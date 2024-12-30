@@ -8,7 +8,8 @@ function LandingPage() {
         <>
             <Header />
             <div className="landing-page-box">
-                <h1>CareNest: Η φωλιά της φροντίδας</h1>
+                <img className="landing-page-logo" src="logo1.png" alt="CareNest Logo" />
+                <h2>Η φωλιά της φροντίδας</h2>
                 <p>Η πλατφόρμα που παρέχει το gov.gr, συνδέει οικογένειες με έμπειρες νταντάδες στη γειτονιά σας. Είτε αναζητάτε αξιόπιστη φροντίδα παιδιών είτε ψάχνετε για ευκαιρίες εργασίας, είμαστε εδώ για να σας βοηθήσουμε!</p>
             </div>
             {/* <Box

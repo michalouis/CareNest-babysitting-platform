@@ -13,7 +13,7 @@ body {
     background-color: #FFFFFF; /* White background */
     padding: 1rem; /* Padding using rem */
     min-width: 25rem;
-    max-width: 60rem;
+    /* max-width: 60rem; */
     margin-top: 1rem; /* Add some top margin using rem */
     margin-left: 1rem; /* Left margin */
     margin-right: 1rem; /* Right margin */
@@ -21,21 +21,31 @@ body {
     display: flex; /* Use flexbox */
     flex-direction: column; /* Arrange children in a column */
     justify-content: center; /* Center children vertically */
+    align-items: center;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    /* flex: 1 */
 }
 
-.landing-page-box h1 {
+.landing-page-logo {
+    width: 400px;
+    height: 96px;
+}
+
+.landing-page-box h2 {
     overflow: hidden; /* Hide overflow */
     word-wrap: break-word; /* Break long words */
     text-overflow: ellipsis; /* Add ellipsis for overflow text */
     margin-top: 0; /* Remove the top margin */
     margin-bottom: 0.25rem; /* Reduce the gap below the heading using rem */
+    color: #6247AA;
 }
 
 .landing-page-box p {
+    text-align: center; 
+    max-width: 60rem;
     overflow: hidden; /* Hide overflow */
     word-wrap: break-word; /* Break long words */
     text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    margin-top: 0; /* Remove the gap above the paragraph */
+    margin-top: 10; /* Remove the gap above the paragraph */
     margin-bottom: 0; /* Remove the gap below the paragraph */
 }
