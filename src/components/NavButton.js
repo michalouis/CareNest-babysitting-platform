@@ -1,12 +1,14 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import { Typography, Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 function NavButton(props) {
     return (
         <>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
+                component={Link} to={props.to}
                 color="inherit"
                 sx={{
                     display: 'flex',

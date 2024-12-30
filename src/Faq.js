@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "./components/Header";
 
-function LandingPage() {
+function Faq() {
     return (
         <>
         <div>
             <Header />
-            <h1>Arxiki</h1>
+            <h1>Frequently Asked Questions</h1>
         </div>
         </>
     )
 };
 
-export default LandingPage;
+export default Faq;
