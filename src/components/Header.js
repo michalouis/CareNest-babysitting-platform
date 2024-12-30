@@ -12,7 +12,6 @@ function Header() {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <NavButton to="/faq" src="info.png" width="28px" height="28px" altText="Information Icon" text="Συχνές Ερωτήσεις" />
                     <NavButton to="/messages" src="message.png" width="28px" height="28px" altText="Information Icon" text="Μηνύματα" />
-                    <NavButton to="/messages" src="notification.png" width="28px" height="28px" altText="Information Icon" text="Ειδοποιήσεις" />
                     <Box sx={{ ml: 2 }}>
                         <NavSignButton />
                     </Box>

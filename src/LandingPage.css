@@ -1,0 +1,41 @@
+body {
+  background-color: #f0f0f0; /* Light gray background */
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.landing-page-box {
+    background-color: #FFFFFF; /* White background */
+    padding: 1rem; /* Padding using rem */
+    min-width: 25rem;
+    max-width: 60rem;
+    margin-top: 1rem; /* Add some top margin using rem */
+    margin-left: 1rem; /* Left margin */
+    margin-right: 1rem; /* Right margin */
+    border-radius: 1rem; /* Rounded corners using rem */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Arrange children in a column */
+    justify-content: center; /* Center children vertically */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.landing-page-box h1 {
+    overflow: hidden; /* Hide overflow */
+    word-wrap: break-word; /* Break long words */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    margin-top: 0; /* Remove the top margin */
+    margin-bottom: 0.25rem; /* Reduce the gap below the heading using rem */
+}
+
+.landing-page-box p {
+    overflow: hidden; /* Hide overflow */
+    word-wrap: break-word; /* Break long words */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    margin-top: 0; /* Remove the gap above the paragraph */
+    margin-bottom: 0; /* Remove the gap below the paragraph */
+}

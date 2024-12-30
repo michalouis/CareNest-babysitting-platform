@@ -1,6 +1,8 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import { Typography, Button } from "@mui/material";
+import LoginIcon from '@mui/icons-material/Login';
+import './NavButton.css';
 
 function NavSignButton(props) {
     return (
@@ -19,8 +21,10 @@ function NavSignButton(props) {
                 }}
                 disableElevation
             >
+                <LoginIcon sx={{ marginRight: 0.5 }} />
                 <Typography
                     variant="h6"
+                    className="nav-button-text"
                     sx={{
                         fontSize: '1rem',
                         textTransform: 'capitalize',
