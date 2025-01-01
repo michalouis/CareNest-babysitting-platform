@@ -108,9 +108,15 @@
     margin-top: 1rem;
 }
 
+@media (max-width: 1300px) {
+    .infobox p {
+        font-size: 0.85rem;
+    }
+}
+
 .infobox-image {
-    width: 40%;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    width: auto;
+    height: 40%;
+    max-width: auto;
+    max-height: 40%;
 }
