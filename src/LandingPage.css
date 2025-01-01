@@ -1,51 +1,62 @@
-body {
-  background-color: #f0f0f0; /* Light gray background */
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.landing-page-box {
-    background-color: #FFFFFF; /* White background */
-    padding: 1rem; /* Padding using rem */
+.welcome-box {
+    background-color: var(--white);
+    padding: 1rem;
+    margin: 1rem; 
     min-width: 25rem;
-    /* max-width: 60rem; */
-    margin-top: 1rem; /* Add some top margin using rem */
-    margin-left: 1rem; /* Left margin */
-    margin-right: 1rem; /* Right margin */
-    border-radius: 1rem; /* Rounded corners using rem */
-    display: flex; /* Use flexbox */
-    flex-direction: column; /* Arrange children in a column */
-    justify-content: center; /* Center children vertically */
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    /* flex: 1 */
+    box-sizing: border-box;
 }
 
-.landing-page-logo {
+.welcome-logo {
     width: 400px;
     height: 96px;
 }
 
-.landing-page-box h2 {
-    overflow: hidden; /* Hide overflow */
-    word-wrap: break-word; /* Break long words */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    margin-top: 0; /* Remove the top margin */
-    margin-bottom: 0.25rem; /* Reduce the gap below the heading using rem */
-    color: #6247AA;
+.welcome-box h1 {
+    color: var(--clr-purple-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-.landing-page-box p {
+.welcome-box h2 {
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--clr-purple-dark);
+}
+
+.welcome-box p {
     text-align: center; 
-    max-width: 60rem;
-    overflow: hidden; /* Hide overflow */
-    word-wrap: break-word; /* Break long words */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    margin-top: 10; /* Remove the gap above the paragraph */
-    margin-bottom: 0; /* Remove the gap below the paragraph */
+    max-width: 45rem;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    margin-top: 10;
+}
+
+.right-aligned-image {
+    width: 300px;
+    position: absolute;
+    justify-self: middle;
+    right: 1rem;
+}
+
+.left-aligned-image {
+    width: 300px;
+    position: absolute;
+    justify-self: middle;
+    left: 1rem;
+}
+
+@media (max-width: 1400px) {
+    .right-aligned-image,
+    .left-aligned-image {
+        display: none;
+    }
 }

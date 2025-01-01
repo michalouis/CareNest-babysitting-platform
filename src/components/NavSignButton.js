@@ -6,35 +6,35 @@ import './NavButton.css';
 
 function NavSignButton(props) {
     return (
-        <Box>
-            <Button 
-                variant="contained"
-                sx={{
-                    bgcolor: '#FFFFFF', // White background
-                    color: '#815AC0', // Text color
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 0.5,
-                    '&:hover': {
-                        bgcolor: '#EDE7F6', // Lighter hover background color
-                    }
-                }}
-                disableElevation
-            >
-                <LoginIcon sx={{ marginRight: 0.5 }} />
-                <Typography
-                    variant="h6"
-                    className="nav-button-text"
+            <Box>
+                <Button 
+                    variant="contained"
                     sx={{
-                        fontSize: '1rem',
-                        textTransform: 'capitalize',
-                        fontWeight: 'bold',
+                        bgcolor: 'var(--white)',
+                        color: 'var(--clr-purple-light)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.5,
+                        '&:hover': {
+                            bgcolor: 'var(--clr-purple-hover)'
+                        }
                     }}
+                    disableElevation
                 >
-                    Σύνδεση
-                </Typography>
-            </Button>
-        </Box>
+                    <LoginIcon sx={{ marginRight: 0.5 }} />
+                    <Typography
+                        variant="h6"
+                        className="nav-button-text"
+                        sx={{
+                            fontSize: '1rem',
+                            textTransform: 'capitalize',
+                            fontWeight: 'bold',
+                        }}
+                        >
+                        Σύνδεση
+                    </Typography>
+                </Button>
+            </Box>
     );
 }
 

@@ -1,37 +1,27 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Header from './components/Header';
-import './LandingPage.css';     
+import './style.css';     
+import './LandingPage.css';
+import LearnMoreButtons from './components/LearnMoreButttons';
+import SignupButton from './components/SignupButton';
 
 function LandingPage() {
     return (
         <>
             <Header />
-            <div className="landing-page-box">
-                <img className="landing-page-logo" src="logo1.png" alt="CareNest Logo" />
+            <div className="welcome-box">
+                <img className="welcome-logo" src="logo1.png" alt="CareNest Logo" />
                 <h2>Η φωλιά της φροντίδας</h2>
                 <p>Η πλατφόρμα που παρέχει το gov.gr, συνδέει οικογένειες με έμπειρες νταντάδες στη γειτονιά σας. Είτε αναζητάτε αξιόπιστη φροντίδα παιδιών είτε ψάχνετε για ευκαιρίες εργασίας, είμαστε εδώ για να σας βοηθήσουμε!</p>
+                <h1>Μάθετε πως λειτουργεί!</h1>
+                <p>Ανακαλύψτε πώς η πλατφόρμα CareNest μπορεί να σας βοηθήσει! Μάθετε περισσότερα για το πώς μπορείτε να συνδέσετε την οικογένειά σας με έμπειρες νταντάδες ή να βρείτε την ιδανική ευκαιρία εργασίας στον χώρο της φροντίδας.</p>
+                <LearnMoreButtons />
+                <h1>Εγγραφή</h1>
+                <p>Η εγγραφή σας στην πλατφόρμα γίνεται εύκολα και γρήγορα μέσω του TaxisNet και διαρκεί λιγότερο από 10 λεπτά! Είτε είστε γονέας είτε νταντά, αποκτήστε πρόσβαση στις υπηρεσίες μας άμεσα και με ασφάλεια.</p>
+                <SignupButton />
+                <img className="right-aligned-image" src="mom.png" alt="Right Aligned Image" />
+                <img className="left-aligned-image" src="mom2.png" alt="Right Aligned Image" />
             </div>
-            {/* <Box
-                sx={{
-                    bgcolor: '#FFFFFF', // White background
-                    padding: 2,
-                    minWidth: '300px', // Minimum width
-                    maxWidth: '1280px', // Maximum width
-                    minHeight: '100px', // Minimum height
-                    maxHeight: '150px', // Maximum height
-                    marginTop: 4, // Add some top margin
-                    textAlign: 'center', // Center the text
-                    borderRadius: '16px', // Rounded corners
-                    marginLeft: 2, // Align to the left side of the screen
-                    display: 'flex', // Use flexbox
-                    flexDirection: 'column', // Arrange children in a column
-                    justifyContent: 'center', // Center children vertically
-                }}
-            >
-                <h1 style={{ marginBottom: '8px' }}>CareNest: Η φωλιά της φροντίδας</h1>
-                <p style={{ marginTop: '0' }}>Η πλατφόρμα που παρέχει το gov.gr, συνδέει οικογένειες με έμπειρες νταντάδες στη γειτονιά σας. Είτε αναζητάτε αξιόπιστη φροντίδα παιδιών είτε ψάχνετε για ευκαιρίες εργασίας, είμαστε εδώ για να σας βοηθήσουμε!</p>
-            </Box> */}
         </>
     );
 }
