@@ -1,7 +1,9 @@
 import React from 'react';
-import Header from '../Header/Header';
+import Header from '../Layout/Header';
+import Footer from '../Layout/Footer';
 import WelcomeBox from './WelcomeBox/WelcomeBox';
 import Info from './Info/Info';
+import Contact from './Contact';
 import './LandingPage.css';
 import '../style.css';
 
@@ -11,6 +13,8 @@ function LandingPage() {
             <Header />
             <WelcomeBox />
             <Info />
+            <Contact />
+            <Footer />
         </>
     );
 }
