@@ -17,7 +17,7 @@
 }
 
 .welcome-box h1 {
-    color: var(--clr-purple-dark);
+    color: var(--clr-purple-main);
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
@@ -28,7 +28,7 @@
     text-overflow: ellipsis;
     margin-top: 0;
     margin-bottom: 1rem;
-    color: var(--clr-purple-dark);
+    color: var(--clr-purple-main);
 }
 
 .welcome-box p {

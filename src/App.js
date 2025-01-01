@@ -1,9 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./LandingPage";
-import About from './About';
-import Faq from './Faq';
-import Messages from './Messages';
+import LandingPage from "./LandingPage/LandingPage";
+import About from './About/About';
+import Faq from './Faq/Faq';
+import Messages from './Messages/Messages';
 
 export default function App() {
   return (
