@@ -10,7 +10,7 @@ function NavSignButton(props) {
                 <Button 
                     variant="contained"
                     sx={{
-                        bgcolor: 'var(--white)',
+                        bgcolor: 'var(--clr-white)',
                         color: 'var(--clr-purple-light)',
                         display: 'flex',
                         alignItems: 'center',

@@ -1,5 +1,7 @@
+/********************** WELCOME BOX **********************/
+
 .welcome-box {
-    background-color: var(--white);
+    background-color: var(--clr-white);
     padding: 1rem;
     margin: 1rem; 
     min-width: 25rem;
@@ -59,4 +61,56 @@
     .left-aligned-image {
         display: none;
     }
+}
+
+/********************** INFO **********************/
+
+.infobox-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.info h1 {
+    font-size: xxx-large;
+    color: var(--clr-purple-main);
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+/********************** INFOBOXES **********************/
+
+.infobox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-white);
+    border-radius: 1rem;
+    width: 300px;
+    height: 300px;
+    flex-grow: 1;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.infobox p {
+    font-weight: 500;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    margin-top: 1rem;
+}
+
+.infobox-image {
+    width: 40%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }

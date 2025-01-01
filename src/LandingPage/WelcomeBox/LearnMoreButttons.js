@@ -16,6 +16,8 @@ function LearnMoreButtons() {
             }}
         >
             <Button
+                component="a"
+                href="#info-parent"
                 variant='outlined'
                 sx={{
                     display: 'flex',
@@ -33,6 +35,8 @@ function LearnMoreButtons() {
                 ΓΙΑ ΤΟΥΣ ΓΟΝΕΙΣ
             </Button>
             <Button
+                component="a"
+                href="#info-ntanta"
                 variant='outlined'
                 sx={{
                     display: 'flex',
