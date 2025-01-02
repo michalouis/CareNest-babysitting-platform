@@ -5,7 +5,6 @@ function Messages() {
     return (
         <>
         <div>
-            <Header />
             <h1>Messages</h1>
         </div>
         </>

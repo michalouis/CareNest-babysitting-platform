@@ -10,15 +10,30 @@
     --clr-purple-main: #6247AA;
     --clr-purple-light: #A06CD5;
     --clr-purple-hover: #ac8acf;
-
-}
-
-body {
-  background-color: var(--clr-light-grey);
-  margin: 0;
-  padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--clr-light-grey);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 100vh;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }

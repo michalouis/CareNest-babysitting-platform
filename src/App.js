@@ -1,5 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
+import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 import LandingPage from "./LandingPage/LandingPage";
 import About from './About/About';
 import Faq from './Faq/Faq';
@@ -16,12 +18,18 @@ export default function App() {
     	<body>
     	<div className="App">
         	<BrowserRouter>
-        	  <Routes>
-        	    <Route path="/" element={<LandingPage />} />
-        	    <Route path="/about" element={<About />} />
-        	    <Route path="/messages" element={<Messages />} />
-        	    <Route path="/faq" element={<Faq />} />
-        	  </Routes>
+				<div className="app-container">
+					<Header />
+					<div className="content">
+						<Routes>
+							<Route path="/" element={<LandingPage />} />
+							<Route path="/about" element={<About />} />
+							<Route path="/faq" element={<Faq />} />
+							<Route path="/messages" element={<Messages />} />
+						</Routes>
+					</div>
+					<Footer />
+				</div>
         	</BrowserRouter>
         </div>
       </body>

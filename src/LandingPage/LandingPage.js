@@ -10,11 +10,9 @@ import '../style.css';
 function LandingPage() {
     return (
         <>
-            <Header />
             <WelcomeBox />
             <Info />
             <Contact />
-            <Footer />
         </>
     );
 }

@@ -8,7 +8,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 function Footer() {
     return (
-        <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: '#815AC0', height: '100px' }}>
+        <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: '#815AC0', height: '100px', marginTop: 'auto' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
                 <Typography variant="body1" sx={{ color: '#FFFFFF' }}>
                     © 2023 CareNest
