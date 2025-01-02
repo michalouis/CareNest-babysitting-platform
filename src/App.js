@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
+import ScrolltoTop from "./Layout/ScrolltoTop";
 import LandingPage from "./LandingPage/LandingPage";
 import About from './About/About';
 import Faq from './Faq/Faq';
@@ -28,6 +29,7 @@ export default function App() {
 							<Route path="/messages" element={<Messages />} />
 						</Routes>
 					</div>
+					<ScrolltoTop />
 					<Footer />
 				</div>
         	</BrowserRouter>
