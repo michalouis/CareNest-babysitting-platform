@@ -47,6 +47,7 @@
     position: absolute;
     justify-self: middle;
     right: 1rem;
+    pointer-events: none;
 }
 
 .left-aligned-image {
@@ -54,6 +55,7 @@
     position: absolute;
     justify-self: middle;
     left: 1rem;
+    pointer-events: none;
 }
 
 @media (max-width: 1400px) {

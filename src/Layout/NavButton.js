@@ -2,7 +2,7 @@ import React from "react";
 import Box from '@mui/material/Box';
 import { Typography, Button } from "@mui/material";
 import { Link } from 'react-router-dom';
-import './NavButton.css';
+import './navbutton.css';
 
 function NavButton(props) {
     return (

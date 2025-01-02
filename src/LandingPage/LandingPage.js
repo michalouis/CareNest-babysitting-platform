@@ -4,7 +4,7 @@ import Footer from '../Layout/Footer';
 import WelcomeBox from './WelcomeBox/WelcomeBox';
 import Info from './Info/Info';
 import Contact from './Contact';
-import './LandingPage.css';
+import './landingPage.css';
 import '../style.css';
 
 function LandingPage() {
