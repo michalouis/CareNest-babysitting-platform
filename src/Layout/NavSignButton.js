@@ -11,12 +11,12 @@ function NavSignButton(props) {
                     variant="contained"
                     sx={{
                         bgcolor: 'var(--clr-white)',
-                        color: 'var(--clr-purple-light)',
+                        color: 'var(--clr-purple-main)',
                         display: 'flex',
                         alignItems: 'center',
                         gap: 0.5,
                         '&:hover': {
-                            bgcolor: 'var(--clr-purple-hover)'
+                            opacity: 0.8,
                         }
                     }}
                     disableElevation
