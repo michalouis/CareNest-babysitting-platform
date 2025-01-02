@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Breadcrumbs, Link } from '@mui/material';
 import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
 import FaqTab from './FaqTab';
@@ -31,7 +31,13 @@ export default function Faq() {
 
     return (
         <>
-            <Box className='faq-container' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem', marginBottom: '2rem' }}>
+            <Breadcrumbs sx={{ marginTop: '1rem', marginLeft: '1rem' }}>
+                <Link underline="hover" color="inherit" href="/">
+                    Αρχική Σελίδα
+                </Link>
+                <Typography color="text.primary">Συχνές Ερωτήσεις</Typography>
+            </Breadcrumbs>
+            <Box className='faq-container' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem' }}>
                 <h1>Συχνές Ερωτήσεις</h1>
                 <FaqTab onTabChange={handleTabChange} />
                 <Box sx={{ width: '80%', maxWidth: '800px', marginTop: '2rem' }}>

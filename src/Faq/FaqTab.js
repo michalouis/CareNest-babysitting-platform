@@ -14,13 +14,15 @@ function FaqTab({ onTabChange }) {
         <Box sx={{ width: 'auto', marginTop: '1rem', padding: '10px', backgroundColor: 'var(--clr-white)', boxShadow: 2, borderRadius: '10px' }}>
             <Tabs value={selectedTab} onChange={handleChange} centered TabIndicatorProps={{ style: { display: 'none' } }}>
                 <Tab
-                    label="Γονείς"
+                    label="Γονεις"
                     className="faq-tab"
                     sx={{
                         backgroundColor: selectedTab === 0 ? 'var(--clr-light-grey)' : 'transparent',
                         borderRadius: '4px',
                         color: 'var(--clr-black)',
                         margin: '10px',
+                        fontWeight: '600',
+                        fontSize: 'large',
                         '&.Mui-selected': {
                             color: 'var(--clr-black)',
                         },
@@ -30,13 +32,15 @@ function FaqTab({ onTabChange }) {
                     }}
                 />
                 <Tab
-                    label="Νταντάδες"
+                    label="Ντανταδες"
                     className="faq-tab"
                     sx={{
                         backgroundColor: selectedTab === 1 ? 'var(--clr-light-grey)' : 'transparent',
                         borderRadius: '4px',
                         color: 'var(--clr-black)',
                         margin: '10px',
+                        fontWeight: '600',
+                        fontSize: 'large',
                         '&.Mui-selected': {
                             color: 'var(--clr-black)',
                         },
