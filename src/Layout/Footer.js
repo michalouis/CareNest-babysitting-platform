@@ -10,7 +10,7 @@ import './layout.css';
 
 function Footer() {
     return (
-        <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: '#815AC0', height: '100px', marginTop: 'auto' }}>
+        <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: 'var(--clr-purple-main)', height: '100px', marginTop: 'auto' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
                 <div className="footer-text">
                     © 2023 CareNest

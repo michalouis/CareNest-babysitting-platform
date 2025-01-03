@@ -5,13 +5,22 @@
 }
 
 :root {
+    --clr-black: #000000;
     --clr-white: #FFFFFF;
     --clr-light-grey: #e9e9e9;
     --clr-grey: #737373;
+    
+    --clr-pink: #F72585;
+    --clr-magenta: #B5179E;
+    --clr-purple-light: #ddd0ea;
     --clr-purple-main: #6247AA;
-    --clr-purple-light: #A06CD5;
-    --clr-purple-hover: #ac8acf;
-    --clr-black: #000000;
+    --clr-purple-dark: #560BAD;
+    --clr-violet: #480CA8;
+    --clr-violet-dark: #3A0CA3;
+    --clr-blue: #3F37C9;
+    --clr-blue-light: #4361EE;
+    --clr-blue-ligher: #4895EF;
+    --clr-cyan: #4CC9F0;
 }
 
 html {

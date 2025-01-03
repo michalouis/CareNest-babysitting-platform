@@ -25,7 +25,7 @@ function LearnMoreButtons() {
                     color: 'var(--clr-purple-main)',
                     borderColor: 'var(--clr-purple-main)',
                     '&:hover': {
-                        bgcolor: 'var(--clr-purple-hover)',
+                        bgcolor: 'var(--clr-purple-light)',
                         borderColor: 'var(--clr-purple-main)',
                     },
                     fontWeight: 'bold',
@@ -44,7 +44,7 @@ function LearnMoreButtons() {
                     color: 'var(--clr-purple-main)',
                     borderColor: 'var(--clr-purple-main)',
                     '&:hover': {
-                        bgcolor: 'var(--clr-purple-hover)',
+                        bgcolor: 'var(--clr-purple-light)',
                         borderColor: 'var(--clr-purple-main)',
                     },
                     fontWeight: 'bold',
