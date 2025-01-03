@@ -68,13 +68,9 @@
 /********************** INFO **********************/
 
 .infobox-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
-    margin: 1rem;
 }
 
 .info h1 {
@@ -86,19 +82,17 @@
 
 /********************** INFOBOXES **********************/
 
-.infobox {
+/* .infobox {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--clr-white);
+    background-color: var(--clr-purple-main);
     border-radius: 1rem;
-    width: 300px;
-    height: 300px;
-    flex-grow: 1;
     padding: 1rem;
     margin: 1rem;
-}
+    box-shadow: 1;
+} */
 
 .infobox p {
     font-weight: 500;

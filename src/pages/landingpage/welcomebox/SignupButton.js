@@ -1,10 +1,13 @@
 import React from "react";
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import '../../../style.css';
 
 function SignupButton() {
     return (
         <Button
+            component={Link}
+            to="/signup"
             variant='contained'
             sx={{
                 marginTop: '1rem',

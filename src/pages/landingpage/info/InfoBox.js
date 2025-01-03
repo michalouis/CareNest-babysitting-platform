@@ -10,16 +10,23 @@ function InfoBox(props) {
                 bgcolor: 'var(--clr-purple-main)',
                 boxShadow: 1,
                 borderRadius: '1rem',
-                width: '200px',
-                widthmax: '100px',
-                height: '300px',
+                width: { xs: '100%', sm: '50%', md: '10%' }, // Responsive width
+                height: {xs: '100%', sm: '50%', md: '250px'},
                 flexGrow: 1,
                 justifyContent: 'center',
                 alignContent: 'center',
+                textAlign: 'center',
+                padding: '0.5rem',
+                margin: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
             }}
         >
-            <img className='infobox-image' src={props.imgSrc} alt={props.alt}/>
-            <p>{props.text}</p>
+            {props.icon}
+            <p style={{ marginTop: '1rem', wordWrap: 'break-word' }}>
+                {props.text}
+            </p>
         </Box>
     );
 }
