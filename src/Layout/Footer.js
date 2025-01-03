@@ -6,7 +6,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import './layout.css'; // Import the CSS file
+import './layout.css';
 
 function Footer() {
     return (
@@ -16,11 +16,14 @@ function Footer() {
                     © 2023 CareNest
                 </div>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <div className="footer-link" style={{ marginRight: '1rem' }}>
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', marginRight: '1rem' }}>
+                        <Link to="/error404" className="footer-link" style={{ marginRight: '1rem' }}>
+                            Error404
+                        </Link>
                         <Link to="/contact" className="footer-link">
                             Επικοινωνία
                         </Link>
-                    </div>
+                    </Box>
                     <IconButton color="inherit" href="https://www.facebook.com" target="_blank">
                         <FacebookIcon />
                     </IconButton>

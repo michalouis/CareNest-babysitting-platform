@@ -7,6 +7,7 @@ import LandingPage from "./pages/landingpage/LandingPage";
 import Faq from './pages/faq/Faq';
 import Messages from './pages/messages/Messages';
 import Contact from "./pages/contact/Contact";
+import Error404 from "./pages/error404/Error404";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
 							<Route path="/contact" element={<Contact />} />
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/messages" element={<Messages />} />
+							<Route path="*" element={<Error404 />} />
 						</Routes>
 					</div>
 					<ScrolltoTop />
