@@ -1,0 +1,12 @@
+.contact-title {
+    color: var(--clr-purple-main);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contact-description {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1rem;
+}

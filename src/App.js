@@ -4,9 +4,9 @@ import Header from "./Layout/Header";
 import Footer from "./Layout/Footer";
 import ScrolltoTop from "./Layout/ScrolltoTop";
 import LandingPage from "./LandingPage/LandingPage";
-import About from './About/About';
 import Faq from './Faq/Faq';
 import Messages from './Messages/Messages';
+import Contact from "./Contact/Contact";
 
 export default function App() {
   return (
@@ -24,7 +24,7 @@ export default function App() {
 					<div className="content">
 						<Routes>
 							<Route path="/" element={<LandingPage />} />
-							<Route path="/about" element={<About />} />
+							<Route path="/contact" element={<Contact />} />
 							<Route path="/faq" element={<Faq />} />
 							<Route path="/messages" element={<Messages />} />
 						</Routes>

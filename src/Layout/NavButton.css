@@ -1,6 +1,0 @@
-/* Hide text on small screens */
-@media (max-width: 42rem) {
-  .nav-button-text {
-    display: none;
-  }
-}

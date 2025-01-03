@@ -1,0 +1,21 @@
+/* Hide text on small screens */
+@media (max-width: 42rem) {
+  .nav-button-text {
+    display: none;
+  }
+}
+
+.footer-text {
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.footer-link {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
