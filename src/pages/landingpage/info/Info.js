@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import InfoBox from './InfoBox';
-import '../../style.css';
+import '../../../style.css';
 
 function Info() {
     return (

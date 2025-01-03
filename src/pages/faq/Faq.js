@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Link } from '@mui/material';
-import Header from '../Layout/Header';
-import Breadcrumbs from '../Layout/Breadcrumbs';
-import Footer from '../Layout/Footer';
+import Breadcrumbs from '../../layout/Breadcrumbs';
 import FaqTab from './FaqTab';
 import FaqItem from './FaqItem';
 import './faq.css';

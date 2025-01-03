@@ -1,12 +1,12 @@
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-import Header from "./Layout/Header";
-import Footer from "./Layout/Footer";
-import ScrolltoTop from "./Layout/ScrolltoTop";
-import LandingPage from "./LandingPage/LandingPage";
-import Faq from './Faq/Faq';
-import Messages from './Messages/Messages';
-import Contact from "./Contact/Contact";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+import ScrolltoTop from "./layout/ScrolltoTop";
+import LandingPage from "./pages/landingpage/LandingPage";
+import Faq from './pages/faq/Faq';
+import Messages from './pages/messages/Messages';
+import Contact from "./pages/contact/Contact";
 
 export default function App() {
   return (

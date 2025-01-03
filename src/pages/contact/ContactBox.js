@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Snackbar, Alert } from '@mui/material';
-import Breadcrumbs from '../Layout/Breadcrumbs';
 import './contact.css';
 
-function Contact() {
+function ContactBox() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -62,7 +61,6 @@ function Contact() {
 
     return (
         <>
-            <Breadcrumbs current="Επικοινωνία" />
             <Box
                 sx={{
                     backgroundColor: 'var(--clr-white)',
@@ -75,7 +73,7 @@ function Contact() {
                     alignItems: 'center',
                 }}
             >
-                <h1 className="contact-title">Επικοινωνήστε μαζί μας</h1>
+                <h1 className="Box-title">Επικοινωνήστε μαζί μας</h1>
                 <p className="contact-description">
                     Συμπληρώστε την παρακάτω φόρμα για να επικοινωνήσετε μαζί μας. Θα χαρούμε να σας βοηθήσουμε!
                 </p>
@@ -137,4 +135,4 @@ function Contact() {
     );
 }
 
-export default Contact;
+export default ContactBox;

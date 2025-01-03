@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from '@mui/material';
-import '../../style.css';
+import '../../../style.css';
 
 function SignupButton() {
     return (
