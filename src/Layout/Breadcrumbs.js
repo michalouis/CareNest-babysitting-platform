@@ -19,7 +19,7 @@ function Breadcrumbs({ current }) {
     };
 
     return (
-        <MUIBreadcrumbs sx={{ marginTop: '1rem', marginLeft: '1rem', display: 'flex', alignItems: 'center' }}>
+        <MUIBreadcrumbs sx={{ marginTop: '1rem', marginLeft: '0.5rem', display: 'flex', alignItems: 'center' }}>
             <IconButton onClick={handleNavigateBefore} >
                 <NavigateBeforeIcon />
             </IconButton>
