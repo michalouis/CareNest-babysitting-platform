@@ -2,7 +2,7 @@ import React from "react";
 import Box from '@mui/material/Box';
 import { Typography, Button } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
-import './navbutton.css';
+import './layout.css';
 
 function NavSignButton(props) {
     return (
