@@ -1,0 +1,18 @@
+.login-header {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.login-text {
+    font-size: 1rem;
+    color: var(--clr-grey);
+}
+
+.signup-link {
+    text-decoration: underline;
+    color: var(--clr-black);
+}
+
+.signup-link:hover {
+    text-decoration: none;
+}
