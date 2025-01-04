@@ -30,21 +30,26 @@ function Signup() {
     const [errorMessage, setErrorMessage] = useState('');
     const [isRoleSelected, setIsRoleSelected] = useState(false);
     const [isInfoRead, setIsInfoRead] = useState(false);
+    const [showError, setShowError] = useState(false);
 
     const handleNext = () => {
         if (activeStep === 0 && !isRoleSelected) {
             setErrorMessage('Please select a role before proceeding.');
             setError(true);
+            setShowError(true);
         } else if (activeStep === 1 && !isInfoRead) {
             setErrorMessage('Please read the information and check the box before proceeding.');
             setError(true);
+            setShowError(true);
         } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setShowError(false);
         }
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setShowError(false);
     };
 
     const handleRoleSelection = (selected) => {
@@ -71,8 +76,8 @@ function Signup() {
                     <StepperComponent steps={signupSteps} activeStep={activeStep} />
                 </Box>
                 <Box sx={{ marginTop: '2rem', width: '100%', flexGrow: 1 }}>
-                    {activeStep === 0 && <RoleSelection onRoleSelect={handleRoleSelection} />}
-                    {activeStep === 1 && <Information onInfoRead={handleInfoRead} />}
+                    {activeStep === 0 && <RoleSelection onRoleSelect={handleRoleSelection} showError={showError} />}
+                    {activeStep === 1 && <Information onInfoRead={handleInfoRead} showError={showError} />}
                     {activeStep === 2 && <LoginTaxisnet />}
                     {activeStep === 3 && <Createprofile />}
                 </Box>

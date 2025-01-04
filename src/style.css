@@ -5,11 +5,20 @@
 }
 
 :root {
+    /* monochrome */
     --clr-black: #000000;
     --clr-white: #FFFFFF;
     --clr-light-grey: #e9e9e9;
     --clr-grey: #737373;
+
+    /* errors */
+    --clr-error: #FF0000;
+    --clr-error-lighter: #ff8383;
+    --clr-error-light: #ef5350;
+    --clr-error-main: #d32f2f;
+    --clr-error-dark: #c62828;
     
+    /* color pallete */
     --clr-pink: #F72585;
     --clr-magenta: #B5179E;
     --clr-purple-light: #ddd0ea;

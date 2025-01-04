@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
 import { Box, Radio, FormControlLabel } from '@mui/material';
 
-function RoleSelection({ onRoleSelect }) {
+function RoleSelection({ onRoleSelect, showError }) {
     const [selectedRole, setSelectedRole] = useState('');
 
     const handleRoleChange = (event) => {
         setSelectedRole(event.target.value);
-        onRoleSelect(true); // Notify parent component that a role is selected
+        onRoleSelect(true);
     };
 
     return (
         <>
             <p style={{ fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>Which role do you belong to?</p>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '2rem',
+                    width: { xs: '95%', sm: '80%', md: '60%' },
+                    padding: '1rem',
+                    borderRadius: '1rem',
+                    margin: '0 auto',
+                }}
+            >
                 <Box
                     onClick={() => {
                         setSelectedRole('parent');
@@ -22,7 +33,6 @@ function RoleSelection({ onRoleSelect }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: { xs: '95%', sm: '80%', md: '60%' },
                         cursor: 'pointer',
                     }}
                 >
@@ -36,12 +46,13 @@ function RoleSelection({ onRoleSelect }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: selectedRole === 'parent' ? 'var(--clr-blue)' : 'var(--clr-white)',
+                            bgcolor: showError && !selectedRole ? 'var(--clr-error-lighter)' : selectedRole === 'parent' ? 'var(--clr-blue)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
                             boxShadow: 1,
                             width: '100%',
                             height: 'auto',
+                            boxShadow: selectedRole === 'parent' ? '6' : '0'
                         }}
                     >
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: selectedRole === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
@@ -65,7 +76,6 @@ function RoleSelection({ onRoleSelect }) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: { xs: '95%', sm: '80%', md: '60%' },
                         cursor: 'pointer',
                     }}
                 >
@@ -79,12 +89,13 @@ function RoleSelection({ onRoleSelect }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: selectedRole === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)',
+                            bgcolor: showError && !selectedRole ? 'var(--clr-error-lighter)' : selectedRole === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
                             boxShadow: 1,
                             width: '100%',
                             height: 'auto',
+                            boxShadow: selectedRole === 'nanny' ? '6' : '0'
                         }}
                     >
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: selectedRole === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)' }}>

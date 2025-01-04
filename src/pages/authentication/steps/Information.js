@@ -9,12 +9,12 @@ const faqItems = [
     { question: "Question 4", answer: "Answer 4" }
 ];
 
-function Information({ onInfoRead }) {
+function Information({ onInfoRead, showError }) {
     const [checked, setChecked] = useState(false);
 
     const handleCheckboxChange = (event) => {
         setChecked(event.target.checked);
-        onInfoRead(event.target.checked); // Notify parent component that the info is read
+        onInfoRead(event.target.checked);
     };
 
     return (
@@ -25,9 +25,9 @@ function Information({ onInfoRead }) {
                     <FaqItem key={index} question={faq.question} answer={faq.answer} />
                 ))}
                 <FormControlLabel
-                    control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
+                    control={<Checkbox checked={checked} onChange={handleCheckboxChange} sx={{ color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)' }} />}
                     label="I have read and understood the information"
-                    sx={{ marginTop: '2rem' }}
+                    sx={{ marginTop: '2rem', color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)' }}
                 />
             </Box>
         </Box>
