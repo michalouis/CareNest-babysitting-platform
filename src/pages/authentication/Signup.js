@@ -96,7 +96,7 @@ function Signup() {
                 </Box>
                 <Box sx={{ marginTop: '2rem', width: '100%', flexGrow: 1 }}>
                     {activeStep === 0 && <RoleSelection selectedRole={signupData.selectedRole} onRoleSelect={handleRoleSelection} showError={showError} />}
-                    {activeStep === 1 && <Information isInfoRead={signupData.isInfoRead} onInfoRead={handleInfoRead} showError={showError} />}
+                    {activeStep === 1 && <Information selectedRole={signupData.selectedRole} isInfoRead={signupData.isInfoRead} onInfoRead={handleInfoRead} showError={showError} />}
                     {activeStep === 2 && <LoginTaxisnet />}
                     {activeStep === 3 && <Createprofile />}
                 </Box>

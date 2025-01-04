@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import FaqItem from '../../faq/FaqItem';
 
-const faqItems = [
-    { question: "Question 1", answer: "Answer 1" },
-    { question: "Question 2", answer: "Answer 2" },
-    { question: "Question 3", answer: "Answer 3" },
-    { question: "Question 4", answer: "Answer 4" }
+const faqItemsParent = [
+    { question: "Question 1 Parent", answer: "Answer 1" },
+    { question: "Question 2 Parent", answer: "Answer 2" },
+    { question: "Question 3 Parent", answer: "Answer 3" },
+    { question: "Question 4 Parent", answer: "Answer 4" }
 ];
 
-function Information({ isInfoRead, onInfoRead, showError }) {
+const faqItemsNanny = [
+    { question: "Question 1 Nanny", answer: "Answer 1" },
+    { question: "Question 2 Nanny", answer: "Answer 2" },
+    { question: "Question 3 Nanny", answer: "Answer 3" },
+    { question: "Question 4 Nanny", answer: "Answer 4" }
+];
+
+function Information({ selectedRole, isInfoRead, onInfoRead, showError }) {
     const [checked, setChecked] = useState(isInfoRead);
 
     useEffect(() => {
@@ -20,6 +27,8 @@ function Information({ isInfoRead, onInfoRead, showError }) {
         setChecked(event.target.checked);
         onInfoRead(event.target.checked);
     };
+
+    const faqItems = selectedRole === 'parent' ? faqItemsParent : faqItemsNanny;
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
