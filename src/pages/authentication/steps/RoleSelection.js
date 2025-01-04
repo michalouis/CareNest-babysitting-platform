@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { Box, Radio, FormControlLabel } from '@mui/material';
 
-function RoleSelection() {
+function RoleSelection({ onRoleSelect }) {
     const [selectedRole, setSelectedRole] = useState('');
 
     const handleRoleChange = (event) => {
         setSelectedRole(event.target.value);
+        onRoleSelect(true); // Notify parent component that a role is selected
     };
 
     return (
         <>
-            <p style={{ fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>Σε ποια ομάδα ανήκετε;</p>
+            <p style={{ fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>Which role do you belong to?</p>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', width: '100%' }}>
                 <Box
-                    onClick={() => setSelectedRole('parent')}
+                    onClick={() => {
+                        setSelectedRole('parent');
+                        onRoleSelect(true);
+                    }}
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -53,7 +57,10 @@ function RoleSelection() {
                     </Box>
                 </Box>
                 <Box
-                    onClick={() => setSelectedRole('nanny')}
+                    onClick={() => {
+                        setSelectedRole('nanny');
+                        onRoleSelect(true);
+                    }}
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -72,11 +79,11 @@ function RoleSelection() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: selectedRole === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)', // Change background color based on selection
+                            bgcolor: selectedRole === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
                             boxShadow: 1,
-                            width: '100%', // Full width within the container
+                            width: '100%',
                             height: 'auto',
                         }}
                     >

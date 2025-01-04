@@ -1,7 +1,7 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import { AppBar, Toolbar, IconButton } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -9,6 +9,13 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import './layout.css';
 
 function Footer() {
+    const location = useLocation();
+    const hideFooter = location.pathname === '/login' || location.pathname === '/signup';
+
+    if (hideFooter) {
+        return null;
+    }
+
     return (
         <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: 'var(--clr-purple-main)', height: '100px', marginTop: 'auto' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>

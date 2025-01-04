@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Snackbar, Alert } from '@mui/material';
 import StepperComponent from './StepperComponent';
 import RoleSelection from './steps/RoleSelection';
 import Information from './steps/Information';
@@ -18,17 +18,27 @@ import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const signupSteps = [
-    { label: 'Επιλογή Ομάδας', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
-    { label: 'Πληροφορίες', icon: <InfoIcon style={{ fontSize: 40 }} /> },
-    { label: 'Εγγραφή', icon: <LoginIcon style={{ fontSize: 40 }} /> },
-    { label: 'Δημιουργία Προφίλ', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
+    { label: 'Step 1', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
+    { label: 'Step 2', icon: <InfoIcon style={{ fontSize: 40 }} /> },
+    { label: 'Step 3', icon: <LoginIcon style={{ fontSize: 40 }} /> },
+    { label: 'Step 4', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
 ];
 
 function Signup() {
     const [activeStep, setActiveStep] = useState(0);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isRoleSelected, setIsRoleSelected] = useState(false);
+    const [isInfoRead, setIsInfoRead] = useState(false);
 
     const handleNext = () => {
-        if (activeStep < signupSteps.length - 1) {
+        if (activeStep === 0 && !isRoleSelected) {
+            setErrorMessage('Please select a role before proceeding.');
+            setError(true);
+        } else if (activeStep === 1 && !isInfoRead) {
+            setErrorMessage('Please read the information and check the box before proceeding.');
+            setError(true);
+        } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
     };
@@ -37,59 +47,76 @@ function Signup() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const handleRoleSelection = (selected) => {
+        setIsRoleSelected(selected);
+        setError(false);
+    };
+
+    const handleInfoRead = (read) => {
+        setIsInfoRead(read);
+        setError(false);
+    };
+
     return (
         <>
-            <Breadcrumbs current="Εγγραφή" />
+            <Breadcrumbs current="Signup" />
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', margin: '1rem', flexGrow: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'baseline', gap: '1rem' }}>
-                    <h1 className="login-header">Εγγραφή στη Πλατοφορμα</h1>
+                    <h1 className="login-header">Signup</h1>
                     <p className="login-text">
-                        Έχετε ήδη λογαριασμό; <Link to="/login" className="signup-link">Σύνδεση</Link>
+                        Already have an account? <Link to="/login" className="signup-link">Login</Link>
                     </p>
                 </Box>
                 <Box sx={{ width: '100%', marginTop: '2rem' }}>
                     <StepperComponent steps={signupSteps} activeStep={activeStep} />
                 </Box>
                 <Box sx={{ marginTop: '2rem', width: '100%', flexGrow: 1 }}>
-                    {activeStep === 0 && <RoleSelection />}
-                    {activeStep === 1 && <Information />}
+                    {activeStep === 0 && <RoleSelection onRoleSelect={handleRoleSelection} />}
+                    {activeStep === 1 && <Information onInfoRead={handleInfoRead} />}
                     {activeStep === 2 && <LoginTaxisnet />}
                     {activeStep === 3 && <Createprofile />}
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem', width: '100%' }}>
-                    <Button
-                        variant='contained'
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{
-                            padding: '0.75rem 1.5rem',
-                            fontSize: '1rem',
-                            backgroundColor: 'var(--clr-violet)',
-                            '&:hover': {
-                                opacity: 0.8,
-                            },
-                        }}
-                        startIcon={<ArrowBackIosIcon />}
-                    >
-                        Πίσω
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={handleNext}
-                        disabled={activeStep === signupSteps.length - 1}
-                        sx={{
-                            padding: '0.75rem 1.5rem',
-                            fontSize: '1rem',
-                            backgroundColor: 'var(--clr-violet)',
-                            '&:hover': {
-                                opacity: 0.8,
-                            },
-                        }}
-                        endIcon={<ArrowForwardIosIcon />}
-                    >
-                        Επόμενο
-                    </Button>
+                <Box sx={{ display: 'flex', justifyContent: activeStep === 0 ? 'flex-end' : 'space-between', marginTop: '2rem', padding: '0 2rem', width: '100%' }}>
+                    {activeStep !== 0 && (
+                        <Button
+                            variant='contained'
+                            onClick={handleBack}
+                            sx={{
+                                padding: '0.75rem 1.5rem',
+                                fontSize: '1rem',
+                                backgroundColor: 'var(--clr-violet)',
+                                '&:hover': {
+                                    opacity: 0.8,
+                                },
+                            }}
+                            startIcon={<ArrowBackIosIcon />}
+                        >
+                            Πίσω
+                        </Button>
+                    )}
+                    {activeStep !== signupSteps.length - 1 && (
+                        <Button
+                            variant="contained"
+                            onClick={handleNext}
+                            sx={{
+                                padding: '0.75rem 1.5rem',
+                                fontSize: '1rem',
+                                backgroundColor: 'var(--clr-violet)',
+                                '&:hover': {
+                                    opacity: 0.8,
+                                },
+                            }}
+                            endIcon={<ArrowForwardIosIcon />}
+                        >
+                            Συνέχεια
+                        </Button>
+                    )}
                 </Box>
+                <Snackbar open={error} autoHideDuration={5000} onClose={() => setError(false)}>
+                    <Alert onClose={() => setError(false)} severity="error" sx={{ width: '100%' }}>
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
             </Box>
         </>
     );

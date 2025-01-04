@@ -10,21 +10,23 @@ import MessageIcon from '@mui/icons-material/Message';
 
 function Header() {
     const location = useLocation();
-    const hideNavButtons = location.pathname === '/login' || location.pathname === '/signup';
+    const hideHeader = location.pathname === '/login' || location.pathname === '/signup';
+
+    if (hideHeader) {
+        return null;
+    }
 
     return (
         <AppBar position="static" sx={{ height: '80px', width: '100%', justifyContent: 'center', backgroundColor: 'var(--clr-purple-main)' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <NavButton to="/" src="logo3.png" width="200px" height="48px" altText="Αρχική Σελίδα" />
-                {!hideNavButtons && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <NavButton to="/faq" icon={<HelpIcon />} text="Συχνές Ερωτήσεις" />
-                        <NavButton to="/messages" icon={<MessageIcon />} text="Μηνύματα" />
-                        <Box sx={{ ml: 2 }}>
-                            <NavLoginButton />
-                        </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <NavButton to="/faq" icon={<HelpIcon />} text="Συχνές Ερωτήσεις" />
+                    <NavButton to="/messages" icon={<MessageIcon />} text="Μηνύματα" />
+                    <Box sx={{ ml: 2 }}>
+                        <NavLoginButton />
                     </Box>
-                )}
+                </Box>
             </Toolbar>
         </AppBar>
     );
