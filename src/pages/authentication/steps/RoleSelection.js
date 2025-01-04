@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Radio, FormControlLabel } from '@mui/material';
 
-function RoleSelection({ onRoleSelect, showError }) {
-    const [selectedRole, setSelectedRole] = useState('');
+function RoleSelection({ selectedRole, onRoleSelect, showError }) {
+    const [role, setRole] = useState(selectedRole);
+
+    useEffect(() => {
+        setRole(selectedRole);
+    }, [selectedRole]);
 
     const handleRoleChange = (event) => {
-        setSelectedRole(event.target.value);
-        onRoleSelect(true);
+        setRole(event.target.value);
+        onRoleSelect(event.target.value);
     };
 
     return (
@@ -26,8 +30,8 @@ function RoleSelection({ onRoleSelect, showError }) {
             >
                 <Box
                     onClick={() => {
-                        setSelectedRole('parent');
-                        onRoleSelect(true);
+                        setRole('parent');
+                        onRoleSelect('parent');
                     }}
                     sx={{
                         display: 'flex',
@@ -38,7 +42,7 @@ function RoleSelection({ onRoleSelect, showError }) {
                 >
                     <FormControlLabel
                         value="parent"
-                        control={<Radio checked={selectedRole === 'parent'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: selectedRole === 'parent' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
+                        control={<Radio checked={role === 'parent'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
                         sx={{ marginRight: '1rem' }}
                     />
                     <Box
@@ -46,16 +50,16 @@ function RoleSelection({ onRoleSelect, showError }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: showError && !selectedRole ? 'var(--clr-error-lighter)' : selectedRole === 'parent' ? 'var(--clr-blue)' : 'var(--clr-white)',
+                            bgcolor: showError && !role ? 'var(--clr-error-lighter)' : role === 'parent' ? 'var(--clr-blue)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
                             boxShadow: 1,
                             width: '100%',
                             height: 'auto',
-                            boxShadow: selectedRole === 'parent' ? '6' : '0'
+                            boxShadow: role === 'parent' ? '6' : '0'
                         }}
                     >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: selectedRole === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
                             <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Γονέας</p>
                             <p style={{
                                 fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
@@ -69,8 +73,8 @@ function RoleSelection({ onRoleSelect, showError }) {
                 </Box>
                 <Box
                     onClick={() => {
-                        setSelectedRole('nanny');
-                        onRoleSelect(true);
+                        setRole('nanny');
+                        onRoleSelect('nanny');
                     }}
                     sx={{
                         display: 'flex',
@@ -81,7 +85,7 @@ function RoleSelection({ onRoleSelect, showError }) {
                 >
                     <FormControlLabel
                         value="nanny"
-                        control={<Radio checked={selectedRole === 'nanny'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: selectedRole === 'nanny' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
+                        control={<Radio checked={role === 'nanny'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
                         sx={{ marginRight: '1rem' }}
                     />
                     <Box
@@ -89,16 +93,16 @@ function RoleSelection({ onRoleSelect, showError }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: showError && !selectedRole ? 'var(--clr-error-lighter)' : selectedRole === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)',
+                            bgcolor: showError && !role ? 'var(--clr-error-lighter)' : role === 'nanny' ? 'var(--clr-blue)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
                             boxShadow: 1,
                             width: '100%',
                             height: 'auto',
-                            boxShadow: selectedRole === 'nanny' ? '6' : '0'
+                            boxShadow: role === 'nanny' ? '6' : '0'
                         }}
                     >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: selectedRole === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
                             <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Νταντά</p>
                             <p style={{
                                 fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },

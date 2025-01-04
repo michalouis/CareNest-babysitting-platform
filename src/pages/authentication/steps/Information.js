@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import FaqItem from '../../faq/FaqItem';
 
@@ -9,8 +9,12 @@ const faqItems = [
     { question: "Question 4", answer: "Answer 4" }
 ];
 
-function Information({ onInfoRead, showError }) {
-    const [checked, setChecked] = useState(false);
+function Information({ isInfoRead, onInfoRead, showError }) {
+    const [checked, setChecked] = useState(isInfoRead);
+
+    useEffect(() => {
+        setChecked(isInfoRead);
+    }, [isInfoRead]);
 
     const handleCheckboxChange = (event) => {
         setChecked(event.target.checked);
