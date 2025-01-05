@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { Box } from '@mui/material';
+import { Box, Button, Snackbar, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import StepperComponent from './StepperComponent';
 import RoleSelection from './steps/RoleSelection';
 import Information from './steps/Information';
-import LoginTaxisnet from './steps/LoginTaxisnet';
+import Register from './steps/Register';
 import Createprofile from './steps/Createprofile';
-import StepNavigation from './StepNavigation';
 import './authentication.css';
 import '../../style.css';
 
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import InfoIcon from '@mui/icons-material/Info';
-import LoginIcon from '@mui/icons-material/Login';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-const signupSteps = [
-    { label: 'Step 1', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
-    { label: 'Step 2', icon: <InfoIcon style={{ fontSize: 40 }} /> },
-    { label: 'Step 3', icon: <LoginIcon style={{ fontSize: 40 }} /> },
-    { label: 'Step 4', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
-];
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function Signup() {
     const [activeStep, setActiveStep] = useState(0);
@@ -92,27 +82,74 @@ function Signup() {
                     </p>
                 </Box>
                 <Box sx={{ width: '100%', marginTop: '2rem' }}>
-                    <StepperComponent steps={signupSteps} activeStep={activeStep} />
+                    <StepperComponent activeStep={activeStep} />
                 </Box>
                 <Box sx={{ marginTop: '2rem', width: '100%', flexGrow: 1 }}>
                     {activeStep === 0 && <RoleSelection selectedRole={signupData.selectedRole} onRoleSelect={handleRoleSelection} showError={showError} />}
                     {activeStep === 1 && <Information selectedRole={signupData.selectedRole} isInfoRead={signupData.isInfoRead} onInfoRead={handleInfoRead} showError={showError} />}
-                    {activeStep === 2 && <LoginTaxisnet />}
+                    {activeStep === 2 && <Register />}
                     {activeStep === 3 && <Createprofile />}
                 </Box>
-                <StepNavigation
-                    activeStep={activeStep}
-                    stepsLength={signupSteps.length}
-                    handleBack={handleBack}
-                    handleNext={handleNext}
-                    error={error}
-                    errorMessage={errorMessage}
-                    openConfirmModal={openConfirmModal}
-                    handleCloseModal={handleCloseModal}
-                    handleConfirmRole={handleConfirmRole}
-                    selectedRole={signupData.selectedRole}
-                    setError={setError}
-                />
+                <Box sx={{ display: 'flex', justifyContent: activeStep === 0 ? 'flex-end' : 'space-between', marginTop: '2rem', padding: '0 2rem', width: '100%' }}>
+                    {activeStep !== 0 && (
+                        <Button
+                            variant='contained'
+                            onClick={handleBack}
+                            sx={{
+                                padding: '0.75rem 1.5rem',
+                                fontSize: '1rem',
+                                backgroundColor: 'var(--clr-blue)',
+                                '&:hover': {
+                                    opacity: 0.8,
+                                },
+                            }}
+                            startIcon={<ArrowBackIosIcon />}
+                        >
+                            Πίσω
+                        </Button>
+                    )}
+                    {activeStep !== 2 && (
+                        <Button
+                            variant="contained"
+                            onClick={handleNext}
+                            sx={{
+                                padding: '0.75rem 1.5rem',
+                                fontSize: '1rem',
+                                backgroundColor: 'var(--clr-blue)',
+                                '&:hover': {
+                                    opacity: 0.8,
+                                },
+                            }}
+                            endIcon={<ArrowForwardIosIcon />}
+                        >
+                            Συνέχεια
+                        </Button>
+                    )}
+                </Box>
+                <Snackbar open={error} autoHideDuration={5000} onClose={() => setError(false)}>
+                    <Alert onClose={() => setError(false)} severity="error" sx={{ width: '100%' }}>
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
+                <Dialog
+                    open={openConfirmModal}
+                    onClose={handleCloseModal}
+                >
+                    <DialogTitle id="confirm-role-title">Confirm Role Selection</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="confirm-role-description">
+                            You have selected the role: <strong>{signupData.selectedRole}</strong>. Are you sure you want to proceed with this role?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseModal} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleConfirmRole} color="primary" autoFocus>
+                            Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </>
     );

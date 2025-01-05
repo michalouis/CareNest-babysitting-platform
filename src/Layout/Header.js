@@ -10,7 +10,7 @@ import MessageIcon from '@mui/icons-material/Message';
 
 function Header() {
     const location = useLocation();
-    const hideHeader = location.pathname === '/login' || location.pathname === '/signup';
+    const hideHeader = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/createprofile';
 
     if (hideHeader) {
         return null;

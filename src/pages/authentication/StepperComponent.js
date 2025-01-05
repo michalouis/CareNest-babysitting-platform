@@ -2,6 +2,10 @@ import React from 'react';
 import { Stepper, Step, StepLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import InfoIcon from '@mui/icons-material/Info';
+import LoginIcon from '@mui/icons-material/Login';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 // STEPPER BASED ON MATERIAL UI EXAMPLE FROM THEIR WEBSITE (https://mui.com/material-ui/react-stepper/)
 
@@ -60,10 +64,17 @@ function ColorlibStepIcon(props) {
     );
 }
 
-function StepperComponent({ steps, activeStep }) {
+const signupSteps = [
+    { label: 'Επιλογή Ομάδας', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
+    { label: 'Πληροφορίες', icon: <InfoIcon style={{ fontSize: 40 }} /> },
+    { label: 'Εγγραφή', icon: <LoginIcon style={{ fontSize: 40 }} /> },
+    { label: 'Δημιουργία Προφίλ', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
+];
+
+function StepperComponent({ activeStep }) {
     return (
         <Stepper alternativeLabel activeStep={activeStep} connector={<ColorConnector />}>
-            {steps.map((step, index) => (
+            {signupSteps.map((step, index) => (
                 <Step key={index}>
                     <StepLabel StepIconComponent={(props) => <ColorlibStepIcon {...props} icon={step.icon} />}>{step.label}</StepLabel>
                 </Step>

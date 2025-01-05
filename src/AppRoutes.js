@@ -7,6 +7,7 @@ import Contact from './pages/contact/Contact';
 import Error404 from './pages/error404/Error404';
 import Login from './pages/authentication/Login';
 import Signup from './pages/authentication/Signup';
+import Createprofile from './pages/authentication/steps/Createprofile';
 
 function AppRoutes() {
     return (
@@ -17,6 +18,7 @@ function AppRoutes() {
             <Route path="/messages" element={<Messages />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/createprofile" element={<Createprofile />} />
             <Route path="*" element={<Error404 />} />
         </Routes>
     );
