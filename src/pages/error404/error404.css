@@ -1,0 +1,52 @@
+.error404-container {
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+.error404-title {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--clr-black);
+}
+
+.error404-subtitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--clr-black);
+}
+
+.error404-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--clr-black);
+}
+
+/* underline text to show it's clickable */
+.link {
+    color: var(--clr-black);
+    text-decoration: underline;
+}
+
+.image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+/* make image scalable */
+@media (max-width: 680px) {
+    .image {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .image {
+        width: 60%;
+    }
+}

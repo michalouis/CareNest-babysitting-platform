@@ -1,21 +1,33 @@
 /* Hide text on small screens */
-@media (max-width: 42rem) {
-  .nav-button-text {
-    display: none;
-  }
+@media (max-width: 50rem) {
+	.header-button-text {
+		display: none;
+	}
+}
+
+.header-button-text {
+	font-size: 1.1rem;
+	text-transform: capitalize;
+	font-weight: bold;
 }
 
 .footer-text {
-  color: #FFFFFF;
-  font-size: 1rem;
+	color: var(--clr-white);
+	font-size: 1rem;
 }
 
 .footer-link {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-size: 1rem;
+	color: var(--clr-white);
+	text-decoration: none;
+	font-size: 1rem;
 }
 
 .footer-link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
+}
+
+.drawer-header {
+	display: flex;
+	justify-content: flex-end;
+	padding: 1rem;
 }

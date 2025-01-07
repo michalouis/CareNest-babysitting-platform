@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Snackbar, Alert } from '@mui/material';
-import './contact.css';
+import { collection, addDoc } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../firebase';
+import '../../style.css';
 
 function ContactBox() {
     const [name, setName] = useState('');
@@ -8,13 +10,15 @@ function ContactBox() {
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({});
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    // Function to validate email (xxxx@xxxx.xxx)
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(String(email).toLowerCase());
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newErrors = {};
         if (!name) newErrors.name = 'You have to fill the text field';
         if (!email) {
@@ -25,10 +29,23 @@ function ContactBox() {
         if (!message) newErrors.message = 'You have to fill the text field';
 
         if (Object.keys(newErrors).length === 0) {
-            setOpen(true);
-            setName('');
-            setEmail('');
-            setMessage('');
+            setLoading(true);
+            try {
+                await addDoc(collection(FIREBASE_DB, 'messages'), {
+                    name,
+                    email,
+                    message,
+                    timestamp: new Date(),  // date it was sent
+                });
+                setOpen(true);
+                setName('');
+                setEmail('');
+                setMessage('');
+            } catch (error) {
+                console.error('Error adding document: ', error);
+            } finally {
+                setLoading(false);
+            }
         } else {
             setErrors(newErrors);
         }
@@ -71,12 +88,28 @@ function ContactBox() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    position: 'relative',
+                    overflow: 'hidden', // for loading bar
                 }}
             >
-                <h1 className="Box-title">Επικοινωνήστε μαζί μας</h1>
-                <p className="contact-description">
+                {/* Title and description */}
+                <h1 style={{
+                    color: 'var(--clr-purple-main)',
+                    marginBottom: '1rem',
+                    fontSize: '2rem',
+                    fontWeight: 'bold',
+                }}>
+                    Επικοινωνήστε μαζί μας
+                </h1>
+                <p style={{
+                   marginBottom: '2rem',
+                   textAlign: 'center',
+                   fontSize: '1rem',
+                }}>
                     Συμπληρώστε την παρακάτω φόρμα για να επικοινωνήσετε μαζί μας. Θα χαρούμε να σας βοηθήσουμε!
                 </p>
+
+                {/* Form */}
                 <TextField
                     label="Όνομα"
                     variant="outlined"
@@ -85,7 +118,6 @@ function ContactBox() {
                     onChange={handleNameChange}
                     error={!!errors.name}
                     helperText={errors.name}
-                    InputLabelProps={{ shrink: true }}
                     sx={{ marginBottom: '1rem' }}
                 />
                 <TextField
@@ -96,7 +128,6 @@ function ContactBox() {
                     onChange={handleEmailChange}
                     error={!!errors.email}
                     helperText={errors.email}
-                    InputLabelProps={{ shrink: true }}
                     sx={{ marginBottom: '1rem' }}
                 />
                 <TextField
@@ -109,7 +140,6 @@ function ContactBox() {
                     onChange={handleMessageChange}
                     error={!!errors.message}
                     helperText={errors.message}
-                    InputLabelProps={{ shrink: true }}
                     sx={{ marginBottom: '1rem' }}
                 />
                 <Button
@@ -117,15 +147,17 @@ function ContactBox() {
                     onClick={handleSubmit}
                     sx={{
                         backgroundColor: 'var(--clr-purple-main)',
-                        color: 'var(--clr-white)',
                         '&:hover': {
                             opacity: 0.8,
                         },
                     }}
+                    disabled={loading}
                 >
-                    Αποστολή
+                    <p className='button-text'>Αποστολή</p>
                 </Button>
-                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+
+                {/* Success popup */}
+                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                         Send
                     </Alert>

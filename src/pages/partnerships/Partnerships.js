@@ -1,16 +1,16 @@
 import React from "react";
 import { useFinishProfileRedirect, useLoginRequiredRedirect } from '../../AuthChecks';
 
-function Messages() {
+function Partnerships() {
 
     useFinishProfileRedirect();
     useLoginRequiredRedirect();
 
     return (
         <div>
-            <h1>Messages</h1>
+            <h1>Partnerships</h1>
         </div>
     );
 }
 
-export default Messages;
+export default Partnerships;

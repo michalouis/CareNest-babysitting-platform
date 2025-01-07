@@ -6,10 +6,12 @@ import '../style.css';
 const ScrolltoTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
+    // Scroll to top of the page
     const handleScrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    // Show button when page is scrolled down
     const toggleVisibility = () => {
         if (window.pageYOffset > 300) {
             setIsVisible(true);
@@ -18,6 +20,7 @@ const ScrolltoTop = () => {
         }
     };
 
+    // Add and remove the window scroll event listener
     useEffect(() => {
         window.addEventListener('scroll', toggleVisibility);
         return () => {
@@ -31,17 +34,16 @@ const ScrolltoTop = () => {
             color="primary"
             aria-label="scroll to top"
             sx={{
-                zIndex: 100,
+                zIndex: 100,    // Make sure the button is above everything else
                 position: 'fixed',
                 bottom: '5rem',
                 right: '2rem',
                 bgcolor: 'var(--clr-purple-main)',
-                color: 'var(--clr-white)',
                 opacity: isVisible ? 1 : 0,
                 pointerEvents: isVisible ? 'auto' : 'none',
                 transition: 'opacity 0.5s ease-in-out',
                 '&:hover': {
-                    bgcolor: 'var(--clr-purple-hover)',
+                    opacity: 0.8,
                 },
             }}
         >

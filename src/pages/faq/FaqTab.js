@@ -5,14 +5,27 @@ import './faq.css';
 function FaqTab({ onTabChange }) {
     const [selectedTab, setSelectedTab] = useState(0);
 
+    // Function to handle tab change
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
         onTabChange(newValue);
     };
 
     return (
-        <Box sx={{ width: 'auto', marginTop: '1rem', padding: '10px', backgroundColor: 'var(--clr-white)', boxShadow: 2, borderRadius: '10px' }}>
-            <Tabs value={selectedTab} onChange={handleChange} centered TabIndicatorProps={{ style: { display: 'none' } }}>
+        <Box sx={{
+            width: 'auto',
+            marginTop: '1rem',
+            padding: '10px',
+            backgroundColor: 'var(--clr-white)',
+            boxShadow: 2,
+            borderRadius: '10px'
+        }}>
+            <Tabs
+                value={selectedTab}
+                onChange={handleChange}
+                centered
+                TabIndicatorProps={{ style: { display: 'none' } }}  // remove default indicator styling
+            >
                 <Tab
                     label="Γονεις"
                     className="faq-tab"

@@ -3,11 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/date-fns": "^3.2.0",
+    "@date-io/dayjs": "^3.2.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
+    "@mui/lab": "^6.0.0-beta.22",
     "@mui/material": "^6.3.0",
+    "@mui/x-date-pickers": "^7.23.3",
     "cra-template": "1.2.0",
+    "dayjs": "^1.11.13",
+    "firebase": "^11.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",
@@ -37,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.25.9"
   }
 }

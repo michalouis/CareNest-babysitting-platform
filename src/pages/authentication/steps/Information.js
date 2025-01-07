@@ -2,44 +2,60 @@ import React, { useState, useEffect } from 'react';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import FaqItem from '../../faq/FaqItem';
 
-const faqItemsParent = [
-    { question: "Question 1 Parent", answer: "Answer 1" },
-    { question: "Question 2 Parent", answer: "Answer 2" },
-    { question: "Question 3 Parent", answer: "Answer 3" },
-    { question: "Question 4 Parent", answer: "Answer 4" }
+const infoItemsParent = [
+    { question: "Ποια είναι τα κριτήρια επιλεξιμότητας;", answer: "Η δυνατότητα πρόσβασης στις υπηρεσίες της πλατφόρμας εξαρτάται από το εισόδημα και την κατάσταση της οικογένειας. Αν πληρείτε τα κριτήρια επιλεξιμότητας, θα έχετε την δυνατότητα να χρησιμοποιήσετε την πλατφόρμα για να βρείτε και να συνεργαστείτε με νταντάδες που καλύπτουν τις ανάγκες σας." },
+    { question: "Ποια διαδικασία πρέπει να ακολουθήσω;", answer: "Αρχικά, πρέπει να αναζητήσετε μια νταντά με βάση τις ανάγκες σας και τα κριτήρια που επιλέγετε (π.χ. ωράρια, εμπειρία). Στη συνέχεια, θα πρέπει να κανονίσετε ένα ραντεβού γνωριμίας, το οποίο μπορεί να γίνει είτε δια ζώσης είτε διαδικτυακά. Όταν βρείτε μια νταντά που σας ταιριάζει, θα πρέπει να δημιουργήσετε μια αίτηση και να την στείλετε. Αφού υπογράψετε το συμφωνητικό, η συνεργασία θα ξεκινήσει και θα διαρκέσει για τον μήνα που έχετε συμφωνήσει." },
+    { question: "Τι κάνω στο τέλος της συνεργασίας;", answer: "Στο τέλος της συνεργασίας, πρέπει να πάτε στη \"τρέχουσα συνεργασία\" σας και να την ολοκληρώσετε. Έτσι, η νταντά θα μπορέσει να πληρωθεί και εσείς θα έχετε την δυνατότητα να ξεκινήσετε μια νέα συνεργασία με μια άλλη νταντά, εφόσον το επιθυμείτε. Μην ξεχάσετε να αφήσετε και μια κριτική για την εμπειρία σας με τη νταντά!" },
+    { question: "Τι λειτουργίες παρέχει η πλατφόρμα;", answer: "Η πλατφόρμα παρέχει μια τεράστια ομάδα νταντάδων που μπορείτε να επιλέξετε για μερική ή πλήρη απασχόληση, για να φροντίζουν τα παιδιά σας με ασφάλεια. Είτε πρόκειται για καθημερινή φύλαξη είτε για ειδικές ανάγκες, η πλατφόρμα εξασφαλίζει μια ασφαλή και ευέλικτη εμπειρία για τους γονείς." }
 ];
 
-const faqItemsNanny = [
-    { question: "Question 1 Nanny", answer: "Answer 1" },
-    { question: "Question 2 Nanny", answer: "Answer 2" },
-    { question: "Question 3 Nanny", answer: "Answer 3" },
-    { question: "Question 4 Nanny", answer: "Answer 4" }
+const infoItemsNanny = [
+    { question: "Ποια είναι τα κριτήρια επιλεξιμότητας;", answer: "Η πλατφόρμα είναι ανοιχτή σε όλους όσοι έχουν εμπειρία στη φροντίδα παιδιών ή κάποιο σχετικό πτυχίο. Το βασικότερο είναι να έχετε όρεξη για δουλειά και να αγαπάτε αυτό που κάνετε, ώστε να παρέχετε ποιοτική φροντίδα στα παιδιά." },
+    { question: "Ποια διαδικασία πρέπει να ακολουθήσω;", answer: "Ξεκινήστε δημιουργώντας το προφίλ σας και στη συνέχεια δημοσιεύστε την αγγελία σας για τις υπηρεσίες που προσφέρετε. Όταν κάποιοι γονείς ενδιαφερθούν, θα σας στείλουν αίτημα για ραντεβού γνωριμίας, το οποίο μπορείτε να αποδεχθείτε ή να απορρίψετε. Εφόσον συμφωνήσετε να συνεργαστείτε, ο γονέας θα σας στείλει το συμφωνητικό συνεργασίας, το οποίο υπογράφετε για να ξεκινήσει η συνεργασία σας." },
+    { question: "Τι κάνω στο τέλος της συνεργασίας;", answer: "Μετά την ολοκλήρωση της συνεργασίας από τον γονέα, θα πρέπει να επιβεβαιώσετε ότι έχετε λάβει το voucher πληρωμής σας μέσω της πλατφόρμας. Μόλις γίνει αυτό, μπορείτε να προχωρήσετε σε νέες συνεργασίες με άλλους γονείς που ενδιαφέρονται για τις υπηρεσίες σας." },
+    { question: "Τι λειτουργίες παρέχει η πλατφόρμα;", answer: "Η πλατφόρμα σας επιτρέπει να προβάλλετε το προφίλ σας σε εκατοντάδες γονείς, να διαχειρίζεστε αιτήσεις συνεργασίας, να επικοινωνείτε με γονείς, και να οργανώνετε το πρόγραμμά σας εύκολα. Παρέχει επίσης εργαλεία για την ασφαλή υπογραφή συμφωνητικών και τη διασφάλιση των πληρωμών σας." }
 ];
 
 function Information({ selectedRole, isInfoRead, onInfoRead, showError }) {
     const [checked, setChecked] = useState(isInfoRead);
 
+    // Update checkbox checked status when the isInfoRead changes
     useEffect(() => {
         setChecked(isInfoRead);
     }, [isInfoRead]);
 
+    // Handle the checkbox change
     const handleCheckboxChange = (event) => {
         setChecked(event.target.checked);
         onInfoRead(event.target.checked);
     };
 
-    const faqItems = selectedRole === 'parent' ? faqItemsParent : faqItemsNanny;
+    // Select the correct info items based on the selected role
+    const infoItems = selectedRole === 'parent' ? infoItemsParent : infoItemsNanny;
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box sx={{ width: '80%', maxWidth: '1000px', textAlign: 'center' }}>
-                <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>Insert text here.</p>
-                {faqItems.map((faq, index) => (
+                <p className='description'>
+                    Διαβάστε τις παρακάτω πληροφορίες για τα κριτήρια επιλεξιμότητας, τη διαδικασία
+                    που πρέπει να ακολουθήσετε και τις λειτουργίες της πλατφόρμας, ώστε να γνωρίζετε
+                    πως να την χρησιμοποιήσετε σωστά πριν την εγγραφή σας.
+                </p>
+
+                {/* Information */}
+                {infoItems.map((faq, index) => (
                     <FaqItem key={index} question={faq.question} answer={faq.answer} />
                 ))}
+            
+                {/* Checkbox */}
                 <FormControlLabel
-                    control={<Checkbox checked={checked} onChange={handleCheckboxChange} sx={{ color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)' }} />}
-                    label="I have read and understood the information"
+                    control={
+                        <Checkbox checked={checked}
+                        onChange={handleCheckboxChange}
+                        sx={{
+                            color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)'
+                    }} />}
+                    label="Έχω διαβάσει και κατανοώ τις πληροφορίες"
                     sx={{ marginTop: '2rem', color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)' }}
                 />
             </Box>

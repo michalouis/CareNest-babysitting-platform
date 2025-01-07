@@ -10,7 +10,7 @@ import './layout.css';
 
 function Footer() {
     const location = useLocation();
-    const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/createprofile';
+    const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile';
 
     if (hideFooter) {
         return null;
@@ -20,7 +20,7 @@ function Footer() {
         <AppBar position="static" sx={{ top: 'auto', bottom: 0, backgroundColor: 'var(--clr-purple-main)', height: '100px', marginTop: 'auto' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
                 <div className="footer-text">
-                    © 2023 CareNest
+                    © 2025 CareNest
                 </div>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', marginRight: '1rem' }}>

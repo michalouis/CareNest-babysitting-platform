@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Typography, Link } from '@mui/material';
+import { Box } from '@mui/material';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import FaqTab from './FaqTab';
 import FaqItem from './FaqItem';
 import './faq.css';
+import { useFinishProfileRedirect } from '../../AuthChecks';    // if logged in unfinished profile, redirect to finish profile
+
 
 export default function Faq() {
     const [selectedTab, setSelectedTab] = useState(0);
+
+    useFinishProfileRedirect();
 
     const handleTabChange = (newValue) => {
         setSelectedTab(newValue);
     };
 
+    // FAQs
     const faqParents = [
         { question: "Ποια είναι τα κριτήρια επιλεξιμότητας;", answer: "Η δυνατότητα πρόσβασης στις υπηρεσίες της πλατφόρμας εξαρτάται από το εισόδημα και την κατάσταση της οικογένειας. Αν πληρείτε τα κριτήρια επιλεξιμότητας, θα έχετε την δυνατότητα να χρησιμοποιήσετε την πλατφόρμα για να βρείτε και να συνεργαστείτε με νταντάδες που καλύπτουν τις ανάγκες σας." },
         { question: "Ποια διαδικασία πρέπει να ακολουθήσω;", answer: "Αρχικά, πρέπει να αναζητήσετε μια νταντά με βάση τις ανάγκες σας και τα κριτήρια που επιλέγετε (π.χ. ωράρια, εμπειρία). Στη συνέχεια, θα πρέπει να κανονίσετε ένα ραντεβού γνωριμίας, το οποίο μπορεί να γίνει είτε δια ζώσης είτε διαδικτυακά. Όταν βρείτε μια νταντά που σας ταιριάζει, θα πρέπει να δημιουργήσετε μια αίτηση και να την στείλετε. Αφού υπογράψετε το συμφωνητικό, η συνεργασία θα ξεκινήσει και θα διαρκέσει για τον μήνα που έχετε συμφωνήσει." },
@@ -36,7 +41,7 @@ export default function Faq() {
                 <FaqTab onTabChange={handleTabChange} />
                 <Box sx={{ width: '80%', maxWidth: '800px', marginTop: '2rem' }}>
                     {faqs.map((faq, index) => (
-                        <FaqItem key={index} question={faq.question} answer={faq.answer} />
+                        <FaqItem key={index} question={faq.question} answer={faq.answer} /> // pass question and answer as props, based on selected tab
                     ))}
                 </Box>
             </Box>

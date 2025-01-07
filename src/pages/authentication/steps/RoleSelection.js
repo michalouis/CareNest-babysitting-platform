@@ -4,30 +4,34 @@ import { Box, Radio, FormControlLabel } from '@mui/material';
 function RoleSelection({ selectedRole, onRoleSelect, showError }) {
     const [role, setRole] = useState(selectedRole);
 
+    // Update the role when the selected role changes
     useEffect(() => {
         setRole(selectedRole);
     }, [selectedRole]);
 
+    // Handle the role change
     const handleRoleChange = (event) => {
         setRole(event.target.value);
         onRoleSelect(event.target.value);
     };
 
     return (
-        <>
-            <p style={{ fontSize: '1.5rem', marginBottom: '2rem', textAlign: 'center' }}>Which role do you belong to?</p>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <p className='description'>Σε ποια ομάδα ανήκετε;</p>
             <Box
                 sx={{
+                    width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
+                    textAlign: 'left',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '2rem',
-                    width: { xs: '95%', sm: '80%', md: '60%' },
-                    padding: '1rem',
-                    borderRadius: '1rem',
-                    margin: '0 auto',
+                    gap: '1rem',
+                    padding: '1rem 1rem 2rem 1rem',
+                    position: 'relative',
+                    overflow: 'hidden',
                 }}
             >
+                {/* Parent Role Radio Button (can click box or radio button) */}
                 <Box
                     onClick={() => {
                         setRole('parent');
@@ -40,11 +44,19 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                         cursor: 'pointer',
                     }}
                 >
+                    {/* Radio Button */}
                     <FormControlLabel
                         value="parent"
-                        control={<Radio checked={role === 'parent'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
-                        sx={{ marginRight: '1rem' }}
+                        control={
+                            <Radio checked={role === 'parent'}
+                            onChange={handleRoleChange}
+                            sx={{
+                                transform: 'scale(1.5)',
+                                color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-grey)'
+                        }} />}
                     />
+
+                    {/* For box colors */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -59,18 +71,24 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             boxShadow: role === 'parent' ? '6' : '0'
                         }}
                     >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
-                            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Γονέας</p>
-                            <p style={{
-                                fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
-                                marginTop: '0.5rem',
-                                wordWrap: 'break-word'
-                            }}>
-                                Απαλλαγείτε από το άγχος, αφήνοντας τα παιδιά σας σε ασφαλή χέρια! Βρείτε την ιδανική νταντά, δείτε τις αιτήσεις σας και κλείστε ραντεβού γνωριμίας εύκολα μέσα από την πλατφόρμα.
+                        {/* For text colors */}
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)'
+                        }}>
+                            <p className='role-title'>Γονέας</p>
+                            <p className='role-description'>
+                                Απαλλαγείτε από το άγχος, αφήνοντας τα παιδιά σας σε ασφαλή χέρια!
+                                Βρείτε την ιδανική νταντά, δείτε τις αιτήσεις σας και κλείστε
+                                ραντεβού γνωριμίας εύκολα μέσα από την πλατφόρμα.
                             </p>
                         </Box>
                     </Box>
                 </Box>
+
+                {/* Nanny Role Radio Button (can click box or radio button) */}
                 <Box
                     onClick={() => {
                         setRole('nanny');
@@ -83,11 +101,19 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                         cursor: 'pointer',
                     }}
                 >
+                    {/* Radio Button */}
                     <FormControlLabel
                         value="nanny"
-                        control={<Radio checked={role === 'nanny'} onChange={handleRoleChange} sx={{ transform: 'scale(1.5)', color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-grey)' }} />}
-                        sx={{ marginRight: '1rem' }}
+                        control={
+                            <Radio checked={role === 'nanny'}
+                            onChange={handleRoleChange}
+                            sx={{
+                                transform: 'scale(1.5)',
+                                color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-grey)'
+                        }} />}
                     />
+
+                    {/* For box colors */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -102,20 +128,24 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             boxShadow: role === 'nanny' ? '6' : '0'
                         }}
                     >
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)' }}>
-                            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Νταντά</p>
-                            <p style={{
-                                fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
-                                marginTop: '0.5rem',
-                                wordWrap: 'break-word'
-                            }}>
-                                Ψάχνετε ευκαιρίες να προσφέρετε τις υπηρεσίες σας; Εγγραφείτε, δημιουργήστε προφίλ και ξεκινήστε αξιόπιστες συνεργασίες με γονείς που σας χρειάζονται!
+                        {/* For text colors */}
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)'
+                        }}>
+                            <p className='role-title'>Νταντά</p>
+                            <p className='role-description'>
+                                Ψάχνετε ευκαιρίες να προσφέρετε τις υπηρεσίες σας;
+                                Εγγραφείτε, δημιουργήστε προφίλ και ξεκινήστε αξιόπιστες
+                                συνεργασίες με γονείς που σας χρειάζονται!
                             </p>
                         </Box>
                     </Box>
                 </Box>
             </Box>
-        </>
+        </Box>
     );
 }
 
