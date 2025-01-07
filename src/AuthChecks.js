@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from './firebase';
 
+// Redirect the user to the profile creation page if the profile is not created
 export function useFinishProfileRedirect() {
     const navigate = useNavigate();
 
@@ -24,6 +25,7 @@ export function useFinishProfileRedirect() {
     }, [navigate]);
 }
 
+// Redirect the user to the 404 page if the profile is already created
 export function useProfileExistsRedirect() {
     const navigate = useNavigate();
 
@@ -46,6 +48,7 @@ export function useProfileExistsRedirect() {
     }, [navigate]);
 }
 
+// Redirect the user to the login page if they are not logged in
 export function useLoginRequiredRedirect() {
     const navigate = useNavigate();
 
@@ -60,6 +63,7 @@ export function useLoginRequiredRedirect() {
     }, [navigate]);
 }
 
+// Redirect the user to the home page if they are already logged in
 export function useAlreadyLoggedInRedirect() {
     const navigate = useNavigate();
 
