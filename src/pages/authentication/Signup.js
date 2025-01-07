@@ -143,7 +143,7 @@ function Signup() {
                             onClick={handleBack}
                             sx={{
                                 padding: '0.75rem 1.5rem',
-                                backgroundColor: 'var(--clr-blue)',
+                                backgroundColor: 'var(--clr-violet)',
                                 '&:hover': {
                                     opacity: 0.8,
                                 },
@@ -162,7 +162,7 @@ function Signup() {
                             sx={{
                                 padding: '0.75rem 1.5rem',
                                 fontSize: '1rem',
-                                backgroundColor: 'var(--clr-blue)',
+                                backgroundColor: 'var(--clr-violet)',
                                 '&:hover': {
                                     opacity: 0.8,
                                 },
@@ -197,7 +197,7 @@ function Signup() {
                         <Button variant='text' onClick={handleCloseDialog} sx={{ color: 'var(--clr-black)' }}>
                             <p className='button-text'>Ακύρωση</p>
                         </Button>
-                        <Button variant='contained' onClick={handleConfirmRole} sx={{ backgroundColor: 'var(--clr-blue)', '&:hover': { opacity: 0.8 } }} autoFocus>
+                        <Button variant='contained' onClick={handleConfirmRole} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} autoFocus>
                             <p className='button-text'>Συνέχεια</p>
                         </Button>
                     </DialogActions>

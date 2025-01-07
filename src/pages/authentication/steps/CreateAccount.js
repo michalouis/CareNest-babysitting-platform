@@ -178,6 +178,9 @@ function CreateAccount({ role }) {
                 position: 'relative',
                 overflow: 'hidden'
             }}>
+                <p style={{color: 'var(--clr-grey)'}}>
+                    Τύπος Λογαριασμού: <strong>{role === 'parent' ? 'Γονέας' : 'Νταντά'}</strong>
+                </p>
                 {/* First & Last Name */}
                 <TextField
                     id="first-name-input"

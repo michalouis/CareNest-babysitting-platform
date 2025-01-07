@@ -119,7 +119,7 @@ function Login() {
                             sx={{
                                 fontSize: '1.5rem',
                                 padding: '0.5rem 1rem',
-                                backgroundColor: 'var(--clr-blue)',
+                                backgroundColor: 'var(--clr-violet)',
                                 '&:hover': {
                                     opacity: '0.8',
                                 },

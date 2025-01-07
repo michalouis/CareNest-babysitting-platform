@@ -26,7 +26,7 @@ function SignupButton() {
                 marginTop: '1rem',
                 minWidth: '150px',
                 minHeight: '50px',
-                bgcolor: 'var(--clr-purple-main)', // Background color
+                bgcolor: 'var(--clr-violet)', // Background color
                 color: 'var(--clr-white)', // Text color
                 '&:hover': {
                     opacity: 0.8, // Make the button more transparent on hover
