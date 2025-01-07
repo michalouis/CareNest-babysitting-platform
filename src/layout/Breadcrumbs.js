@@ -4,6 +4,19 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { useNavigate, useLocation } from 'react-router-dom';
 import "../style.css";
 
+const pathLabels = {
+    '/': 'Αρχική Σελίδα',
+    '/profile': 'Προφίλ',
+    '/edit-profile': 'Επεξεργασία Προφίλ',
+    '/profile/edit-profile': 'Επεξεργασία Προφίλ',
+    '/search': 'Αναζήτηση Νταντάς',
+    '/job-posting': 'Αγγελία Εργασίας',
+    '/meetings': 'Ραντεβού Γνωριμίας',
+    '/applications': 'Αιτήσεις',
+    '/contracts': 'Συμφωνητικά',
+    '/partnerships': 'Συνεργασίες',
+};
+
 function Breadcrumbs({ current, showPopup = false }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -67,9 +80,9 @@ function Breadcrumbs({ current, showPopup = false }) {
     // Get the path array from the current location
     const pathArray = location.pathname.split('/').filter(Boolean);
     const breadcrumbs = [
-        { label: 'Αρχική Σελίδα', path: '/' },
-        ...pathArray.map((path, index) => ({    // create an array of objects with the label and path for each breadcrumb
-            label: path,
+        { label: pathLabels['/'], path: '/' },
+        ...pathArray.map((path, index) => ({
+            label: pathLabels[`/${pathArray.slice(0, index + 1).join('/')}`] || path,
             path: `/${pathArray.slice(0, index + 1).join('/')}`
         }))
     ];
@@ -107,12 +120,12 @@ function Breadcrumbs({ current, showPopup = false }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button variant='text' onClick={handleNavigateCancel} sx={{ color: 'var(--clr-black)' }}>
-                    <p className='button-text'>Παραμονή</p>
-                </Button>
-                <Button variant='contained' onClick={handleNavigateConfirm} sx={{ backgroundColor: 'var(--clr-error-main)', '&:hover': { opacity: 0.8 } }} autoFocus>
-                    <p className='button-text'>Αποχώρηση</p>
-                </Button>
+                    <Button variant='text' onClick={handleNavigateCancel} sx={{ color: 'var(--clr-black)' }}>
+                        <p className='button-text'>Παραμονή</p>
+                    </Button>
+                    <Button variant='contained' onClick={handleNavigateConfirm} sx={{ backgroundColor: 'var(--clr-error-main)', '&:hover': { opacity: 0.8 } }}>
+                        <p className='button-text'>Αποχώρηση</p>
+                    </Button>
                 </DialogActions>
             </Dialog>
         </>

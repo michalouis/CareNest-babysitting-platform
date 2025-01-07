@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Box, Divider } from '@mui/material';
+import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Box, Divider, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -15,6 +15,7 @@ import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import './layout.css';
+import '../style.css';
 
 // Implementation similar to the on on Material-UI's website (https://mui.com/material-ui/react-drawer/)
 
@@ -25,12 +26,16 @@ function DrawerItem({ to, icon: Icon, title }) {
             <ListItemIcon>
                 <Icon sx={{ color: 'var(--clr-purple-main)', fontSize: '2rem' }} />
             </ListItemIcon>
-            <ListItemText primary={title} primaryTypographyProps={{
-                fontSize: '1.25rem',
-                textTransform: 'capitalize',
-                fontWeight: 'bold',
-                color: 'var(--clr-purple-main)'
-            }} />
+            <ListItemText>
+                <p style={{
+                    fontSize: '1.25rem',
+                    textTransform: 'capitalize',
+                    fontWeight: 'bold',
+                    color: 'var(--clr-purple-main)'
+                }}>
+                    {title}
+                </p>
+            </ListItemText>
         </ListItem>
     );
 }
@@ -38,6 +43,7 @@ function DrawerItem({ to, icon: Icon, title }) {
 function AppDrawer({ open, onClose }) {
     const navigate = useNavigate();
     const [userRole, setUserRole] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
@@ -56,6 +62,14 @@ function AppDrawer({ open, onClose }) {
     const handleLogout = async () => {
         await signOut(FIREBASE_AUTH);
         navigate('/');
+    };
+
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
     };
 
     const DrawerList = (
@@ -92,24 +106,50 @@ function AppDrawer({ open, onClose }) {
                 </List>
             </>
             {/* Logout button */}
-            <ListItem button onClick={handleLogout} sx={{ justifyContent: 'center', alignItems: 'center', marginTop: 'auto' }}>
+            <ListItem button onClick={handleDialogOpen} sx={{ justifyContent: 'center', alignItems: 'center', marginTop: 'auto' }}>
                 <ListItemIcon>
                     <LogoutIcon sx={{ color: 'var(--clr-error-main)', fontSize: '2rem' }} />
                 </ListItemIcon>
-                <ListItemText primary="Αποσύνδεση" primaryTypographyProps={{
-                    fontSize: '1.25rem',
-                    textTransform: 'capitalize',
-                    fontWeight: 'bold',
-                    color: 'var(--clr-error-main)',
-                }} />
+                <ListItemText>
+                    <p style={{
+                        fontSize: '1.25rem',
+                        textTransform: 'capitalize',
+                        fontWeight: 'bold',
+                        color: 'var(--clr-error-main)'
+                    }}>
+                        Αποσύνδεση
+                    </p>
+                </ListItemText>
             </ListItem>
         </Box>
     );
 
     return (
-        <Drawer anchor="right" open={open} onClose={onClose}>
-            {DrawerList}
-        </Drawer>
+        <>
+            <Drawer anchor="right" open={open} onClose={onClose}>
+                {DrawerList}
+            </Drawer>
+
+            <Dialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+            >
+                <DialogTitle><strong>Επιβεβαίωση Αποσύνδεσης</strong></DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Είστε σίγουρος ότι θέλετε να αποσυνδεθείτε;
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} sx={{ color: 'var(--clr-black)' }}>
+                        <p className='button-text'>Ακύρωση</p>
+                    </Button>
+                    <Button onClick={handleLogout} sx={{ backgroundColor: 'var(--clr-error-main)', color: 'var(--clr-white)' }}>
+                        <p className='button-text'>Αποσύνδεση</p>
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     );
 }
 

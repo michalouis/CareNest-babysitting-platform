@@ -58,6 +58,12 @@ body {
     flex-direction: column;
 }
 
+.small-button-text {
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
 .button-text {
     font-size: 1.15rem;
     text-transform: capitalize;

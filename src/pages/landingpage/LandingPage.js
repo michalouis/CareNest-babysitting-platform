@@ -55,7 +55,7 @@ function LandingPage() {
                     {userData.role === 'parent' ? (
                         <LoggedinParent firstName={userData.firstName} />
                     ) : (
-                        <LoggedinNanny />
+                        <LoggedinNanny firstName={userData.firstName}/>
                     )}
                 </>
             ) : (

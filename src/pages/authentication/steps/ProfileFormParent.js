@@ -4,9 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
 
-function ProfileFormParent({ firstName, lastName, amka, email }) {
-    // form data
-    const [formData, setFormData] = useState({
+function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
+    // if userData is passed function is used for editing profile,
+    // else for creating profile
+    const [formData, setFormData] = useState(userData ? {
+        gender: userData.gender,
+        age: userData.age,
+        address: userData.address,
+        postalCode: userData.postalCode,
+        town: userData.town,
+        phoneNumber: userData.phoneNumber,
+        childName: userData.childName,
+        childGender: userData.childGender,
+        childAgeGroup: userData.childAgeGroup,
+        aboutMe: userData.aboutMe,
+    } : {
         gender: '',
         age: '',
         address: '',
@@ -121,7 +133,11 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
                     profileCreated: true,
                     partnershipActive: false,
                 });
-                navigate('/signup-complete'); // Navigate to the signup complete page
+                if (userData) {
+                    navigate('/profile'); // Navigate to the profile page if userData exists
+                } else {
+                    navigate('/signup-complete'); // Navigate to the signup complete page if userData does not exist
+                }
             }
         } catch (error) {
             console.error('Error updating profile:', error);

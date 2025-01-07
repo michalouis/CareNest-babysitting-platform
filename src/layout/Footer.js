@@ -10,7 +10,7 @@ import './layout.css';
 
 function Footer() {
     const location = useLocation();
-    const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile';
+    const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile' || location.pathname === '/profile/edit-profile';
 
     if (hideFooter) {
         return null;

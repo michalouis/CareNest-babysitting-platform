@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import '../../style.css';
 
 function WelcomeBox({ firstName }) {
   return (
@@ -9,8 +10,8 @@ function WelcomeBox({ firstName }) {
         backgroundColor: 'var(--clr-white)',
         padding: '1rem',
         margin: '1rem',
-        width: 'calc(100% - 2rem)',
-        height: '100%', // 200px = height of header + footer
+        width: '100% - 2rem',
+        height: '100%',
         borderRadius: '1rem',
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' }, // Column for small screens, row for medium and up
@@ -55,7 +56,7 @@ function WelcomeBox({ firstName }) {
 					opacity: 0.8,
 					},
 			}}>
-				Αναζήτηση Νταντάς
+				<p className='big-button-text'>Αναζήτηση Νταντάς</p>
 			</Button>
     	</Box>
 		<Box

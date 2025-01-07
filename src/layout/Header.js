@@ -20,7 +20,7 @@ function Header() {
     }, []);
 
     // Different header for the login, signup and profile creation pages (forces user to complete their profile)
-    const showLogoOnly = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile';
+    const showLogoOnly = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile' || location.pathname === '/profile/edit-profile';
 
     if (showLogoOnly) {
         return (
