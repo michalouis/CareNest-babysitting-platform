@@ -84,8 +84,8 @@ function SignupComplete() {
                     gap: '1rem'
                 }}>
                     {renderButton(
-                        userData.role === 'parent' ? 'Αναζήτηση Νταντάς' : 'Συνεργασίες',
-                        userData.role === 'parent' ? '/search' : '/partnerships'
+                        userData.role === 'parent' ? 'Αναζήτηση Νταντάς' : 'Αγγελία Εργασίας',
+                        userData.role === 'parent' ? '/search' : '/job-posting'
                     )}
                     {renderButton('Αρχική Σελίδα', '/')}
                 </Box>

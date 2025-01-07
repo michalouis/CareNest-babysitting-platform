@@ -63,6 +63,46 @@ export function useLoginRequiredRedirect() {
     }, [navigate]);
 }
 
+// Redirect the user to the landing page if they are not logged in or not a parent
+export function useNotParentRedirect() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+            if (!user) {
+                navigate('/');
+            } else {
+                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
+                if (!userDoc.exists() || userDoc.data().role !== 'parent') {
+                    navigate('/');
+                }
+            }
+        });
+
+        return () => unsubscribe();
+    }, [navigate]);
+}
+
+// Redirect the user to the landing page if they are not logged in or not a nanny
+export function useNotNannyRedirect() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+            if (!user) {
+                navigate('/');
+            } else {
+                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
+                if (!userDoc.exists() || userDoc.data().role !== 'nanny') {
+                    navigate('/');
+                }
+            }
+        });
+
+        return () => unsubscribe();
+    }, [navigate]);
+}
+
 // Redirect the user to the home page if they are already logged in
 export function useAlreadyLoggedInRedirect() {
     const navigate = useNavigate();

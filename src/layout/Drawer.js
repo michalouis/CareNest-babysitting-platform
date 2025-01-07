@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Box, Divider } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { FIREBASE_AUTH } from '../firebase';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../firebase';
 
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import WorkIcon from '@mui/icons-material/Work';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DrawRoundedIcon from '@mui/icons-material/DrawRounded';
@@ -35,6 +37,21 @@ function DrawerItem({ to, icon: Icon, title }) {
 
 function AppDrawer({ open, onClose }) {
     const navigate = useNavigate();
+    const [userRole, setUserRole] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+            if (user) {
+                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setUserRole(userData.role);
+                }
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const handleLogout = async () => {
         await signOut(FIREBASE_AUTH);
@@ -55,12 +72,20 @@ function AppDrawer({ open, onClose }) {
                 <List>
                     <DrawerItem to="/profile" icon={AccountCircleIcon} title="Προφίλ" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/search" icon={SearchIcon} title="Αναζήτηση Νταντάς" />
+                    {userRole === 'parent' ? (
+                        <DrawerItem to="/search" icon={SearchIcon} title="Αναζήτηση Νταντάς" />
+                    ) : (
+                        <DrawerItem to="/job-posting" icon={WorkIcon} title="Αγγελία Εργασίας" />
+                    )}
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     <DrawerItem to="/meetings" icon={EventIcon} title="Ραντεβού Γνωριμίας" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/applications" icon={AssignmentIcon} title="Αιτήσεις" />
-                    <Divider sx={{ width: '80%', margin: '0 auto' }} />
+                    {userRole === 'parent' && (
+                        <>
+                        <DrawerItem to="/applications" icon={AssignmentIcon} title="Αιτήσεις" />
+                        <Divider sx={{ width: '80%', margin: '0 auto' }} />
+                        </>
+                    )}
                     <DrawerItem to="/contracts" icon={DrawRoundedIcon} title="Συμφωνητικά" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     <DrawerItem to="/partnerships" icon={GroupIcon} title="Συνεργασίες" />
