@@ -65,7 +65,6 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             bgcolor: showError && !role ? 'var(--clr-error-lighter)' : role === 'parent' ? 'var(--clr-violet)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
-                            boxShadow: 1,
                             width: '100%',
                             height: 'auto',
                             boxShadow: role === 'parent' ? '6' : '0'
@@ -122,7 +121,6 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             bgcolor: showError && !role ? 'var(--clr-error-lighter)' : role === 'nanny' ? 'var(--clr-violet)' : 'var(--clr-white)',
                             padding: '1rem',
                             borderRadius: '1rem',
-                            boxShadow: 1,
                             width: '100%',
                             height: 'auto',
                             boxShadow: role === 'nanny' ? '6' : '0'

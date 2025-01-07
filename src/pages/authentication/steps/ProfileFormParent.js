@@ -5,7 +5,7 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
 
 function ProfileFormParent({ firstName, lastName, amka, email }) {
-    const [loading, setLoading] = useState(false);
+    // form data
     const [formData, setFormData] = useState({
         gender: '',
         age: '',
@@ -18,7 +18,7 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
         childAgeGroup: '',
         aboutMe: '',
     });
-
+    
     // error states for the form fields
     const [errorStates, setErrorStates] = useState({
         gender: false,
@@ -32,9 +32,10 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
         childAgeGroup: false,
         aboutMe: false,
     });
-
+    
     // error messages for the form fields
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const navigate = useNavigate();
@@ -490,7 +491,7 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
                     alignSelf: 'center',
                     fontSize: '1.5rem',
                     padding: '0.5rem 1rem',
-                    backgroundColor: loading ? 'grey' : 'var(--clr-blue)',
+                    backgroundColor: loading ? 'grey' : 'var(--clr-violet)',
                     '&:hover': {
                         opacity: '0.8',
                     },
@@ -531,7 +532,7 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
                 <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-error-main)' }}>
                     <p className='button-text'>Ακύρωση</p>
                 </Button>
-                <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-blue)', '&:hover': { opacity: 0.8 } }} autoFocus>
+                <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} autoFocus>
                     <p className='button-text'>Υποβολή</p>
                 </Button>
             </DialogActions>

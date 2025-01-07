@@ -7,6 +7,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import StepperComponent from '../StepperComponent';
 import { useProfileExistsRedirect } from '../../../AuthChecks';
 import ProfileFormParent from './ProfileFormParent';
+import ProfileFormNanny from './ProfileFormNanny';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -59,7 +60,6 @@ function CreateProfile() {
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'flex-start',
                 gap: '2rem',
                 backgroundColor: 'var(--clr-white)',
                 padding: '1rem', borderRadius: '1rem',
@@ -108,11 +108,14 @@ function CreateProfile() {
                         lastName={userData.lastName}
                         amka={userData.amka}
                         email={userData.email}
-                        role={userData.role}
                     />
                 ) : (
-                    // Add code for other roles later
-                    <div>υπό κατασκευή 👷</div>
+                    <ProfileFormNanny
+                        firstName={userData.firstName}
+                        lastName={userData.lastName}
+                        amka={userData.amka}
+                        email={userData.email}
+                    />
                 )
             )}
         </Box>
