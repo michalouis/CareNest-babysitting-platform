@@ -26,7 +26,7 @@ function LogoButton() {
                     gap: 0.5
                 }}
             >
-                <img src="logo3.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
+                <img src="/logo3.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
             </Button>
         </Box>
     );

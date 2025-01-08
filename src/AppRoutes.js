@@ -17,6 +17,7 @@ import Applications from './pages/applications/Applications';
 import Contracts from './pages/contracts/Contracts';
 import Partnerships from './pages/partnerships/Partnerships';
 import JobPosting from './pages/job_posting/JobPosting';
+import EditJobPosting from './pages/job_posting/EditJobPosting';
 
 function AppRoutes() {
     return (
@@ -37,6 +38,7 @@ function AppRoutes() {
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/partnerships" element={<Partnerships />} />
                 <Route path="/job-posting" element={<JobPosting />} />
+                <Route path="/job-posting/edit-job-posting" element={<EditJobPosting />} />
                 <Route path="/error404" element={<Error404 />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

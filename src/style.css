@@ -9,7 +9,8 @@
     --clr-black: #000000;
     --clr-white: #FFFFFF;
     --clr-light-grey: #e9e9e9;
-    --clr-grey: #737373;
+    --clr-grey: #9e9e9e;
+    --clr-dark-grey: #757575;
 
     /* errors */
     --clr-error: #FF0000;
@@ -30,6 +31,9 @@
     --clr-blue-light: #4361EE;
     --clr-blue-lighter: #4895EF;
     --clr-cyan: #4CC9F0;
+
+    --clr-brat-green: #00e676;
+    --clr-dark-green: #00c853;
 }
 
 html {

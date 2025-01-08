@@ -473,7 +473,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.childAgeGroup}
                 InputProps={{ style: { textAlign: 'left' } }}
             >
-                <MenuItem value="<3">&lt;3 χρονών</MenuItem>
+                <MenuItem value="1-2">1-2 χρονών</MenuItem>
                 <MenuItem value="3-6">3-6 χρονών</MenuItem>
                 <MenuItem value="7-12">7-12 χρονών</MenuItem>
                 <MenuItem value="13-16">13-16 χρονών</MenuItem>

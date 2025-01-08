@@ -40,7 +40,7 @@ export default function Faq() {
     return (
         <>  
             <PageTitle title="CareNest - Συχνές Ερωτήσεις" />
-            <Breadcrumbs current="Συχνές Ερωτήσεις" />
+            <Breadcrumbs />
             <Box className='faq-container' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem' }}>
                 <h1>Συχνές Ερωτήσεις</h1>
                 <FaqTab onTabChange={handleTabChange} />

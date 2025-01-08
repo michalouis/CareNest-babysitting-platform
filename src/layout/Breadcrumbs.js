@@ -21,6 +21,7 @@ const pathLabels = {
     '/contracts': 'Συμφωνητικά',
     '/partnerships': 'Συνεργασίες',
     '/job-posting': 'Αγγελία Εργασίας',
+    '/job-posting/edit-job-posting': 'Δημιουργία Αγγελίας',
     '/error404': 'Σφάλμα 404',
 };
 
