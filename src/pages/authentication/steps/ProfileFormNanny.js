@@ -5,9 +5,23 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
 import '../../../style.css';
 
-function ProfileFormParent({ firstName, lastName, amka, email }) {
-    // form data
-    const [formData, setFormData] = useState({
+function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
+    
+    const [formData, setFormData] = useState(userData ? {
+        gender: userData.gender,
+        age: userData.age,
+        address: userData.address,
+        postalCode: userData.postalCode,
+        town: userData.town,
+        phoneNumber: userData.phoneNumber,
+        aboutMe: userData.aboutMe,
+        experience: userData.experience,
+        degrees: userData.degrees,
+        certificates: userData.certificates,
+        recommendations: userData.recommendations,
+        languages: userData.languages,
+        music: userData.music,
+    } : {
         gender: '',
         age: '',
         address: '',
@@ -299,7 +313,11 @@ function ProfileFormParent({ firstName, lastName, amka, email }) {
                     profileCreated: true,
                     partnershipActive: false,
                 });
-                navigate('/signup-complete'); // Navigate to the signup complete page
+                if (userData) {
+                    navigate('/profile'); // Navigate to the profile page if userData exists
+                } else {
+                    navigate('/signup-complete'); // Navigate to the signup complete page if userData does not exist
+                }
             }
         } catch (error) {
             console.error('Error updating profile:', error);

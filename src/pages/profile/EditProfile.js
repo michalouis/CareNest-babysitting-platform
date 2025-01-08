@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import ProfileFormParent from "../authentication/steps/ProfileFormParent";
+import ProfileFormNanny from "../authentication/steps/ProfileFormNanny";
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
-import { useNavigate } from 'react-router-dom';
 import '../../style.css';
 
 function EditProfile() {
     const [userData, setUserData] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -25,18 +24,6 @@ function EditProfile() {
         fetchUserData();
     }, []);
 
-    const handleSave = async () => {
-        const user = FIREBASE_AUTH.currentUser;
-        if (user) {
-            try {
-                await updateDoc(doc(FIREBASE_DB, 'users', user.uid), userData);
-                navigate('/profile');
-            } catch (error) {
-                console.error('Error updating profile:', error);
-            }
-        }
-    };
-
     if (!userData) {
         return <p>Loading...</p>;
     }
@@ -51,7 +38,11 @@ function EditProfile() {
             alignItems: 'center',
             marginTop: '2rem'
         }}>
-            <ProfileFormParent userData={userData} />
+            {userData.role === 'parent' ? (
+                <ProfileFormParent userData={userData} />
+            ) : (
+                <ProfileFormNanny userData={userData} />
+            )}
         </Box>
         </>
     );
