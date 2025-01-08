@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 function JobPosting() {
     const { isLoading } = AuthCheck( true, false, false, 'nanny' );
@@ -10,9 +11,10 @@ function JobPosting() {
     }
 
     return (
-        <div>
+        <>  
+            <PageTitle title="CareNest - Αγγελία" />
             <h1>Job Posting</h1>
-        </div>
+        </>
     );
 }
 

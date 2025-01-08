@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './error404.css';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 function Error404() {
     const { isLoading } = AuthCheck();
@@ -13,6 +14,7 @@ function Error404() {
 
     return (
         <div className="error404-container">
+            <PageTitle title="CareNest - Error 404" />
             <h1 className="error404-title">ERROR 404 :(</h1>
             <h2 className="error404-subtitle">Η σελίδα δεν βρέθηκε.</h2>
             <p className="error404-text">Λυπούμαστε, αλλά η σελίδα που αναζητάτε δεν υπάρχει ή έχει μετακινηθεί.</p>

@@ -7,6 +7,7 @@ import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box, TextField, Button, Snackbar, Alert, LinearProgress } from '@mui/material';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 function Login() {
     const navigate = useNavigate();
@@ -49,6 +50,7 @@ function Login() {
 
     return (
         <>
+            <PageTitle title="CareNest - Σύνδεση" />
             <Breadcrumbs current="Σύνδεση" />
             <Box sx={{
                 display: 'flex',

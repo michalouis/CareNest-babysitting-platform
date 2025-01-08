@@ -3,6 +3,7 @@ import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../../AuthChecks';
 import Loading from '../../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 import '../../../style.css';
 
@@ -36,49 +37,52 @@ function SignupComplete() {
     };
 
     return (
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            width: '100%-2rem',
-            margin: '1rem 0',
-            height: 'calc(100vh - 180px - 2rem)', // 180px = height of header + footer
-        }}>
-            {/* Text */}
-            <h1 style={{ marginBottom: '1rem' }}>
-                Συγχαρητήρια! Ολοκληρώσατε την εγγραφή σας στη πλατφόρμα.
-            </h1>
+        <>
+            <PageTitle title="CareNest - Ολοκληρώσατε το προφίλ σας!" />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                width: '100%-2rem',
+                margin: '1rem 0',
+                height: 'calc(100vh - 180px - 2rem)', // 180px = height of header + footer
+            }}>
+                {/* Text */}
+                <h1 style={{ marginBottom: '1rem' }}>
+                    Συγχαρητήρια! Ολοκληρώσατε την εγγραφή σας στη πλατφόρμα.
+                </h1>
 
-            { userData && (
-                <>
-                <h2>
-                    {userData.role === 'parent' ? (
-                        'Μπορείτε να ξεκινήστε την εύρεση νταντάς τώρα.'
-                    ) : (
-                        'Μπορείτε να ξεκινήστε να φτιάχνετε την αγγελία σας.'
-                    )}
-                </h2>
-            
-                {/* Buttons */}
-                <Box sx={{
-                    marginTop: '2rem',
-                    width: '100%',
-                    maxWidth: '300px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1rem'
-                }}>
-                    {renderButton(
-                        userData.role === 'parent' ? 'Αναζήτηση Νταντάς' : 'Αγγελία Εργασίας',
-                        userData.role === 'parent' ? '/search' : '/job-posting'
-                    )}
-                    {renderButton('Αρχική Σελίδα', '/')}
-                </Box>
-                </>
-            )}
-        </Box>
+                { userData && (
+                    <>
+                    <h2>
+                        {userData.role === 'parent' ? (
+                            'Μπορείτε να ξεκινήστε την εύρεση νταντάς τώρα.'
+                        ) : (
+                            'Μπορείτε να ξεκινήστε να φτιάχνετε την αγγελία σας.'
+                        )}
+                    </h2>
+                
+                    {/* Buttons */}
+                    <Box sx={{
+                        marginTop: '2rem',
+                        width: '100%',
+                        maxWidth: '300px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem'
+                    }}>
+                        {renderButton(
+                            userData.role === 'parent' ? 'Αναζήτηση Νταντάς' : 'Αγγελία Εργασίας',
+                            userData.role === 'parent' ? '/search' : '/job-posting'
+                        )}
+                        {renderButton('Αρχική Σελίδα', '/')}
+                    </Box>
+                    </>
+                )}
+            </Box>
+        </>
     );
 }
 

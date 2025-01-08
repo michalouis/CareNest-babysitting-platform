@@ -3,6 +3,7 @@ import { Box, Button, TextField, Grid, Dialog, DialogActions, DialogContent, Dia
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -269,6 +270,7 @@ function Profile() {
 
     return (
         <>
+            <PageTitle title="CareNest - Προφίλ" />
             <Breadcrumbs current="Προφίλ" />
             <h1 style={{ marginLeft: '1rem' }}>Προφίλ Χρήστη</h1>
             <Box sx={{

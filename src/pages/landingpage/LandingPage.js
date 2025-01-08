@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import PageTitle from '../../PageTitle';
 
 import Loading from '../../layout/Loading';
 import Loggedout from './Loggedout';
@@ -34,6 +35,7 @@ function LandingPage() {
 
     return (
         <>
+            <PageTitle title="CareNest - Αρχική Σελίδα" />
             {userData ? (
                 <>
                     {userData.role === 'parent' ? (

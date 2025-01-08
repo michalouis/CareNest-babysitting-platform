@@ -5,6 +5,7 @@ import { Box, Button, Snackbar, Alert, Dialog, DialogActions, DialogContent, Dia
 import StepperComponent from './StepperComponent';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 import './authentication.css';
 import '../../style.css';
@@ -91,6 +92,7 @@ function Signup() {
 
     return (
         <>
+            <PageTitle title="CareNest - Εγγραφή" />
             <Breadcrumbs current="Εγγραφή" showPopup={true} />
             <Box sx={{
                 display: 'flex',

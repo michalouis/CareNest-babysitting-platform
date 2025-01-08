@@ -6,6 +6,7 @@ import FaqItem from './FaqItem';
 import './faq.css';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 export default function Faq() {
     const { isLoading } = AuthCheck();
@@ -37,7 +38,8 @@ export default function Faq() {
     const faqs = selectedTab === 0 ? faqParents : faqNannies;
 
     return (
-        <>
+        <>  
+            <PageTitle title="CareNest - Συχνές Ερωτήσεις" />
             <Breadcrumbs current="Συχνές Ερωτήσεις" />
             <Box className='faq-container' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem' }}>
                 <h1>Συχνές Ερωτήσεις</h1>

@@ -5,6 +5,8 @@ import ProfileFormParent from "../authentication/steps/ProfileFormParent";
 import ProfileFormNanny from "../authentication/steps/ProfileFormNanny";
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
+
 import '../../style.css';
 
 function EditProfile() {
@@ -16,20 +18,21 @@ function EditProfile() {
 
     return (
         <>
-        <Breadcrumbs current="Επεξεργασία Προφίλ" showPopup={true} />
-            <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Προφίλ</h1>
-        <Box style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '2rem'
-        }}>
-            {userData.role === 'parent' ? (
-                <ProfileFormParent userData={userData} />
-            ) : (
-                <ProfileFormNanny userData={userData} />
-            )}
-        </Box>
+            <PageTitle title="CareNest - Επεξεργασία Προφίλ" />
+            <Breadcrumbs current="Επεξεργασία Προφίλ" showPopup={true} />
+                <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Προφίλ</h1>
+            <Box style={{ 
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: '2rem'
+            }}>
+                {userData.role === 'parent' ? (
+                    <ProfileFormParent userData={userData} />
+                ) : (
+                    <ProfileFormNanny userData={userData} />
+                )}
+            </Box>
         </>
     );
 }

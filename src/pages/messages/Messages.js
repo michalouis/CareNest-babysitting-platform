@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
+import PageTitle from '../../PageTitle';
 
 function Messages() {
     const { isLoading } = AuthCheck( true );
@@ -10,9 +11,10 @@ function Messages() {
     }
 
     return (
-        <div>
+        <>
+            <PageTitle title="CareNest - Μηνύματα" />
             <h1>Messages</h1>
-        </div>
+        </>
     );
 }
 
