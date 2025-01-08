@@ -8,7 +8,7 @@ import ProfileFormParent from './ProfileFormParent';
 import ProfileFormNanny from './ProfileFormNanny';
 import { useAuthCheck as AuthCheck } from '../../../AuthChecks';
 import Loading from '../../../layout/Loading';
-import PageTitle from '../../PageTitle';
+import PageTitle from '../../../PageTitle';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 

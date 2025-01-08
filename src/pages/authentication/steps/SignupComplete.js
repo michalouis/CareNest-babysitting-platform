@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../../AuthChecks';
 import Loading from '../../../layout/Loading';
-import PageTitle from '../../PageTitle';
+import PageTitle from '../../../PageTitle';
 
 import '../../../style.css';
 
