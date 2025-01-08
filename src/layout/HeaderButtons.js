@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import { Link } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../firebase';
+import AppDrawer from './Drawer';
 import './layout.css';
 import '../style.css';
-import AppDrawer from './Drawer';
 
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import HelpIcon from '@mui/icons-material/Help';
 import MessageIcon from '@mui/icons-material/Message';
 
-// WebSite Logo Image (does nothing)
-function LogoImage() {
-    return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img src="/logo2.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
-        </Box>
-    );
-}
-
-// WebSite Logo Button (takes you to the home page)
+// Website Logo Button (takes you to the home page)
 function LogoButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -40,7 +33,7 @@ function LogoButton() {
 }
 
 // FAQ Button (takes you to the FAQ page)
-function FaqButton(props) {
+function FaqButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
@@ -60,7 +53,7 @@ function FaqButton(props) {
 }
 
 // Messages Button (takes you to the Messages page) - shows only if user logged in
-function MessagesButton(props) {
+function MessagesButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
@@ -80,9 +73,9 @@ function MessagesButton(props) {
 }
 
 // Login Button (takes you to the Login page) - shows only if user not logged in
-function LoginButton(props) {
+function LoginButton() {
     return (
-        <Box>
+        <Box sx={{ marginLeft: '1rem' }}>
             <Button
                 component={Link}
                 to="/login"
@@ -107,7 +100,7 @@ function LoginButton(props) {
 }
 
 // Menu Button (shows only if user logged in)
-function MenuButton(props) {
+function MenuButton() {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -119,7 +112,7 @@ function MenuButton(props) {
     };
 
     return (
-        <Box>
+        <Box sx={{ marginLeft: '1rem' }}>
             <Button
                 variant="contained"
                 sx={{
@@ -143,4 +136,45 @@ function MenuButton(props) {
     );
 }
 
-export { LogoImage, LogoButton, FaqButton, MessagesButton, LoginButton, MenuButton };
+function HeaderButtons() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+            setIsLoggedIn(!!user);  // !! converts user to boolean
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    if (isLoading) {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <Skeleton variant="rectangular" width={200} height={40} sx={{ borderRadius: '5px' }} animation="wave" />
+                <Skeleton variant="rectangular" width={130} height={40} sx={{ borderRadius: '5px' }} animation="wave" />
+                <Skeleton variant="rectangular" width={120} height={40} sx={{ borderRadius: '5px' }} animation="wave" />
+            </Box>
+        );
+    }
+
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {isLoggedIn ? (
+                <>
+                    <FaqButton />
+                    <MessagesButton />
+                    <MenuButton />
+                </>
+            ) : (
+                <>
+                    <FaqButton />
+                    <LoginButton />
+                </>
+            )}
+        </Box>
+    );
+}
+
+export { LogoButton, HeaderButtons };

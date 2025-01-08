@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, TextField, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, Checkbox } from "@mui/material";
+import { Box, Button, TextField, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { useFinishProfileRedirect, useLoginRequiredRedirect } from '../../AuthChecks';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';

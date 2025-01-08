@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../firebase';
-import { useFinishProfileRedirect } from '../../AuthChecks';
+// import { onAuthStateChanged } from 'firebase/auth';
+// import { doc, getDoc } from 'firebase/firestore';
+// import { FIREBASE_AUTH, FIREBASE_DB } from '../../firebase';
+import { useAuthCheck } from '../../AuthChecks';
 
+import Loading from '../../layout/Loading';
 import Loggedout from './Loggedout';
 import LoggedinParent from './LoggedinParent';
 import LoggedinNanny from './LoggedinNanny';
@@ -12,25 +13,13 @@ import './landingPage.css';
 import '../../style.css';
 
 function LandingPage() {
-    const [userData, setUserData] = useState(null);
+    const { userData, isLoading } = useAuthCheck();
 
-    useFinishProfileRedirect();
+    // useFinishProfileRedirect();
 
-    // Check if the user is logged in or not
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-            if (user) {
-                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
-                if (userDoc.exists()) {
-                    setUserData(userDoc.data());
-                }
-            } else {
-                setUserData(null);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
+    if (isLoading) {
+        return <Loading />;
+    }
 
     if (userData) {
         console.log(`Hello, ${userData.firstName} ${userData.lastName}. Your AMKA is ${userData.amka}.`);
