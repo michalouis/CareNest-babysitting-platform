@@ -8,34 +8,234 @@ import { useNavigate } from 'react-router-dom';
 import { deleteUser } from 'firebase/auth';
 import '../../style.css';
 
-import FileIcon from '@mui/icons-material/InsertDriveFile';
+import FileIcon from '@mui/icons-material/Description';
 
+// translate data to greek
+const translateMap = {
+    school: 'Απολυτήριο Σχολείου',
+    university: 'Πανεπιστήμιο',
+    college: 'Κολέγιο',
+    tei: 'ΤΕΙ',
+    english: 'Αγγλικά',
+    german: 'Γερμανικά',
+    french: 'Γαλλικά',
+    spanish: 'Ισπανικά',
+    piano: 'Πιάνο',
+    guitar: 'Κιθάρα',
+    violin: 'Βιολί',
+    flute: 'Φλάουτο'
+};
+
+
+// data common to parents/nannies
+const renderCommonData = (userData) => (
+    <>
+        {/* Personal Data */}
+        <h2>Προσωπικά Στοιχεία</h2>
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Όνομα" value={userData.firstName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Επώνυμο" value={userData.lastName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField
+                    label="Φύλο"
+                    value={
+                        userData.gender === 'Male' ? 'Άντρας' :
+                        userData.gender === 'Female' ? 'Γυναίκα' :
+                        userData.gender === 'Other' ? 'Άλλο' :
+                        ''
+                    }
+                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
+                    fullWidth
+                    variant="outlined"
+                />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="ΑΜΚΑ" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+        </Grid>
+
+        {/* Contact Data */}
+        <h2>Στοιχεία Επικοινωνίας</h2>
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Διεύθυνση" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Ταχυδρομικός Κώδικας" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <TextField label="Τηλέφωνο" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField label="Email" value={userData.email} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+        </Grid>
+
+        <h2>Σχετικά με μένα</h2>
+        <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
+    </>
+);
+
+// data exclusive to parents (child data)
+const renderParentData = (userData) => (
+    <>
+        <h2>Στοιχεία Παιδιού</h2>
+        <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+                <TextField label="Όνομα Παιδιού" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+            <Grid item xs={12} md={4}>
+                <TextField
+                    label="Φύλο Παιδιού"
+                    value={
+                        userData.childGender === 'Male' ? 'Αγόρι' :
+                        userData.childGender === 'Female' ? 'Κορίτσι' :
+                        userData.childGender === 'Other' ? 'Άλλο' :
+                        ''
+                    }
+                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
+                    fullWidth
+                    variant="outlined"
+                />
+            </Grid>
+            <Grid item xs={12} md={4}>
+                <TextField label="Ηλικιακή Ομάδα Παιδιού" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            </Grid>
+        </Grid>
+    </>
+);
+
+// data exclusive to nannies (experience, degrees, certificates, recommendations, skills)
+const renderNannyData = (userData) => (
+    <>
+        <h2>Εμπειρία</h2>
+        <TextField
+            label="Εμπειρία"
+            value={userData.experience.replace('months', ' μήνες')}
+            slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
+            fullWidth
+            variant="outlined"
+        />
+
+        <h2>Σπουδές</h2>
+        {userData.degrees.map((degree, index) => (
+            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                    <strong>{index + 1}. {translateMap[degree.degreeLevel]}:</strong> {degree.degreeTitle}
+                </p>
+                <Button
+                    variant="contained"
+                    startIcon={<FileIcon />}
+                    sx={{ backgroundColor: 'var(--clr-violet)', }}
+                >
+                    <p className="smaller-button-text">{degree.degreeFile}</p>
+                </Button>
+            </Box>
+        ))}
+
+        <h2>Πιστοποιητικά</h2>
+        {userData.certificates.map((certificate, index) => (
+            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                    <strong>{index + 1}. {certificate.certificateTitle}: </strong>
+                </p>
+                <Button
+                    variant="contained"
+                    startIcon={<FileIcon />}
+                    sx={{ backgroundColor: 'var(--clr-violet)', }}
+                >
+                    <p className="smaller-button-text">{certificate.certificateFile}</p>
+                </Button>
+            </Box>
+        ))}
+
+        <h2>Συστάσεις</h2>
+        {userData.recommendations.map((recommendation, index) => (
+            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                    <strong>{index + 1}. {recommendation.recommendationTitle}: </strong>
+                </p>
+                <Button
+                    variant="contained"
+                    startIcon={<FileIcon />}
+                    sx={{ backgroundColor: 'var(--clr-violet)', }}
+                >
+                    <p className="smaller-button-text">{recommendation.recommendationFile}</p>
+                </Button>
+            </Box>
+        ))}
+
+        <h2>Δεξιότητες</h2>
+        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
+            {Object.entries(userData.languages).map(([language, value]) => (
+                value && (
+                    <Box
+                        key={language}
+                        sx={{
+                            backgroundColor: 'var(--clr-violet)',
+                            color: 'white',
+                            padding: '1rem',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '20px'
+                        }}
+                    >
+                        <p className="button-text">
+                            {translateMap[language]}
+                        </p>
+                    </Box>
+                )
+            ))}
+            {Object.entries(userData.music).map(([music, value]) => (
+                value && (
+                    <Box
+                        key={music}
+                        sx={{
+                            backgroundColor: 'var(--clr-violet)',
+                            color: 'white',
+                            padding: '1rem',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '20px'
+                        }}
+                    >
+                        <p className="button-text">
+                            {translateMap[music]}
+                        </p>
+                    </Box>
+                )
+            ))}
+        </Box>
+    </>
+);
+
+// Profile component
 function Profile() {
-    useFinishProfileRedirect();
-    useLoginRequiredRedirect();
+    useFinishProfileRedirect();     // Redirect to finish profile if not completed
+    useLoginRequiredRedirect();     // Redirect to login if not logged in
 
     const [userData, setUserData] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const navigate = useNavigate();
 
-    const degreeLevelsGreek = {
-        school: 'Απολυτήριο Σχολείου',
-        university: 'Πανεπιστήμιο',
-        college: 'Κολέγιο',
-        tei: 'ΤΕΙ',
-    };
-
-    const skillMap = {
-        english: 'Αγγλικά',
-        german: 'Γερμανικά',
-        french: 'Γαλλικά',
-        spanish: 'Ισπανικά',
-        piano: 'Πιάνο',
-        guitar: 'Κιθάρα',
-        violin: 'Βιολί',
-        flute: 'Φλάουτο'
-    };
-
+    // Fetch user data from Firebase
     useEffect(() => {
         const fetchUserData = async () => {
             const user = FIREBASE_AUTH.currentUser;
@@ -50,6 +250,7 @@ function Profile() {
         fetchUserData();
     }, []);
 
+    // Dialog box for account deletion
     const handleDeleteDialogOpen = () => {
         setDeleteDialogOpen(true);
     };
@@ -58,6 +259,7 @@ function Profile() {
         setDeleteDialogOpen(false);
     };
 
+    // Delete user account
     const handleDeleteAccount = async () => {
         const user = FIREBASE_AUTH.currentUser;
         if (user) {
@@ -73,6 +275,7 @@ function Profile() {
         }
     };
 
+    // Loading component while fetching data
     if (!userData) {
         return <p>Loading...</p>;
     }
@@ -89,6 +292,7 @@ function Profile() {
                 gap: '1rem',
                 margin: '1rem'
             }}>
+                {/* Buttons: Edit profile, delete account */}
                 <Box sx={{
                     width: '260px',
                     borderRadius: '1rem',
@@ -121,6 +325,8 @@ function Profile() {
                         <p className="button-text">Διαγραφή Λογαριασμού</p>
                     </Button>
                 </Box>
+
+                {/* User Data */}
                 <Box sx={{
                     flexGrow: 1,
                     display: 'flex',
@@ -135,193 +341,12 @@ function Profile() {
                     justifyContent: 'space-around',
                     position: 'relative'
                 }}>
-                    <h2>Προσωπικά Στοιχεία</h2>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Όνομα" value={userData.firstName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Επώνυμο" value={userData.lastName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                label="Φύλο"
-                                value={
-                                    userData.gender === 'Male' ? 'Άντρας' :
-                                    userData.gender === 'Female' ? 'Γυναίκα' :
-                                    userData.gender === 'Other' ? 'Άλλο' :
-                                    ''
-                                }
-                                slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                                fullWidth
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="ΑΜΚΑ" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                    </Grid>
-
-                    <h2>Στοιχεία Επικοινωνίας</h2>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Διεύθυνση" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Ταχυδρομικός Κώδικας" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Τηλέφωνο" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField label="Email" value={userData.email} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                        </Grid>
-                    </Grid>
-
-                    { userData.role === 'parent' ? (
-                        <>
-                        <h2>Στοιχεία Παιδιού</h2>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={4}>
-                                <TextField label="Όνομα Παιδιού" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <TextField label="Φύλο Παιδιού"
-                                    value={
-                                        userData.childGender === 'Male' ? 'Αγόρι' :
-                                        userData.childGender === 'Female' ? 'Κορίτσι' :
-                                        userData.childGender === 'Other' ? 'Άλλο' :
-                                        ''
-                                    }
-                                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                                    fullWidth
-                                    variant="outlined"
-                                    />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <TextField label="Ηλικιακή Ομάδα Παιδιού" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                            </Grid>
-                        </Grid>
-                        </>
-                    ) : (
-                        <>
-                        <h2>Εμπειρία</h2>
-                        <TextField
-                            label="Εμπειρία"
-                            value={userData.experience.replace('months', ' μήνες')}
-                            slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                            fullWidth
-                            variant="outlined"
-                        />
-
-                        <h2>Σπουδές</h2>
-                        {userData.degrees.map((degree, index) => (
-                            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                                    <strong>{index + 1}. {degreeLevelsGreek[degree.degreeLevel]}:</strong> {degree.degreeTitle}
-                                </p>
-                                <Button
-                                    variant="contained"
-                                    startIcon={<FileIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-violet)', }}
-                                >
-                                    <p className="smaller-button-text">{degree.degreeFile}</p>
-                                </Button>
-                            </Box>
-                        ))}
-
-                        <h2>Πιστοποιητικά</h2>
-                        {userData.certificates.map((certificate, index) => (
-                            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                                    <strong>{index + 1}. {certificate.certificateTitle}: </strong>
-                                </p>
-                                <Button
-                                    variant="contained"
-                                    startIcon={<FileIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-violet)', }}
-                                >
-                                    <p className="smaller-button-text">{certificate.certificateFile}</p>
-                                </Button>
-                            </Box>
-                        ))}
-
-                        <h2>Συστάσεις</h2>
-                        {userData.recommendations.map((recommendation, index) => (
-                            <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                                <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                                    <strong>{index + 1}. {recommendation.recommendationTitle}: </strong>
-                                </p>
-                                <Button
-                                    variant="contained"
-                                    startIcon={<FileIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-violet)', }}
-                                >
-                                    <p className="smaller-button-text">{recommendation.recommendationFile}</p>
-                                </Button>
-                            </Box>
-                        ))}
-
-                        <h2>Δεξιότητες</h2>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
-                            {Object.entries(userData.languages).map(([language, value]) => (
-                                value && (
-                                    <Box
-                                        sx={{
-                                            backgroundColor: 'var(--clr-violet)',
-                                            color: 'white',
-                                            padding: '1rem',
-                                            height: '40px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderRadius: '20px'
-                                        }}
-                                    >
-                                        <p className="button-text">
-                                            {skillMap[language]}
-                                        </p>
-                                    </Box>
-                                )
-                            ))}
-                            {Object.entries(userData.music).map(([music, value]) => (
-                                value && (
-                                    <Box
-                                        sx={{
-                                            backgroundColor: 'var(--clr-violet)',
-                                            color: 'white',
-                                            padding: '1rem',
-                                            height: '40px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderRadius: '20px'
-                                        }}
-                                    >
-                                        <p className="button-text">
-                                            {skillMap[music]}
-                                        </p>
-                                    </Box>
-                                )
-                            ))}
-                        </Box>
-                        </>
-                    )}
-
-                    <h2>Σχετικά με μένα</h2>
-                    <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
+                    {renderCommonData(userData)}    {/* Common data for parents/nannies */}
+                    {userData.role === 'parent' ? renderParentData(userData) : renderNannyData(userData)}   {/* Parent/Nanny specific data */}
                 </Box>
             </Box>
 
+            {/* Dialog box for account deletion */}
             <Dialog
                 open={deleteDialogOpen}
                 onClose={handleDeleteDialogClose}

@@ -15,7 +15,7 @@ import MessageIcon from '@mui/icons-material/Message';
 function LogoImage() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img src="logo2.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
+            <img src="/logo2.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
         </Box>
     );
 }

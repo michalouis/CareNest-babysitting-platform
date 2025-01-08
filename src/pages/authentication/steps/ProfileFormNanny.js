@@ -540,6 +540,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 label="Ηλικία"
                 variant="outlined"
                 fullWidth
+                type="number"
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                 onBlur={handleAgeBlur}
