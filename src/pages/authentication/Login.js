@@ -51,7 +51,7 @@ function Login() {
     return (
         <>
             <PageTitle title="CareNest - Σύνδεση" />
-            <Breadcrumbs current="Σύνδεση" />
+            <Breadcrumbs />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',

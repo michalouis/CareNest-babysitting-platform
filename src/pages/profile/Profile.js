@@ -271,7 +271,7 @@ function Profile() {
     return (
         <>
             <PageTitle title="CareNest - Προφίλ" />
-            <Breadcrumbs current="Προφίλ" />
+            <Breadcrumbs />
             <h1 style={{ marginLeft: '1rem' }}>Προφίλ Χρήστη</h1>
             <Box sx={{
                 display: 'flex',

@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import { Breadcrumbs as MUIBreadcrumbs, Link, Typography, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Breadcrumbs as MUIBreadcrumbs, Link, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { useNavigate, useLocation } from 'react-router-dom';
 import "../style.css";
 
 const pathLabels = {
     '/': 'Αρχική Σελίδα',
+    '/contact': 'Επικοινωνία',
+    '/faq': 'Συχνές Ερωτήσεις',
+    '/messages': 'Μηνύματα',
+    '/login': 'Σύνδεση',
+    '/signup': 'Εγγραφή',
+    '/create-profile': 'Δημιουργία Προφίλ',
+    '/signup-complete': 'Ολοκλήρωση Εγγραφής',
     '/profile': 'Προφίλ',
-    '/edit-profile': 'Επεξεργασία Προφίλ',
     '/profile/edit-profile': 'Επεξεργασία Προφίλ',
     '/search': 'Αναζήτηση Νταντάς',
-    '/job-posting': 'Αγγελία Εργασίας',
     '/meetings': 'Ραντεβού Γνωριμίας',
     '/applications': 'Αιτήσεις',
     '/contracts': 'Συμφωνητικά',
     '/partnerships': 'Συνεργασίες',
+    '/job-posting': 'Αγγελία Εργασίας',
+    '/error404': 'Σφάλμα 404',
 };
 
-function Breadcrumbs({ current, showPopup = false }) {
+function Breadcrumbs({ showPopup = false }) {
     const navigate = useNavigate();
     const location = useLocation();
     const [openNavigateAwayDialog, setOpenNavigateAwayDialog] = useState(false);
@@ -105,7 +112,9 @@ function Breadcrumbs({ current, showPopup = false }) {
                         {breadcrumb.label}
                     </Link>
                 ))}
-                <Typography color="var(--clr-black)">{current}</Typography>
+                <p style={{ color: 'var(--clr-black)', }}>
+                    {breadcrumbs[breadcrumbs.length - 1].label}
+                </p>
             </MUIBreadcrumbs>
 
             {/* Warning dialog */}

@@ -15,7 +15,7 @@ function Contact() {
     return (
         <>
             <PageTitle title="CareNest - Επικοινωνία" />
-            <Breadcrumbs current="Επικοινωνία" />
+            <Breadcrumbs />
             <ContactBox />
         </>
     );

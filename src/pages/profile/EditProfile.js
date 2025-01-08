@@ -19,7 +19,7 @@ function EditProfile() {
     return (
         <>
             <PageTitle title="CareNest - Επεξεργασία Προφίλ" />
-            <Breadcrumbs current="Επεξεργασία Προφίλ" showPopup={true} />
+            <Breadcrumbs showPopup={true} />
                 <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Προφίλ</h1>
             <Box style={{ 
                 display: 'flex',

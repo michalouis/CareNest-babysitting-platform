@@ -93,7 +93,7 @@ function Signup() {
     return (
         <>
             <PageTitle title="CareNest - Εγγραφή" />
-            <Breadcrumbs current="Εγγραφή" showPopup={true} />
+            <Breadcrumbs showPopup={true} />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
