@@ -1,32 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
+import React from 'react';
 import { Box, Button } from '@mui/material';
-import { useLoginRequiredRedirect } from '../../../AuthChecks';
-import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuthCheck as AuthCheck } from '../../../AuthChecks';
+import Loading from '../../../layout/Loading';
+
 import '../../../style.css';
 
 function SignupComplete() {
-    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
-    useLoginRequiredRedirect();
+    const { userData, isLoading } = AuthCheck( true );
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-            if (user) {
-                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
-                if (userDoc.exists()) {
-                    setUserData(userDoc.data());
-                }
-            } else {
-                setUserData(null);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
+    if (isLoading) {
+        return <Loading />;
+    }
 
     const renderButton = (buttonText, navigateTo) => {
         return (

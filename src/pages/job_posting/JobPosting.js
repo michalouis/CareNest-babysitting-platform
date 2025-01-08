@@ -1,10 +1,13 @@
 import React from "react";
-import { useFinishProfileRedirect, useNotNannyRedirect } from '../../AuthChecks';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 function JobPosting() {
+    const { isLoading } = AuthCheck( true, false, false, 'nanny' );
 
-    useFinishProfileRedirect();
-    useNotNannyRedirect();
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div>

@@ -4,13 +4,16 @@ import Breadcrumbs from '../../layout/Breadcrumbs';
 import FaqTab from './FaqTab';
 import FaqItem from './FaqItem';
 import './faq.css';
-import { useFinishProfileRedirect } from '../../AuthChecks';    // if logged in unfinished profile, redirect to finish profile
-
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 export default function Faq() {
+    const { isLoading } = AuthCheck();
     const [selectedTab, setSelectedTab] = useState(0);
 
-    useFinishProfileRedirect();
+    if (isLoading) {
+        return <Loading />;
+    }
 
     const handleTabChange = (newValue) => {
         setSelectedTab(newValue);

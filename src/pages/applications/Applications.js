@@ -1,10 +1,13 @@
 import React from "react";
-import { useFinishProfileRedirect, useLoginRequiredRedirect } from '../../AuthChecks';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 function Applications() {
+    const { isLoading } = AuthCheck( true, false, false, 'parent' );
 
-    useFinishProfileRedirect();
-    useLoginRequiredRedirect();
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div>

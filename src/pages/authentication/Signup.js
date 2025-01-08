@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box, Button, Snackbar, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import StepperComponent from './StepperComponent';
-import { useAlreadyLoggedInRedirect } from '../../AuthChecks';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
+
 import './authentication.css';
 import '../../style.css';
 
@@ -26,7 +28,11 @@ function Signup() {
         isInfoRead: false,
     });
 
-    useAlreadyLoggedInRedirect();   // Redirect to the homepage if the user is already logged in
+    const { isLoading } = AuthCheck( false, true);
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     // Handle the next button (check for errors)
     const handleNext = () => {

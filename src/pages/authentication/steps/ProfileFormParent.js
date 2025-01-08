@@ -249,7 +249,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
         if (!formData.childName) {
             setErrors((prevErrors) => ({ ...prevErrors, childName: 'Το πεδίο είναι υποχρεωτικό' }));
             setErrorStates((prevStates) => ({ ...prevStates, childName: true }));
-        } else if (!/^[a-zA-Z\s]+$/.test(formData.childName)) {
+        } else if (!/^[a-zA-Zα-ωΑ-ΩάέήίόύώΆΈΉΊΌΎΏ]+$/.test(formData.childName)) {
             setErrors((prevErrors) => ({ ...prevErrors, childName: 'Το όνομα πρέπει να αποτελείται μόνο απο γράμματα' }));
             setErrorStates((prevStates) => ({ ...prevStates, childName: true }));
         } else {

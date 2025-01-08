@@ -5,17 +5,22 @@ import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../firebase';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box, TextField, Button, Snackbar, Alert, LinearProgress } from '@mui/material';
-import { useAlreadyLoggedInRedirect } from '../../AuthChecks';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    
+    const { isLoading } = AuthCheck( false, true );
 
-    useAlreadyLoggedInRedirect();   // Redirect to the homepage if the user is already logged in
+    if (isLoading) {
+        return <Loading />;
+    }
 
     // Handle the login process
     const handleLogin = async () => {

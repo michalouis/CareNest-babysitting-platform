@@ -1,43 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { signOut, onAuthStateChanged } from 'firebase/auth';
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
+import { signOut } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../../firebase';
 import StepperComponent from '../StepperComponent';
-import { useProfileExistsRedirect } from '../../../AuthChecks';
 import ProfileFormParent from './ProfileFormParent';
 import ProfileFormNanny from './ProfileFormNanny';
+import { useAuthCheck as AuthCheck } from '../../../AuthChecks';
+import Loading from '../../../layout/Loading';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
 function CreateProfile() {
-    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
-
-    useProfileExistsRedirect(); // Redirect to the homepage if the profile has already been created
-
-    // Get the user data
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-            if (user) {
-                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
-                if (userDoc.exists()) {
-                    setUserData(userDoc.data());
-                }
-            } else {
-                setUserData(null);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
-
     // Handle Logout
     const handleLogout = async () => {
         await signOut(FIREBASE_AUTH);
         navigate('/'); // Navigate to the landing page
     };
+
+    const { userData, isLoading } = AuthCheck( true, false, true );
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
 
     return (
         <>

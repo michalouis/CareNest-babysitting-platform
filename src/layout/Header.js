@@ -22,6 +22,7 @@ function Header() {
         );
     }
 
+    // Regular header for the rest of the pages
     return (
         <AppBar position="static" sx={{ height: '80px', width: '100%', justifyContent: 'center', backgroundColor: 'var(--clr-purple-main)' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

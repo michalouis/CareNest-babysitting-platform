@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './error404.css';
-
-// simple error404 page
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 function Error404() {
+    const { isLoading } = AuthCheck();
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
     return (
         <div className="error404-container">
             <h1 className="error404-title">ERROR 404 :(</h1>

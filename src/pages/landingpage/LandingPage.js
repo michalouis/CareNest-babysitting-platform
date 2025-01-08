@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-// import { onAuthStateChanged } from 'firebase/auth';
-// import { doc, getDoc } from 'firebase/firestore';
-// import { FIREBASE_AUTH, FIREBASE_DB } from '../../firebase';
-import { useAuthCheck } from '../../AuthChecks';
+import React from 'react';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 
 import Loading from '../../layout/Loading';
 import Loggedout from './Loggedout';
@@ -13,9 +10,7 @@ import './landingPage.css';
 import '../../style.css';
 
 function LandingPage() {
-    const { userData, isLoading } = useAuthCheck();
-
-    // useFinishProfileRedirect();
+    const { userData, isLoading } = AuthCheck();
 
     if (isLoading) {
         return <Loading />;

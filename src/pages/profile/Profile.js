@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Button, TextField, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { useFinishProfileRedirect, useLoginRequiredRedirect } from '../../AuthChecks';
-import { doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
+import { doc, deleteDoc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from 'firebase/auth';
@@ -228,27 +229,13 @@ const renderNannyData = (userData) => (
 
 // Profile component
 function Profile() {
-    useFinishProfileRedirect();     // Redirect to finish profile if not completed
-    useLoginRequiredRedirect();     // Redirect to login if not logged in
-
-    const [userData, setUserData] = useState(null);
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const navigate = useNavigate();
-
-    // Fetch user data from Firebase
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const user = FIREBASE_AUTH.currentUser;
-            if (user) {
-                const userDoc = await getDoc(doc(FIREBASE_DB, 'users', user.uid));
-                if (userDoc.exists()) {
-                    setUserData(userDoc.data());
-                }
-            }
-        };
-
-        fetchUserData();
-    }, []);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const { userData, isLoading } = AuthCheck( true );  // Get user data, redirect to login page if not logged in
+    
+    if (isLoading) {
+        return <Loading />;
+    }
 
     // Dialog box for account deletion
     const handleDeleteDialogOpen = () => {

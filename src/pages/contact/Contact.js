@@ -1,9 +1,16 @@
 import React from 'react';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import ContactBox from './ContactBox';
-import { useFinishProfileRedirect } from '../../AuthChecks';    // if logged in unfinished profile, redirect to finish profile
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
+
 function Contact() {
-    useFinishProfileRedirect();
+    const { isLoading } = AuthCheck();
+
+    if (isLoading) {
+        return <Loading />;
+    }
+    
     return (
         <>
             <Breadcrumbs current="Επικοινωνία" />
