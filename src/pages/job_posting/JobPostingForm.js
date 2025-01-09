@@ -92,12 +92,14 @@ function JobPostingForm() {
         const newErrors = {};
         const newSnackbarMessages = [];
         let selectedDays = 0;
-
+        const newTimetable = {};
+    
         // Timetable validation
         daysOfWeek.forEach((day) => {
             const selectedTimes = timePeriods.filter((time) => selectedCells[`${day}-${time}`]);
             if (selectedTimes.length > 0) {
                 selectedDays++;
+                newTimetable[day] = selectedTimes;
                 if (jobPostingData.employmentType === 'full-time' && selectedTimes.length < 2) {
                     newErrors.timetable = true;
                 } else if (jobPostingData.employmentType === 'part-time' && selectedTimes.length < 1) {
@@ -105,7 +107,7 @@ function JobPostingForm() {
                 }
             }
         });
-
+    
         // Timetable error messages
         if (selectedDays !== 5) {
             newErrors.timetable = true;
@@ -114,9 +116,9 @@ function JobPostingForm() {
             setTimetableError('Πρέπει στις μέρες που έχετε διαλέξει να βάλετε αρκετές ώρες για να καλύπτουν τους χρόνους απασχόλησης που έχετε επιλέξει');
         } else {
             setTimetableError('');
-
+            setjobPostingData((prevData) => ({ ...prevData, timetable: newTimetable }));
         }
-
+    
         // Other fields validation & snackbar error messages
         if (!jobPostingData.ageGroups.length) {
             newErrors.ageGroups = true;
@@ -133,7 +135,7 @@ function JobPostingForm() {
         if (newErrors.timetable) {
             newSnackbarMessages.push('Χρονοδιάγραμμα Διαθεσιμότητας');
         }
-
+    
         setErrorStates(newErrors);
         if (newSnackbarMessages.length > 0) {
             setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
