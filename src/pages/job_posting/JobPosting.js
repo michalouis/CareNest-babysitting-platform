@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { updateDoc, doc, getDoc, deleteField } from 'firebase/firestore';
@@ -17,9 +17,9 @@ function JobPosting() {
 
     // Function to handle the click of the "New Posting" button
     const handleNewPostingClick = () => {
-        if (userData.jobPostingData) {
+        if (userData && userData.jobPostingData) {
             setOpenDialog(true);
-        } else {
+        } else if (userData && !userData.jobPostingData) {
             navigate('/job-posting/edit-job-posting');
         }
     };
@@ -93,7 +93,7 @@ function JobPosting() {
                         marginTop: '1.5rem',
                         padding: '0.5rem 1rem',
                     }}
-                    disabled={!userData.jobPostingData}
+                    disabled={userData && !userData.jobPostingData}
                     onClick={() => navigate('/job-posting/edit-job-posting')}
                 >
                     <p className="big-button-text">Προσωρινά Αποθηκευμένη Αγγελία</p>
