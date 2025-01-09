@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
-function JobPostingForm({ userData }) {
+function JobPostingForm({ userData, setSaved }) {
     const [editMode, setEditMode] = useState(!userData.jobPostingData);   // if job posting data doesn't exist, start in edit mode
     const [timetableError, setTimetableError] = useState('');   // error message for timetable
     const [loading, setLoading] = useState(false);
@@ -86,6 +86,7 @@ function JobPostingForm({ userData }) {
                 }
     
                 setEditMode(false);
+                setSaved(true);
             }
         } catch (error) {
             console.error('Error updating job posting:', error);
@@ -181,7 +182,7 @@ function JobPostingForm({ userData }) {
                             disabled={!editMode}
                         />
                     }
-                    label="1-2 χρονών<"
+                    label="1-2 χρονών"
                 />
                 <FormControlLabel
                     control={
@@ -334,15 +335,15 @@ function JobPostingForm({ userData }) {
                     <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
                 </Button>
             ) : (
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Box sx={{ display: 'flex', gap: '2rem', alignSelf: 'center' }}>
                     <Button
                         variant="contained"
-                        onClick={() => setEditMode(true)}
+                        onClick={() => { setEditMode(true); setSaved(false); }}
                         sx={{
                             alignSelf: 'center',
                             fontSize: '1.5rem',
                             padding: '0.5rem 1rem',
-                            backgroundColor: 'var(--clr-violet)',
+                            backgroundColor: 'var(--clr-blue-lighter)',
                             '&:hover': {
                                 opacity: '0.8',
                             },
