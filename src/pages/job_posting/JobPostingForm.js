@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, MenuItem, Button, FormControlLabel, Checkbox, LinearProgress, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, TextField, MenuItem, Button, FormControlLabel, Checkbox, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { updateDoc, getDoc, setDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ function JobPostingForm({ userData, setSaved }) {
     const [timetableError, setTimetableError] = useState('');   // error message for timetable
     const [loading, setLoading] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarState, setSnackbarState] = useState('error');
     const navigate = useNavigate();
 
     // form data
@@ -69,6 +70,35 @@ function JobPostingForm({ userData, setSaved }) {
 
     ///////////////  VALIDATE & SUBMIT ///////////////
 
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            const user = FIREBASE_AUTH.currentUser;
+            if (user) {
+                const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+                const jobPostingDocRef = doc(FIREBASE_DB, 'jobPostings', user.uid);
+    
+                // Update jobPosted in userData
+                await updateDoc(userDocRef, {
+                    jobPosted: true,
+                });
+    
+                // Upload job posting data to jobPostings collection
+                await updateDoc(jobPostingDocRef, {
+                    ...jobPostingData,
+                });
+    
+                navigate('/job-posting');
+            }
+        } catch (error) {
+            console.error('Error submitting job posting:', error);
+            setSnackbarState('error');
+            setSnackbarMessage('Υπήρξε σφάλμα κατά την υποβολή της αγγελίας σας.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleSave = async () => {
         if (!validate()) return;
     
@@ -87,6 +117,9 @@ function JobPostingForm({ userData, setSaved }) {
     
                 setEditMode(false);
                 setSaved(true);
+                window.scrollTo(0, 0);
+                setSnackbarState('success');
+                setSnackbarMessage('Η αγγελία σας αποθηκεύτηκε προσωρινά με επιτυχία! Για να την δημοσιεύστε πατήστε υποβολή.');
             }
         } catch (error) {
             console.error('Error updating job posting:', error);
@@ -145,6 +178,7 @@ function JobPostingForm({ userData, setSaved }) {
     
         setErrorStates(newErrors);
         if (newSnackbarMessages.length > 0) {
+            setSnackbarState('error');
             setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
         } else {
             setSnackbarMessage('');
@@ -166,6 +200,9 @@ function JobPostingForm({ userData, setSaved }) {
             boxShadow: '2',
             margin: '2rem',
         }}>
+            <h1 style={{ alignSelf: 'center' }}>
+                {editMode ? 'Επεξεργασία' : 'Προεπισκόπηση'}
+            </h1>
             <p style={{color: 'var(--clr-grey)'}}>Όλα τα πεδία είναι υποχρεωτικά.</p>
 
             {/* Age Groups */}
@@ -338,7 +375,11 @@ function JobPostingForm({ userData, setSaved }) {
                 <Box sx={{ display: 'flex', gap: '2rem', alignSelf: 'center' }}>
                     <Button
                         variant="contained"
-                        onClick={() => { setEditMode(true); setSaved(false); }}
+                        onClick={() => {
+                            setEditMode(true);
+                            setSaved(false);
+                            window.scrollTo(0, 0);
+                        }}
                         sx={{
                             alignSelf: 'center',
                             fontSize: '1.5rem',
@@ -353,6 +394,7 @@ function JobPostingForm({ userData, setSaved }) {
                     </Button>
                     <Button
                         variant="contained"
+                        onClick={handleSubmit}
                         sx={{
                             alignSelf: 'center',
                             fontSize: '1.5rem',
@@ -367,9 +409,8 @@ function JobPostingForm({ userData, setSaved }) {
                     </Button>
                 </Box>
             )}
-            {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
         
-            {/* Error Snackbar */}
+            {/* Snackbar */}
             <Snackbar
                 open={!!snackbarMessage}
                 autoHideDuration={6000}
@@ -377,7 +418,7 @@ function JobPostingForm({ userData, setSaved }) {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                 sx={{ marginRight: '0.5rem' }}
             >
-                <Alert onClose={() => setSnackbarMessage('')} severity="error">
+                <Alert onClose={() => setSnackbarMessage('')} severity={snackbarState === 'error' ? "error" : "success"}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>

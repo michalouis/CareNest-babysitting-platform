@@ -7,6 +7,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
+import ViewJobPosting from "./ViewJobPosting";
 
 import '../../style.css'
 
@@ -51,9 +52,9 @@ function JobPosting() {
 
     return (
         <>
-            <PageTitle title="CareNest - Αγγελία" />
+            <PageTitle title="CareNest - Αγγελία Εργασίας" />
             <Breadcrumbs />
-            <h1 style={{ margin: '1rem' }}>Αγγελία</h1>
+            <h1 style={{ margin: '1rem' }}>Αγγελία Εργασίας</h1>
             <Box
                 sx={{
                     display: 'flex',
@@ -62,64 +63,76 @@ function JobPosting() {
                     justifyContent: 'center',
                     textAlign: 'center',
                     margin: '1rem 1rem',
-                }}>
-                <p style={{ fontSize: '1.2rem', maxWidth: '1080px' }}>
-                    <strong>Δημιουργήστε την αγγελία σας και βρείτε την ιδανική συνεργασία!</strong><br />
-                    Δηλώστε τις προτιμήσεις και τη διαθεσιμότητά σας, ώστε να σας
-                    βρουν οι κατάλληλες οικογένειες. Συμπληρώστε στοιχεία όπως τον
-                    χρόνο απασχόλησης, την τοποθεσία εργασίας και το ηλικιακό γκρουπ
-                    που προτιμάτε να φροντίζετε.
-                </p>
+            }}>
+                {userData && userData.jobPosted ? (
+                    <>
+                        <p style={{ fontSize: '1.2rem', maxWidth: '1080px' }}>
+                            <strong>Έχετε δημοσιεύσει την αγγελία σας με επιτυχία!</strong><br />
+                            Μπορείτε να τη δείτε παρακάτω.
+                        </p>
+                        <ViewJobPosting jobPostingData={userData.jobPostingData} />
+                    </>
+                ) : (
+                    <>
+                    <p style={{ fontSize: '1.2rem', maxWidth: '1080px' }}>
+                        <strong>Δημιουργήστε την αγγελία σας και βρείτε την ιδανική συνεργασία!</strong><br />
+                        Δηλώστε τις προτιμήσεις και τη διαθεσιμότητά σας, ώστε να σας
+                        βρουν οι κατάλληλες οικογένειες. Συμπληρώστε στοιχεία όπως τον
+                        χρόνο απασχόλησης, την τοποθεσία εργασίας και το ηλικιακό γκρουπ
+                        που προτιμάτε να φροντίζετε.
+                    </p>
 
-                {/* New Posting */}
-                <Button
-                    variant="contained"
-                    sx={{
-                        width: '450px',
-                        marginTop: '4rem',
-                        padding: '0.5rem 1rem',
-                        backgroundColor: 'var(--clr-violet)',
-                    }}
-                    onClick={handleNewPostingClick}
-                >
-                    <p className="big-button-text">Δημιουργία Νέας Αγγελίας</p>
-                </Button>
+                    {/* New Posting */}
+                    <Button
+                        variant="contained"
+                        sx={{
+                            width: '450px',
+                            marginTop: '4rem',
+                            padding: '0.5rem 1rem',
+                            backgroundColor: 'var(--clr-violet)',
+                        }}
+                        onClick={handleNewPostingClick}
+                    >
+                        <p className="big-button-text">Δημιουργία Νέας Αγγελίας</p>
+                    </Button>
 
-                {/* Open saved posting */}
-                <Button
-                    variant="contained"
-                    sx={{
-                        width: '450px',
-                        marginTop: '1.5rem',
-                        padding: '0.5rem 1rem',
-                    }}
-                    disabled={userData && !userData.jobPostingData}
-                    onClick={() => navigate('/job-posting/edit-job-posting')}
-                >
-                    <p className="big-button-text">Προσωρινά Αποθηκευμένη Αγγελία</p>
-                </Button>
+                    {/* Open saved posting */}
+                    <Button
+                        variant="contained"
+                        sx={{
+                            width: '450px',
+                            marginTop: '1.5rem',
+                            padding: '0.5rem 1rem',
+                        }}
+                        disabled={userData && !userData.jobPostingData}
+                        onClick={() => navigate('/job-posting/edit-job-posting')}
+                    >
+                        <p className="big-button-text">Προσωρινά Αποθηκευμένη Αγγελία</p>
+                    </Button>
+
+                    {/* Dialog for new posting button */}
+                    <Dialog
+                        open={openDialog}
+                        onClose={() => setOpenDialog(false)}
+                        >
+                        <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Υπάρχει ήδη αποθηκευμένη αγγελία. Αν δημιουργήσετε νέα αγγελία, <strong>η παλιά θα διαγραφεί.</strong>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setOpenDialog(false)} sx={{ color: 'var(--clr-black)' }}>
+                                <p className="button-text">Ακύρωση</p>
+                            </Button>
+                            <Button variant='contained' onClick={handleDialogClose} sx={{ backgroundColor: 'var(--clr-error)' }}>
+                                <p className="button-text">Δημιουργία Νέας Αγγελίας</p>
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </>
+                )}
             </Box>
-
-            {/* Dialog for new posting button */}
-            <Dialog
-                open={openDialog}
-                onClose={() => setOpenDialog(false)}
-            >
-                <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Υπάρχει ήδη αποθηκευμένη αγγελία. Αν δημιουργήσετε νέα αγγελία, <strong>η παλιά θα διαγραφεί.</strong>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenDialog(false)} sx={{ color: 'var(--clr-black)' }}>
-                        <p className="button-text">Ακύρωση</p>
-                    </Button>
-                    <Button variant='contained' onClick={handleDialogClose} sx={{ backgroundColor: 'var(--clr-error)' }}>
-                        <p className="button-text">Δημιουργία Νέας Αγγελίας</p>
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </>
     );
 }
