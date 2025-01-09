@@ -58,14 +58,20 @@ function CreateAccount({ role }) {
             }
 
             // Store user data in the database
-            await setDoc(doc(FIREBASE_DB, 'users', user.uid), {
+            const userData = {
                 email,
                 firstName,
                 lastName,
                 amka,
-                role, // Store the role here
+                role,
                 profileCreated: false,
-            });
+            };
+
+            if (role === 'nanny') {
+                userData.jobPosted = false;
+            }
+
+            await setDoc(doc(FIREBASE_DB, 'users', user.uid), userData);
 
             navigate('/create-profile'); // Navigate to the Createprofile page
         } catch (error) {
