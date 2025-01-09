@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { updateDoc, doc, getDoc, deleteField } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
@@ -17,7 +17,6 @@ function JobPosting() {
 
     // Function to handle the click of the "New Posting" button
     const handleNewPostingClick = () => {
-        console.log(userData.jobPostingData);
         if (userData.jobPostingData) {
             setOpenDialog(true);
         } else {

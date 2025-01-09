@@ -7,9 +7,15 @@ import { useNavigate } from 'react-router-dom';
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
-function JobPostingForm() {
+function JobPostingForm({ userData }) {
+    const [editMode, setEditMode] = useState(!userData.jobPostingData);   // if job posting data doesn't exist, start in edit mode
+    const [timetableError, setTimetableError] = useState('');   // error message for timetable
+    const [loading, setLoading] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const navigate = useNavigate();
+
     // form data
-    const [jobPostingData, setjobPostingData] = useState({
+    const [jobPostingData, setjobPostingData] = useState(userData.jobPostingData || {
         ageGroups: [],
         employmentType: '',
         babysittingPlace: '',
@@ -23,13 +29,6 @@ function JobPostingForm() {
         babysittingPlace: false,
         timetable: false,
     });
-
-    const [timetableError, setTimetableError] = useState('');   // error message for timetable
-    const [loading, setLoading] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [selectedCells, setSelectedCells] = useState({});
-    const navigate = useNavigate();
-
 
     ///////////////  HANDLES FOR FIELDS & ERRORS ///////////////
 
@@ -54,11 +53,18 @@ function JobPostingForm() {
     /////////////// TIMETABLE ///////////////
 
     const handleCellClick = (day, time) => {
-        const key = `${day}-${time}`;
-        setSelectedCells((prev) => ({
-            ...prev,
-            [key]: !prev[key],
-        }));
+        setjobPostingData((prevjobPostingData) => {
+            const newTimetable = { ...prevjobPostingData.timetable };
+            if (!newTimetable[day]) {
+                newTimetable[day] = [];
+            }
+            if (newTimetable[day].includes(time)) {
+                newTimetable[day] = newTimetable[day].filter((t) => t !== time);
+            } else {
+                newTimetable[day].push(time);
+            }
+            return { ...prevjobPostingData, timetable: newTimetable };
+        });
     };
 
     ///////////////  VALIDATE & SUBMIT ///////////////
@@ -79,7 +85,7 @@ function JobPostingForm() {
                     await setDoc(userDocRef, { jobPostingData });
                 }
     
-                navigate('/job-posting');
+                setEditMode(false);
             }
         } catch (error) {
             console.error('Error updating job posting:', error);
@@ -96,7 +102,7 @@ function JobPostingForm() {
     
         // Timetable validation
         daysOfWeek.forEach((day) => {
-            const selectedTimes = timePeriods.filter((time) => selectedCells[`${day}-${time}`]);
+            const selectedTimes = timePeriods.filter((time) => jobPostingData.timetable[day]?.includes(time));
             if (selectedTimes.length > 0) {
                 selectedDays++;
                 newTimetable[day] = selectedTimes;
@@ -172,6 +178,7 @@ function JobPostingForm() {
                             onChange={() => handleCheckboxChange('ageGroups', '1-2')}
                             name="1-2"
                             sx={{ color: errorStates.ageGroups ? 'var(--clr-error)' : 'var(--clr-black)' }}
+                            disabled={!editMode}
                         />
                     }
                     label="1-2 χρονών<"
@@ -183,6 +190,7 @@ function JobPostingForm() {
                             onChange={() => handleCheckboxChange('ageGroups', '3-6')}
                             name="3-6"
                             sx={{ color: errorStates.ageGroups ? 'var(--clr-error)' : 'var(--clr-black)' }}
+                            disabled={!editMode}
                         />
                     }
                     label="3-6 χρονών"
@@ -194,6 +202,7 @@ function JobPostingForm() {
                             onChange={() => handleCheckboxChange('ageGroups', '7-12')}
                             name="7-12"
                             sx={{ color: errorStates.ageGroups ? 'var(--clr-error)' : 'var(--clr-black)' }}
+                            disabled={!editMode}
                         />
                     }
                     label="7-12 χρονών"
@@ -205,6 +214,7 @@ function JobPostingForm() {
                             onChange={() => handleCheckboxChange('ageGroups', '13-16')}
                             name="13-16"
                             sx={{ color: errorStates.ageGroups ? 'var(--clr-error)' : 'var(--clr-black)' }}
+                            disabled={!editMode}
                         />
                     }
                     label="13-16 χρονών"
@@ -224,6 +234,7 @@ function JobPostingForm() {
                 fullWidth
                 error={errorStates.employmentType}
                 helperText={errorStates.employmentType ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                disabled={!editMode}
             >
                 <MenuItem value="part-time">Μερική Απασχόληση (4 ώρες)</MenuItem>
                 <MenuItem value="full-time">Πλήρης Απασχόληση (8 ώρες)</MenuItem>
@@ -242,6 +253,7 @@ function JobPostingForm() {
                 fullWidth
                 error={errorStates.babysittingPlace}
                 helperText={errorStates.babysittingPlace ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                disabled={!editMode}
             >
                 <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
                 <MenuItem value="nanny-home">Σπίτι Μου</MenuItem>
@@ -282,9 +294,9 @@ function JobPostingForm() {
                                     <TableCell key={time} align="center" sx={{ padding: '5px' }}>
                                         <Button
                                             sx={{
-                                                backgroundColor: selectedCells[`${day}-${time}`] ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
+                                                backgroundColor: jobPostingData.timetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
                                                 '&:hover': {
-                                                    backgroundColor: selectedCells[`${day}-${time}`] ? 'var(--clr-dark-green)' : 'var(--clr-dark-grey)',
+                                                    backgroundColor: jobPostingData.timetable[day]?.includes(time) ? 'var(--clr-dark-green)' : 'var(--clr-dark-grey)',
                                                 },
                                                 width: '100px',
                                                 height: '40px',
@@ -292,6 +304,7 @@ function JobPostingForm() {
                                                 margin: '1px',
                                             }}
                                             onClick={() => handleCellClick(day, time)}
+                                            disabled={!editMode}
                                         >
                                         </Button>
                                     </TableCell>
@@ -303,22 +316,56 @@ function JobPostingForm() {
             </TableContainer>
             {timetableError && <p style={{ color: 'var(--clr-error)' }}>{timetableError}</p>}
 
-            <Button
-                variant="contained"
-                onClick={handleSave}
-                sx={{
-                    alignSelf: 'center',
-                    fontSize: '1.5rem',
-                    padding: '0.5rem 1rem',
-                    backgroundColor: loading ? 'grey' : 'var(--clr-violet)',
-                    '&:hover': {
-                        opacity: '0.8',
-                    },
-                }}
-                disabled={loading}
-            >
-                <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
-            </Button>
+            {editMode ? (
+                <Button
+                    variant="contained"
+                    onClick={handleSave}
+                    sx={{
+                        alignSelf: 'center',
+                        fontSize: '1.5rem',
+                        padding: '0.5rem 1rem',
+                        backgroundColor: loading ? 'grey' : 'var(--clr-violet)',
+                        '&:hover': {
+                            opacity: '0.8',
+                        },
+                    }}
+                    disabled={loading}
+                >
+                    <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
+                </Button>
+            ) : (
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => setEditMode(true)}
+                        sx={{
+                            alignSelf: 'center',
+                            fontSize: '1.5rem',
+                            padding: '0.5rem 1rem',
+                            backgroundColor: 'var(--clr-violet)',
+                            '&:hover': {
+                                opacity: '0.8',
+                            },
+                        }}
+                    >
+                        <p className='big-button-text'>Επεξεργασία</p>
+                    </Button>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            alignSelf: 'center',
+                            fontSize: '1.5rem',
+                            padding: '0.5rem 1rem',
+                            backgroundColor: 'var(--clr-violet)',
+                            '&:hover': {
+                                opacity: '0.8',
+                            },
+                        }}
+                    >
+                        <p className='big-button-text'>Υποβολή</p>
+                    </Button>
+                </Box>
+            )}
             {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
         
             {/* Error Snackbar */}
