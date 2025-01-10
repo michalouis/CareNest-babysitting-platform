@@ -18,6 +18,8 @@ function EditProfile() {
 
     return (
         <>
+        {userData && (
+            <>
             <PageTitle title="CareNest - Επεξεργασία Προφίλ" />
             <Breadcrumbs showPopup={true} />
                 <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Προφίλ</h1>
@@ -33,6 +35,8 @@ function EditProfile() {
                     <ProfileFormNanny userData={userData} />
                 )}
             </Box>
+            </>
+        )}
         </>
     );
 }

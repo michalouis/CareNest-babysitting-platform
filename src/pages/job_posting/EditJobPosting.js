@@ -26,6 +26,8 @@ function EditJobPosting() {
 
     return (
         <>
+        {userData && (
+            <>
             <PageTitle title="CareNest - Δημιουργία Αγγελίας" />
             <Breadcrumbs showPopup={!saved}/>
             <h1 style={{ margin: '1rem' }}>Δημιουργία Αγγελίας</h1>
@@ -44,6 +46,8 @@ function EditJobPosting() {
                     <JobPostingForm userData={userData} setSaved={setSaved}/>
                 </Box>
             )}
+            </>
+        )}
         </>
     );
 }

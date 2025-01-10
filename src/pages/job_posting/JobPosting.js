@@ -52,6 +52,8 @@ function JobPosting() {
 
     return (
         <>
+        {userData && (
+            <>
             <PageTitle title="CareNest - Αγγελία Εργασίας" />
             <Breadcrumbs />
             <h1 style={{ margin: '1rem' }}>Αγγελία Εργασίας</h1>
@@ -133,6 +135,8 @@ function JobPosting() {
                 </>
                 )}
             </Box>
+            </>
+        )}
         </>
     );
 }
