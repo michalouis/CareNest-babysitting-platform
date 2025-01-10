@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, MenuItem, Tooltip, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress, Snackbar, Alert } from '@mui/material';
+import { Box, TextField, MenuItem, Tooltip, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress, Snackbar, Alert, Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
@@ -51,6 +51,15 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const navigate = useNavigate();
+
+    const towns = [
+        "Athens", "Mesologgi", "Halkida", "Karpenisi", "Lamia", "Amfissa", "Tripoli", "Patra", "Pyrgos", "Korinthos",
+        "Sparti", "Kalamata", "Zakynthos", "Kerkyra", "Argostoli", "Leykada", "Arta", "Prebeza", "Karditsa", "Larissa",
+        "Bolos", "Trikala", "Grebena", "Drama", "Beroia", "Thessaloniki", "Kabala", "Kastoria", "Kilkis", "Kozani",
+        "Edessa", "Katerini", "Serres", "Florina", "Polygyros", "Aleksandroypoli", "Ksanthi", "Komotini", "Rodos",
+        "Ermoypoli", "Mytilini", "Samos", "Xios", "Hrakleio", "Agios Nikolaos", "Rethimno", "Hania", "Ioannina",
+        "Hgoymenitsa", "Leivadia", "Nayplion"
+    ];
 
     ///////////// VALIDATION /////////////
 
@@ -409,15 +418,25 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.postalCode}
                 helperText={errors.postalCode}
             />
-            <TextField
-                label="Πόλη*"
-                name="town"
-                value={formData.town}
-                onChange={(e) => setFormData({ ...formData, town: e.target.value })}
-                onBlur={handleTownBlur}
+            <p style={{ fontSize: '1.15rem' }}>Διαλέξτε μια από τις πόλεις της λίστας στα αγγλικά.</p>
+            <Autocomplete
+                options={towns}
+                getOptionLabel={(option) => option}
+                onChange={(event, newValue) => {
+                    setFormData({ ...formData, town: newValue });
+                    handleTownBlur();
+                }}
                 fullWidth
-                error={errorStates.town}
-                helperText={errors.town}
+                value={formData.town || null}
+                renderInput={(params) => (          // for error
+                    <TextField
+                        {...params}
+                        label="Πόλη*"
+                        error={errorStates.town}
+                        helperText={errors.town}
+                    />
+                )}
+                onBlur={handleTownBlur}
             />
             <TextField
                 label="Τηλέφωνο*"
