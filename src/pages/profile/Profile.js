@@ -7,7 +7,7 @@ import PageTitle from '../../PageTitle';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
-import { deleteUser } from 'firebase/auth';
+import { deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import '../../style.css';
 
 import FileIcon from '@mui/icons-material/Description';
@@ -252,8 +252,19 @@ function Profile() {
         const user = FIREBASE_AUTH.currentUser;
         if (user) {
             try {
+                // Re-authenticate the user
+                const credential = EmailAuthProvider.credential(user.email, prompt('Please enter your password to confirm:'));
+                await reauthenticateWithCredential(user, credential);
+
+                // Delete job posting document from Firestore
+                if (userData.role === 'nanny' && userData.jobPosted) {
+                    console.log('Deleting job posting document...');
+                    await deleteDoc(doc(FIREBASE_DB, 'jobPostings', user.uid));
+                }
+
                 // Delete user document from Firestore
                 await deleteDoc(doc(FIREBASE_DB, 'users', user.uid));
+
                 // Delete user account
                 await deleteUser(user);
                 navigate('/'); // Navigate to home or login page after deletion

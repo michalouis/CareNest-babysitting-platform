@@ -17,7 +17,6 @@ function EditJobPosting() {
         if (!isLoading && !initiatedSave) {
             setSaved(!!userData.jobPostingData);    // !! to turn to boolean
             setInitiatedSave(true);
-            console.log('initiatedSave');
         }
     }, [userData]);
 

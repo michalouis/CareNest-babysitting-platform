@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, MenuItem, Button, FormControlLabel, Checkbox, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { updateDoc, getDoc, setDoc, doc } from 'firebase/firestore';
+import { updateDoc, getDoc, setDoc, doc, addDoc, collection } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -76,18 +76,18 @@ function JobPostingForm({ userData, setSaved }) {
             const user = FIREBASE_AUTH.currentUser;
             if (user) {
                 const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
-                const jobPostingDocRef = doc(FIREBASE_DB, 'jobPostings', user.uid);
     
                 // Update jobPosted in userData
                 await updateDoc(userDocRef, {
                     jobPosted: true,
                 });
-    
-                // Upload job posting data to jobPostings collection
-                await updateDoc(jobPostingDocRef, {
+
+                // Create a new job posting document in the jobPostings collection with the document ID set to the user's UID
+                const jobPostingDocRef = doc(FIREBASE_DB, 'jobPostings', user.uid);
+                await setDoc(jobPostingDocRef, {
                     ...jobPostingData,
                 });
-    
+                    
                 navigate('/job-posting');
             }
         } catch (error) {
