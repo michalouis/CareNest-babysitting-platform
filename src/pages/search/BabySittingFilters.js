@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Autocomplete, TextField, MenuItem, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Divider } from '@mui/material';
+import { Button, Autocomplete, TextField, MenuItem, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];

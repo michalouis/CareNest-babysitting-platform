@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, Divider, Snackbar, Alert } from "@mui/material";
+import { Box, Button, Snackbar, Alert } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable } from './BabySittingFilters';
+import { FormExperience, FormDegree, FormSkills, FormRating } from "./NannyFilters";
 
 function Search() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
@@ -22,12 +23,29 @@ function Search() {
             '16:00-20:00': [],
             '20:00-00:00': []
         },
+        experience: '',
+        degree: '',
+        languages: {      
+            english: false,
+            german: false,
+            french: false,
+            spanish: false,
+        },
+        music: {      
+            piano: false,
+            guitar: false,
+            violin: false,
+            flute: false,
+        },
+        rating: 0,
     });
     const [errors, setErrors] = useState({
         town: { hasError: false, message: '' },
         childAgeGroup: { hasError: false, message: '' },
         workTime: { hasError: false, message: '' },
         timeTable: false,
+        experience: { hasError: false, message: '' },
+        degree: { hasError: false, message: '' },
     });
 
     if (isLoading) {
@@ -76,6 +94,24 @@ function Search() {
             pass = false;
             newSnackbarMessages.push('Χρονοδιάγραμμα');
         }
+        if (!filterData.experience || errors.experience.hasError) {
+            pass = false;
+            updatedErrors = {
+                ...updatedErrors,
+                experience: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            };
+            setErrors(updatedErrors);
+            newSnackbarMessages.push('Εμπειρία');
+        }
+        if (!filterData.degree || errors.degree.hasError) {
+            pass = false;
+            updatedErrors = {
+                ...updatedErrors,
+                degree: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            };
+            setErrors(updatedErrors);
+            newSnackbarMessages.push('Σπουδές');
+        }
 
         if (newSnackbarMessages.length > 0) {
             setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
@@ -101,7 +137,7 @@ function Search() {
             </p>
             <Box sx={{
                 display: 'flex',
-                flexDirection: { xs: 'column-reverse', md: 'row' },
+                flexDirection: { xs: 'column-reverse', lg: 'row' },
                 justifyContent: 'space-between',
                 gap: '1rem',
                 margin: '1rem'
@@ -129,6 +165,10 @@ function Search() {
                             <FormTimeTable formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             
                             <h2>Φίλτρα Νταντάς</h2>
+                            <FormExperience formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <FormDegree formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <FormSkills formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <FormRating formData={filterData} setFormData={setFilterData}/>
                         </Box>
 
                         <Box sx={{
