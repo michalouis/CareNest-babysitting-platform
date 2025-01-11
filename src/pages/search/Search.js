@@ -5,7 +5,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './BabySittingFilters';
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './Filters';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
@@ -51,6 +51,7 @@ function Search() {
         degree: { hasError: false, message: '' },
     });
 
+    const navigate = useNavigate();
     if (isLoading) {
         return <Loading />;
     }
@@ -106,10 +107,40 @@ function Search() {
         return pass;
     };
 
+    const flattenTimetable = (timetable) => {
+        const flatTimetable = {};
+        Object.keys(timetable).forEach(day => {
+            timetable[day].forEach(time => {
+                flatTimetable[`timetable_${day}_${time}`] = true;
+            });
+        });
+        return flatTimetable;
+    };
+
+    const flattenSkills = (obj, prefix) => {
+        const flatObject = {};
+        Object.keys(obj).forEach(key => {
+            flatObject[`${prefix}_${key}`] = obj[key];
+        });
+        return flatObject;
+    };
+
     const handleSubmit = async () => {
         if (!validate()) return;
 
         console.log('Search for babysitter filters:', filterData);
+
+        const flatTimetable = flattenTimetable(filterData.timeTable);
+        const flatLanguages = flattenSkills(filterData.languages, 'languages');
+        const flatMusic = flattenSkills(filterData.music, 'music');
+
+        const queryParams = new URLSearchParams({
+            ...filterData,
+            ...flatTimetable,
+            ...flatLanguages,
+            ...flatMusic
+        }).toString();
+        navigate(`/search/results?${queryParams}`);
     };
 
     return (
