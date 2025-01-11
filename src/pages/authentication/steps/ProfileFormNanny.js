@@ -8,6 +8,10 @@ import '../../../style.css';
 function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     
     const [formData, setFormData] = useState(userData ? {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        amka: userData.amka,
+        email: userData.email,
         gender: userData.gender,
         age: userData.age,
         address: userData.address,
@@ -22,6 +26,10 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
         languages: userData.languages,
         music: userData.music,
     } : {
+        firstName: firstName,
+        lastName: lastName,
+        amka: amka,
+        email: email,
         gender: '',
         age: '',
         address: '',
@@ -514,13 +522,13 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
             <h2>Προσωπικά Στοιχεία</h2>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="First Name" value={firstName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="First Name" value={formData.firstName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="Last Name" value={lastName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="Last Name" value={formData.lastName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="AMKA" value={amka} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="AMKA" value={formData.amka} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
                 <TextField label="Role" value="Νταντά" InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
@@ -610,7 +618,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.phoneNumber}
             />
             <Tooltip title="This field can't be changed"  arrow>
-                <TextField label="Email" value={email} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="Email" value={formData.email} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* dropdown months of experience */}
