@@ -149,9 +149,9 @@ function JobPostingForm({ userData, setSaved }) {
         });
     
         // Timetable error messages
-        if (selectedDays !== 5) {
+        if (selectedDays < 5) {
             newErrors.timetable = true;
-            setTimetableError('Πρέπει να διαλέξετε ώρες για 5 μέρες');
+            setTimetableError('Πρέπει να διαλέξετε ώρες για  τουλάχιστον 5 μέρες');
         } else if (newErrors.timetable) {
             setTimetableError('Πρέπει στις μέρες που έχετε διαλέξει να βάλετε αρκετές ώρες για να καλύπτουν τους χρόνους απασχόλησης που έχετε επιλέξει');
         } else {
@@ -319,17 +319,17 @@ function JobPostingForm({ userData, setSaved }) {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            {timePeriods.map((time) => (
-                                <TableCell key={time} align="center" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.2rem' }}>{time}</TableCell>
+                            {daysOfWeek.map((day) => (
+                                <TableCell key={day} align="center" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.2rem' }}>{day}</TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {daysOfWeek.map((day) => (
-                            <TableRow key={day}>
-                                <TableCell component="th" scope="row" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.25rem', width: '5px' }}>{day}</TableCell>
-                                {timePeriods.map((time) => (
-                                    <TableCell key={time} align="center" sx={{ padding: '5px' }}>
+                        {timePeriods.map((time) => (
+                            <TableRow key={time}>
+                                <TableCell component="th" scope="row" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.25rem', width: '5px' }}>{time}</TableCell>
+                                {daysOfWeek.map((day) => (
+                                    <TableCell key={day} align="center" sx={{ padding: '5px' }}>
                                         <Button
                                             sx={{
                                                 backgroundColor: jobPostingData.timetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
