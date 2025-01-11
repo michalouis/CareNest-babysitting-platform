@@ -5,8 +5,11 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable } from './BabySittingFilters';
-import { FormExperience, FormDegree, FormSkills, FormRating } from "./NannyFilters";
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './BabySittingFilters';
+
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 function Search() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
@@ -94,24 +97,6 @@ function Search() {
             pass = false;
             newSnackbarMessages.push('Χρονοδιάγραμμα');
         }
-        if (!filterData.experience || errors.experience.hasError) {
-            pass = false;
-            updatedErrors = {
-                ...updatedErrors,
-                experience: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-            };
-            setErrors(updatedErrors);
-            newSnackbarMessages.push('Εμπειρία');
-        }
-        if (!filterData.degree || errors.degree.hasError) {
-            pass = false;
-            updatedErrors = {
-                ...updatedErrors,
-                degree: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-            };
-            setErrors(updatedErrors);
-            newSnackbarMessages.push('Σπουδές');
-        }
 
         if (newSnackbarMessages.length > 0) {
             setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
@@ -131,9 +116,11 @@ function Search() {
         <>
             <PageTitle title="CareNest - Αναζήτηση Νταντάς" />
             <Breadcrumbs />
-            <h1 style={{ margin: '1rem' }}>Αναζήτηση Νταντάς</h1>
-            <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center', }}>
-                Add text later
+            <h1 style={{ marginLeft: '1rem' }}>Αναζήτηση Νταντάς</h1>
+            <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center', textAlign: 'center' }}>
+                Χρησιμοποιήστε τα φίλτρα παρακάτω για να βρείτε τη νταντά που ταιριάζει στις ανάγκες σας.
+                Επιλέξτε κριτήρια όπως την περιοχή, τις ημέρες και ώρες φύλαξης, καθώς και τα προσόντα και
+                την εμπειρία της νταντάς. Προσαρμόστε την αναζήτησή σας για να δείτε τα καλύτερα αποτελέσματα!
             </p>
             <Box sx={{
                 display: 'flex',
@@ -158,21 +145,32 @@ function Search() {
                             justifyContent: 'space-around',
                             position: 'relative'
                         }}>
-                            <h2>Φίλτρα Φύλαξης</h2>
+                            <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+                            <h1>Φίλτρα Φύλαξης</h1>
+                            <h3>Πόλη Αναζήτησης*</h3>
                             <FormTown formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Ηλικιακή Ομάδα Παιδιού*</h3>
                             <FormChildAgeGroup formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Διάρκεια Απασχόλησης της Νταντάς*</h3>
                             <FormWorkTime formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>
+                                Χρονοδιάγραμμα Φύλαξης*: <span style={{ fontWeight: 'normal' }}>Καθορίστε τις ημέρες και ώρες που επιθυμείτε να γίνετε η φύλαξη του παιδιού σας.</span>
+                            </h3>
                             <FormTimeTable formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             
-                            <h2>Φίλτρα Νταντάς</h2>
+                            <h1>Φίλτρα Νταντάς</h1>
+                            <h3>Ελάχιστη εμπειρίας της νταντάς</h3>
                             <FormExperience formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Επίπεδο σπουδών της νταντάς</h3>
                             <FormDegree formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Δεξιότητες της Νταντάς</h3>
                             <FormSkills formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Έλάχιστος μέσος όρος αξιλογήσεων</h3>
                             <FormRating formData={filterData} setFormData={setFilterData}/>
                         </Box>
 
                         <Box sx={{
-                            width: '260px',
+                            width: { xs: '100%', lg: '260px' },
                             borderRadius: '1rem',
                             display: 'flex',
                             flexDirection: 'column',
@@ -181,26 +179,30 @@ function Search() {
                         }}>
                             <Button
                                 variant="contained"
-                                // onClick={() => navigate('/profile/edit-profile')}
+                                onClick={handleSubmit}
                                 sx={{
                                     width: '100%',
                                     backgroundColor: 'var(--clr-violet)',
                                     '&:hover': { opacity: 0.8 },
-                                    padding: '0.5rem 0'
-                                }}
-                            >
-                                <p className="big-button-text">Αγαπημένα</p>
+                                    padding: '0.5rem 0',
+                                    gap: '0.5rem'
+                            }}>
+                                <SearchIcon sx={{ fontSize: 35 }}/>
+                                <p className="big-button-text">Αναζήτηση</p>
                             </Button>
                             <Button
                                 variant="contained"
-                                onClick={handleSubmit}
+                                // onClick={() => navigate('/profile/edit-profile')}
                                 sx={{
                                     width: '100%',
                                     backgroundColor: 'var(--clr-error)',
                                     '&:hover': { opacity: 0.8 },
-                                    padding: '0.5rem 0'
-                            }}>
-                                <p className="big-button-text">Αναζήτηση</p>
+                                    padding: '0.5rem 0',
+                                    gap: '0.5rem'
+                                }}
+                            >
+                                <FavoriteIcon sx={{ fontSize: 30 }}/>
+                                <p className="big-button-text">Αγαπημένα</p>
                             </Button>
                         </Box>
                     </>

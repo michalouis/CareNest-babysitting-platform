@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, Autocomplete, TextField, MenuItem, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import { Button, Autocomplete, TextField, MenuItem, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Box, FormControlLabel, Checkbox, Rating, IconButton } from '@mui/material';
+
+import ClearIcon from '@mui/icons-material/Clear';
+import '../../style.css';
 
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
@@ -70,7 +73,7 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
 
     return (
         <TextField
-            label="Ηλικιακή Ομάδα"
+            label="Ηλικιακή Ομάδα*"
             select
             value={formData.childAgeGroup}
             onChange={(e) => setFormData({
@@ -108,7 +111,7 @@ function FormWorkTime({ formData, setFormData, errors, setErrors }) {
 
     return (
         <TextField
-            label="Ώρες Εργασίας"
+            label="Ώρες Εργασίας*"
             select
             value={formData.workTime}
             onChange={(e) => setFormData({
@@ -160,7 +163,7 @@ const validateTimeTable = ({ timeTable, workTime }) => {
     return { hasError: invalid, message: errorMessage };
 };
 
-function FormTimeTable({ formData, setFormData, errors, setErrors }) {
+function FormTimeTable({ formData, setFormData, errors }) {
     const handleCellClick = (day, time) => {
         setFormData((prevFormData) => {
             const newTimetable = { ...prevFormData.timeTable };
@@ -253,4 +256,232 @@ function FormTimeTable({ formData, setFormData, errors, setErrors }) {
     );
 }
 
-export { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable };
+function FormExperience({ formData, setFormData }) {
+    const handleDelete = () => {
+        setFormData({
+            ...formData,
+            experience: ''
+        });
+    };
+
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
+            <TextField
+                label="Εμπειρία"
+                select
+                value={formData.experience}
+                onChange={(e) => setFormData({
+                    ...formData,
+                    experience: e.target.value
+                })}
+                fullWidth
+                InputProps={{ style: { textAlign: 'left' } }}
+                >
+                <MenuItem value="0-6months">0-6 μήνες</MenuItem>
+                <MenuItem value="6-12months">6-12 μήνες</MenuItem>
+                <MenuItem value="12-18months">12-18 μήνες</MenuItem>
+                <MenuItem value="18-24months">18-24 μήνες</MenuItem>
+                <MenuItem value="24-36months">24-36 μήνες</MenuItem>
+                <MenuItem value="36+months">36+ μήνες</MenuItem>
+            </TextField>
+            <Button
+                variant="contained"
+                onClick={handleDelete}
+                sx={{
+                    backgroundColor: 'var(--clr-error-main)',
+                    color: 'var(--clr-white)',
+                    '&:hover': {
+                        opacity: 0.8,
+                    },
+                }}
+            >
+                <p className='button-text'>Διαγραφή</p>
+                <ClearIcon />
+            </Button>
+        </Box>
+    );
+}
+
+function FormDegree({ formData, setFormData }) {
+    const handleDelete = () => {
+        setFormData({
+            ...formData,
+            degree: ''
+        });
+    };
+
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
+            <TextField
+                label="Σπουδές"
+                select
+                value={formData.degree}
+                onChange={(e) => setFormData({
+                    ...formData,
+                    degree: e.target.value
+                })}
+                fullWidth
+                InputProps={{ style: { textAlign: 'left' } }}
+            >
+                <MenuItem value="school">Απολυτήριο Λυκείου</MenuItem>
+                <MenuItem value="college">Κολλέγιο</MenuItem>
+                <MenuItem value="tei">ΤΕΙ</MenuItem>
+                <MenuItem value="university">Πανεπιστήμιο</MenuItem>
+            </TextField>
+            <Button
+            variant="contained"
+            onClick={handleDelete}
+            sx={{
+                backgroundColor: 'var(--clr-error-main)',
+                // color: 'var(--clr-white)',
+                '&:hover': {
+                    opacity: 0.8,
+                },
+            }} >
+                <p className='button-text'>Διαγραφή</p>
+                <ClearIcon />
+            </Button>
+        </Box>
+    );
+}
+
+function FormSkills({ formData, setFormData }) {
+    const handleToggleChange = (category, item) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [category]: {
+                ...prevFormData[category],
+                [item]: !prevFormData[category][item],
+            },
+        }));
+    };
+
+    return(
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <p><u>Ξένες Γλώσσες</u></p>
+            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.languages.english}
+                        onChange={() => handleToggleChange('languages', 'english')}
+                        name="english"
+                    />}
+                    label="Αγγλικά"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.languages.german}
+                        onChange={() => handleToggleChange('languages', 'german')}
+                        name="german"
+                    />}
+                    label="Γερμανικά"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.languages.french}
+                        onChange={() => handleToggleChange('languages', 'french')}
+                        name="french"
+                    />}
+                    label="Γαλλικά"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.languages.spanish}
+                        onChange={() => handleToggleChange('languages', 'spanish')}
+                        name="spanish"
+                    />}
+                    label="Ισπανικά"
+                />
+            </Box>
+            
+            <p><u>Μουσική</u></p>
+            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.music.piano}
+                        onChange={() => handleToggleChange('music', 'piano')}
+                        name="piano"
+                    />}
+                    label="Πιάνο"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.music.guitar}
+                        onChange={() => handleToggleChange('music', 'guitar')}
+                        name="guitar"
+                    />}
+                    label="Κιθάρα"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.music.violin}
+                        onChange={() => handleToggleChange('music', 'violin')}
+                        name="violin"
+                    />}
+                    label="Βιολί"
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={formData.music.flute}
+                        onChange={() => handleToggleChange('music', 'flute')}
+                        name="flute"
+                    />}
+                    label="Φλάουτο"
+                />
+            </Box>
+        </Box>
+    );
+}
+
+function FormRating({ formData, setFormData }) {
+    const handleRatingChange = (event, newValue) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            rating: newValue,
+        }));
+    };
+
+    const handleDelete = () => {
+        setFormData({
+            ...formData,
+            rating: 0
+        });
+    };
+
+    return (
+        <Box sx={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <Rating
+                precision={0.5}
+                size="large"
+                value={formData.rating || 0}
+                onChange={handleRatingChange}
+                sx={{ fontSize: '3.5rem' }}
+            />
+            <Button
+                variant="contained"
+                onClick={handleDelete}
+                sx={{
+                    backgroundColor: 'var(--clr-error-main)',
+                    color: 'var(--clr-white)',
+                    '&:hover': {
+                        opacity: 0.8,
+                    },
+                    height: '80%'
+                }}
+            >
+                <p className='button-text'>Διαγραφή</p>
+                <ClearIcon />
+            </Button>
+        </Box>
+    );
+}
+
+export { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating };
