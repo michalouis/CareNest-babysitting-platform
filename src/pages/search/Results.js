@@ -7,7 +7,7 @@ import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './Filters';
 import { FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
-
+import { ResultsContainer } from './ResultsComponents';
 
 /////////////// PARSE FUNCTIONS ///////////////
 
@@ -153,10 +153,10 @@ function Results() {
             <h1 style={{ marginLeft: '1rem' }}>Αποτελέσματα Αναζήτησης</h1>
             <Box sx={{ margin: '1rem' }}>
                 <Box sx={{
-                    width: { xs: '100%', lg: '260px' },
+                    width: 'auto',
                     borderRadius: '1rem',
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: { xs: 'column', sm: 'row' },
                     gap: '0.5rem',
                     alignItems: 'center',
                 }}>
@@ -164,10 +164,9 @@ function Results() {
                         variant="contained"
                         onClick={handleOpenDialog}
                         sx={{
-                            width: '100%',
                             backgroundColor: 'var(--clr-violet)',
                             '&:hover': { opacity: 0.8 },
-                            padding: '0.5rem 0',
+                            padding: '0.5rem 1rem',
                             gap: '0.5rem',
                         }}
                     >
@@ -177,10 +176,9 @@ function Results() {
                     <Button
                         variant="contained"
                         sx={{
-                            width: '100%',
                             backgroundColor: 'var(--clr-error)',
                             '&:hover': { opacity: 0.8 },
-                            padding: '0.5rem 0',
+                            padding: '0.5rem 1rem',
                             gap: '0.5rem'
                         }}
                     >
@@ -189,7 +187,7 @@ function Results() {
                     </Button>
                 </Box>
             </Box>
-            <div>
+            {/* <div>
                 <h2>Filter Data:</h2>
                 <p>Town: {filterData.town}</p>
                 <p>Child Age Group: {filterData.childAgeGroup}</p>
@@ -214,8 +212,9 @@ function Results() {
                 <p>Flute: {filterData.music.flute ? 'Yes' : 'No'}</p>
                 <h3>Rating:</h3>
                 <p>{filterData.rating}</p>
-            </div>
+            </div> */}
             {renderDialog()}
+            <ResultsContainer filterData={filterData} />
             <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
         </>
     );
