@@ -5,62 +5,10 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './Filters';
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
-
-// Validate the filter data and return true if all fields are correct
-function validateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
-    let pass = true;
-    const newSnackbarMessages = [];
-    let updatedErrors = { ...errors };
-
-    if (!filterData.town || errors.town.hasError) {
-        pass = false;
-        updatedErrors = {
-            ...updatedErrors,
-            town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-        };
-        setErrors(updatedErrors);
-        newSnackbarMessages.push('Πόλη');
-    }
-    if (!filterData.childAgeGroup || errors.childAgeGroup.hasError) {
-        pass = false;
-        updatedErrors = {
-            ...updatedErrors,
-            childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-        };
-        setErrors(updatedErrors);
-        newSnackbarMessages.push('Ηλικιακή Ομάδα');
-    }
-    if (!filterData.workTime || errors.workTime.hasError) {
-        pass = false;
-        updatedErrors = {
-            ...updatedErrors,
-            workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-        };
-        setErrors(updatedErrors);
-        newSnackbarMessages.push('Ώρες Εργασίας');
-    }
-    const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
-    updatedErrors = {
-        ...updatedErrors,
-        timeTable: validationResult
-    };
-    setErrors(updatedErrors);
-    if (validationResult.hasError) {
-        pass = false;
-        newSnackbarMessages.push('Χρονοδιάγραμμα');
-    }
-
-    if (newSnackbarMessages.length > 0) {
-        setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
-    } else {
-        setSnackbarMessage('Όλα τα πεδία είναι σωστά συμπληρωμένα');
-    }
-    return pass;
-}
 
 // Snackbar for errors
 function ErrorSnackbar({ snackbarMessage, setSnackbarMessage }) {
@@ -140,37 +88,17 @@ function Search() {
         return <Loading />;
     }
 
-    /////////////// SUBMIT & TURN DATA INTO URL PARAMS ///////////////
-
-    // Flatten the timetable object to a flat object
-    const flattenTimetable = (timetable) => {
-        const flatTimetable = {};
-        Object.keys(timetable).forEach(day => {
-            timetable[day].forEach(time => {
-                flatTimetable[`timetable_${day}_${time}`] = true;
-            });
-        });
-        return flatTimetable;
-    };
-    
-    // Flatten the skills object to a flat object
-    const flattenSkills = (obj, prefix) => {
-        const flatObject = {};
-        Object.keys(obj).forEach(key => {
-            flatObject[`${prefix}_${key}`] = obj[key];
-        });
-        return flatObject;
-    };
+    /////////////// TURN DATA INTO URL PARAMS & SUBMIT ///////////////
 
     // Handle the submit button
     const handleSubmit = async () => {
-        if (!validateFilterData(filterData, errors, setErrors, setSnackbarMessage)) return;
+        if (!ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage)) return;
 
         console.log('Search for babysitter filters:', filterData);
 
-        const flatTimetable = flattenTimetable(filterData.timeTable);
-        const flatLanguages = flattenSkills(filterData.languages, 'languages');
-        const flatMusic = flattenSkills(filterData.music, 'music');
+        const flatTimetable = FlattenTimetable(filterData.timeTable);
+        const flatLanguages = FlattenSkills(filterData.languages, 'languages');
+        const flatMusic = FlattenSkills(filterData.music, 'music');
 
         // Turn the filter data into URL parameters
         const queryParams = new URLSearchParams({

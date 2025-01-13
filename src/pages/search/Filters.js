@@ -7,6 +7,83 @@ import '../../style.css';
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
+/////////////// VALIDATION ///////////////
+
+// Validate the filter data and return true if all fields are correct
+function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
+    let pass = true;
+    const newSnackbarMessages = [];
+    let updatedErrors = { ...errors };
+
+    if (!filterData.town || errors.town.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Πόλη');
+    }
+    if (!filterData.childAgeGroup || errors.childAgeGroup.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Ηλικιακή Ομάδα');
+    }
+    if (!filterData.workTime || errors.workTime.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Ώρες Εργασίας');
+    }
+    const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
+    updatedErrors = {
+        ...updatedErrors,
+        timeTable: validationResult
+    };
+    setErrors(updatedErrors);
+    if (validationResult.hasError) {
+        pass = false;
+        newSnackbarMessages.push('Χρονοδιάγραμμα');
+    }
+
+    if (newSnackbarMessages.length > 0) {
+        setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+    } else {
+        setSnackbarMessage('Όλα τα πεδία είναι σωστά συμπληρωμένα');
+    }
+    return pass;
+}
+
+/////////////// FLATTEN FUNCTIONS ///////////////
+///// (to pass the data as url parameters) /////
+
+function FlattenTimetable(timetable) {
+    const flatTimetable = {};
+    Object.keys(timetable).forEach(day => {
+        timetable[day].forEach(time => {
+            flatTimetable[`timetable_${day}_${time}`] = true;
+        });
+    });
+    return flatTimetable;
+}
+
+function FlattenSkills(obj, prefix) {
+    const flatObject = {};
+    Object.keys(obj).forEach(key => {
+        flatObject[`${prefix}_${key}`] = obj[key];
+    });
+    return flatObject;
+}
+
+/////////////// FILTERS ///////////////
+
 function FormTown({ formData, setFormData, errors, setErrors }) {
     const towns = [
         "Athens", "Mesologgi", "Halkida", "Karpenisi", "Lamia", "Amfissa", "Tripoli", "Patra", "Pyrgos", "Korinthos",
@@ -484,4 +561,4 @@ function FormRating({ formData, setFormData }) {
     );
 }
 
-export { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeTable, FormExperience, FormDegree, FormSkills, FormRating };
+export { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData };

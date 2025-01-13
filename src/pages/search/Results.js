@@ -1,7 +1,15 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './Filters';
+import { FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
+
+
+/////////////// PARSE FUNCTIONS ///////////////
 
 const parseTimetable = (params) => {
     const timetable = {};
@@ -28,22 +36,162 @@ const parseSkills = (params, prefix) => {
     return skills;
 };
 
+// Snackbar for errors
+const ErrorSnackbar = ({ snackbarMessage, setSnackbarMessage }) => (
+    <Snackbar
+        open={!!snackbarMessage}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarMessage('')}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        sx={{ marginRight: '0.5rem' }}
+    >
+        <Alert onClose={() => setSnackbarMessage('')} severity="error">
+            {snackbarMessage}
+        </Alert>
+    </Snackbar>
+);
+
 function Results() {
+    const navigate = useNavigate();
+    
+    // Get filter data from URL
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const filterData = Object.fromEntries(queryParams.entries());
-    filterData.timeTable = parseTimetable(filterData);
-    filterData.languages = parseSkills(filterData, 'languages');
-    filterData.music = parseSkills(filterData, 'music');
+    const initialFilterData = Object.fromEntries(queryParams.entries());
+    initialFilterData.timeTable = parseTimetable(initialFilterData);
+    initialFilterData.languages = parseSkills(initialFilterData, 'languages');
+    initialFilterData.music = parseSkills(initialFilterData, 'music');
 
+    // Ensure all required properties are initialized
+    const [filterData, setFilterData] = useState({
+        town: initialFilterData.town || '',
+        childAgeGroup: initialFilterData.childAgeGroup || '',
+        workTime: initialFilterData.workTime || '',
+        timeTable: initialFilterData.timeTable || {},
+        languages: initialFilterData.languages || {},
+        music: initialFilterData.music || {},
+        experience: initialFilterData.experience || '',
+        degree: initialFilterData.degree || '',
+        rating: initialFilterData.rating || 0,
+    });
+
+    /////////// NEW SEARCH ///////////
+
+    const [newFilterData, setNewFilterData] = useState(null);   // changed filter data stored here
+
+    // Errors state
+    const [errors, setErrors] = useState({
+        town: { hasError: false, message: '' },
+        childAgeGroup: { hasError: false, message: '' },
+        workTime: { hasError: false, message: '' },
+        timeTable: { hasError: false, message: '' },
+        experience: { hasError: false, message: '' },
+        degree: { hasError: false, message: '' },
+    });
+
+    const [snackbarMessage, setSnackbarMessage] = useState(''); // Error Message
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleOpenDialog = () => {
+        setNewFilterData(structuredClone(filterData));
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    const handleNewSearchSubmit = () => {
+        if (!ValidateFilterData(newFilterData, errors, setErrors, setSnackbarMessage)) return;
+
+        const flatTimetable = FlattenTimetable(newFilterData.timeTable);
+        const flatLanguages = FlattenSkills(newFilterData.languages, 'languages');
+        const flatMusic = FlattenSkills(newFilterData.music, 'music');
+
+        const queryParams = new URLSearchParams({
+            ...newFilterData,
+            ...flatTimetable,
+            ...flatLanguages,
+            ...flatMusic
+        }).toString();
+        window.location.href = `/search/results?${queryParams}`;
+    };
+
+    
+    const renderDialog = () => (
+        <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
+            <DialogTitle><p className='button-text'>Αναζήτηση Νταντάς</p></DialogTitle>
+            <DialogContent>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <FormTown formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <FormChildAgeGroup formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <FormWorkTime formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <FormTimeTable formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <FormExperience formData={newFilterData} setFormData={setNewFilterData} />
+                    <FormDegree formData={newFilterData} setFormData={setNewFilterData} />
+                    <FormSkills formData={newFilterData} setFormData={setNewFilterData} />
+                    <FormRating formData={newFilterData} setFormData={setNewFilterData} />
+                </Box>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDialog} sx={{ color: 'var(--clr-black)' }}>
+                    <p className='button-text'>Ακύρωση</p>
+                </Button>
+                <Button variant="contained" onClick={handleNewSearchSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}>
+                    <p className='button-text'>Αναζήτηση</p>
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+
+    /////////////// END NEW SEARCH ///////////////
+    
     return (
         <>
             <PageTitle title="CareNest - Αποτελέσματα Αναζήτησης" />
             <Breadcrumbs />
-            <h1>Αποτελέσματα Αναζήτησης</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Αποτελέσματα Αναζήτησης</h1>
+            <Box sx={{ margin: '1rem' }}>
+                <Box sx={{
+                    width: { xs: '100%', lg: '260px' },
+                    borderRadius: '1rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                    alignItems: 'center',
+                }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleOpenDialog}
+                        sx={{
+                            width: '100%',
+                            backgroundColor: 'var(--clr-violet)',
+                            '&:hover': { opacity: 0.8 },
+                            padding: '0.5rem 0',
+                            gap: '0.5rem',
+                        }}
+                    >
+                        <SearchIcon sx={{ fontSize: 35 }} />
+                        <p className="big-button-text">Νέα Αναζήτηση</p>
+                    </Button>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            width: '100%',
+                            backgroundColor: 'var(--clr-error)',
+                            '&:hover': { opacity: 0.8 },
+                            padding: '0.5rem 0',
+                            gap: '0.5rem'
+                        }}
+                    >
+                        <FavoriteIcon sx={{ fontSize: 30 }} />
+                        <p className="big-button-text">Αγαπημένα</p>
+                    </Button>
+                </Box>
+            </Box>
             <div>
                 <h2>Filter Data:</h2>
-                <p>Location: {filterData.town}</p>
+                <p>Town: {filterData.town}</p>
                 <p>Child Age Group: {filterData.childAgeGroup}</p>
                 <p>Work Time: {filterData.workTime}</p>
                 <h3>Timetable:</h3>
@@ -67,6 +215,8 @@ function Results() {
                 <h3>Rating:</h3>
                 <p>{filterData.rating}</p>
             </div>
+            {renderDialog()}
+            <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
         </>
     );
 }
