@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid2, Box, Card, CardContent, CardActionArea, CardActions, IconButton } from '@mui/material';
+import { Box, Card, CardContent, CardActionArea, CardActions, IconButton, Pagination, Skeleton } from '@mui/material';
 import { getDocs, getDoc, collection, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 
@@ -131,6 +131,9 @@ function ResultsItem({ item }) {
 
 function ResultsContainer({ filterData }) {
     const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 6;
 
     useEffect(() => {
         const fetchJobPostings = async () => {
@@ -159,29 +162,45 @@ function ResultsContainer({ filterData }) {
                 console.log('Result Data:', validUsers); // Print result data to the console
             } catch (error) {
                 console.error("Error fetching job postings or user data:", error.message, error.stack);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchJobPostings();
     }, [filterData]);
 
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+
+    const paginatedResults = results.slice((page - 1) * itemsPerPage, page * itemsPerPage); // Current results to display on the page
+    const totalPages = Math.ceil(results.length / itemsPerPage);
+
     return (
-        <Box
-            sx={{
-                flexGrow: 1,
-                margin: '1rem',
-                display: 'grid',
-                gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' },
-                gap: 1.5,
-        }}>
-            {results.map((item, index) => (
-                <Box key={index}>
-                    <ResultsItem item={item} />
+        <Box sx={{ flexGrow: 1, margin: '1rem', color: 'var(--clr-black)', display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
+            {loading ? (
+                // Create skeleton items while loading
+                Array.from(new Array(itemsPerPage)).map((index) => (
+                    <Skeleton key={index} variant="rectangular" width="100%" height={130} />
+                ))
+            ) : (
+                // Display the results
+                paginatedResults.map((item, index) => (
+                    <Box key={index} sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        <ResultsItem item={item} />
+                    </Box>
+                ))
+            )}
+            {/* Pagination */}
+            {!loading && (
+                // Pagination component is inside grid, so use gridColumn to span the entire row
+                <Box sx={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                    <Pagination count={totalPages} page={page} onChange={handleChange} />
                 </Box>
-            ))}
+            )}
         </Box>
     );
 }
-
 
 export { ResultsContainer, ResultsItem };
