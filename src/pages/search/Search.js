@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Snackbar, Alert } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
@@ -10,10 +10,81 @@ import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, validateTimeT
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
 
+// Validate the filter data and return true if all fields are correct
+function validateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
+    let pass = true;
+    const newSnackbarMessages = [];
+    let updatedErrors = { ...errors };
 
+    if (!filterData.town || errors.town.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Πόλη');
+    }
+    if (!filterData.childAgeGroup || errors.childAgeGroup.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Ηλικιακή Ομάδα');
+    }
+    if (!filterData.workTime || errors.workTime.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Ώρες Εργασίας');
+    }
+    const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
+    updatedErrors = {
+        ...updatedErrors,
+        timeTable: validationResult
+    };
+    setErrors(updatedErrors);
+    if (validationResult.hasError) {
+        pass = false;
+        newSnackbarMessages.push('Χρονοδιάγραμμα');
+    }
+
+    if (newSnackbarMessages.length > 0) {
+        setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+    } else {
+        setSnackbarMessage('Όλα τα πεδία είναι σωστά συμπληρωμένα');
+    }
+    return pass;
+}
+
+// Snackbar for errors
+function ErrorSnackbar({ snackbarMessage, setSnackbarMessage }) {
+    return (
+        <Snackbar
+            open={!!snackbarMessage}
+            autoHideDuration={6000}
+            onClose={() => setSnackbarMessage('')}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            sx={{ marginRight: '0.5rem' }}
+        >
+            <Alert onClose={() => setSnackbarMessage('')} severity="error">
+                {snackbarMessage}
+            </Alert>
+        </Snackbar>
+    );
+}
+
+// Main component
 function Search() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
     const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    // Filter data state
     const [filterData, setFilterData] = useState({
         town: '',
         childAgeGroup: '',
@@ -42,6 +113,19 @@ function Search() {
         },
         rating: 0,
     });
+    
+    // Set the filter data to the user's data if it exists
+    useEffect(() => {
+        if (userData) {
+            setFilterData(prevData => ({
+                ...prevData,
+                town: userData.town || '',
+                childAgeGroup: userData.childAgeGroup || ''
+            }));
+        }
+    }, [userData]);
+    
+    // Errors state
     const [errors, setErrors] = useState({
         town: { hasError: false, message: '' },
         childAgeGroup: { hasError: false, message: '' },
@@ -56,57 +140,9 @@ function Search() {
         return <Loading />;
     }
 
-    const validate = () => {
-        let pass = true;
-        const newSnackbarMessages = [];
-        let updatedErrors = { ...errors };
+    /////////////// SUBMIT & TURN DATA INTO URL PARAMS ///////////////
 
-        if (!filterData.town || errors.town.hasError) {
-            pass = false;
-            updatedErrors = {
-                ...updatedErrors,
-                town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-            };
-            setErrors(updatedErrors);
-            newSnackbarMessages.push('Πόλη');
-        }
-        if (!filterData.childAgeGroup || errors.childAgeGroup.hasError) {
-            pass = false;
-            updatedErrors = {
-                ...updatedErrors,
-                childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-            };
-            setErrors(updatedErrors);
-            newSnackbarMessages.push('Ηλικιακή Ομάδα');
-        }
-        if (!filterData.workTime || errors.workTime.hasError) {
-            pass = false;
-            updatedErrors = {
-                ...updatedErrors,
-                workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
-            };
-            setErrors(updatedErrors);
-            newSnackbarMessages.push('Ώρες Εργασίας');
-        }
-        const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
-        updatedErrors = {
-            ...updatedErrors,
-            timeTable: validationResult
-        };
-        setErrors(updatedErrors);
-        if (validationResult.hasError) {
-            pass = false;
-            newSnackbarMessages.push('Χρονοδιάγραμμα');
-        }
-
-        if (newSnackbarMessages.length > 0) {
-            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
-        } else {
-            setSnackbarMessage('Όλα τα πεδία είναι σωστά συμπληρωμένα');
-        }
-        return pass;
-    };
-
+    // Flatten the timetable object to a flat object
     const flattenTimetable = (timetable) => {
         const flatTimetable = {};
         Object.keys(timetable).forEach(day => {
@@ -116,7 +152,8 @@ function Search() {
         });
         return flatTimetable;
     };
-
+    
+    // Flatten the skills object to a flat object
     const flattenSkills = (obj, prefix) => {
         const flatObject = {};
         Object.keys(obj).forEach(key => {
@@ -125,8 +162,9 @@ function Search() {
         return flatObject;
     };
 
+    // Handle the submit button
     const handleSubmit = async () => {
-        if (!validate()) return;
+        if (!validateFilterData(filterData, errors, setErrors, setSnackbarMessage)) return;
 
         console.log('Search for babysitter filters:', filterData);
 
@@ -134,6 +172,7 @@ function Search() {
         const flatLanguages = flattenSkills(filterData.languages, 'languages');
         const flatMusic = flattenSkills(filterData.music, 'music');
 
+        // Turn the filter data into URL parameters
         const queryParams = new URLSearchParams({
             ...filterData,
             ...flatTimetable,
@@ -240,18 +279,7 @@ function Search() {
                 )}
             </Box>
 
-            {/* Error Snackbar */}
-            <Snackbar
-                open={!!snackbarMessage}
-                autoHideDuration={6000}
-                onClose={() => setSnackbarMessage('')}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                sx={{ marginRight: '0.5rem' }}
-            >
-                <Alert onClose={() => setSnackbarMessage('')} severity="error">
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
+            <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
         </>
     );
 }

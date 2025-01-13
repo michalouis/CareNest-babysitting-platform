@@ -126,7 +126,7 @@ const renderNannyData = (userData) => (
         <h2>Εμπειρία</h2>
         <TextField
             label="Εμπειρία"
-            value={userData.experience.replace('months', ' μήνες')}
+            value={`${userData.experience} μήνες`}
             slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
             fullWidth
             variant="outlined"

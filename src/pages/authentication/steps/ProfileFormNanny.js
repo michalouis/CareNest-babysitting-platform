@@ -636,12 +636,12 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.experience}
                 InputProps={{ style: { textAlign: 'left' } }}
             >
-                <MenuItem value="0-6months">0-6 μήνες</MenuItem>
-                <MenuItem value="6-12months">6-12 μήνες</MenuItem>
-                <MenuItem value="12-18months">12-18 μήνες</MenuItem>
-                <MenuItem value="18-24months">18-24 μήνες</MenuItem>
-                <MenuItem value="24-36months">24-36 μήνες</MenuItem>
-                <MenuItem value="36+months">36+ μήνες</MenuItem>
+                <MenuItem value="0-6">0-6 μήνες</MenuItem>
+                <MenuItem value="6-12">6-12 μήνες</MenuItem>
+                <MenuItem value="12-18">12-18 μήνες</MenuItem>
+                <MenuItem value="18-24">18-24 μήνες</MenuItem>
+                <MenuItem value="24-36">24-36 μήνες</MenuItem>
+                <MenuItem value="36+">36+ μήνες</MenuItem>
             </TextField>
 
             <h2>Σπουδές</h2>
