@@ -149,12 +149,34 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                     ...formData,
                     profileCreated: true,
                     partnershipActive: false,
+                    favorites: [],
+                    uid: user.uid,
                 });
                 if (userData) {
                     navigate('/profile'); // Navigate to the profile page if userData exists
                 } else {
                     navigate('/signup-complete'); // Navigate to the signup complete page if userData does not exist
                 }
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Update the profile
+    const handleProfileUpdate = async () => {
+        if (!validate()) return;
+
+        setLoading(true);
+        try {
+            const user = FIREBASE_AUTH.currentUser;
+            if (user) {
+                await updateDoc(doc(FIREBASE_DB, 'users', user.uid), {
+                    ...formData,
+                });
+                navigate('/profile'); // Navigate to the profile page after update
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -337,7 +359,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // Submit the form
     const handleConfirmSubmit = () => {
         setOpenConfirmDialog(false);
-        handleProfileCreation();
+        if (formData.profileCreated) {
+            handleProfileUpdate();
+        } else {
+            handleProfileCreation();
+        }
     };
 
     return (

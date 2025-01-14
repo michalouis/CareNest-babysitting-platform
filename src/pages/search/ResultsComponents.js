@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, CardActionArea, CardActions, IconButton, Pagination, Skeleton } from '@mui/material';
-import { getDocs, getDoc, collection, doc } from 'firebase/firestore';
-import { FIREBASE_DB } from '../../firebase';
+import { getDocs, getDoc, collection, doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -22,8 +22,8 @@ const translateMap = {
     flute: 'Φλάουτο'
 };
 
-function ResultsItem({ item }) {
-    const { firstName, lastName, experience, degrees, languages, music, score } = item;
+function ResultsItem({ item, favorites, setFavorites }) {
+    const { firstName, lastName, experience, degrees, languages, music, score, uid } = item;
 
     const ShowSkills = (languages, music) => {
         const skills = { ...languages, ...music };
@@ -54,6 +54,34 @@ function ResultsItem({ item }) {
     };
 
     const hasSkills = Object.values({ ...languages, ...music }).some(value => value);
+
+    // Handle favorite button click
+    const handleFavoriteClick = async () => {
+        const user = FIREBASE_AUTH.currentUser;
+        if (!user) return;
+
+        // Update the user's favorites list
+        const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+        try {
+            // If the job Posting is already in the favorites list, remove them
+            if (favorites.includes(uid)) {
+                await updateDoc(userDocRef, {
+                    favorites: arrayRemove(uid)
+                });
+                setFavorites((prevFavorites) => prevFavorites.filter(favoriteId => favoriteId !== uid));
+            } else {
+                // If the job Posting is not in the favorites list, add them
+                await updateDoc(userDocRef, {
+                    favorites: arrayUnion(uid)
+                });
+                setFavorites((prevFavorites) => [...prevFavorites, uid]);
+            }
+        } catch (error) {
+            console.error('Error updating favorites:', error);
+        }
+    };
+
+    const isFavorited = favorites.includes(uid);
 
     return (
         <Card sx={{
@@ -107,10 +135,10 @@ function ResultsItem({ item }) {
             {/* Favorite Icon */}
             <CardActions sx={{ marginRight: '0.5rem' }} >
                 <IconButton
-                    // onClick={() => { /* Handle favorite click event */ }}
+                    onClick={handleFavoriteClick}
                     sx={{ justifyItems: 'center' }}
-                    >
-                    <FavoriteIcon sx={{ fontSize: '3rem' }}/>
+                >
+                    <FavoriteIcon sx={{ fontSize: '3rem', color: isFavorited ? 'red' : '' }} />
                 </IconButton>
             </CardActions>
         </Card>
@@ -121,83 +149,121 @@ function ResultsContainer({ filterData }) {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
+    const [favorites, setFavorites] = useState([]);
     const itemsPerPage = 6;
 
-    useEffect(() => {
-        const fetchJobPostings = async () => {
-            try {
-                const jobPostingsSnapshot = await getDocs(collection(FIREBASE_DB, 'jobPostings'));
-                const jobPostings = jobPostingsSnapshot.docs.map(doc => {
-                    return { id: doc.id, ...doc.data() };
-                });
-    
-                console.log('Filtered Data:', filterData);
-                const users = await Promise.all(
-                    jobPostings.map(async (jobPosting) => {
-                        const userDoc = await getDoc(doc(FIREBASE_DB, 'users', jobPosting.id));
-                        if (userDoc.exists()) {
-                            console.log('User Data:', userDoc.data()); // Print user data to the console
-                            return { ...userDoc.data(), jobPostingData: jobPosting };
-                        } else {
-                            console.error('No such user:', jobPosting.id);
-                            return null;
-                        }
-                    })
-                );
-    
-                const validUsers = users.filter(user => {
-                    if (user === null) return false;
-    
-                    const { jobPostingData } = user;
-    
-                    // Check town
-                    if (user.town !== filterData.town) return false;
-    
-                    // Check child age group
-                    if (!jobPostingData.ageGroups.includes(filterData.childAgeGroup)) return false;
-    
-                    // Check work time
-                    if (jobPostingData.employmentType !== filterData.workTime) return false;
-    
-                    // Check babysitting place
-                    if (jobPostingData.babysittingPlace !== 'both' && jobPostingData.babysittingPlace !== filterData.babysittingPlace) return false;
-    
-                    // Check experience by the index of the experienceLevels array
-                    const experienceLevels = ['0-6', '6-12', '12-18', '18-24', '24-36', '36+'];
-                    const userExperienceIndex = experienceLevels.indexOf(user.experience);
-                    const filterExperienceIndex = experienceLevels.indexOf(filterData.experience);
-                    if (filterData.experience && userExperienceIndex < filterExperienceIndex) return false;
-    
-                    // Check degree, some: check if at least one degree matches the filter
-                    if (filterData.degree && !user.degrees.some(degree => degree.degreeLevel === filterData.degree)) return false;
-    
-                    // // Check languages
-                    for (const [language, value] of Object.entries(filterData.languages)) {
-                        if (value && !user.languages[language]) return false;
-                    }
-    
-                    // // Check music
-                    for (const [instrument, value] of Object.entries(filterData.music)) {
-                        if (value && !user.music[instrument]) return false;
-                    }
-    
-                    // // Check rating
-                    if (user.score < filterData.rating) return false;
-    
-                    return true;
-                });
-    
-                setResults(validUsers);
-                console.log('Result Data:', validUsers); // Print result data to the console
-            } catch (error) {
-                console.error("Error fetching job postings or user data:", error.message, error.stack);
-            } finally {
-                setLoading(false);
+    // Fetch user's favorites
+    const fetchFavorites = async () => {
+        try {
+            const user = FIREBASE_AUTH.currentUser;
+            if (!user) {
+                console.log("No user is currently logged in.");
+                return;
             }
-        };
     
-        fetchJobPostings();
-    }, [filterData]);
+            // Fetch user document
+            const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                console.log("Fetched favorites:", userData.favorites);
+                setFavorites(userData.favorites || []);
+            } else {
+                console.log("User document does not exist.");
+            }
+        } catch (error) {
+            console.error("Error fetching favorites:", error.message, error.stack);
+        }
+    };
+    
+    // Fetch job postings based on the filter data
+    const fetchJobPostings = async () => {
+        try {
+            // Fetch all job postings
+            const jobPostingsSnapshot = await getDocs(collection(FIREBASE_DB, 'jobPostings'));
+            const jobPostings = jobPostingsSnapshot.docs.map(doc => {
+                return { id: doc.id, ...doc.data() };
+            });
+    
+            // Fetch user data for each job posting (user's data include job posting data)
+            const nannies = await Promise.all(
+                jobPostings.map(async (jobPosting) => {
+                    const userDoc = await getDoc(doc(FIREBASE_DB, 'users', jobPosting.id));
+                    if (userDoc.exists()) {
+                        console.log('User Data:', userDoc.data()); // Print user data to the console
+                        return { ...userDoc.data(), jobPostingData: jobPosting };
+                    } else {
+                        console.error('No such user:', jobPosting.id);
+                        return null;
+                    }
+                })
+            );
+    
+            // Filter the nannies based on the filter data
+            const validNannies = nannies.filter(user => {
+                if (user === null) return false;
+    
+                const { jobPostingData } = user;
+    
+                // Check town
+                if (user.town !== filterData.town) return false;
+    
+                // Check child age group
+                if (!jobPostingData.ageGroups.includes(filterData.childAgeGroup)) return false;
+    
+                // Check work time
+                if (jobPostingData.employmentType !== filterData.workTime) return false;
+    
+                // Check babysitting place
+                if (jobPostingData.babysittingPlace !== 'both' && jobPostingData.babysittingPlace !== filterData.babysittingPlace) return false;
+    
+                // Check experience by the index of the experienceLevels array
+                const experienceLevels = ['0-6', '6-12', '12-18', '18-24', '24-36', '36+'];
+                const userExperienceIndex = experienceLevels.indexOf(user.experience);
+                const filterExperienceIndex = experienceLevels.indexOf(filterData.experience);
+                if (filterData.experience && userExperienceIndex < filterExperienceIndex) return false;
+    
+                // Check degree, some: check if at least one degree matches the filter
+                if (filterData.degree && !user.degrees.some(degree => degree.degreeLevel === filterData.degree)) return false;
+    
+                // Check languages
+                for (const [language, value] of Object.entries(filterData.languages)) {
+                    if (value && !user.languages[language]) return false;
+                }
+    
+                // Check music
+                for (const [instrument, value] of Object.entries(filterData.music)) {
+                    if (value && !user.music[instrument]) return false;
+                }
+    
+                // Check rating
+                if (user.score < filterData.rating) return false;
+    
+                return true;
+            });
+    
+            setResults(validNannies);
+            console.log('Result Data:', validNannies); // Print result data to the console
+        } catch (error) {
+            console.error("Error fetching job postings or user data:", error.message, error.stack);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    // Fetch user's favorites and job postings based on the filter data
+    useEffect(() => {
+        const unsubscribe = FIREBASE_AUTH.onAuthStateChanged((user) => {
+            if (user) {
+                fetchFavorites();
+                fetchJobPostings();
+            } else {
+                console.log("No user is currently logged in.");
+            }
+        });
+    
+        return () => unsubscribe();
+    }, []);
 
     const handleChange = (event, value) => {
         setPage(value);
@@ -218,7 +284,7 @@ function ResultsContainer({ filterData }) {
                     // Display the results
                     paginatedResults.map((item, index) => (
                         <Box key={index} sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                            <ResultsItem item={item} />
+                            <ResultsItem item={item} favorites={favorites} setFavorites={setFavorites} />
                         </Box>
                     ))
                 ) : (
