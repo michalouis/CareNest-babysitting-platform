@@ -81,17 +81,17 @@ function ViewJobPosting({ jobPostingData }) {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            {timePeriods.map((time) => (
-                                <TableCell key={time} align="center" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.2rem' }}>{time}</TableCell>
+                            {daysOfWeek.map((day) => (
+                                <TableCell key={day} align="center" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.2rem' }}>{day}</TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {daysOfWeek.map((day) => (
-                            <TableRow key={day}>
-                                <TableCell component="th" scope="row" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.25rem', width: '5px' }}>{day}</TableCell>
-                                {timePeriods.map((time) => (
-                                    <TableCell key={time} align="center" sx={{ padding: '5px' }}>
+                        {timePeriods.map((time) => (
+                            <TableRow key={time}>
+                                <TableCell component="th" scope="row" sx={{ padding: '5px', fontWeight: 'bold', fontSize: '1.25rem', width: '5px' }}>{time}</TableCell>
+                                {daysOfWeek.map((day) => (
+                                    <TableCell key={day} align="center" sx={{ padding: '5px' }}>
                                         <Button
                                             sx={{
                                                 backgroundColor: jobPostingData.timetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',

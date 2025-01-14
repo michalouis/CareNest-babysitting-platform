@@ -25,6 +25,9 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
         recommendations: userData.recommendations,
         languages: userData.languages,
         music: userData.music,
+        profileCreated: userData.profileCreated,
+        partnershipActive: userData.partnershipActive,
+        score: userData.score,
     } : {
         firstName: firstName,
         lastName: lastName,
@@ -53,6 +56,9 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             violin: false,
             flute: false,
         },
+        profileCreated: false,
+        partnershipActive: false,
+        score: 5,
     });
     
     // error states for the form fields
@@ -329,12 +335,33 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                     ...formData,
                     profileCreated: true,
                     partnershipActive: false,
+                    score: (Math.random() * (4.99 - 4.01) + 4.01).toFixed(2),
                 });
                 if (userData) {
                     navigate('/profile'); // Navigate to the profile page if userData exists
                 } else {
                     navigate('/signup-complete'); // Navigate to the signup complete page if userData does not exist
                 }
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Update the profile
+    const handleProfileUpdate = async () => {
+        if (!validate()) return;
+
+        setLoading(true);
+        try {
+            const user = FIREBASE_AUTH.currentUser;
+            if (user) {
+                await updateDoc(doc(FIREBASE_DB, 'users', user.uid), {
+                    ...formData,
+                });
+                navigate('/profile'); // Navigate to the profile page after update
             }
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -498,7 +525,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // Submit the form
     const handleConfirmSubmit = () => {
         setOpenConfirmDialog(false);
-        handleProfileCreation();
+        if (formData.profileCreated) {
+            handleProfileUpdate();
+        } else {
+            handleProfileCreation();
+        }
     };
 
     return (
