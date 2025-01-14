@@ -42,6 +42,15 @@ function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
         setErrors(updatedErrors);
         newSnackbarMessages.push('Ώρες Εργασίας');
     }
+    if (!filterData.babysittingPlace || errors.babysittingPlace.hasError) {
+        pass = false;
+        updatedErrors = {
+            ...updatedErrors,
+            babysittingPlace: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+        };
+        setErrors(updatedErrors);
+        newSnackbarMessages.push('Χώρος Φύλαξης');
+    }
     const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
     updatedErrors = {
         ...updatedErrors,
@@ -56,7 +65,7 @@ function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
     if (newSnackbarMessages.length > 0) {
         setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
     } else {
-        setSnackbarMessage('Όλα τα πεδία είναι σωστά συμπληρωμένα');
+        setSnackbarMessage('');
     }
     return pass;
 }
@@ -171,6 +180,44 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
     );
 }
 
+function FormBabysittingPlace({ formData, setFormData, errors, setErrors }) {
+    const handleBlur = () => {
+        if (!formData.babysittingPlace) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                babysittingPlace: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            }));
+        } else {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                babysittingPlace: { hasError: false, message: '' }
+            }));
+        }
+    };
+
+    return (
+        <TextField
+            label="Χώρος Φύλαξης"
+            name="babysittingPlace"
+            select
+            value={formData.babysittingPlace}
+            onChange={(e) => setFormData({
+                ...formData,
+                babysittingPlace: e.target.value
+            })}
+            onBlur={handleBlur}
+            fullWidth
+            error={errors.babysittingPlace.hasError}
+            helperText={errors.babysittingPlace.message}
+            InputProps={{ style: { textAlign: 'left' } }}
+        >
+            <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
+            <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
+            <MenuItem value="both">Και στα δύο</MenuItem>
+        </TextField>
+    );
+}
+
 function FormWorkTime({ formData, setFormData, errors, setErrors }) {
     const handleBlur = () => {
         if (!formData.workTime) {
@@ -205,6 +252,8 @@ function FormWorkTime({ formData, setFormData, errors, setErrors }) {
         </TextField>
     );
 }
+
+
 
 const validateTimeTable = ({ timeTable, workTime }) => {
     let invalid = false;
@@ -561,4 +610,4 @@ function FormRating({ formData, setFormData }) {
     );
 }
 
-export { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData };
+export { FormTown, FormChildAgeGroup, FormWorkTime, FormBabysittingPlace, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData };

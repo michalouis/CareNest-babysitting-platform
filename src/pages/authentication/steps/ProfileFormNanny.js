@@ -335,7 +335,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                     ...formData,
                     profileCreated: true,
                     partnershipActive: false,
-                    score: (Math.random() * (4.99 - 4.01) + 4.01).toFixed(2),
+                    score: (Math.random() * (4.99 - 2.01) + 2.01).toFixed(2),
                 });
                 if (userData) {
                     navigate('/profile'); // Navigate to the profile page if userData exists

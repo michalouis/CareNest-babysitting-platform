@@ -294,7 +294,7 @@ function JobPostingForm({ userData, setSaved }) {
                 disabled={!editMode}
             >
                 <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
-                <MenuItem value="nanny-home">Σπίτι Μου</MenuItem>
+                <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
                 <MenuItem value="both">Και στα δύο</MenuItem>
             </TextField>
 

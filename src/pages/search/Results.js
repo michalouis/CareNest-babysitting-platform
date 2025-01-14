@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating } from './Filters';
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FormBabysittingPlace } from './Filters';
 import { FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
 import { ResultsContainer } from './ResultsComponents';
 
@@ -67,6 +67,7 @@ function Results() {
         town: initialFilterData.town || '',
         childAgeGroup: initialFilterData.childAgeGroup || '',
         workTime: initialFilterData.workTime || '',
+        babysittingPlace: initialFilterData.babysittingPlace || '',
         timeTable: initialFilterData.timeTable || {},
         languages: initialFilterData.languages || {},
         music: initialFilterData.music || {},
@@ -84,6 +85,7 @@ function Results() {
         town: { hasError: false, message: '' },
         childAgeGroup: { hasError: false, message: '' },
         workTime: { hasError: false, message: '' },
+        babysittingPlace: { hasError: false, message: '' },
         timeTable: { hasError: false, message: '' },
         experience: { hasError: false, message: '' },
         degree: { hasError: false, message: '' },
@@ -126,6 +128,7 @@ function Results() {
                     <FormTown formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
                     <FormChildAgeGroup formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
                     <FormWorkTime formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <FormBabysittingPlace formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
                     <FormTimeTable formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
                     <FormExperience formData={newFilterData} setFormData={setNewFilterData} />
                     <FormDegree formData={newFilterData} setFormData={setNewFilterData} />
@@ -187,32 +190,6 @@ function Results() {
                     </Button>
                 </Box>
             </Box>
-            {/* <div>
-                <h2>Filter Data:</h2>
-                <p>Town: {filterData.town}</p>
-                <p>Child Age Group: {filterData.childAgeGroup}</p>
-                <p>Work Time: {filterData.workTime}</p>
-                <h3>Timetable:</h3>
-                {Object.keys(filterData.timeTable).map(day => (
-                    <div key={day}>
-                        <strong>{day}:</strong> {filterData.timeTable[day].join(', ')}
-                    </div>
-                ))}
-                <p>Experience: {filterData.experience}</p>
-                <p>Degree: {filterData.degree}</p>
-                <h3>Languages:</h3>
-                <p>English: {filterData.languages.english ? 'Yes' : 'No'}</p>
-                <p>German: {filterData.languages.german ? 'Yes' : 'No'}</p>
-                <p>French: {filterData.languages.french ? 'Yes' : 'No'}</p>
-                <p>Spanish: {filterData.languages.spanish ? 'Yes' : 'No'}</p>
-                <h3>Music Skills:</h3>
-                <p>Piano: {filterData.music.piano ? 'Yes' : 'No'}</p>
-                <p>Guitar: {filterData.music.guitar ? 'Yes' : 'No'}</p>
-                <p>Violin: {filterData.music.violin ? 'Yes' : 'No'}</p>
-                <p>Flute: {filterData.music.flute ? 'Yes' : 'No'}</p>
-                <h3>Rating:</h3>
-                <p>{filterData.rating}</p>
-            </div> */}
             {renderDialog()}
             <ResultsContainer filterData={filterData} />
             <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />

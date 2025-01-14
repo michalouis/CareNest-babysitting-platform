@@ -5,7 +5,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
+import { FormTown, FormChildAgeGroup, FormWorkTime, FormBabysittingPlace, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
@@ -37,6 +37,7 @@ function Search() {
         town: '',
         childAgeGroup: '',
         workTime: '',
+        babysittingPlace: '',
         timeTable: {
             '00:00-04:00': [],
             '04:00-08:00': [],
@@ -78,6 +79,7 @@ function Search() {
         town: { hasError: false, message: '' },
         childAgeGroup: { hasError: false, message: '' },
         workTime: { hasError: false, message: '' },
+        babysittingPlace: { hasError: false, message: '' },
         timeTable: false,
         experience: { hasError: false, message: '' },
         degree: { hasError: false, message: '' },
@@ -149,6 +151,8 @@ function Search() {
                             <FormTown formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             <h3>Ηλικιακή Ομάδα Παιδιού*</h3>
                             <FormChildAgeGroup formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
+                            <h3>Χώρος Φύλαξης του Παιδιού*</h3>
+                            <FormBabysittingPlace formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             <h3>Διάρκεια Απασχόλησης της Νταντάς*</h3>
                             <FormWorkTime formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             <h3>
