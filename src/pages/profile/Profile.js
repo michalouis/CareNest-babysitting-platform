@@ -11,6 +11,8 @@ import { deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'fir
 import '../../style.css';
 
 import FileIcon from '@mui/icons-material/Description';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GradeIcon from '@mui/icons-material/Grade';
 
 // translate data to greek
 const translateMap = {
@@ -28,6 +30,34 @@ const translateMap = {
     flute: 'Φλάουτο'
 };
 
+const renderProfilePicture = (userData) => (
+    <Box sx={{
+        display: 'flex', 
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: 'var(--clr-white)',
+        padding: '1rem',
+        borderRadius: '1rem',
+        boxShadow: '2',
+    }}>
+        <Box sx={{ 
+            display: 'flex',
+            alignItems: 'center',
+        }}>
+            <AccountCircleIcon style={{ fontSize: '7rem' }} />
+        </Box>
+        {userData.score && (
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: 'var(--clr-gold)',
+            }}>
+                <GradeIcon sx={{ fontSize: '2.5rem', marginRight: '0.5rem' }} />
+                <p className='big-button-text-gold'>{userData.score}</p>
+            </Box>
+        )}
+    </Box>
+);
 
 // data common to parents/nannies
 const renderCommonData = (userData) => (
@@ -270,6 +300,7 @@ function Profile() {
                         gap: '0.5rem',
                         alignItems: 'center'
                     }}>
+                        {renderProfilePicture(userData)}    {/* Profile picture */}
                         <Button
                             variant="contained"
                             sx={{

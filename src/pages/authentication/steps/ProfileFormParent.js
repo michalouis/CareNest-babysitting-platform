@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UploadIcon from '@mui/icons-material/Upload';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // if userData is passed function is used for editing profile,
     // else for creating profile
     const [formData, setFormData] = useState(userData ? {
+        profilePhoto: userData.profilePhoto,
         firstName: userData.firstName,
         lastName: userData.lastName,
         amka: userData.amka,
@@ -23,6 +28,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
         childAgeGroup: userData.childAgeGroup,
         aboutMe: userData.aboutMe,
     } : {
+        profilePhoto: '',
         firstName: firstName,
         lastName: lastName,
         amka: amka,
@@ -384,6 +390,39 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             position: 'relative'
         }}>
             <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+            <Box sx={{ 
+                display: 'flex',
+                alignItems: 'center', 
+                gap: '1rem' 
+            }}>
+                <AccountCircleIcon style={{ fontSize: 100 }} />
+                <Button
+                    variant="contained"
+                    component="label"
+                    sx={{ backgroundColor: 'var(--clr-violet)' }}
+                    startIcon={<UploadIcon />}
+                >
+                    <p className='button-text'>Ανεβάστε φωτογραφία</p>
+                    <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setFormData({ ...formData, profilePhoto: e.target.files[0].name })}
+                    />
+                </Button>
+                {formData.profilePhoto ? (
+                    <p>{formData.profilePhoto}</p>
+                ) : (
+                    <p>Δεν έχετε ανεβάσει φωτογραφία</p>
+                )}
+            </Box>
+            <Button
+                variant="contained"
+                sx={{ backgroundColor: 'var(--clr-error)' }}
+                startIcon={<DeleteIcon />}
+                onClick={() => setFormData({ ...formData, profilePhoto: '' })}
+            >
+                <p className='button-text'>Διαγραφή φωτογραφίας</p>
+            </Button>
             <h2>Προσωπικά Στοιχεία</h2>
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
             <Tooltip title="This field can't be changed" arrow>

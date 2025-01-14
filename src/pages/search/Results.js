@@ -66,7 +66,7 @@ function Results() {
     initialFilterData.music = parseSkills(initialFilterData, 'music');
 
     // Ensure all required properties are initialized
-    const [filterData, setFilterData] = useState({
+    const filterData = {
         town: initialFilterData.town || '',
         childAgeGroup: initialFilterData.childAgeGroup || '',
         workTime: initialFilterData.workTime || '',
@@ -87,7 +87,7 @@ function Results() {
         experience: initialFilterData.experience || '',
         degree: initialFilterData.degree || '',
         rating: initialFilterData.rating || 0,
-    });
+    };
 
     /////////// NEW SEARCH ///////////
 

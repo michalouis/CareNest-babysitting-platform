@@ -5,9 +5,16 @@ import { updateDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../../firebase';
 import '../../../style.css';
 
-function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UploadIcon from '@mui/icons-material/Upload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+
+function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     
     const [formData, setFormData] = useState(userData ? {
+        profilePhoto: userData.profilePhoto,
+        score: userData.score,
         firstName: userData.firstName,
         lastName: userData.lastName,
         amka: userData.amka,
@@ -29,6 +36,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
         partnershipActive: userData.partnershipActive,
         score: userData.score,
     } : {
+        profilePhoto: '',
         firstName: firstName,
         lastName: lastName,
         amka: amka,
@@ -551,6 +559,39 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             textAlign: 'left',
         }}>
             <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+            <Box sx={{ 
+                display: 'flex',
+                alignItems: 'center', 
+                gap: '1rem' 
+            }}>
+                <AccountCircleIcon style={{ fontSize: 100 }} />
+                <Button
+                    variant="contained"
+                    component="label"
+                    sx={{ backgroundColor: 'var(--clr-violet)' }}
+                    startIcon={<UploadIcon />}
+                >
+                    <p className='button-text'>Ανεβάστε φωτογραφία</p>
+                    <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setFormData({ ...formData, profilePhoto: e.target.files[0].name })}
+                    />
+                </Button>
+                {formData.profilePhoto ? (
+                    <p>{formData.profilePhoto}</p>
+                ) : (
+                    <p>Δεν έχετε ανεβάσει φωτογραφία</p>
+                )}
+            </Box>
+            <Button
+                variant="contained"
+                sx={{ backgroundColor: 'var(--clr-error)' }}
+                startIcon={<DeleteIcon />}
+                onClick={() => setFormData({ ...formData, profilePhoto: '' })}
+            >
+                <p className='button-text'>Διαγραφή φωτογραφίας</p>
+            </Button>
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
             <h2>Προσωπικά Στοιχεία</h2>
             <Tooltip title="This field can't be changed" arrow>
@@ -718,6 +759,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     },
                                     width: 'fit-content',
                                 }}
+                                startIcon={<UploadIcon />}
                             >
                                 <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
                                 <input
@@ -745,6 +787,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     opacity: 0.8,
                                 },
                             }}
+                            startIcon={<DeleteIcon />}
                         >
                             <p className='button-text'>Διαγραφή πεδίου σπουδών</p>
                         </Button>
@@ -763,6 +806,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                         },
                         marginBottom: '1rem',
                     }}
+                    startIcon={<AddIcon />}
                 >
                     <p className='button-text'>Προσθήκη Σπουδών</p>
                 </Button>
@@ -796,6 +840,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     },
                                     width: 'fit-content',
                                 }}
+                                startIcon={<UploadIcon />}
                             >
                                 <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
                                 <input
@@ -823,6 +868,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     opacity: 0.8,
                                 },
                             }}
+                            startIcon={<DeleteIcon />}
                         >
                             <p className='button-text'>Διαγραφή Πεδίου Πιστοποιητικού</p>
                         </Button>
@@ -841,6 +887,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                         },
                         marginBottom: '1rem',
                     }}
+                    startIcon={<AddIcon />}
                 >
                     <p className='button-text'>Προσθήκη Πιστοποιητικού</p>
                 </Button>
@@ -874,6 +921,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     },
                                     width: 'fit-content',
                                 }}
+                                startIcon={<UploadIcon />}
                             >
                                 <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
                                 <input
@@ -901,6 +949,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                                     opacity: 0.8,
                                 },
                             }}
+                            startIcon={<DeleteIcon />}
                         >
                             <p className='button-text'>Διαγραφή Πεδίου Σύστασης</p>
                         </Button>
@@ -919,6 +968,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                         },
                         marginBottom: '1rem',
                     }}
+                    startIcon={<AddIcon />}
                 >
                     <p className='button-text'>Προσθήκη Σύστασης</p>
                 </Button>
@@ -1092,4 +1142,4 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     )
 }
 
-export default ProfileFormParent;
+export default ProfileFormNanny;
