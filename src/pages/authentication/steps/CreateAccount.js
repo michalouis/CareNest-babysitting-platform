@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress } from '@mui/material';
+import { Box, TextField, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, LinearProgress, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
@@ -14,6 +14,7 @@ function CreateAccount({ role }) {
     const [lastName, setLastName] = useState('');
     const [amka, setAmka] = useState('');
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     // Error states
     const [emailError, setEmailError] = useState(false);
@@ -85,14 +86,36 @@ function CreateAccount({ role }) {
     // Handle the form submission (check for errors or empty fields), then open confirm dialog
     const handleSubmit = () => {
         let hasError = false;
+        const newSnackbarMessages = [];
     
-        if (emailError || !email) hasError = true;
-        if (passwordError || !password) hasError = true;
-        if (repeatPasswordError || !repeatPassword || repeatPassword !== password) hasError = true;
-        if (firstNameError || !firstName) hasError = true;
-        if (lastNameError || !lastName) hasError = true;
-        if (amkaError || !amka) hasError = true;
+        if (firstNameError || !firstName) {
+            hasError = true;
+            newSnackbarMessages.push('Όνομα');
+        }
+        if (lastNameError || !lastName) {
+            hasError = true;
+            newSnackbarMessages.push('Επίθετο');
+        if (amkaError || !amka) {
+            hasError = true;
+            newSnackbarMessages.push('ΑΜΚΑ');
+        }
+        if (emailError || !email) {
+            hasError = true;
+            newSnackbarMessages.push('Email');
+        }
+        if (passwordError || !password) {
+            hasError = true;
+            newSnackbarMessages.push('Κωδικός');
+        }
+        if (repeatPasswordError || !repeatPassword || repeatPassword !== password) {
+            hasError = true;
+            newSnackbarMessages.push('Επανάληψη Κωδικού');
+        }
+        }
     
+        if (newSnackbarMessages.length > 0) {
+            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+        }
         if (!hasError) {
             handleConfirmDialogOpen();
         }
@@ -312,6 +335,19 @@ function CreateAccount({ role }) {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* Error Snackbar */}
+            <Snackbar
+                open={!!snackbarMessage}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarMessage('')}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                sx={{ marginRight: '0.5rem' }}
+            >
+                <Alert onClose={() => setSnackbarMessage('')} severity="error">
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }
