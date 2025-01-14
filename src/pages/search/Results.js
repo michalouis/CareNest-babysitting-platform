@@ -135,14 +135,29 @@ function Results() {
             <DialogTitle><p className='button-text'>Αναζήτηση Νταντάς</p></DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+                    <h1>Φίλτρα Φύλαξης</h1>
+                    <h3>Πόλη Αναζήτησης*</h3>
                     <FormTown formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <h3>Ηλικιακή Ομάδα Παιδιού*</h3>
                     <FormChildAgeGroup formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <h3>Χώρος Φύλαξης του Παιδιού*</h3>
                     <FormWorkTime formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <h3>Διάρκεια Απασχόλησης της Νταντάς*</h3>
                     <FormBabysittingPlace formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+                    <h3>
+                        Χρονοδιάγραμμα Φύλαξης*: <span style={{ fontWeight: 'normal' }}>Καθορίστε τις ημέρες και ώρες που επιθυμείτε να γίνετε η φύλαξη του παιδιού σας.</span>
+                    </h3>
                     <FormTimeTable formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
+
+                    <h1>Φίλτρα Νταντάς</h1>
+                    <h3>Ελάχιστη εμπειρίας της νταντάς</h3>
                     <FormExperience formData={newFilterData} setFormData={setNewFilterData} />
+                    <h3>Επίπεδο σπουδών της νταντάς</h3>
                     <FormDegree formData={newFilterData} setFormData={setNewFilterData} />
+                    <h3>Δεξιότητες της Νταντάς</h3>
                     <FormSkills formData={newFilterData} setFormData={setNewFilterData} />
+                    <h3>Έλάχιστος μέσος όρος αξιλογήσεων</h3>
                     <FormRating formData={newFilterData} setFormData={setNewFilterData} />
                 </Box>
             </DialogContent>

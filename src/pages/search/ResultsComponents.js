@@ -31,18 +31,9 @@ function ResultsItem({ item }) {
             .filter(([_, value]) => value)  // Filter out the false values
             .map(([key, _]) => translateMap[key]); // Translate the skill names using translateMap
 
-        // Shuffle the array
-        for (let i = skillArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [skillArray[i], skillArray[j]] = [skillArray[j], skillArray[i]];
-        }
-
-        // Get the first 5 skills
-        const displayedSkills = skillArray.slice(0, 4);
-
         return (
             <>
-                {displayedSkills.map((skill, index) => (
+                {skillArray.map((skill, index) => (
                     <Box
                         key={index}
                         sx={{ 
@@ -65,31 +56,30 @@ function ResultsItem({ item }) {
     const hasSkills = Object.values({ ...languages, ...music }).some(value => value);
 
     return (
-        <Card
-            sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                justifyContent: { xs: 'center', sm: 'space-between' },
-                height: '100%',
+        <Card sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
+            justifyContent: { xs: 'center', sm: 'space-between' },
+            height: '100%',
+            padding: '0',
         }}>
-            <CardContent>
-                <CardActionArea
-                    // onClick={() => { /* Handle click event */ }}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: 'center',
-                        justifyContent: 'flex-start',
+            <CardActionArea
+                // onClick={() => { /* Handle click event */ }}
+            >
+                <CardContent sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
                 }} >
                     {/* Profile Icon & Score */}
-                    <Box
-                        sx={{ 
-                            display: 'flex',
-                            flexDirection: { xs: 'row', sm: 'column' },
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginRight: '1rem'
+                    <Box sx={{ 
+                        display: 'flex',
+                        flexDirection: { xs: 'row', sm: 'column' },
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '1rem'
                     }}>
                         <AccountCircleIcon sx={{ fontSize: '5rem' }} />
                         <Box sx={{
@@ -112,12 +102,10 @@ function ResultsItem({ item }) {
                         {degrees.length > 0 && (<p style={{ fontSize: '1.5rem' }}><strong>Σπουδές</strong> {degrees[0].degreeTitle}</p>)}
                         {hasSkills && (<p style={{ fontSize: '1.5rem' }}><strong>Δεξιότητες</strong> {ShowSkills(languages, music)}</p>)}
                     </Box>
-                </CardActionArea>
-            </CardContent>
+                </CardContent>
+            </CardActionArea>
             {/* Favorite Icon */}
-            <CardActions
-            sx={{ marginRight: '1rem' }}
-            >
+            <CardActions sx={{ marginRight: '0.5rem' }} >
                 <IconButton
                     // onClick={() => { /* Handle favorite click event */ }}
                     sx={{ justifyItems: 'center' }}
@@ -219,7 +207,7 @@ function ResultsContainer({ filterData }) {
     const totalPages = Math.ceil(results.length / itemsPerPage);
 
     return (
-        <Box sx={{ flexGrow: 1, margin: '1rem', color: 'var(--clr-black)', display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
+        <Box sx={{ flexGrow: 1, margin: '1rem', display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
             {loading ? (
                 // Create skeleton items while loading
                 Array.from(new Array(itemsPerPage)).map((index) => (
