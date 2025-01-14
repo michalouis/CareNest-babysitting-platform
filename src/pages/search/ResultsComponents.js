@@ -140,24 +140,65 @@ function ResultsContainer({ filterData }) {
             try {
                 const jobPostingsSnapshot = await getDocs(collection(FIREBASE_DB, 'jobPostings'));
                 const jobPostings = jobPostingsSnapshot.docs.map(doc => {
-                    console.log('Document ID:', doc.id); // Print the name (ID) of each document
                     return { id: doc.id, ...doc.data() };
                 });
-
+    
+                console.log('Filtered Data:', filterData);
                 const users = await Promise.all(
                     jobPostings.map(async (jobPosting) => {
                         const userDoc = await getDoc(doc(FIREBASE_DB, 'users', jobPosting.id));
                         if (userDoc.exists()) {
                             console.log('User Data:', userDoc.data()); // Print user data to the console
-                            return userDoc.data();
+                            return { ...userDoc.data(), jobPostingData: jobPosting };
                         } else {
                             console.error('No such user:', jobPosting.id);
                             return null;
                         }
                     })
                 );
-
-                const validUsers = users.filter(user => user !== null && user.town === filterData.town);
+    
+                const validUsers = users.filter(user => {
+                    if (user === null) return false;
+    
+                    const { jobPostingData } = user;
+    
+                    // Check town
+                    if (user.town !== filterData.town) return false;
+    
+                    // Check child age group
+                    if (!jobPostingData.ageGroups.includes(filterData.childAgeGroup)) return false;
+    
+                    // Check work time
+                    if (jobPostingData.employmentType !== filterData.workTime) return false;
+    
+                    // Check babysitting place
+                    if (jobPostingData.babysittingPlace !== 'both' && jobPostingData.babysittingPlace !== filterData.babysittingPlace) return false;
+    
+                    // Check experience by the index of the experienceLevels array
+                    const experienceLevels = ['0-6', '6-12', '12-18', '18-24', '24-36', '36+'];
+                    const userExperienceIndex = experienceLevels.indexOf(user.experience);
+                    const filterExperienceIndex = experienceLevels.indexOf(filterData.experience);
+                    if (filterData.experience && userExperienceIndex < filterExperienceIndex) return false;
+    
+                    // Check degree, some: check if at least one degree matches the filter
+                    if (filterData.degree && !user.degrees.some(degree => degree.degreeLevel === filterData.degree)) return false;
+    
+                    // // Check languages
+                    for (const [language, value] of Object.entries(filterData.languages)) {
+                        if (value && !user.languages[language]) return false;
+                    }
+    
+                    // // Check music
+                    for (const [instrument, value] of Object.entries(filterData.music)) {
+                        if (value && !user.music[instrument]) return false;
+                    }
+    
+                    // // Check rating
+                    if (user.score < filterData.rating) return false;
+    
+                    return true;
+                });
+    
                 setResults(validUsers);
                 console.log('Result Data:', validUsers); // Print result data to the console
             } catch (error) {
@@ -166,7 +207,7 @@ function ResultsContainer({ filterData }) {
                 setLoading(false);
             }
         };
-
+    
         fetchJobPostings();
     }, [filterData]);
 
