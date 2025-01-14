@@ -13,6 +13,7 @@ import Profile from './pages/profile/Profile';
 import EditProfile from './pages/profile/EditProfile';
 import Search from './pages/search/Search';
 import Results from './pages/search/Results';
+import Favorites from './pages/search/Favorites';
 import Meetings from './pages/meetings/Meetings';
 import Applications from './pages/applications/Applications';
 import Contracts from './pages/contracts/Contracts';
@@ -35,6 +36,7 @@ function AppRoutes() {
                 <Route path="/profile/edit-profile" element={<EditProfile />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/results" element={<Results />} />
+                <Route path="/search/favorites" element={<Favorites />} />
                 <Route path="/meetings" element={<Meetings />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/contracts" element={<Contracts />} />

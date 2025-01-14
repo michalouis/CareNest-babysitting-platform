@@ -203,6 +203,7 @@ function Results() {
                     </Button>
                     <Button
                         variant="contained"
+                        onClick={() => navigate('/search/favorites')}
                         sx={{
                             backgroundColor: 'var(--clr-error)',
                             '&:hover': { opacity: 0.8 },

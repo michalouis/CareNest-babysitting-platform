@@ -194,7 +194,7 @@ function Search() {
                             </Button>
                             <Button
                                 variant="contained"
-                                // onClick={() => navigate('/profile/edit-profile')}
+                                onClick={() => navigate('/search/favorites')}
                                 sx={{
                                     width: '100%',
                                     backgroundColor: 'var(--clr-error)',
