@@ -76,7 +76,7 @@ function StepperComponent({ activeStep }) {
         <Stepper alternativeLabel activeStep={activeStep} connector={<ColorConnector />}>
             {signupSteps.map((step, index) => (
                 <Step key={index}>
-                    <StepLabel StepIconComponent={(props) => <ColorlibStepIcon {...props} icon={step.icon} />}>{step.label}</StepLabel>
+                    <StepLabel slots={{ stepIcon: (props) => <ColorlibStepIcon {...props} icon={step.icon} /> }}>{step.label}</StepLabel>
                 </Step>
             ))}
         </Stepper>

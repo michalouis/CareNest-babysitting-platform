@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Box, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
@@ -34,57 +34,35 @@ const renderCommonData = (userData) => (
     <>
         {/* Personal Data */}
         <h2>Προσωπικά Στοιχεία</h2>
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Όνομα" value={userData.firstName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Επώνυμο" value={userData.lastName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField
-                    label="Φύλο"
-                    value={
-                        userData.gender === 'Male' ? 'Άντρας' :
-                        userData.gender === 'Female' ? 'Γυναίκα' :
-                        userData.gender === 'Other' ? 'Άλλο' :
-                        ''
-                    }
-                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                    fullWidth
-                    variant="outlined"
-                />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="ΑΜΚΑ" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-        </Grid>
+        <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
+            <TextField label="Όνομα" value={userData.firstName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Επώνυμο" value={userData.lastName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField
+                label="Φύλο"
+                value={
+                    userData.gender === 'Male' ? 'Άντρας' :
+                    userData.gender === 'Female' ? 'Γυναίκα' :
+                    userData.gender === 'Other' ? 'Άλλο' :
+                    ''
+                }
+                slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
+                fullWidth
+                variant="outlined"
+            />
+            <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="ΑΜΚΑ" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+        </Box>
 
         {/* Contact Data */}
         <h2>Στοιχεία Επικοινωνίας</h2>
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Διεύθυνση" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Ταχυδρομικός Κώδικας" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <TextField label="Τηλέφωνο" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField label="Email" value={userData.email} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-        </Grid>
+        <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
+            <TextField label="Διεύθυνση" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Ταχυδρομικός Κώδικας" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Τηλέφωνο" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField label="Email" value={userData.email} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+        </Box>
 
         <h2>Σχετικά με μένα</h2>
         <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
@@ -95,28 +73,22 @@ const renderCommonData = (userData) => (
 const renderParentData = (userData) => (
     <>
         <h2>Στοιχεία Παιδιού</h2>
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-                <TextField label="Όνομα Παιδιού" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-            <Grid item xs={12} md={4}>
-                <TextField
-                    label="Φύλο Παιδιού"
-                    value={
-                        userData.childGender === 'Male' ? 'Αγόρι' :
-                        userData.childGender === 'Female' ? 'Κορίτσι' :
-                        userData.childGender === 'Other' ? 'Άλλο' :
-                        ''
-                    }
-                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                    fullWidth
-                    variant="outlined"
-                />
-            </Grid>
-            <Grid item xs={12} md={4}>
-                <TextField label="Ηλικιακή Ομάδα Παιδιού" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Grid>
-        </Grid>
+        <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 1.5, width: '100%' }}>
+            <TextField label="Όνομα Παιδιού" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+            <TextField
+                label="Φύλο Παιδιού"
+                value={
+                    userData.childGender === 'Male' ? 'Αγόρι' :
+                    userData.childGender === 'Female' ? 'Κορίτσι' :
+                    userData.childGender === 'Other' ? 'Άλλο' :
+                    ''
+                }
+                slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
+                fullWidth
+                variant="outlined"
+            />
+            <TextField label="Ηλικιακή Ομάδα Παιδιού" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+        </Box>
     </>
 );
 

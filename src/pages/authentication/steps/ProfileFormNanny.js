@@ -554,16 +554,16 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
             <h2>Προσωπικά Στοιχεία</h2>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="First Name" value={formData.firstName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="First Name" value={formData.firstName} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="Last Name" value={formData.lastName} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="Last Name" value={formData.lastName} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="AMKA" value={formData.amka} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="AMKA" value={formData.amka} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="Role" value="Νταντά" InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="Role" value="Νταντά" slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* Gender - dropdown menu, 3 options */}
@@ -577,7 +577,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 fullWidth
                 error={errorStates.gender}
                 helperText={errors.gender}
-                InputProps={{ style: { textAlign: 'left' } }}
+                slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
                 <MenuItem value="Male">Άντρας</MenuItem>
                 <MenuItem value="Female">Γυναίκα</MenuItem>
@@ -650,7 +650,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.phoneNumber}
             />
             <Tooltip title="This field can't be changed"  arrow>
-                <TextField label="Email" value={formData.email} InputProps={{ readOnly: true }} fullWidth disabled variant="filled" />
+                <TextField label="Email" value={formData.email} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* dropdown months of experience */}
@@ -666,7 +666,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 fullWidth
                 error={errorStates.experience}
                 helperText={errors.experience}
-                InputProps={{ style: { textAlign: 'left' } }}
+                slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
                 <MenuItem value="0-6">0-6 μήνες</MenuItem>
                 <MenuItem value="6-12">6-12 μήνες</MenuItem>

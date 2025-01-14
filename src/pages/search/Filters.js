@@ -170,7 +170,7 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
             fullWidth
             error={errors.childAgeGroup.hasError}
             helperText={errors.childAgeGroup.message}
-            InputProps={{ style: { textAlign: 'left' } }}
+            slotProps={{ input: { style: { textAlign: 'left' } } }}
         >
             <MenuItem value="1-2">1-2 χρονών</MenuItem>
             <MenuItem value="3-6">3-6 χρονών</MenuItem>
@@ -209,7 +209,7 @@ function FormBabysittingPlace({ formData, setFormData, errors, setErrors }) {
             fullWidth
             error={errors.babysittingPlace.hasError}
             helperText={errors.babysittingPlace.message}
-            InputProps={{ style: { textAlign: 'left' } }}
+            slotProps={{ input: { style: { textAlign: 'left' } } }}
         >
             <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
             <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
@@ -399,7 +399,7 @@ function FormExperience({ formData, setFormData }) {
                     experience: e.target.value
                 })}
                 fullWidth
-                InputProps={{ style: { textAlign: 'left' } }}
+                slotProps={{ input: { style: { textAlign: 'left' } } }}
                 >
                 <MenuItem value="0-6">0-6 μήνες</MenuItem>
                 <MenuItem value="6-12">6-12 μήνες</MenuItem>
@@ -445,7 +445,7 @@ function FormDegree({ formData, setFormData }) {
                     degree: e.target.value
                 })}
                 fullWidth
-                InputProps={{ style: { textAlign: 'left' } }}
+                slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
                 <MenuItem value="school">Απολυτήριο Λυκείου</MenuItem>
                 <MenuItem value="college">Κολλέγιο</MenuItem>
