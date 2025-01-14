@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, CardActionArea, CardActions, IconButton, Pagination, Skeleton } from '@mui/material';
 import { getDocs, getDoc, collection, doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -23,6 +24,7 @@ const translateMap = {
 };
 
 function ResultsItem({ item, favorites, setFavorites }) {
+    const navigate = useNavigate();
     const { firstName, lastName, experience, degrees, languages, music, score, uid } = item;
 
     const ShowSkills = (languages, music) => {
@@ -93,7 +95,7 @@ function ResultsItem({ item, favorites, setFavorites }) {
             padding: '0',
         }}>
             <CardActionArea
-                // onClick={() => { /* Handle click event */ }}
+                onClick={() => navigate(`/search/view-post?uid=${uid}`)}
             >
                 <CardContent sx={{
                     display: 'flex',

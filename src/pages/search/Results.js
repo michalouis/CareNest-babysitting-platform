@@ -8,6 +8,8 @@ import Breadcrumbs from '../../layout/Breadcrumbs';
 import { FormTown, FormChildAgeGroup, FormWorkTime, FormTimeTable, FormExperience, FormDegree, FormSkills, FormRating, FormBabysittingPlace } from './Filters';
 import { FlattenTimetable, FlattenSkills, ValidateFilterData } from './Filters';
 import { ResultsContainer } from './ResultsComponents';
+import { useAuthCheck as AuthCheck } from '../../AuthChecks';
+import Loading from '../../layout/Loading';
 
 /////////////// PARSE FUNCTIONS ///////////////
 
@@ -52,6 +54,7 @@ const ErrorSnackbar = ({ snackbarMessage, setSnackbarMessage }) => (
 );
 
 function Results() {
+    const { isLoading } = AuthCheck(true, false, false, 'parent');
     const navigate = useNavigate();
     
     // Get filter data from URL
@@ -129,7 +132,10 @@ function Results() {
         window.location.href = `/search/results?${queryParams}`;
     };
 
-    
+    if (isLoading) {
+        return <Loading />;
+    }
+
     const renderDialog = () => (
         <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
             <DialogTitle><p className='button-text'>Αναζήτηση Νταντάς</p></DialogTitle>
@@ -173,7 +179,7 @@ function Results() {
     );
 
     /////////////// END NEW SEARCH ///////////////
-    
+
     return (
         <>
             <PageTitle title="CareNest - Αποτελέσματα Αναζήτησης" />

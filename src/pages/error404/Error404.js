@@ -21,7 +21,7 @@ function Error404() {
             <p className="error404-text">
                 <strong>Μη κλαις!</strong> Μπορείτε να επιστρέψετε στην <Link to="/" className="link">αρχική σελίδα</Link> ή να χρησιμοποιήσετε το μενού για να βρείτε αυτό που ψάχνετε.
             </p>
-            <img src='error404.jpg' alt='crying baby' className="image" />
+            <img src='/error404.jpg' alt='crying baby' className="image" />
         </div>
     );
 }
