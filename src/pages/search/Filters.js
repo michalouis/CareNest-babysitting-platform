@@ -277,12 +277,10 @@ const validateTimeTable = ({ timeTable, workTime }) => {
     });
 
     // Timetable error messages
-    if (selectedDays < 5) {
-        console.log('Error found: not enough days selected');
+    if (selectedDays !== 5) {
         invalid = true;
         errorMessage = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
     } else if (invalid) {
-        console.log('Error found!!!!!!!!!!!');
         errorMessage = 'Πρέπει στις μέρες που έχετε διαλέξει να βάλετε αρκετές ώρες για να καλύπτουν τους χρόνους απασχόλησης που έχετε επιλέξει';
     }
 

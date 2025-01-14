@@ -204,6 +204,7 @@ function ResultsContainer({ filterData }) {
                 if (user === null) return false;
     
                 const { jobPostingData } = user;
+                console.log('Nanny Name:', user.firstName, user.lastName);
     
                 // Check town
                 if (user.town !== filterData.town) return false;
@@ -216,6 +217,21 @@ function ResultsContainer({ filterData }) {
     
                 // Check babysitting place
                 if (jobPostingData.babysittingPlace !== 'both' && jobPostingData.babysittingPlace !== filterData.babysittingPlace) return false;
+
+                // Check timetable
+                const parentTimetable = filterData.timeTable;
+                const nannyTimetable = jobPostingData.timetable;
+
+                for (const [day, times] of Object.entries(parentTimetable)) {
+                    if (!nannyTimetable[day] || !times.every(time => nannyTimetable[day].includes(time))) {
+                        console.log('Timetable does not match:', day, times);
+                        console.log('Parent Timetable:', parentTimetable);
+                        console.log('Nanny Timetable:', nannyTimetable);
+                        return false;
+                    } else {
+                        console.log('Timetable matches:', day, times);
+                    }
+                }
     
                 // Check experience by the index of the experienceLevels array
                 const experienceLevels = ['0-6', '6-12', '12-18', '18-24', '24-36', '36+'];
