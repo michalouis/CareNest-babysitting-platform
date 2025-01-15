@@ -20,6 +20,7 @@ const pathLabels = {
     '/search/view-nanny': 'Προβολή Νταντάς',
     '/search/favorites': 'Αγαπημένα',
     '/meetings': 'Ραντεβού Γνωριμίας',
+    '/meetings/view-meeting': 'Προβολή Ραντεβού',
     '/applications': 'Αιτήσεις',
     '/contracts': 'Συμφωνητικά',
     '/partnerships': 'Συνεργασίες',

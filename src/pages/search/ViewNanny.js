@@ -9,6 +9,7 @@ import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { renderCommonData, renderNannyData } from '../profile/Profile';
 import ViewJobPosting from '../job_posting/ViewJobPosting';
+import MakeMeetingDialog from '../meetings/MakeMeetingDialog';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -16,6 +17,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
+// Render the profile picture  & score
 const renderProfileScore = (userData) => (
     <Box sx={{
         display: 'flex', 
@@ -47,18 +49,20 @@ export default function ViewPost() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const uid = queryParams.get('uid');
+    const nannyId = queryParams.get('uid');
     const [nannyData, setNannyData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
+    // Fetch nanny data
     useEffect(() => {
         const fetchNannyData = async () => {
             try {
-                const nannyDoc = await getDoc(doc(FIREBASE_DB, 'users', uid));
+                const nannyDoc = await getDoc(doc(FIREBASE_DB, 'users', nannyId));
                 if (nannyDoc.exists()) {
                     setNannyData(nannyDoc.data());
                 } else {
-                    console.error('No such nanny:', uid);
+                    console.error('No such nanny:', nannyId);
                 }
             } catch (error) {
                 console.error('Error fetching nanny data:', error);
@@ -68,7 +72,7 @@ export default function ViewPost() {
         };
 
         fetchNannyData();
-    }, [uid]);
+    }, [nannyId]);
 
     if (isLoading || loading) {
         return <Loading />;
@@ -118,8 +122,8 @@ export default function ViewPost() {
                             '&:hover': { opacity: 0.8 },
                             padding: '0.5rem 0'
                         }}
-                        // onClick={() => navigate('/profile/edit-profile')}
                         startIcon={<EventIcon />}
+                        onClick={() => setDialogOpen(true)}
                     >
                         <p className="button-text">Ραντεβού Γνωριμίας</p>
                     </Button>
@@ -167,6 +171,13 @@ export default function ViewPost() {
                     <ViewJobPosting jobPostingData={nannyData.jobPostingData} />
                 </Box>
             </Box>
+
+            {/* For setting up a meeting - look MakeMeetingDialog.js */}
+            <MakeMeetingDialog
+                open={dialogOpen}
+                onClose={() => setDialogOpen(false)}
+                nannyId={nannyId}
+            />
         </>
     );
 }

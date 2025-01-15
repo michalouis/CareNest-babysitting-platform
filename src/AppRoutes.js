@@ -16,6 +16,7 @@ import Results from './pages/search/Results';
 import ViewNanny from './pages/search/ViewNanny';
 import Favorites from './pages/search/Favorites';
 import Meetings from './pages/meetings/Meetings';
+import ViewMeeting from './pages/meetings/ViewMeeting';
 import Applications from './pages/applications/Applications';
 import Contracts from './pages/contracts/Contracts';
 import Partnerships from './pages/partnerships/Partnerships';
@@ -40,6 +41,7 @@ function AppRoutes() {
                 <Route path="/search/view-nanny" element={<ViewNanny />} />
                 <Route path="/search/favorites" element={<Favorites />} />
                 <Route path="/meetings" element={<Meetings />} />
+                <Route path="/meetings/view-meeting" element={<ViewMeeting />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/partnerships" element={<Partnerships />} />
