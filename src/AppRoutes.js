@@ -9,7 +9,7 @@ import Login from './pages/authentication/Login';
 import Signup from './pages/authentication/Signup';
 import CreateProfile from './pages/authentication/steps/CreateProfile';
 import SignupComplete from './pages/authentication/steps/SignupComplete';
-import Profile from './pages/profile/Profile';
+import { Profile } from './pages/profile/Profile';
 import EditProfile from './pages/profile/EditProfile';
 import Search from './pages/search/Search';
 import Results from './pages/search/Results';

@@ -7,7 +7,8 @@ const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00',
 function ViewJobPosting({ jobPostingData }) {
     return (
         <Box sx={{
-            width: '90%',
+            flexGrow: 1,
+            width: '100%',
             maxWidth: '1200px',
             display: 'flex',
             flexDirection: 'column',
@@ -17,7 +18,6 @@ function ViewJobPosting({ jobPostingData }) {
             padding: '2rem 1rem',
             borderRadius: '1rem',
             boxShadow: '2',
-            margin: '2rem',
         }}>
             {/* Age Groups */}
             <h2>Ηλικιακές Ομάδες Παιδιών</h2>

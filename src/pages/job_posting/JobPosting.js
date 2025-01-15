@@ -68,7 +68,7 @@ function JobPosting() {
             }}>
                 {userData && userData.jobPosted ? (
                     <>
-                        <p style={{ fontSize: '1.2rem', maxWidth: '1080px' }}>
+                        <p style={{ fontSize: '1.2rem', maxWidth: '1080px', marginBottom: '1rem' }}>
                             <strong>Έχετε δημοσιεύσει την αγγελία σας με επιτυχία!</strong><br />
                             Μπορείτε να τη δείτε παρακάτω.
                         </p>
