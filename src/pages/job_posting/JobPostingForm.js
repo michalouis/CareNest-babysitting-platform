@@ -162,7 +162,7 @@ function JobPostingForm({ userData, setSaved }) {
         // Other fields validation & snackbar error messages
         if (!jobPostingData.ageGroups.length) {
             newErrors.ageGroups = true;
-            newSnackbarMessages.push('Ηλικιακές Ομάδες Παιδιών');
+            newSnackbarMessages.push('Ηλικιακές Ομάδες Φροντίδας');
         }
         if (!jobPostingData.employmentType) {
             newErrors.employmentType = true;
@@ -206,7 +206,7 @@ function JobPostingForm({ userData, setSaved }) {
             <p style={{color: 'var(--clr-grey)'}}>Όλα τα πεδία είναι υποχρεωτικά.</p>
 
             {/* Age Groups */}
-            <h2>Ηλικιακές Ομάδες Παιδιών</h2>
+            <h2>Ηλικιακές Ομάδες Φροντίδας</h2>
             <p style={{ fontSize: '1.15rem' }}>Ηλικιακές ομάδες παιδιών που νιώθετε άνετα να φροντίσετε</p>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
@@ -295,7 +295,7 @@ function JobPostingForm({ userData, setSaved }) {
             >
                 <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
                 <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
-                <MenuItem value="both">Και στα δύο</MenuItem>
+                <MenuItem value="both">Σπίτι Γονέα & Νταντάς</MenuItem>
             </TextField>
 
             {/* Timetable */}

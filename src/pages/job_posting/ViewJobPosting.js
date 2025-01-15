@@ -20,7 +20,7 @@ function ViewJobPosting({ jobPostingData }) {
             boxShadow: '2',
         }}>
             {/* Age Groups */}
-            <h2>Ηλικιακές Ομάδες Παιδιών</h2>
+            <h2>Ηλικιακές Ομάδες Φροντίδας</h2>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 {jobPostingData.ageGroups.map((ageGroup) => (
                     <Box
@@ -68,7 +68,7 @@ function ViewJobPosting({ jobPostingData }) {
                 value={
                     jobPostingData.babysittingPlace === 'parents-home' ? 'Σπίτι Γονέα' :
                     jobPostingData.babysittingPlace === 'nanny-home' ? 'Σπίτι Νταντάς' :
-                    jobPostingData.babysittingPlace === 'both' ? 'Και στα δύο' :
+                    jobPostingData.babysittingPlace === 'both' ? 'Σπίτι Γονέα & Νταντάς' :
                     ''
                 }
                 fullWidth

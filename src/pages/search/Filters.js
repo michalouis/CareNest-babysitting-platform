@@ -213,7 +213,7 @@ function FormBabysittingPlace({ formData, setFormData, errors, setErrors }) {
         >
             <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
             <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
-            <MenuItem value="both">Και στα δύο</MenuItem>
+            <MenuItem value="both">Σπίτι Γονέα & Νταντάς</MenuItem>
         </TextField>
     );
 }
