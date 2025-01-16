@@ -135,18 +135,17 @@ export default function ViewMeeting() {
                             alignItems: 'flex-start',
                         }}>
                             <p style={{ fontSize: '1.3rem' }}>
-                                <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingState === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
+                                <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingType === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
                             </p>
                             {meetingData.meetingType == 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
                         </Box>
-                        {meetingData.meetingType == 'online' ? (
+                        {meetingData.meetingType === 'online' ? (
                             <Button
                                 variant="contained"
                                 startIcon={<VideocamIcon />}
-                                sx={{
-                                    backgroundColor: 'var(--clr-blue)', 
-                                    padding: '0.5rem 1rem',
-                            }}>
+                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
+                                disabled={meetingData.meetingState !== 'accepted'}
+                            >
                                 Σύνδεση στην Συνάντηση
                             </Button>
                         ) : (
@@ -167,6 +166,7 @@ export default function ViewMeeting() {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         width: '100%',
+                        gap: '2rem',
                     }}>
                         <Box sx={{
                             display: 'flex',
@@ -196,6 +196,7 @@ export default function ViewMeeting() {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         width: '100%',
+                        gap: '4rem',
                     }}>
                         {nannyData && (
                             <Box sx={{

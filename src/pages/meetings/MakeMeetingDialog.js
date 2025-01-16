@@ -17,6 +17,8 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
     // State variables for the form fields
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
+    const currentYear = new Date().getFullYear();
+    const [year, setYear] = useState(currentYear);
     const [hour, setHour] = useState('');
     const [minute, setMinute] = useState('');
     const [meetingType, setMeetingType] = useState('');
@@ -27,6 +29,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
     // State variables for the form field errors
     const [dayError, setDayError] = useState(false);
     const [monthError, setMonthError] = useState(false);
+    const [yearError, setYearError] = useState(false);
     const [hourError, setHourError] = useState(false);
     const [minuteError, setMinuteError] = useState(false);
     const [meetingTypeError, setMeetingTypeError] = useState(false);
@@ -37,12 +40,12 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
     // Function to validate the form fields
     const validateFields = () => {
         let isValid = true;
-    
+
         // get current date to check if the selected date is in the past
-        const selectedDate = new Date(new Date().getFullYear(), month, day, hour, minute);
+        const selectedDate = new Date(year, month, day, hour, minute);
         const currentDate = new Date();
-    
-        if (!day) {
+
+        if (!day || day < 1 || day > 31) {
             setDayError(true);
             isValid = false;
         } else {
@@ -55,14 +58,22 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
         } else {
             setMonthError(false);
         }
-    
+
+        if (!year || year < currentYear) {
+            setYearError(true);
+            isValid = false;
+        } else {
+            setYearError(false);
+        }
+
         // check if the selected date is in the past
         if (selectedDate < currentDate) {
             setDayError(true);
             setMonthError(true);
+            setYearError(true);
             isValid = false;
         }
-    
+
         if (!hour) {
             setHourError(true);
             isValid = false;
@@ -111,7 +122,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
 
         try {
             // Combine day, month, hour, and minute into a single DateTime object
-            const dateTime = { month, day, hour, minute };
+            const dateTime = { year, month, day, hour, minute };
 
             // Add the meeting to the meetings collection
             const meetingDocRef = await addDoc(collection(FIREBASE_DB, 'meetings'), {
@@ -179,9 +190,9 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                             <TextField
                                 label="Ημέρα"
                                 type="number"
-                                inputProps={{ min: 1, max: 31 }}
+                                slotProps={{ input: { min: 1, max: 31 } }}
                                 value={day}
-                                onChange={(e) => { const value = e.target.value; setDay(value); if (value) {setDayError(false); setMonthError(false);}; }}
+                                onChange={(e) => { const value = e.target.value; setDay(value); if (value) {setDayError(false); setMonthError(false); setYearError(false);}; }}
                                 fullWidth
                                 error={dayError}
                                 helperText={dayError ? 'Παρακαλώ εισάγετε μια έγκυρη ημερομηνία' : ''}
@@ -199,6 +210,16 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                                     <MenuItem key={index} value={index}>{month}</MenuItem>
                                 ))}
                             </TextField>
+                            <TextField
+                                label="Χρονιά"	
+                                type="number"
+                                slotProps={{ input: { min: 2025, max: 2035 } }}
+                                value={year}
+                                onChange={(e) => { const value = e.target.value; setYear(value); if (value) setYearError(false); }}
+                                fullWidth
+                                error={yearError}
+                                helperText={yearError ? 'Παρακαλώ εισάγετε μια έγκυρη ημερομηνία' : ''}
+                            />
                         </Box>
                         {/* Time */}
                         <p><strong>Επιλέξτε ώρα για το ραντεβού:</strong></p>
@@ -236,7 +257,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                             value={meetingType}
                             onChange={(e) => { const value = e.target.value; setMeetingType(value); if (value) setMeetingTypeError(false); }}
                         >
-                            <FormControlLabel value="οnline" control={<Radio />} label="Διαδυκτιακό" />
+                            <FormControlLabel value="online" control={<Radio />} label="Διαδυκτιακό" />
                             <FormControlLabel value="in-person" control={<Radio />} label="Δια ζώσης" />
                         </RadioGroup>
                         {meetingType === 'in-person' && (
