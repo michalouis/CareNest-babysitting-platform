@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Box, MenuItem, IconButton } from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, IconButton } from '@mui/material';
 
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const months = [
@@ -159,4 +161,87 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
     );
 }
 
-export default DateRangeDialog;
+function FilterBox({ filters, setFilters, checkboxOptions }) {
+    const [dateRangeDialogOpen, setDateRangeDialogOpen] = useState(false);
+
+    const handleCheckboxChange = (event) => {
+        setFilters({
+            ...filters,
+            [event.target.name]: event.target.checked
+        });
+    };
+
+    const handleDateRangeChange = (newFromDate, newToDate) => {
+        setFilters({
+            ...filters,
+            fromDate: newFromDate,
+            toDate: newToDate
+        });
+    };
+
+    return (
+        <Box sx={{
+            width: '320px',
+            borderRadius: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            alignItems: 'center',
+            backgroundColor: 'var(--clr-white)',
+            height: '100%',
+            padding: '1rem',
+        }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <FilterAltIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
+                <h2>Φίλτρα</h2>
+            </Box>
+            <Divider sx={{ width: '80%' }} />
+            <h3>Τύπος</h3>
+            <FormGroup>
+                {checkboxOptions.map((option) => (
+                    <FormControlLabel
+                        key={option.value}
+                        control={
+                            <Checkbox
+                                checked={filters[option.value]}
+                                onChange={handleCheckboxChange}
+                                name={option.value}
+                            />
+                        }
+                        label={option.label}
+                    />
+                ))}
+            </FormGroup>
+            <h3>Χρονικό Εύρος</h3>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.5rem' }}>
+                <h4>
+                    Από: {filters.fromDate.day && filters.fromDate.month !== '' && filters.fromDate.year ?
+                        `${filters.fromDate.day} ${months[filters.fromDate.month]} ${filters.fromDate.year}` : '-'}
+                </h4>
+                <h4>
+                    Μέχρι: {filters.toDate.day && filters.toDate.month !== '' && filters.toDate.year ?
+                        `${filters.toDate.day} ${months[filters.toDate.month]} ${filters.toDate.year}` : '-'}
+                </h4>
+            </Box>
+            <Button
+                variant="contained"
+                startIcon={<CalendarMonthIcon />}
+                sx={{
+                    backgroundColor: 'var(--clr-blue)'
+                }}
+                onClick={() => setDateRangeDialogOpen(true)}
+            >
+                <p className="small-button-text">Επεξεργασία</p>
+            </Button>
+            <DateRangeDialog
+                open={dateRangeDialogOpen}
+                onClose={() => setDateRangeDialogOpen(false)}
+                fromDate={filters.fromDate}
+                toDate={filters.toDate}
+                onDateRangeChange={handleDateRangeChange}
+            />
+        </Box>
+    );
+}
+
+export { FilterBox, DateRangeDialog };
