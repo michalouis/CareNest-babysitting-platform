@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField, RadioGroup, FormControlLabel, Radio, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import { addDoc, updateDoc, doc, collection, arrayUnion } from 'firebase/firestore';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField, RadioGroup, FormControlLabel, Radio, Box, MenuItem } from '@mui/material';
+import { addDoc, updateDoc, doc, collection, arrayUnion, serverTimestamp } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
     const [meetingType, setMeetingType] = useState('');
     const [address, setAddress] = useState('');
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // State variables for the form field errors
     const [dayError, setDayError] = useState(false);
@@ -41,13 +42,13 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
         const selectedDate = new Date(new Date().getFullYear(), month, day, hour, minute);
         const currentDate = new Date();
     
-        if (day === '' || day === null || day === undefined) {
+        if (!day) {
             setDayError(true);
             isValid = false;
         } else {
             setDayError(false);
         }
-    
+
         if (month === '' || month === null || month === undefined) {    // month is 0-indexed
             setMonthError(true);
             isValid = false;
@@ -56,40 +57,40 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
         }
     
         // check if the selected date is in the past
-        if (day && month && selectedDate < currentDate) {
+        if (selectedDate < currentDate) {
             setDayError(true);
             setMonthError(true);
             isValid = false;
         }
     
-        if (hour === '' || hour === null || hour === undefined) {
+        if (!hour) {
             setHourError(true);
             isValid = false;
         } else {
             setHourError(false);
         }
-    
-        if (minute === '' || minute === null || minute === undefined) {
+
+        if (!minute) {
             setMinuteError(true);
             isValid = false;
         } else {
             setMinuteError(false);
         }
-    
-        if (meetingType === '' || meetingType === null || meetingType === undefined) {
+
+        if (!meetingType) {
             setMeetingTypeError(true);
             isValid = false;
         } else {
             setMeetingTypeError(false);
         }
-    
-        if (meetingType === 'in-person' && (address === '' || address === null || address === undefined)) {
+
+        if (meetingType === 'in-person' && !address) {
             setAddressError(true);
             isValid = false;
         } else {
             setAddressError(false);
         }
-    
+
         return isValid;
     };
 
@@ -99,9 +100,12 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
             return;
         }
 
+        setIsSubmitting(true);
+
         const user = FIREBASE_AUTH.currentUser;
         if (!user) {
             console.error('No user is currently logged in.');
+            setIsSubmitting(false);
             return;
         }
 
@@ -116,7 +120,8 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                 dateTime: dateTime,
                 meetingType: meetingType,
                 address: meetingType === 'in-person' ? address : '',
-                meetingState: 'pending'
+                meetingState: 'pending',
+                timestamp: serverTimestamp()
             });
 
             // Update the meetings array for both the parent and the nanny
@@ -138,6 +143,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
         } catch (error) {
             console.error('Error creating meeting:', error);
         } finally {
+            setIsSubmitting(false);
             setConfirmDialogOpen(false);
             onClose();
         }
@@ -156,7 +162,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
     };
 
     return (
-        <> 
+        <>
             {/* Main dialog for creating a new meeting */}
             <Dialog open={open} onClose={onClose}>
                 <DialogTitle><strong>Δημιουργία Ραντεβού Γνωριμίας</strong></DialogTitle>
@@ -230,7 +236,7 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                             value={meetingType}
                             onChange={(e) => { const value = e.target.value; setMeetingType(value); if (value) setMeetingTypeError(false); }}
                         >
-                            <FormControlLabel value="online" control={<Radio />} label="Online" />
+                            <FormControlLabel value="οnline" control={<Radio />} label="Διαδυκτιακό" />
                             <FormControlLabel value="in-person" control={<Radio />} label="Δια ζώσης" />
                         </RadioGroup>
                         {meetingType === 'in-person' && (
@@ -246,10 +252,10 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose} sx={{ color: 'var(--clr-black)' }}>
+                    <Button onClick={onClose} sx={{ color: 'var(--clr-black)' }} disabled={confirmDialogOpen}>
                         <p className='button-text'>Ακύρωση</p>
                     </Button>
-                    <Button variant="contained" onClick={handleOpenConfirmDialog} sx={{ backgroundColor: 'var(--clr-violet)' }}>
+                    <Button variant="contained" onClick={handleOpenConfirmDialog} sx={{ backgroundColor: 'var(--clr-violet)' }} disabled={confirmDialogOpen}>
                         <p className='button-text'>Δημιουργία</p>
                     </Button>
                 </DialogActions>
@@ -264,10 +270,10 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseConfirmDialog} sx={{ color: 'var(--clr-black)' }}>
+                    <Button onClick={handleCloseConfirmDialog} sx={{ color: 'var(--clr-black)' }} disabled={isSubmitting}>
                         <p className='button-text'>Ακύρωση</p>
                     </Button>
-                    <Button variant="contained" onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)' }}>
+                    <Button variant="contained" onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)' }} disabled={isSubmitting}>
                         <p className='button-text'>Επιβεβαίωση</p>
                     </Button>
                 </DialogActions>
