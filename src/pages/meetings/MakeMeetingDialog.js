@@ -13,7 +13,7 @@ const months = [
 const hours = ['06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
 const minutes = ['00', '15', '30', '45'];
 
-function MakeMeetingDialog({ open, onClose, nannyId }) {
+function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLastName, nannyFirstName, nannyLastName }) {
     // State variables for the form fields
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
@@ -127,12 +127,21 @@ function MakeMeetingDialog({ open, onClose, nannyId }) {
             // Add the meeting to the meetings collection
             const meetingDocRef = await addDoc(collection(FIREBASE_DB, 'meetings'), {
                 parentId: user.uid,
+                parentFirstName: parentFirstName,
+                parentLastName: parentLastName,
+                nannyFirstName: nannyFirstName,
+                nannyLastName: nannyLastName,
                 nannyId: nannyId,
                 dateTime: dateTime,
                 meetingType: meetingType,
                 address: meetingType === 'in-person' ? address : '',
                 meetingState: 'pending',
                 timestamp: serverTimestamp()
+            });
+
+            // Update the meeting document with the meetingId
+            await updateDoc(meetingDocRef, {
+                meetingId: meetingDocRef.id
             });
 
             // Update the meetings array for both the parent and the nanny

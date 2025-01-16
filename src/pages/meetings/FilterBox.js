@@ -244,4 +244,4 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
     );
 }
 
-export { FilterBox, DateRangeDialog };
+export { FilterBox };

@@ -177,6 +177,10 @@ export default function ViewPost() {
                 open={dialogOpen}
                 onClose={() => setDialogOpen(false)}
                 nannyId={nannyId}
+                parentFirstName={userData.firstName}
+                parentLastName={userData.lastName}
+                nannyFirstName={nannyData.firstName}
+                nannyLastName={nannyData.lastName}
             />
         </>
     );

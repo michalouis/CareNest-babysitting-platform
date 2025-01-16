@@ -79,33 +79,34 @@ export default function Favorites() {
             <PageTitle title="CareNest - Αγαπημένα" />
             <Breadcrumbs />
             <h1 style={{ marginLeft: '1rem' }}>Αγαπημένα</h1>
-            <Box sx={{ flexGrow: 1, margin: '1rem', display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
-                {loading ? (
-                    // Create skeleton items while loading
-                    Array.from(new Array(itemsPerPage)).map((_, index) => (
-                        <Skeleton key={index} variant="rectangular" width="100%" height={130} />
-                    ))
-                ) : (
-                    paginatedFavorites.length > 0 ? (
-                        // Display the favorites
-                        paginatedFavorites.map((item, index) => (
-                            <Box key={index} sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                                <ResultsItem item={item} favorites={favoritesUID} setFavorites={setFavoritesUID} />
-                            </Box>
+            <Box sx={{ flexGrow: 1, margin: '1rem' }}>
+                <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
+                    {loading ? (
+                        // Create skeleton items while loading
+                        Array.from(new Array(itemsPerPage)).map((_, index) => (
+                            <Skeleton key={index} variant="rectangular" width="100%" height={130} />
                         ))
                     ) : (
-                        // Display no favorites message
-                        <Box sx={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
-                            <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                                Δεν έχετε προσθέσει αγαπημένα!
-                            </p>
-                        </Box>
-                    )
-                )}
+                        paginatedFavorites.length > 0 ? (
+                            // Display the favorites
+                            paginatedFavorites.map((item, index) => (
+                                <Box key={index} sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                                    <ResultsItem item={item} favorites={favoritesUID} setFavorites={setFavoritesUID} />
+                                </Box>
+                            ))
+                        ) : (
+                            // Display no favorites message
+                            <Box sx={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                                    Δεν έχετε προσθέσει αγαπημένα!
+                                </p>
+                            </Box>
+                        )
+                    )}
+                </Box>
                 {/* Pagination */}
                 {!loading && paginatedFavorites.length > 0 && (
-                    // Pagination component is inside grid, so use gridColumn to span the entire row
-                    <Box sx={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
                         <Pagination count={totalPages} page={page} onChange={handleChange} />
                     </Box>
                 )}
