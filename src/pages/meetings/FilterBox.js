@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, IconButton } from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, IconButton, Radio, RadioGroup, FormControl, FormLabel } from '@mui/material';
 
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -179,6 +179,13 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
         });
     };
 
+    const handleSortOrderChange = (event) => {
+        setFilters({
+            ...filters,
+            newerFirst: event.target.value === 'newer'
+        });
+    };
+
     return (
         <Box sx={{
             width: '320px',
@@ -196,7 +203,7 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                 <h2>Φίλτρα</h2>
             </Box>
             <Divider sx={{ width: '80%' }} />
-            <h3>Τύπος</h3>
+            <h3>Κατάσταση</h3>
             <FormGroup>
                 {checkboxOptions.map((option) => (
                     <FormControlLabel
@@ -212,6 +219,17 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                     />
                 ))}
             </FormGroup>
+            <h3>Ταξινόμηση κατά</h3>
+            <FormControl component="fieldset">
+                <RadioGroup
+                    name="sortOrder"
+                    value={filters.newerFirst ? 'newer' : 'older'}
+                    onChange={handleSortOrderChange}
+                >
+                    <FormControlLabel value="newer" control={<Radio />} label="Νεότερα πρώτα" />
+                    <FormControlLabel value="older" control={<Radio />} label="Παλαιότερα πρώτα" />
+                </RadioGroup>
+            </FormControl>
             <h3>Χρονικό Εύρος</h3>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.5rem' }}>
                 <h4>

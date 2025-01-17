@@ -16,9 +16,9 @@ import AccessTimeFilled from '@mui/icons-material/AccessTimeFilled';
 import PlaceRounded from '@mui/icons-material/PlaceRounded';
 
 const checkboxOptions = [
-    { label: "Εγκεκριμένα", value: "accepted" },
+    { label: "Εγκρίθηκε", value: "accepted" },
     { label: "Σε αναμονή", value: "pending" },
-    { label: "Αππορίφθηκαν", value: "rejected" }
+    { label: "Αππορίφθηκε", value: "rejected" }
 ];
 
 function MeetingItem({ meeting, userData }) {
@@ -101,6 +101,7 @@ function Meetings() {
             month: '',
             year: ''
         },
+        newerFirst: true,
     });
     const [meetings, setMeetings] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -134,7 +135,14 @@ function Meetings() {
                     return isWithinDateRange && isStatusMatch;
                 });
 
-                setMeetings(filteredMeetings);
+                // Sort meetings based on the date
+                const sortedMeetings = filteredMeetings.sort((a, b) => {
+                    const dateA = new Date(a.dateTime.year, a.dateTime.month, a.dateTime.day);
+                    const dateB = new Date(b.dateTime.year, b.dateTime.month, b.dateTime.day);
+                    return filters.newerFirst ? dateB - dateA : dateA - dateB;
+                });
+
+                setMeetings(sortedMeetings);
             } catch (error) {
                 console.error("Error fetching meetings:", error.message, error.stack);
             } finally {

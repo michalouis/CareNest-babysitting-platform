@@ -12,19 +12,21 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
-function validate(formData, setErrors, setSnackbarMessage) {
+function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) {
     const newErrors = {};
     const newSnackbarMessages = [];
 
     const fromMonthFilled = formData.fromDate.month !== '';
     const toMonthFilled = formData.toDate.month !== '';
 
-    if (!fromMonthFilled || !formData.fromDate.year) {
-        newErrors.fromDate = 'Το πεδίο είναι υποχρεωτικό';
+    if (!fromMonthFilled || !formData.fromDate.year || formData.fromDate.year < 2025) {
+        setSnackbarSeverity('error');
+        newErrors.fromDate = 'Βάλτε μια έγκυρη ημερομηνία.';
         newSnackbarMessages.push('Από Μήνας/Έτος');
     }
-    if (!toMonthFilled || !formData.toDate.year) {
-        newErrors.toDate = 'Το πεδίο είναι υποχρεωτικό';
+    if (!toMonthFilled || !formData.toDate.year || formData.toDate.year < 2025) {
+        setSnackbarSeverity('error');
+        newErrors.toDate = 'Βάλτε μια έγκυρη ημερομηνία.';
         newSnackbarMessages.push('Μέχρι Μήνας/Έτος');
     }
 
@@ -33,6 +35,7 @@ function validate(formData, setErrors, setSnackbarMessage) {
         const fromDate = new Date(formData.fromDate.year, formData.fromDate.month);
         const toDate = new Date(formData.toDate.year, formData.toDate.month);
         if (fromDate > toDate) {
+            setSnackbarSeverity('error');
             newErrors.fromDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
             newErrors.toDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
             newSnackbarMessages.push('Ημερομηνία "Από" και "Μέχρι"');
@@ -41,21 +44,33 @@ function validate(formData, setErrors, setSnackbarMessage) {
 
     // Timetable validation
     let selectedDays = 0;
+    let timetableError = false;
     daysOfWeek.forEach((day) => {
         const selectedTimes = timePeriods.filter((time) => formData.timetable[day]?.includes(time));
         if (selectedTimes.length > 0) {
             selectedDays++;
+            if (formData.employmentType === 'part-time' && selectedTimes.length !== 1) {
+                timetableError = true;
+            } else if (formData.employmentType === 'full-time' && selectedTimes.length !== 2) {
+                timetableError = true;
+            }
         }
     });
 
-    if (selectedDays < 5) {
+    if (selectedDays !== 5) {
+        setSnackbarSeverity('error');
         newErrors.timetable = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
+        newSnackbarMessages.push('Χρονοδιάγραμμα');
+    } else if (timetableError) {
+        setSnackbarSeverity('error');
+        newErrors.timetable = 'Για μερική απασχόληση μπορείτε να διαλέξετε 4 ώρες ανά ημέρα και για πλήρη απασχόληση 8 ώρες ανά ημέρα.';
         newSnackbarMessages.push('Χρονοδιάγραμμα');
     }
 
     setErrors(newErrors);
 
     if (newSnackbarMessages.length > 0) {
+        setSnackbarSeverity('error');
         setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
     } else {
         setSnackbarMessage('');
@@ -157,7 +172,7 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
                 </TextField>
                 <TextField
                     label="Έτος"
-                    type="number"
+                    type="text"
                     value={formData.fromDate.year}
                     onChange={(e) => handleDateChange('fromDate', 'year', e.target.value)}
                     fullWidth
@@ -184,7 +199,7 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
                 </TextField>
                 <TextField
                     label="Έτος"
-                    type="number"
+                    type="text"
                     value={formData.toDate.year}
                     onChange={(e) => handleDateChange('toDate', 'year', e.target.value)}
                     fullWidth

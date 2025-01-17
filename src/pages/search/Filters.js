@@ -266,10 +266,10 @@ const validateTimeTable = ({ timeTable, workTime }) => {
         const selectedTimes = timePeriods.filter((time) => timeTable[day]?.includes(time));
         if (selectedTimes.length > 0) {
             selectedDays++;
-            if (workTime === 'full-time' && selectedTimes.length < 2) {
+            if (workTime === 'part-time' && selectedTimes.length !== 1) {
                 console.log('Error found: not enough hours for each day');
                 invalid = true;
-            } else if (workTime === 'part-time' && selectedTimes.length < 1) {
+            } else if (workTime === 'full-time' && selectedTimes.length !== 2) {
                 console.log('Error found: not enough hours for each day');
                 invalid = true;
             }
@@ -279,9 +279,9 @@ const validateTimeTable = ({ timeTable, workTime }) => {
     // Timetable error messages
     if (selectedDays !== 5) {
         invalid = true;
-        errorMessage = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
+        errorMessage = 'Πρέπει να διαλέξετε ώρες για ακριβώς 5 μέρες.';
     } else if (invalid) {
-        errorMessage = 'Πρέπει στις μέρες που έχετε διαλέξει να βάλετε αρκετές ώρες για να καλύπτουν τους χρόνους απασχόλησης που έχετε επιλέξει';
+        errorMessage = 'Για μερική απασχόληση μπορείτε να διαλέξετε 4 ώρες ανά ημέρα και για πλήρη απασχόληση 8 ώρες ανά ημέρα.';
     }
 
     return { hasError: invalid, message: errorMessage };

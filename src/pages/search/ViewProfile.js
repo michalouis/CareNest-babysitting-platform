@@ -141,7 +141,7 @@ export default function ViewProfile() {
                                     padding: '0.5rem 0'
                                 }}
                                 startIcon={<AssignmentIcon />}
-                                onClick={() => navigate(`/applications/edit-application?uid=${profileId}`)}
+                                onClick={() => navigate(`/search/view-profile/create-application?uid=${profileId}`)}
                             >
                                 <p className="button-text">Αίτηση Ενδιαφέροντος</p>
                             </Button>

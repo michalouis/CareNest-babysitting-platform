@@ -7,11 +7,11 @@ import Breadcrumbs from '../../layout/Breadcrumbs';
 import Loading from '../../layout/Loading';
 import ApplicationForm from './ApplicationForm';
 
-function CreateApplication() {
+function ViewApplication() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const nannyId = queryParams.get('uid');
+    const applicationId = queryParams.get('applicationId');
 
     if (isLoading) {
         return <Loading />;
@@ -19,8 +19,8 @@ function CreateApplication() {
 
     return (
         <>
-            <PageTitle title="CareNest - Δημιουργία Αίτησης" />
-            <h1 style={{ marginLeft: '1rem' }}>Δημιουργία Αίτησης</h1>
+            <PageTitle title="CareNest - Προβολή Αίτησης" />
+            <h1 style={{ marginLeft: '1rem' }}>Προβολή Αίτησης</h1>
             <Breadcrumbs showPopup={true} />
             {userData && (
                 <Box sx={{
@@ -29,11 +29,11 @@ function CreateApplication() {
                     alignItems: 'center',
                     margin: '1rem'
                 }}>
-                    <ApplicationForm userData={userData} nannyId={nannyId} />
+                    <ApplicationForm userData={userData} applicationId={applicationId} />
                 </Box>
             )}
         </>
     );
 }
 
-export default CreateApplication;
+export default ViewApplication;
