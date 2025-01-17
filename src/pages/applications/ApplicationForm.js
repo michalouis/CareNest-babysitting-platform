@@ -157,41 +157,47 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    setApplicationData((prevApplicationData) => ({
-                        ...prevApplicationData,
+                    const updatedApplicationData = {
+                        ...applicationData,
                         submitted: true,
                         timestamp: new Date().toISOString(),
-                    }));
+                    };
 
                     const updatedApplications = userData.applications.map(app => 
                         app.applicationId === applicationData.applicationId 
-                            ? { ...applicationData, submitted: true, timestamp: new Date().toISOString() } 
+                            ? updatedApplicationData 
                             : app
                     );
 
                     // Create contract in Firebase
-                    const contractData = { ...applicationData, submitted: true, timestamp: new Date().toISOString() };
-                    delete contractData.applicationId;
+                    const contractData = { ...updatedApplicationData };
                     const contractDocRef = await addDoc(collection(FIREBASE_DB, 'contracts'), contractData);
 
                     // Update contract with contractId
                     await updateDoc(contractDocRef, { contractId: contractDocRef.id });
 
                     // Update application with contractId
-                    setApplicationData((prevApplicationData) => ({
-                        ...prevApplicationData,
-                        contractId: contractDocRef.id,
-                    }));
+                    updatedApplicationData.contractId = contractDocRef.id;
+                    const finalUpdatedApplications = updatedApplications.map(app => 
+                        app.applicationId === applicationData.applicationId 
+                            ? updatedApplicationData 
+                            : app
+                    );
+
+                    await updateDoc(userDocRef, { applications: finalUpdatedApplications });
 
                     // Add contract ID to parent's and nanny's data
                     await updateDoc(userDocRef, { contracts: arrayUnion(contractDocRef.id) });
                     const nannyDocRef = doc(FIREBASE_DB, 'users', applicationData.nannyId);
                     await updateDoc(nannyDocRef, { contracts: arrayUnion(contractDocRef.id) });
 
-                    // Update user document with updated applications
-                    await updateDoc(userDocRef, { applications: updatedApplications });
+                    // Update local applicationData with contractId
+                    setApplicationData(prevApplicationData => ({
+                        ...prevApplicationData,
+                        contractId: contractDocRef.id,
+                    }));
 
-                    console.log('Submit:', applicationData);
+                    console.log('Submit:', updatedApplicationData);
                     setSnackbarMessage('Η αίτηση σας υποβλήθηκε με επιτυχία!');
                     setSnackbarSeverity('success');
                 } else {
