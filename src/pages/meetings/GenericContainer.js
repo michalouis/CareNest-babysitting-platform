@@ -12,7 +12,7 @@ function GenericContainer({ userData, items, itemFunction, itemsPerPage = 4, loa
     const totalPages = Math.ceil(items.length / itemsPerPage);
 
     return (
-        <Box sx={{ flexGrow: 1, margin: '1rem' }}>
+        <Box sx={{ flexGrow: 1 }}>
             <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
                 {loading ? (
                     Array.from(new Array(itemsPerPage)).map((_, index) => (

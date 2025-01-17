@@ -4,7 +4,7 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box, Card, CardActionArea, CardContent } from '@mui/material';
-import { FilterBox } from './FilterBox';
+import FilterBox from './FilterBox';
 import GenericContainer from './GenericContainer';
 import { getDocs, collection } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';

@@ -107,181 +107,183 @@ export default function ViewMeeting() {
                 <Breadcrumbs />
                 <h1 style={{ marginLeft: '1rem' }}>Προβολή Ραντεβού</h1>
                 
-                {userData.role === 'parent' && meetingData.meetingState === 'pending' && (
-                    <>
-                        <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
-                            Tο ραντεβού σας βρίσκεται σε αναμονή, μέχρι να εγκριθεί από τη νταντά. <br />
-                            Αν δεν έχετε έρθει σε επαφή με τη νταντά, μπορείτε να την επικοινωνήσετε μέσω του συστήματος μηνυμάτων.
-                        </Alert>
-                    </>
-                )}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                    {userData.role === 'parent' && meetingData.meetingState === 'pending' && (
+                        <>
+                            <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
+                                Tο ραντεβού σας βρίσκεται σε αναμονή, μέχρι να εγκριθεί από τη νταντά. <br />
+                                Αν δεν έχετε έρθει σε επαφή με τη νταντά, μπορείτε να την επικοινωνήσετε μέσω του συστήματος μηνυμάτων.
+                            </Alert>
+                        </>
+                    )}
 
-                {userData.role === 'nanny' && meetingData.meetingState === 'pending' && (
-                    <>
-                    <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
-                        Παρακαλώ αποδεχθείτε ή απορίψτε το ραντεβού που σας έστειλε ο γονέας. <br />
-                        Πληροφορίες για αυτόν μπορείτε να βρείτε παρακάτω.
-                    </Alert>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', margin: '1rem' }}>
-                        <Button variant="contained" sx={{ backgroundColor: "var(--clr-darker-green)" }} onClick={handleAccept}>
-                            <p className='big-button-text'>Αποδοχή</p>
-                        </Button>
-                        <Button variant="contained" sx={{ backgroundColor: "var(--clr-error-main)" }} onClick={handleReject}>
-                            <p className='big-button-text'>Απόρριψη</p>
-                        </Button>
-                    </Box>
-                    </>
-                )}
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    justifyContent: 'flex-start',
-                    margin: '1rem',
-                    padding: '1rem',
-                    width: 'fit-content',
-                    borderRadius: '1rem',
-                    backgroundColor: 'var(--clr-white)',
-                    boxShadow: '3',
-                    gap: '0.5rem',
-                }}>
-                    <p style={{ fontSize: '2.2rem', lineHeight: '2.5rem', alignItems: 'center' }}>
-                        <strong>Κατάσταση Ραντεβού: </strong>
-                        <span style={{
-                            fontWeight: 'bold',
-                            padding: '0.3rem 0.7rem',
-                            backgroundColor: meetingData.meetingState === 'pending' ? 'var(--clr-orange)'
-                            : meetingData.meetingState === 'accepted' ? 'var(--clr-darker-green)' : 'var(--clr-error-main)',
-                            color: 'var(--clr-white)',
-                            borderRadius: '1rem',
-                            display: 'inline-block',
-                            alignSelf: 'center',
-                        }}>
-                            {meetingData.meetingState === 'pending' ? 'Σε αναμονή' 
-                                : meetingData.meetingState === 'accepted' ? 'Εγκρίθηκε' 
-                                : 'Αππορίφθηκε'}
-                        </span>
-                    </p>
-                    <h1 style={{ margin: '1rem 0'}}>Τύπος Ραντεβού</h1>
+                    {userData.role === 'nanny' && meetingData.meetingState === 'pending' && (
+                        <>
+                        <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
+                            Παρακαλώ αποδεχθείτε ή απορίψτε το ραντεβού που σας έστειλε ο γονέας. <br />
+                            Πληροφορίες για αυτόν μπορείτε να βρείτε παρακάτω.
+                        </Alert>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', margin: '1rem' }}>
+                            <Button variant="contained" sx={{ backgroundColor: "var(--clr-darker-green)" }} onClick={handleAccept}>
+                                <p className='big-button-text'>Αποδοχή</p>
+                            </Button>
+                            <Button variant="contained" sx={{ backgroundColor: "var(--clr-error-main)" }} onClick={handleReject}>
+                                <p className='big-button-text'>Απόρριψη</p>
+                            </Button>
+                        </Box>
+                        </>
+                    )}
                     <Box sx={{
                         display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        gap: '2rem',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
+                        margin: '1rem',
+                        padding: '1rem',
+                        width: 'fit-content',
+                        borderRadius: '1rem',
+                        backgroundColor: 'var(--clr-white)',
+                        boxShadow: '3',
+                        gap: '0.5rem',
                     }}>
+                        <p style={{ fontSize: '2.2rem', lineHeight: '2.5rem', alignItems: 'center' }}>
+                            <strong>Κατάσταση Ραντεβού: </strong>
+                            <span style={{
+                                fontWeight: 'bold',
+                                padding: '0.3rem 0.7rem',
+                                backgroundColor: meetingData.meetingState === 'pending' ? 'var(--clr-orange)'
+                                : meetingData.meetingState === 'accepted' ? 'var(--clr-darker-green)' : 'var(--clr-error-main)',
+                                color: 'var(--clr-white)',
+                                borderRadius: '1rem',
+                                display: 'inline-block',
+                                alignSelf: 'center',
+                            }}>
+                                {meetingData.meetingState === 'pending' ? 'Σε αναμονή' 
+                                    : meetingData.meetingState === 'accepted' ? 'Εγκρίθηκε' 
+                                    : 'Αππορίφθηκε'}
+                            </span>
+                        </p>
+                        <h1 style={{ margin: '1rem 0'}}>Τύπος Ραντεβού</h1>
                         <Box sx={{
                             display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            gap: '2rem',
                         }}>
-                            <p style={{ fontSize: '1.3rem' }}>
-                                <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingType === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
-                            </p>
-                            {meetingData.meetingType == 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                            }}>
+                                <p style={{ fontSize: '1.3rem' }}>
+                                    <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingType === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
+                                </p>
+                                {meetingData.meetingType == 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
+                            </Box>
+                            {meetingData.meetingType === 'online' ? (
+                                <Button
+                                    variant="contained"
+                                    startIcon={<VideocamIcon />}
+                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
+                                    disabled={meetingData.meetingState !== 'accepted'}
+                                >
+                                    Σύνδεση στην Συνάντηση
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    startIcon={<NavigationIcon />}
+                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                    disabled={meetingData.meetingState !== 'accepted'}
+                                >
+                                    <p className='small-button-text'>Άνοιγμα διεύθυνσης στο χάρτη</p>
+                                </Button>
+                            )}
                         </Box>
-                        {meetingData.meetingType === 'online' ? (
+                        <h1 style={{ margin: '1rem 0'}}>Ημερομηνία και Ώρα</h1>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            gap: '2rem',
+                        }}>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                            }}>
+                                <p style={{ fontSize: '1.3rem' }}>
+                                    <strong>Ημερομηνία: </strong>{meetingData.dateTime.day} {months[meetingData.dateTime.month]} {meetingData.dateTime.year}
+                                </p>
+                                <p style={{ fontSize: '1.3rem' }}>
+                                    <strong>Ώρα: </strong>{meetingData.dateTime.hour}:{meetingData.dateTime.minute}
+                                </p>
+                            </Box>
                             <Button
                                 variant="contained"
-                                startIcon={<VideocamIcon />}
+                                startIcon={<EventIcon />}
                                 sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
                                 disabled={meetingData.meetingState !== 'accepted'}
                             >
-                                Σύνδεση στην Συνάντηση
+                                <p className='small-button-text'>Προσθήκη στο Ημερολόγιο</p>
                             </Button>
-                        ) : (
-                            <Button
-                                variant="contained"
-                                startIcon={<NavigationIcon />}
-                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
-                                disabled={meetingData.meetingState !== 'accepted'}
-                            >
-                                <p className='small-button-text'>Άνοιγμα διεύθυνσης στο χάρτη</p>
-                            </Button>
-                        )}
-                    </Box>
-                    <h1 style={{ margin: '1rem 0'}}>Ημερομηνία και Ώρα</h1>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        gap: '2rem',
-                    }}>
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                        }}>
-                            <p style={{ fontSize: '1.3rem' }}>
-                                <strong>Ημερομηνία: </strong>{meetingData.dateTime.day} {months[meetingData.dateTime.month]} {meetingData.dateTime.year}
-                            </p>
-                            <p style={{ fontSize: '1.3rem' }}>
-                                <strong>Ώρα: </strong>{meetingData.dateTime.hour}:{meetingData.dateTime.minute}
-                            </p>
                         </Box>
-                        <Button
-                            variant="contained"
-                            startIcon={<EventIcon />}
-                            sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
-                            disabled={meetingData.meetingState !== 'accepted'}
-                        >
-                            <p className='small-button-text'>Προσθήκη στο Ημερολόγιο</p>
-                        </Button>
-                    </Box>
-                    <h1 style={{ margin: '1rem 0' }}>
-                        {userData.role === 'parent' ? 'Πληροφορίες Νταντάς' : 'Πληροφορίες Γονέα'}
-                    </h1>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        gap: '4rem',
-                    }}>
-                        {nannyData && (
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                            }}>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Νταντάς: </strong>{nannyData.firstName} {nannyData.lastName}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Νταντάς: </strong>{nannyData.phoneNumber}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Email Νταντάς: </strong>{nannyData.email}</p>
-                            </Box>
-                        )}
-                        {parentData && (
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                            }}>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Γονέα: </strong>{parentData.firstName} {parentData.lastName}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Γονέα: </strong>{parentData.phoneNumber}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Email Γονέα: </strong>{parentData.email}</p>
-                            </Box>
-                        )}
+                        <h1 style={{ margin: '1rem 0' }}>
+                            {userData.role === 'parent' ? 'Πληροφορίες Νταντάς' : 'Πληροφορίες Γονέα'}
+                        </h1>
                         <Box sx={{
                             display: 'flex',
+                            flexDirection: 'row',
                             alignItems: 'center',
-                            flexDirection: 'column',
-                            alignItems: 'flex-end',
-                            gap: '1rem',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            gap: '4rem',
                         }}>
-                            <Button
-                                variant="contained"
-                                startIcon={<PersonIcon />}
-                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
-                                onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
-                            >
-                                <p className='small-button-text'>Προβολή Προφίλ</p>
-                            </Button>
-                            <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>
-                                <p className='small-button-text'>Αποστολή Μηνύματος</p>
-                            </Button>
+                            {nannyData && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-start',
+                                }}>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Νταντάς: </strong>{nannyData.firstName} {nannyData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Νταντάς: </strong>{nannyData.phoneNumber}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Email Νταντάς: </strong>{nannyData.email}</p>
+                                </Box>
+                            )}
+                            {parentData && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-start',
+                                }}>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Γονέα: </strong>{parentData.firstName} {parentData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Γονέα: </strong>{parentData.phoneNumber}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Email Γονέα: </strong>{parentData.email}</p>
+                                </Box>
+                            )}
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                alignItems: 'flex-end',
+                                gap: '1rem',
+                            }}>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<PersonIcon />}
+                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                    onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
+                                >
+                                    <p className='small-button-text'>Προβολή Προφίλ</p>
+                                </Button>
+                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>
+                                    <p className='small-button-text'>Αποστολή Μηνύματος</p>
+                                </Button>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
