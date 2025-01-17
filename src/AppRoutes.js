@@ -13,8 +13,7 @@ import { Profile } from './pages/profile/Profile';
 import EditProfile from './pages/profile/EditProfile';
 import Search from './pages/search/Search';
 import Results from './pages/search/Results';
-import ViewNanny from './pages/search/ViewNanny';
-import ViewParent from './pages/search/ViewParent';
+import ViewProfile from './pages/search/ViewProfile';
 import Favorites from './pages/search/Favorites';
 import Meetings from './pages/meetings/Meetings';
 import ViewMeeting from './pages/meetings/ViewMeeting';
@@ -39,11 +38,11 @@ function AppRoutes() {
                 <Route path="/profile/edit-profile" element={<EditProfile />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/results" element={<Results />} />
-                <Route path="/search/view-nanny" element={<ViewNanny />} />
+                <Route path="/search/view-profile" element={<ViewProfile />} />
                 <Route path="/search/favorites" element={<Favorites />} />
                 <Route path="/meetings" element={<Meetings />} />
                 <Route path="/meetings/view-meeting" element={<ViewMeeting />} />
-                <Route path="/meetings/view-meeting/view-parent" element={<ViewParent />} />
+                <Route path="/meetings/view-meeting/view-profile" element={<ViewProfile />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/partnerships" element={<Partnerships />} />

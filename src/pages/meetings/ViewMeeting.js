@@ -3,7 +3,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
@@ -22,6 +22,7 @@ const months = [
 export default function ViewMeeting() {
     const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
+    const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const meetingId = queryParams.get('meetingId');
     const [meetingData, setMeetingData] = useState(null);
@@ -270,7 +271,12 @@ export default function ViewMeeting() {
                             alignItems: 'flex-end',
                             gap: '1rem',
                         }}>
-                            <Button variant="contained" startIcon={<PersonIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>
+                            <Button
+                                variant="contained"
+                                startIcon={<PersonIcon />}
+                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
+                            >
                                 <p className='small-button-text'>Προβολή Προφίλ</p>
                             </Button>
                             <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>

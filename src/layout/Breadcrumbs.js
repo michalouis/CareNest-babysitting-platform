@@ -17,7 +17,7 @@ const pathLabels = {
     '/profile/edit-profile': 'Επεξεργασία Προφίλ',
     '/search': 'Αναζήτηση Νταντάς',
     '/search/results': 'Αποτελέσματα Αναζήτησης',
-    '/search/view-nanny': 'Προβολή Νταντάς',
+    '/search/view-profile': 'Προβολή Προφίλ',
     '/search/favorites': 'Αγαπημένα',
     '/meetings': 'Ραντεβού Γνωριμίας',
     '/meetings/view-meeting': 'Προβολή Ραντεβού',
