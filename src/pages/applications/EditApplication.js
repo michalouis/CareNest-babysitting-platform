@@ -7,7 +7,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import Loading from '../../layout/Loading';
-import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable } from './ApplicationFields';
+import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, validate } from './ApplicationFields';
 
 function EditApplication() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
@@ -28,6 +28,7 @@ function EditApplication() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(true);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
         const fetchNannyData = async () => {
@@ -60,21 +61,19 @@ function EditApplication() {
         }
     }, [nannyId, userData]);
 
-    const validate = () => {
-        const newErrors = {};
-        if (!formData.fromDate.month || !formData.fromDate.year) {
-            newErrors.fromDate = 'Το πεδίο είναι υποχρεωτικό';
-        }
-        if (!formData.toDate.month || !formData.toDate.year) {
-            newErrors.toDate = 'Το πεδίο είναι υποχρεωτικό';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+    const handleSave = () => {
+        const isValid = validate(formData, setErrors, setSnackbarMessage);
+        if (!isValid) return;
+        console.log('Temporary Save:', formData);
+        setEditMode(false);
+        window.scrollTo(0, 0);
     };
 
     const handleSubmit = () => {
-        if (!validate()) return;
-        console.log(formData);
+        const isValid = validate(formData, setErrors, setSnackbarMessage);
+        if (!isValid) return;
+        console.log('Submit:', formData);
+        window.scrollTo(0, 0);
     };
 
     if (isLoading || loading) {
@@ -83,9 +82,9 @@ function EditApplication() {
 
     return (
         <>
-            <PageTitle title="CareNest - Επεξεργασία Αίτησης" />
+            <PageTitle title="CareNest - Δημιουργία Αίτησης" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Αίτησης</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Δημιουργία Αίτησης</h1>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -127,18 +126,42 @@ function EditApplication() {
                     
                     <h2>Διάρκεια Συνεργασίας</h2>
                     <p>Επιλέξτε το χρονικό διάστημα που επιθυμείτε να συνεργαστείτε με τη νταντά.</p>
-                    <FormDateRange formData={formData} setFormData={setFormData} errors={errors} />
+                    <FormDateRange formData={formData} setFormData={setFormData} errors={errors} editMode={editMode} />
 
                     <h2>Διαθεσιμότητα</h2>
-                    <FormTimeTable formData={formData} setFormData={setFormData} nannyTimetable={nannyData?.jobPostingData?.timetable || {}} />
+                    <FormTimeTable formData={formData} setFormData={setFormData} nannyTimetable={nannyData?.jobPostingData?.timetable || {}} editMode={editMode} />
 
-                    <Button
-                        variant="contained"
-                        onClick={handleSubmit}
-                        sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
-                    >
-                        Υποβολή
-                    </Button>
+                    {editMode ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                            <Button
+                                variant="contained"
+                                onClick={handleSave}
+                                sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
+                            >
+                                <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Box sx={{ display: 'flex', gap: '2rem', justifyContent: 'center', width: '100%' }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setEditMode(true);
+                                    window.scrollTo(0, 0);
+                                }}
+                                sx={{ backgroundColor: 'var(--clr-blue-lighter)', '&:hover': { opacity: 0.8 } }}
+                            >
+                                <p className='big-button-text'>Επεξεργασία</p>
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={handleSubmit}
+                                sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
+                            >
+                                <p className='big-button-text'>Υποβολή</p>
+                            </Button>
+                        </Box>
+                    )}
                 </Box>
             </Box>
             <Snackbar
