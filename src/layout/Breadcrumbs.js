@@ -27,6 +27,7 @@ const pathLabels = {
     '/applications': 'Αιτήσεις',
     '/applications/view-application': 'Προβολή Αίτησης',
     '/contracts': 'Συμφωνητικά',
+    '/contracts/view-contract': 'Προβολή Συμφωνητικού',
     '/partnerships': 'Συνεργασίες',
     '/job-posting': 'Αγγελία Εργασίας',
     '/job-posting/edit-job-posting': 'Δημιουργία Αγγελίας',

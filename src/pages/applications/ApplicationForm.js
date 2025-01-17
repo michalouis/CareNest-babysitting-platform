@@ -14,7 +14,7 @@ const LastModification = ({ timestamp }) => {
     const formattedTime = date.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' });
 
     return (
-        <p><strong>Τελευταία τροποποίηση:</strong> {formattedDate} {formattedTime}</p>
+        <p><strong>Τελευταία ενημέρωση:</strong> {formattedDate} {formattedTime}</p>
     );
 };
 
@@ -191,10 +191,10 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                     const nannyDocRef = doc(FIREBASE_DB, 'users', applicationData.nannyId);
                     await updateDoc(nannyDocRef, { contracts: arrayUnion(contractDocRef.id) });
 
-                    // Update local applicationData with contractId
+                    // Update local applicationData to reflect the changes
                     setApplicationData(prevApplicationData => ({
                         ...prevApplicationData,
-                        contractId: contractDocRef.id,
+                        submitted: true,
                     }));
 
                     console.log('Submit:', updatedApplicationData);

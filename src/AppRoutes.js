@@ -21,6 +21,7 @@ import Applications from './pages/applications/Applications';
 import CreateApplication from './pages/applications/CreateApplication';
 import ViewApplication from './pages/applications/ViewApplication';
 import Contracts from './pages/contracts/Contracts';
+import ViewContract from './pages/contracts/ViewContract';
 import Partnerships from './pages/partnerships/Partnerships';
 import JobPosting from './pages/job_posting/JobPosting';
 import EditJobPosting from './pages/job_posting/EditJobPosting';
@@ -51,6 +52,7 @@ function AppRoutes() {
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/applications/view-application" element={<ViewApplication />} />
                 <Route path="/contracts" element={<Contracts />} />
+                <Route path="/contracts/view-contract" element={<ViewContract />} />
                 <Route path="/partnerships" element={<Partnerships />} />
                 <Route path="/job-posting" element={<JobPosting />} />
                 <Route path="/job-posting/edit-job-posting" element={<EditJobPosting />} />

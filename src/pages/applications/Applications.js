@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import TodayIcon from '@mui/icons-material/Today';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import UpdateIcon from '@mui/icons-material/Update';
+import PersonIcon from '@mui/icons-material/Person';
 
 const checkboxOptions = [
     { label: "Πρόχειρο", value: "draft" },
@@ -32,7 +33,7 @@ const LastModification = ({ timestamp }) => {
     const formattedDate = date.toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
-        <p style={{ fontSize: '1.3rem' }}><strong>Τελευταία τροποποίηση:</strong> {formattedDate}</p>
+        <p style={{ fontSize: '1.3rem' }}><strong>Τελευταία ενημέρωση:</strong> {formattedDate}</p>
     );
 };
 
@@ -61,6 +62,7 @@ function ApplicationItem({ application }) {
                         </h2>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                        <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Νταντά:</h2>
                         <p style={{ fontSize: '1.3rem' }}>{application.nannyName}</p>
                     </Box>
