@@ -119,6 +119,19 @@ function Meetings() {
                         return meeting.nannyId === userData.uid;
                     }
                     return false;
+                }).filter(meeting => {
+                    const meetingDate = new Date(meeting.dateTime.year, meeting.dateTime.month, meeting.dateTime.day);
+                    const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
+                    const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
+
+                    const isWithinDateRange = (!filters.fromDate.year || meetingDate >= fromDate) &&
+                                              (!filters.toDate.year || meetingDate <= toDate);
+
+                    const isStatusMatch = (filters.accepted && meeting.meetingState === 'accepted') ||
+                                          (filters.pending && meeting.meetingState === 'pending') ||
+                                          (filters.rejected && meeting.meetingState === 'rejected');
+
+                    return isWithinDateRange && isStatusMatch;
                 });
 
                 setMeetings(filteredMeetings);
@@ -132,9 +145,9 @@ function Meetings() {
         if (userData) {
             fetchMeetings();
         }
-    }, [userData]);
+    }, [userData, filters]);
 
-    if (isLoading || loading) {
+    if (isLoading) {
         return <Loading />;
     }
 
@@ -163,7 +176,7 @@ function Meetings() {
                         setFilters={setFilters}
                         checkboxOptions={checkboxOptions}
                     />
-                    <GenericContainer userData={userData} items={meetings} itemFunction={(item, userData) => <MeetingItem meeting={item} userData={userData} />} />
+                    <GenericContainer userData={userData} items={meetings} itemFunction={(item, userData) => <MeetingItem meeting={item} userData={userData} />} loading={loading} />
                 </Box>
             </>
         )}

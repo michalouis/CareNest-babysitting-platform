@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Pagination, Skeleton } from '@mui/material';
 
-function GenericContainer({ userData, items, itemFunction, itemsPerPage = 4 }) {
+function GenericContainer({ userData, items, itemFunction, itemsPerPage = 4, loading }) {
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setLoading(false);
-    }, [items]);
 
     const handleChange = (event, value) => {
         setPage(value);
@@ -21,7 +16,7 @@ function GenericContainer({ userData, items, itemFunction, itemsPerPage = 4 }) {
             <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
                 {loading ? (
                     Array.from(new Array(itemsPerPage)).map((_, index) => (
-                        <Skeleton key={index} variant="rectangular" width="100%" height={130} />
+                        <Skeleton key={index} variant="rectangular" width="100%" height={250} />
                     ))
                 ) : (
                     paginatedItems.length > 0 ? (
