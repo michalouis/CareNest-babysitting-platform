@@ -129,7 +129,12 @@ function EditApplication() {
                     <FormDateRange formData={formData} setFormData={setFormData} errors={errors} editMode={editMode} />
 
                     <h2>Διαθεσιμότητα</h2>
-                    <FormTimeTable formData={formData} setFormData={setFormData} nannyTimetable={nannyData?.jobPostingData?.timetable || {}} editMode={editMode} />
+                    <FormTimeTable formData={formData} setFormData={setFormData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
+                    {errors.timetable && (
+                        <p style={{ color: 'var(--clr-error)', fontSize: '1.2rem' }}>
+                            {errors.timetable}
+                        </p>
+                    )}
 
                     {editMode ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>

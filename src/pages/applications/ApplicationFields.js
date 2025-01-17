@@ -35,8 +35,22 @@ function validate(formData, setErrors, setSnackbarMessage) {
         if (fromDate > toDate) {
             newErrors.fromDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
             newErrors.toDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
-            newSnackbarMessages.push("'Από Μήνας/Έτος', 'Μέχρι Μήνας/Έτος'");
+            newSnackbarMessages.push('Ημερομηνία "Από" και "Μέχρι"');
         }
+    }
+
+    // Timetable validation
+    let selectedDays = 0;
+    daysOfWeek.forEach((day) => {
+        const selectedTimes = timePeriods.filter((time) => formData.timetable[day]?.includes(time));
+        if (selectedTimes.length > 0) {
+            selectedDays++;
+        }
+    });
+
+    if (selectedDays < 5) {
+        newErrors.timetable = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
+        newSnackbarMessages.push('Χρονοδιάγραμμα');
     }
 
     setErrors(newErrors);
@@ -183,7 +197,7 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
     );
 }
 
-function FormTimeTable({ formData, setFormData, nannyTimetable, editMode }) {
+function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors }) {
     const handleCellClick = (day, time) => {
         setFormData((prevFormData) => {
             const newTimetable = { ...prevFormData.timetable };
@@ -207,6 +221,7 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode }) {
                 borderRadius: '1rem',
                 boxShadow: '3',
                 backgroundColor: "#fafafa",
+                border: errors.timetable ? '2px solid var(--clr-error)' : '',
             }}
         >
             <Table>
