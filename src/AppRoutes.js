@@ -14,6 +14,7 @@ import EditProfile from './pages/profile/EditProfile';
 import Search from './pages/search/Search';
 import Results from './pages/search/Results';
 import ViewNanny from './pages/search/ViewNanny';
+import ViewParent from './pages/search/ViewParent';
 import Favorites from './pages/search/Favorites';
 import Meetings from './pages/meetings/Meetings';
 import ViewMeeting from './pages/meetings/ViewMeeting';
@@ -42,6 +43,7 @@ function AppRoutes() {
                 <Route path="/search/favorites" element={<Favorites />} />
                 <Route path="/meetings" element={<Meetings />} />
                 <Route path="/meetings/view-meeting" element={<ViewMeeting />} />
+                <Route path="/meetings/view-meeting/view-parent" element={<ViewParent />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/partnerships" element={<Partnerships />} />

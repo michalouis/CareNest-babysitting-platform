@@ -4,9 +4,9 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { useLocation } from 'react-router-dom';
-import { getDoc, doc } from 'firebase/firestore';
+import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
-import { Box, Button, Alert } from '@mui/material';
+import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import NavigationIcon from '@mui/icons-material/Navigation';
 import VideocamIcon from '@mui/icons-material/Videocam';
@@ -28,6 +28,8 @@ export default function ViewMeeting() {
     const [nannyData, setNannyData] = useState(null);
     const [parentData, setParentData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [actionType, setActionType] = useState('');
 
     useEffect(() => {
         const fetchMeetingData = async () => {
@@ -63,6 +65,35 @@ export default function ViewMeeting() {
         }
     }, [meetingId, userData]);
 
+    const handleAccept = () => {
+        setActionType('accept');
+        setDialogOpen(true);
+    };
+
+    const handleReject = () => {
+        setActionType('reject');
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
+    const handleDialogConfirm = async () => {
+        setLoading(true);
+        try {
+            await updateDoc(doc(FIREBASE_DB, 'meetings', meetingId), {
+                meetingState: actionType === 'accept' ? 'accepted' : 'rejected'
+            });
+            setMeetingData(prevData => ({ ...prevData, meetingState: actionType === 'accept' ? 'accepted' : 'rejected' }));
+        } catch (error) {
+            console.error(`Error ${actionType === 'accept' ? 'accepting' : 'rejecting'} meeting:`, error);
+        } finally {
+            setLoading(false);
+            handleDialogClose();
+        }
+    };
+
     if (isLoading || loading) {
         return <Loading />;
     }
@@ -85,10 +116,20 @@ export default function ViewMeeting() {
                 )}
 
                 {userData.role === 'nanny' && meetingData.meetingState === 'pending' && (
+                    <>
                     <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
                         Παρακαλώ αποδεχθείτε ή απορίψτε το ραντεβού που σας έστειλε ο γονέας. <br />
                         Πληροφορίες για αυτόν μπορείτε να βρείτε παρακάτω.
                     </Alert>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', margin: '1rem' }}>
+                        <Button variant="contained" sx={{ backgroundColor: "var(--clr-darker-green)" }} onClick={handleAccept}>
+                            <p className='big-button-text'>Αποδοχή</p>
+                        </Button>
+                        <Button variant="contained" sx={{ backgroundColor: "var(--clr-error-main)" }} onClick={handleReject}>
+                            <p className='big-button-text'>Απόρριψη</p>
+                        </Button>
+                    </Box>
+                    </>
                 )}
                 <Box sx={{
                     display: 'flex',
@@ -109,7 +150,7 @@ export default function ViewMeeting() {
                             fontWeight: 'bold',
                             padding: '0.3rem 0.7rem',
                             backgroundColor: meetingData.meetingState === 'pending' ? 'var(--clr-orange)'
-                            : meetingData.meetingState === 'accepted' ? 'var(--clr-brat-green)' : 'var(--clr-error-main)',
+                            : meetingData.meetingState === 'accepted' ? 'var(--clr-darker-green)' : 'var(--clr-error-main)',
                             color: 'var(--clr-white)',
                             borderRadius: '1rem',
                             display: 'inline-block',
@@ -189,7 +230,9 @@ export default function ViewMeeting() {
                             <p className='small-button-text'>Προσθήκη στο Ημερολόγιο</p>
                         </Button>
                     </Box>
-                    <h1 style={{ margin: '1rem 0'}}>Πληροφορίες Νταντάς</h1>
+                    <h1 style={{ margin: '1rem 0' }}>
+                        {userData.role === 'parent' ? 'Πληροφορίες Νταντάς' : 'Πληροφορίες Γονέα'}
+                    </h1>
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -236,6 +279,22 @@ export default function ViewMeeting() {
                         </Box>
                     </Box>
                 </Box>
+                <Dialog open={dialogOpen} onClose={handleDialogClose}>
+                    <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Είστε σίγουροι ότι θέλετε να {actionType === 'accept' ? 'αποδεχθείτε' : 'απορρίψετε'} αυτό το ραντεβού;
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleDialogClose} sx={{ color: 'var(--clr-black)' }}>
+                            <p className='button-text'>Ακύρωση</p>
+                        </Button>
+                        <Button variant="contained" onClick={handleDialogConfirm} sx={{ backgroundColor: actionType === 'accept' ? 'var(--clr-darker-green)' : 'var(--clr-error-main)' }}>
+                            <p className='button-text'>{actionType === 'accept' ? 'Αποδοχή' : 'Απόρριψη'}</p>
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </>
         )}
         </>

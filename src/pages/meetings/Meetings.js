@@ -31,7 +31,7 @@ function MeetingItem({ meeting, userData }) {
     const getMeetingStateColor = (state) => {
         switch (state) {
             case 'accepted':
-                return 'var(--clr-brat-green)';
+                return 'var(--clr-darker-green)';
             case 'pending':
                 return 'var(--clr-orange)';
             case 'rejected':
@@ -109,9 +109,19 @@ function Meetings() {
         const fetchMeetings = async () => {
             try {
                 setLoading(true);
-                const meetingsSnapshot = await getDocs(collection(FIREBASE_DB, 'meetings'));
-                const meetingsData = meetingsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setMeetings(meetingsData);
+                const meetingsCollection = await getDocs(collection(FIREBASE_DB, 'meetings'));
+                const meetingsData = meetingsCollection.docs.map(doc => doc.data());
+
+                const filteredMeetings = meetingsData.filter(meeting => {
+                    if (userData.role === 'parent') {
+                        return meeting.parentId === userData.uid;
+                    } else if (userData.role === 'nanny') {
+                        return meeting.nannyId === userData.uid;
+                    }
+                    return false;
+                });
+
+                setMeetings(filteredMeetings);
             } catch (error) {
                 console.error("Error fetching meetings:", error.message, error.stack);
             } finally {
