@@ -18,7 +18,7 @@ import Favorites from './pages/search/Favorites';
 import Meetings from './pages/meetings/Meetings';
 import ViewMeeting from './pages/meetings/ViewMeeting';
 import Applications from './pages/applications/Applications';
-import EditApplication from './pages/applications/EditApplication';
+import CreateApplication from './pages/applications/CreateApplication';
 import Contracts from './pages/contracts/Contracts';
 import Partnerships from './pages/partnerships/Partnerships';
 import JobPosting from './pages/job_posting/JobPosting';
@@ -40,13 +40,13 @@ function AppRoutes() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/results" element={<Results />} />
                 <Route path="/search/view-profile" element={<ViewProfile />} />
-                <Route path="/search/view-profile/edit-application" element={<EditApplication />} />
+                <Route path="/search/view-profile/create-application" element={<CreateApplication />} />
                 <Route path="/search/favorites" element={<Favorites />} />
                 <Route path="/meetings" element={<Meetings />} />
                 <Route path="/meetings/view-meeting" element={<ViewMeeting />} />
                 <Route path="/meetings/view-meeting/view-profile" element={<ViewProfile />} />
                 <Route path="/applications" element={<Applications />} />
-                <Route path="/applications/edit-application" element={<EditApplication />} />
+                <Route path="/applications/create-application" element={<CreateApplication />} />
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/partnerships" element={<Partnerships />} />
                 <Route path="/job-posting" element={<JobPosting />} />
