@@ -52,6 +52,7 @@ function AppRoutes() {
                 <Route path="/meetings/view-meeting/view-profile" element={<ViewProfile />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/applications/view-application" element={<ViewApplication />} />
+                <Route path="/applications/create-application" element={<CreateApplication />} />
                 <Route path="/contracts" element={<Contracts />} />
                 <Route path="/contracts/view-contract" element={<ViewContract />} />
                 <Route path="/partnerships" element={<Partnerships />} />

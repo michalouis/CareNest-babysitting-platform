@@ -13,6 +13,7 @@ import RatingBox from './RatingBox';
 
 import PersonIcon from '@mui/icons-material/Person';
 import MessageIcon from '@mui/icons-material/Message';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 const months = [
     'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
@@ -91,91 +92,126 @@ export default function ViewPartnership() {
         return <Loading />;
     }
 
+    let message = null;
+
+    if (userData.role === 'parent') {
+        if (partnershipData.payments.some(payment => payment === 'paid') && partnershipData.payments[partnershipData.payments.length - 1] !== 'verified') {
+            message = { type: 'info', text: 'Μη ξεχάσετε στο τέλος κάθε μήνα να πληρώσετε τη νταντά.' };
+        } else if (partnershipData.payments[partnershipData.payments.length - 1] === 'verified' && !partnershipData.rating) {
+            message = { type: 'info', text: 'Έχετε πραγματοποιήσει όλες τις πληρωμές! Προσθέστε μια αξιολόγηση για να ολοκληρώσετε τη συνεργασία σας.' };
+        } else if (!partnershipData.active) {
+            message = { type: 'success', text: 'Η συνεργασία έχει ολοκληρωθεί! Μπορείτε να φτιάξετε νέα αίτηση για να την ανανεώστε σας πατώντας \'Ανανέωση Συνεργασίας\'.' };
+        }
+    } else if (userData.role === 'nanny') {
+        if (partnershipData.payments.some(payment => payment === 'paid')) {
+            message = { type: 'info', text: 'Ο γονέας έχει στείλει την ανταμοιβή σας! Παρακαλώ επιβεβαιώστε πως τη λάβατε.' };
+        } else if (!partnershipData.active) {
+            message = { type: 'success', text: 'Η συνεργασία έχει ολοκληρωθεί. Στην ενότητα \'Αξιολόγηση\' μπορείτε να δείτε τη κριτική που σας άφησε ο γονέας.' };
+        }
+    }
+
     return (
         <>
             <PageTitle title="CareNest - Προβολή Συνεργασίας" />
             <Breadcrumbs />
             <h1 style={{ marginLeft: '1rem' }}>Προβολή Συνεργασίας</h1>
             {userData && partnershipData && (
-                <Box sx={{
-                    width: '90%',
-                    maxWidth: '900px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    backgroundColor: 'var(--clr-white)',
-                    padding: '1rem',
-                    borderRadius: '1rem',
-                    boxShadow: '2',
-                    margin: '1rem auto',
-                    gap: '1rem',
-                }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
-                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
-                        <h2 style={{
-                            fontWeight: 'bold',
-                            padding: '0.3rem 0.7rem',
-                            backgroundColor: partnershipData.active ? 'var(--clr-darker-green)' : 'var(--clr-grey)',
-                            color: 'var(--clr-white)',
-                            borderRadius: '1rem',
-                            display: 'inline-block'
-                        }}>
-                            {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
-                        </h2>
-                    </Box>
-                    <h2>Στοιχεία Συνεργάτη</h2> 
+                <>
+                    {message && (
+                        <Alert severity={message.type} sx={{ alignSelf: 'center', width: 'fit-content' }}>
+                            {message.text}
+                        </Alert>
+                    )}
                     <Box sx={{
+                        width: '90%',
+                        maxWidth: '900px',
                         display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'flex-start',
-                        width: '100%',
-                        gap: '2rem',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        backgroundColor: 'var(--clr-white)',
+                        padding: '1rem',
+                        borderRadius: '1rem',
+                        boxShadow: '2',
+                        margin: '1rem auto',
+                        gap: '1rem',
                     }}>
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            gap: '0.5rem',
-                        }}>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
+                        <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
+                            <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
+                            <h2 style={{
+                                fontWeight: 'bold',
+                                padding: '0.3rem 0.7rem',
+                                backgroundColor: partnershipData.active ? 'var(--clr-darker-green)' : 'var(--clr-grey)',
+                                color: 'var(--clr-white)',
+                                borderRadius: '1rem',
+                                display: 'inline-block'
+                            }}>
+                                {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
+                            </h2>
                         </Box>
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            gap: '1rem',
-                        }}>
+                        {!partnershipData.active && userData.role === 'parent' && (
                             <Button
                                 variant="contained"
-                                startIcon={<PersonIcon />}
-                                sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem', alignSelf: 'center' }}
+                                startIcon={<AutorenewIcon />}
+                                onClick={() => navigate(`/applications/create-application?uid=${partnershipData.nannyId}`)}
                             >
-                                <p className='small-button-text'>Προβολή Προφίλ</p>
+                                <p className='button-text'>Ανανέωση Συνεργασίας</p>
                             </Button>
-                            <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
-                                <p className='small-button-text'>Αποστολή Μηνύματος</p>
-                            </Button>
+                        )}
+                        <h2>Στοιχεία Συνεργάτη</h2> 
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            width: '100%',
+                            gap: '2rem',
+                        }}>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                gap: '0.5rem',
+                            }}>
+                                <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
+                                <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
+                                <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
+                            </Box>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                gap: '1rem',
+                            }}>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<PersonIcon />}
+                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
+                                    onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                >
+                                    <p className='small-button-text'>Προβολή Προφίλ</p>
+                                </Button>
+                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
+                                    <p className='small-button-text'>Αποστολή Μηνύματος</p>
+                                </Button>
+                            </Box>
                         </Box>
+                        <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
+                        <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
+                            <FormEmploymentType formData={partnershipData} />
+                            <FormBabysittingPlace formData={partnershipData} />
+                        </Box>
+                        <h2>Διάρκεια Συνεργασίας</h2>
+                        <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
+                        <h2>Ώρες Φροντίδας Παιδιού</h2>
+                        <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
                     </Box>
-                    <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
-                    <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                        <FormEmploymentType formData={partnershipData} />
-                        <FormBabysittingPlace formData={partnershipData} />
-                    </Box>
-                    <h2>Διάρκεια Συνεργασίας</h2>
-                    <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
-                    <h2>Ώρες Φροντίδας Παιδιού</h2>
-                    <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
-                </Box>
+                    <PaymentsBox partnershipData={partnershipData} userData={userData} />
+                    <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} finishPartnership={finishPartnership} />
+                </>
             )}
-            <PaymentsBox partnershipData={partnershipData} userData={userData} />
-            <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} finishPartnership={finishPartnership} />
         </>
     );
 }

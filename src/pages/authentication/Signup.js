@@ -205,7 +205,7 @@ function Signup() {
                         <Button variant='text' onClick={handleCloseDialog} sx={{ color: 'var(--clr-black)' }}>
                             <p className='button-text'>Ακύρωση</p>
                         </Button>
-                        <Button variant='contained' onClick={handleConfirmRole} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} autoFocus>
+                        <Button variant='contained' onClick={handleConfirmRole} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} >
                             <p className='button-text'>Συνέχεια</p>
                         </Button>
                     </DialogActions>

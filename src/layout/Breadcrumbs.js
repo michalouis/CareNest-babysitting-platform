@@ -26,6 +26,7 @@ const pathLabels = {
     '/meetings/view-meeting': 'Προβολή Ραντεβού',
     '/applications': 'Αιτήσεις',
     '/applications/view-application': 'Προβολή Αίτησης',
+    '/applications/create-application': 'Δημιουργία Αίτησης',
     '/contracts': 'Συμφωνητικά',
     '/contracts/view-contract': 'Προβολή Συμφωνητικού',
     '/partnerships': 'Συνεργασίες',

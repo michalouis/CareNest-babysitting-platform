@@ -30,7 +30,7 @@ const getMonthYearString = (date) => {
 };
 
 const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
-    const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month - 1);
+    const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
 
@@ -67,7 +67,7 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
 };
 
 const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) => {
-    const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month - 1);
+    const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
 
