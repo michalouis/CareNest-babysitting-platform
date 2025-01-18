@@ -57,7 +57,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
             if (nannyDoc.exists()) {
                 const nannyData = nannyDoc.data();
                 const newRatingsNum = nannyData.ratingsNum + 1;
-                const newScore = ((nannyData.score * nannyData.ratingsNum) + newRating) / newRatingsNum;
+                const newScore = (((nannyData.score * nannyData.ratingsNum) + newRating) / newRatingsNum).toFixed(2);
     
                 await updateDoc(nannyDocRef, {
                     ratingsNum: newRatingsNum,
