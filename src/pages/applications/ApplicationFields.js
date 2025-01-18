@@ -304,4 +304,75 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors
     );
 }
 
-export { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, validate };
+function VisualizeTimeTable({ formData }) {
+    return (
+        <TableContainer
+            component={Paper}
+            sx={{
+                margin: '1rem 0',
+                borderRadius: '1rem',
+                boxShadow: '3',
+                backgroundColor: "#fafafa",
+            }}
+        >
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        {daysOfWeek.map((day) => (
+                            <TableCell
+                                key={day}
+                                align="center"
+                                sx={{ 
+                                    padding: '5px',
+                                    fontWeight: 'bold',
+                                    fontSize: '1.2rem' 
+                                }}>
+                                {day}
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {timePeriods.map((time) => (
+                        <TableRow key={time}>
+                            <TableCell 
+                                component="th"
+                                scope="row" 
+                                sx={{ 
+                                    padding: '5px', 
+                                    fontWeight: 'bold',
+                                    fontSize: '1.25rem', 
+                                    width: '5px'
+                                }}>
+                                    {time}
+                                </TableCell>
+                            {daysOfWeek.map((day) => (
+                                <TableCell key={day} align="center" sx={{ padding: '5px' }}>
+                                    <Button
+                                        sx={{
+                                            backgroundColor: formData.timetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
+                                            '&:hover': {
+                                                backgroundColor: formData.timetable[day]?.includes(time) ? 'var(--clr-dark-green)' : 'var(--clr-dark-grey)',
+                                            },
+                                            width: '100px',
+                                            height: '40px',
+                                            borderRadius: '0.5rem',
+                                            margin: '1px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                        disabled
+                                    />
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
+}
+
+export { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, VisualizeTimeTable, validate };

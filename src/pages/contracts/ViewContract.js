@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
-import { FormDateRange, FormTimeTable } from '../applications/ApplicationFields';
+import { FormDateRange, VisualizeTimeTable } from '../applications/ApplicationFields';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
@@ -286,7 +286,7 @@ function ViewContract() {
                         <h2>Διάρκεια Συνεργασίας</h2>
                         <FormDateRange formData={contractData} setFormData={setContractData} errors={{}} editMode={false} />
                         <h2>Ώρες Φροντίδας Παιδιού</h2>
-                        <FormTimeTable formData={contractData} setFormData={setContractData} nannyTimetable={contractData.timetable} editMode={false} errors={{}} />
+                        <VisualizeTimeTable formData={contractData} />
                     </Box>
                 </>
             )}

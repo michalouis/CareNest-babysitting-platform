@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import Loading from '../../layout/Loading';
-import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, validate } from './ApplicationFields';
+import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, VisualizeTimeTable, validate } from './ApplicationFields';
 
 const LastModification = ({ timestamp }) => {
     if (!timestamp) return null;
@@ -277,7 +277,11 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                 <p>Επιλέξτε το χρονικό διάστημα που επιθυμείτε να συνεργαστείτε με τη νταντά.</p>
                 <FormDateRange formData={applicationData} setFormData={setApplicationData} errors={errors} editMode={editMode} />
                 <h2>Διαθεσιμότητα</h2>
-                <FormTimeTable formData={applicationData} setFormData={setApplicationData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
+                {!applicationData.submitted ? (
+                    <FormTimeTable formData={applicationData} setFormData={setApplicationData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
+                ) : (
+                    <VisualizeTimeTable formData={applicationData} />
+                )}
                 {errors.timetable && (
                     <p style={{ color: 'var(--clr-error)', fontSize: '1.2rem' }}>
                         {errors.timetable}

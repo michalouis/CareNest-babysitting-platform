@@ -7,7 +7,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormDateRange, FormTimeTable, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
+import { FormDateRange, VisualizeTimeTable, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
 import PaymentsBox from './PaymentsBox';
 import RatingBox from './RatingBox';
 
@@ -214,7 +214,7 @@ export default function ViewPartnership() {
                             <h2>Διάρκεια Συνεργασίας</h2>
                             <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
                             <h2>Ώρες Φροντίδας Παιδιού</h2>
-                            <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
+                            <VisualizeTimeTable formData={partnershipData} />
                         </Box>
                         <Box sx={{
                             width: { xs: '100%', md: 'auto' },
