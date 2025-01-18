@@ -44,7 +44,10 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
                     <p style={{ fontSize: '1.3rem', width: '60%' }}>{paymentStatus}</p>
                     <Button 
                         variant="contained" 
-                        sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }} 
+                        sx={{
+                            backgroundColor: partnershipData.payments[i] === 'current' ? 'var(--clr-blue-light)' : 'var(--clr-violet)',
+                            padding: '0.5rem 1rem'
+                        }} 
                         disabled={partnershipData.payments[i] === 'upcoming'}
                         startIcon={partnershipData.payments[i] === 'current' || partnershipData.payments[i] === 'upcoming' ? <EuroSymbolIcon /> : <ReceiptIcon />}
                         onClick={partnershipData.payments[i] === 'current' ? () => handlePaymentConfirm(i) : null}
@@ -63,7 +66,7 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
     return paymentBoxes;
 };
 
-const generatePaymentBoxesNanny = (partnershipData) => {
+const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) => {
     const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month - 1);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
@@ -89,6 +92,7 @@ const generatePaymentBoxesNanny = (partnershipData) => {
                     <Button 
                         variant="contained" 
                         sx={{ backgroundColor: 'var(--clr-blue-light)', padding: '0.5rem 1rem', width: 'fit-content', alignSelf: 'flex-end' }}
+                        onClick={() => handlePaymentVerification(i)}
                     >
                         <p className='small-button-text'>Επιβεβαίωση Πληρωμής</p>
                     </Button>
@@ -111,6 +115,11 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         setConfirmDialogOpen(true);
     };
 
+    const handlePaymentVerification = (index) => {
+        setSelectedPaymentIndex(index);
+        setConfirmDialogOpen(true);
+    };
+
     const handleConfirmDialogClose = () => {
         setConfirmDialogOpen(false);
         setSelectedPaymentIndex(null);
@@ -120,6 +129,25 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         if (selectedPaymentIndex !== null) {
             const updatedPayments = [...partnershipData.payments];
             updatedPayments[selectedPaymentIndex] = 'paid';
+
+            try {
+                await updateDoc(doc(FIREBASE_DB, 'partnerships', partnershipData.partnershipId), {
+                    payments: updatedPayments
+                });
+                window.location.reload();
+            } catch (error) {
+                console.error('Error updating payment status:', error);
+            }
+        }
+    };
+
+    const handleConfirmVerification = async () => {
+        if (selectedPaymentIndex !== null) {
+            const updatedPayments = [...partnershipData.payments];
+            updatedPayments[selectedPaymentIndex] = 'verified';
+            if (updatedPayments[selectedPaymentIndex + 1] === 'upcoming') {
+                updatedPayments[selectedPaymentIndex + 1] = 'current';
+            }
 
             try {
                 await updateDoc(doc(FIREBASE_DB, 'partnerships', partnershipData.partnershipId), {
@@ -148,20 +176,22 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         }}>
             <h1>Πληρωμές</h1>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem' }}>
-                {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData)}
+                {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData, handlePaymentVerification)}
             </Box>
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
                 <DialogTitle><strong>Επιβεβαίωση Πληρωμής</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουροι πως θέλετε να στείλετε την πληρωμή για αυτόν τον μήνα;
+                        {userData.role === 'parent' 
+                            ? 'Είστε σίγουροι πως θέλετε να στείλετε την πληρωμή για αυτόν τον μήνα;'
+                            : 'Είστε σίγουροι πως θέλετε να επιβεβαιώσετε την πληρωμή για αυτόν τον μήνα;'}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)'}}>
                         <p className='button-text'>Ακύρωση</p>
                     </Button>
-                    <Button variant='contained' onClick={handleConfirmPayment} sx={{ backgroundColor: 'var(--clr-violet)' }}>
+                    <Button variant='contained' onClick={userData.role === 'parent' ? handleConfirmPayment : handleConfirmVerification} sx={{ backgroundColor: 'var(--clr-blue-light)' }}>
                         <p className='button-text'>Επιβεβαίωση</p>
                     </Button>
                 </DialogActions>
