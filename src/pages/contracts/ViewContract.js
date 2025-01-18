@@ -150,9 +150,15 @@ function ViewContract() {
             {contractData && parentData && nannyData && (
                 <>
                     {!userSignedDoc && (
-                        <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                            Παρακαλώ υπογράψτε το συμφωνητικό σας για να ξεκινήσει η συνεργασία σας.
-                        </Alert>
+                        userData.partnershipActive ? (
+                            <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
+                                Έχετε ήδη μια ενεργή συνεργασία! Πρέπει να την τερματίσετε πριν υποβάλετε νέο συμφωνητικό.
+                            </Alert>
+                        ) : (
+                            <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
+                                Παρακαλώ υπογράψτε το συμφωνητικό σας για να ξεκινήσει η συνεργασία σας.
+                            </Alert>
+                        )
                     )}
                     {userSignedDoc && !partnerSignedDoc && (
                         <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
@@ -212,6 +218,7 @@ function ViewContract() {
                                     component="label"
                                     sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
                                     startIcon={<UploadIcon />}
+                                    disabled={userData.partnershipActive}
                                 >
                                     <p className='button-text'>Υποβολή υπογεγραμμένο συμφωνητικό</p>
                                     <input
@@ -223,7 +230,7 @@ function ViewContract() {
                             </>
                         ) : (
                             <>
-                                <h3>Μπορείτε να κατεβάσετε εδω περα το υπογεγραμμένο συμφωνητικό σας</h3>
+                                <h3>Μπορείτε να κατεβάσετε το υπογεγραμμένο συμφωνητικό σας εδώ.</h3>
                                 <Button
                                     variant="contained"
                                     sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
@@ -277,7 +284,7 @@ function ViewContract() {
                         </Box>
                         <h2>Διάρκεια Συνεργασίας</h2>
                         <FormDateRange formData={contractData} setFormData={setContractData} errors={{}} editMode={false} />
-                        <h2>Διαθεσιμότητα</h2>
+                        <h2>Ώρες Φροντίδας Παιδιού</h2>
                         <FormTimeTable formData={contractData} setFormData={setContractData} nannyTimetable={contractData.timetable} editMode={false} errors={{}} />
                     </Box>
                 </>
