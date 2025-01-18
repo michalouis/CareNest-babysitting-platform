@@ -39,7 +39,7 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
 
         paymentBoxes.push(
             <>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%', gap: '1rem' }}>
                     <p style={{ fontSize: '1.3rem', width: '20%', fontWeight: 'bold' }}>{getMonthYearString(currentDate)}</p>
                     <p style={{ fontSize: '1.3rem', width: '60%' }}>{paymentStatus}</p>
                     <Button 
@@ -76,7 +76,7 @@ const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) =
 
         paymentBoxes.push(
             <>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%', gap: '1rem' }}>
                     <p style={{ fontSize: '1.3rem', width: '20%', fontWeight: 'bold' }}>{getMonthYearString(currentDate)}</p>
                     <p style={{ fontSize: '1.3rem', width: '60%' }}>{paymentStatus}</p>
                     <Button 

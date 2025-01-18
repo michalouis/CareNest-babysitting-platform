@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getDoc, doc } from 'firebase/firestore';
+import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
@@ -58,6 +58,34 @@ export default function ViewPartnership() {
             fetchPartnershipData();
         }
     }, [partnershipId, userData]);
+
+    const finishPartnership = async () => {
+        try {
+            // Update partnership data
+            await updateDoc(doc(FIREBASE_DB, 'partnerships', partnershipData.partnershipId), {
+                active: false
+            });
+    
+            // Update nanny data
+            const nannyDocRef = doc(FIREBASE_DB, 'users', partnershipData.nannyId);
+            const nannyDoc = await getDoc(nannyDocRef);
+            if (nannyDoc.exists()) {
+                await updateDoc(nannyDocRef, {
+                    partnershipActive: false,
+                });
+            }
+    
+            // Update parent data
+            const parentDocRef = doc(FIREBASE_DB, 'users', partnershipData.parentId);
+            await updateDoc(parentDocRef, {
+                partnershipActive: false,
+            });
+    
+            window.location.reload();
+        } catch (error) {
+            console.error('Error updating partnership and user data:', error);
+        }
+    };
 
     if (isLoading || loading) {
         return <Loading />;
@@ -145,10 +173,9 @@ export default function ViewPartnership() {
                     <h2>Ώρες Φροντίδας Παιδιού</h2>
                     <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
                 </Box>
-                
             )}
             <PaymentsBox partnershipData={partnershipData} userData={userData} />
-            <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} />
+            <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} finishPartnership={finishPartnership} />
         </>
     );
 }
