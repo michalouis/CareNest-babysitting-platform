@@ -20,8 +20,8 @@ function ViewApplication() {
     return (
         <>
             <PageTitle title="CareNest - Προβολή Αίτησης" />
-            <h1 style={{ marginLeft: '1rem' }}>Προβολή Αίτησης</h1>
             <Breadcrumbs showPopup={true} />
+            <h1 style={{ marginLeft: '1rem' }}>Προβολή Αίτησης</h1>
             {userData && (
                 <Box sx={{
                     display: 'flex',

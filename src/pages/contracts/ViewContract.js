@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
+import { FormDateRange, FormTimeTable } from '../applications/ApplicationFields';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getDoc, doc } from 'firebase/firestore';
+import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { FIREBASE_DB } from '../../firebase';
 import PageTitle from '../../PageTitle';
@@ -9,10 +10,11 @@ import Breadcrumbs from '../../layout/Breadcrumbs';
 import Loading from '../../layout/Loading';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { FormDateRange, FormTimeTable } from '../applications/ApplicationFields';
+import DownloadIcon from '@mui/icons-material/Download';
+import UploadIcon from '@mui/icons-material/Upload';
 
 function ViewContract() {
-    const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
+    const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const contractId = queryParams.get('contractId');
@@ -20,6 +22,8 @@ function ViewContract() {
     const [parentData, setParentData] = useState(null);
     const [nannyData, setNannyData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [fileName, setFileName] = useState('');
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
     const translateMap = {
         Male: 'Άνδρας',
@@ -63,17 +67,56 @@ function ViewContract() {
         }
     }, [contractId]);
 
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+            setOpenConfirmDialog(true);
+            event.target.value = '';
+        }
+    };
+
+    const handleConfirmUpload = async () => {
+        setOpenConfirmDialog(false);
+        try {
+            const userDocRef = doc(FIREBASE_DB, 'contracts', contractId);
+            const updateData = userData.role === 'parent' ? { signedDocParent: fileName } : { signedDocNanny: fileName };
+            await updateDoc(userDocRef, updateData);
+            window.location.reload();
+        } catch (error) {
+            console.error('Error updating contract:', error);
+        }
+    };
+
     if (isLoading || loading) {
         return <Loading />;
     }
 
+    const userSignedDoc = userData.role === 'parent' ? contractData.signedDocParent : contractData.signedDocNanny;
+    const partnerSignedDoc = userData.role === 'parent' ? contractData.signedDocNanny : contractData.signedDocParent;
+
     return (
         <>
             <PageTitle title="CareNest - Προβολή Συμφωνητικού" />
+            <Breadcrumbs />
             <h1 style={{ marginLeft: '1rem' }}>Προβολή Συμφωνητικού</h1>
-            <Breadcrumbs showPopup={true} />
             {contractData && parentData && nannyData && (
                 <>
+                    {!userSignedDoc && (
+                        <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
+                            Παρακαλώ υπογράψτε το συμφωνητικό σας για να ξεκινήσει η συνεργασία σας.
+                        </Alert>
+                    )}
+                    {userSignedDoc && !partnerSignedDoc && (
+                        <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
+                            Έχετε υποβάλει το υπογεγραμμένο συμφωνητικό με επιτυχία. Μόλις το υπογράψει και ο συνεργάτης σας θα ξεκινήσει η συνεργασία σας.
+                        </Alert>
+                    )}
+                    {userSignedDoc && partnerSignedDoc && (
+                        <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
+                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα 'Συνεργασίες'.
+                        </Alert>
+                    )}
                     <Box sx={{
                         width: '90%',
                         maxWidth: '1080px',
@@ -105,8 +148,46 @@ function ViewContract() {
                                 <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Υπογεγραμμένο από Νταντά</p>
                             </Box>
                         </Box>
-                        
+                        <Divider sx={{ width: '90%', margin: '1rem' }} />
+                        {(userData.role === 'parent' && !contractData.signedDocParent) || (userData.role === 'nanny' && !contractData.signedDocNanny) ? (
+                            <>
+                                <h3>1. Κατεβάστε το συμφωνητικό, διαβάστε το και υπογράψτε το.</h3>
+                                <Button
+                                    variant="contained"
+                                    sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    <p className='button-text'>Συμφωνητικό</p>
+                                </Button>
+                                <h3 style={{marginTop: '1rem'}}>2. Ανεβάστε το υπογεγραμμένο συμφωνητικό.</h3>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
+                                    startIcon={<UploadIcon />}
+                                >
+                                    <p className='button-text'>Υποβολή υπογεγραμμένο συμφωνητικό</p>
+                                    <input
+                                        type="file"
+                                        hidden
+                                        onChange={handleFileUpload}
+                                    />
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <h3>Μπορείτε να κατεβάσετε εδω περα το υπογεγραμμένο συμφωνητικό σας</h3>
+                                <Button
+                                    variant="contained"
+                                    sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    <p className='button-text'>Υπογεγραμμένο Συμφωνητικό</p>
+                                </Button>
+                            </>
+                        )}
                     </Box>
+                    <h1 style={{ textAlign: 'center' }}>Προεπισκόπηση Συμφωνητικού</h1>
                     <Box sx={{
                         width: '90%',
                         maxWidth: '1080px',
@@ -154,6 +235,28 @@ function ViewContract() {
                     </Box>
                 </>
             )}
+            <Dialog
+                open={openConfirmDialog}
+                onClose={() => {
+                    setOpenConfirmDialog(false);
+                    setFileName('');
+                }}
+            >
+                <DialogTitle><strong>Επιβεβαίωση</strong></DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Είστε σίγουροι πως θέλετε να ανεβάσετε το αρχείο <strong>{fileName}</strong>;
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenConfirmDialog(false)} sx={{ color: 'var(--clr-black)' }}>
+                        <p className='button-text'>Ακύρωση</p>
+                    </Button>
+                    <Button variant='contained' onClick={handleConfirmUpload} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}>
+                        <p className='button-text'>Υποβολή</p>
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }

@@ -27,7 +27,7 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
-function ContractItem({ contract }) {
+function ContractItem({ contract, userData }) {
     const navigate = useNavigate();
 
     const getContractStateColor = (signedDocParent, signedDocNanny) => {
@@ -49,13 +49,19 @@ function ContractItem({ contract }) {
                             borderRadius: '1rem',
                             display: 'inline-block'
                         }}>
-                            {contract.signedDocParent && contract.signedDocNanny ? 'Υπογεγραμμένο' : contract.signedDocParent ? 'Απαιτεί Υπογραφή Συνεργάτη' : 'Απαιτεί Υπογραφή'}
+                            {contract.signedDocParent && contract.signedDocNanny ? 'Υπογεγραμμένο' :
+                            (userData.role === 'parent' && contract.signedDocParent) || (userData.role === 'nanny' && contract.signedDocNanny) ? 
+                            'Απαιτεί Υπογραφή Συνεργάτη' : 'Απαιτεί Υπογραφή'}
                         </h2>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Νταντά:</h2>
-                        <p style={{ fontSize: '1.3rem' }}>{contract.nannyName}</p>
+                        <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>
+                            {userData.role === 'parent' ? 'Νταντά:' : 'Γονέας:'}
+                        </h2>
+                        <p style={{ fontSize: '1.3rem' }}>
+                            {userData.role === 'parent' ? contract.nannyName : contract.parentName}
+                        </p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
@@ -106,17 +112,14 @@ function Contracts() {
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    console.log('User data:', userData);
                     const contractIds = userData.contracts || [];
-                    console.log('Contract IDs:', contractIds);
                     const contractsData = [];
-                
+
                     for (const contractId of contractIds) {
                         const contractDocRef = doc(FIREBASE_DB, 'contracts', contractId);
                         const contractDoc = await getDoc(contractDocRef);
                         if (contractDoc.exists()) {
                             const contractData = contractDoc.data();
-                            console.log('Contract data:', contractData);
                             if (contractData.nannyId === userData.uid || contractData.parentId === userData.uid) {
                                 contractsData.push(contractData);
                             }
@@ -125,14 +128,20 @@ function Contracts() {
                         }
                     }
                 
+                
+                    console.log('Contracts data:', contractsData);
+                
+
                     console.log('Contracts data:', contractsData);
                 
                     const filteredContracts = contractsData.filter(contract => {
                         const contractDate = new Date(contract.timestamp);
-                    
-                        const isWithinDateRange = (!filters.fromDate.year || contractDate >= new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day)) &&
-                                                  (!filters.toDate.year || contractDate <= new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day));
-                    
+                        const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
+                        const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
+
+                        const isWithinDateRange = (!filters.fromDate.year || contractDate >= fromDate) &&
+                                                  (!filters.toDate.year || contractDate <= toDate);
+
                         let isStatusMatch = false;
                         if (userData.role === 'parent') {
                             isStatusMatch = (filters.needSignature && !contract.signedDocParent) ||
@@ -143,10 +152,20 @@ function Contracts() {
                                             (filters.needSignaturePartner && !contract.signedDocParent) ||
                                             (filters.signed && contract.signedDocParent && contract.signedDocNanny);
                         }
-                    
+
+                        // for special case where both user and parent haven't signed  
+                        if (!contract.signedDocParent && !contract.signedDocNanny && !filters.needSignature) {
+                            isStatusMatch = false;
+                        }
+
                         return isWithinDateRange && isStatusMatch;
                     });
                 
+                
+                    console.log('Filtered contracts:', filteredContracts);
+                
+                    // Sort contracts based on the timestamp
+
                     console.log('Filtered contracts:', filteredContracts);
                 
                     // Sort contracts based on the timestamp
@@ -156,6 +175,10 @@ function Contracts() {
                         return filters.newerFirst ? dateB - dateA : dateA - dateB;
                     });
                 
+                
+                    console.log('Sorted contracts:', sortedContracts);
+                
+
                     console.log('Sorted contracts:', sortedContracts);
                 
                     setContracts(sortedContracts);
@@ -168,7 +191,7 @@ function Contracts() {
                 setLoading(false);
             }
         };
-    
+
         if (userData) {
             fetchContracts();
         }
@@ -202,7 +225,7 @@ function Contracts() {
                             setFilters={setFilters}
                             checkboxOptions={checkboxOptions}
                         />
-                        <GenericContainer userData={userData} items={contracts} itemFunction={(item) => <ContractItem contract={item} />} loading={loading} />
+                        <GenericContainer userData={userData} items={contracts} itemFunction={(item) => <ContractItem contract={item} userData={userData} />} loading={loading} />
                     </Box>
                 </>
             )}

@@ -26,6 +26,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
         applicationId: '',
         nannyId: '',
         parentId: '',
+        parentName: '',
         timestamp: '',
         nannyName: '',
         childAgeGroup: '',
@@ -79,6 +80,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                                 employmentType: data.jobPostingData.employmentType,
                                 babysittingPlace: data.jobPostingData.babysittingPlace,
                                 childAgeGroup: userData.childAgeGroup,
+                                parentName: `${userData.firstName} ${userData.lastName}`
                             }));
                         }
                     } else {
