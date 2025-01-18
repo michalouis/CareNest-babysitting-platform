@@ -8,6 +8,7 @@ import { FIREBASE_DB } from '../../firebase';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import Loading from '../../layout/Loading';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -81,8 +82,8 @@ function ViewContract() {
         try {
             const userDocRef = doc(FIREBASE_DB, 'contracts', contractId);
             const updateData = userData.role === 'parent' 
-                ? { signedDocParent: fileName, timestamp: new Date().toISOString() } 
-                : { signedDocNanny: fileName, timestamp: new Date().toISOString() };
+                ? { signedDocParent: fileName } 
+                : { signedDocNanny: fileName };
             await updateDoc(userDocRef, updateData);
             await createPartnership();
             window.location.reload();
