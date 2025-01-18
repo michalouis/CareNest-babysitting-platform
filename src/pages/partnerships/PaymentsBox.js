@@ -1,9 +1,10 @@
-import React from 'react';
-import { Box, Button, Divider } from '@mui/material';
-
+import React, { useState } from 'react';
+import { Box, Button, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import EuroSymbolIcon from '@mui/icons-material/EuroSymbol';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PaymentsIcon from '@mui/icons-material/Payments';
+import { doc, updateDoc } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../firebase';
 
 const months = [
     'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
@@ -28,7 +29,7 @@ const getMonthYearString = (date) => {
     return `${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-const generatePaymentBoxesParent = (partnershipData) => {
+const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
     const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month - 1);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
@@ -46,6 +47,7 @@ const generatePaymentBoxesParent = (partnershipData) => {
                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }} 
                         disabled={partnershipData.payments[i] === 'upcoming'}
                         startIcon={partnershipData.payments[i] === 'current' || partnershipData.payments[i] === 'upcoming' ? <EuroSymbolIcon /> : <ReceiptIcon />}
+                        onClick={partnershipData.payments[i] === 'current' ? () => handlePaymentConfirm(i) : null}
                     >
                         <p className='button-text'>
                             {partnershipData.payments[i] === 'current' || partnershipData.payments[i] === 'upcoming' ? 'Πληρωμή' : 'Απόδειξη'}
@@ -101,6 +103,35 @@ const generatePaymentBoxesNanny = (partnershipData) => {
 };
 
 const PaymentsBox = ({ partnershipData, userData }) => {
+    const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+    const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(null);
+
+    const handlePaymentConfirm = (index) => {
+        setSelectedPaymentIndex(index);
+        setConfirmDialogOpen(true);
+    };
+
+    const handleConfirmDialogClose = () => {
+        setConfirmDialogOpen(false);
+        setSelectedPaymentIndex(null);
+    };
+
+    const handleConfirmPayment = async () => {
+        if (selectedPaymentIndex !== null) {
+            const updatedPayments = [...partnershipData.payments];
+            updatedPayments[selectedPaymentIndex] = 'paid';
+
+            try {
+                await updateDoc(doc(FIREBASE_DB, 'partnerships', partnershipData.partnershipId), {
+                    payments: updatedPayments
+                });
+                window.location.reload();
+            } catch (error) {
+                console.error('Error updating payment status:', error);
+            }
+        }
+    };
+
     return (
         <Box sx={{
             width: '90%',
@@ -117,8 +148,24 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         }}>
             <h1>Πληρωμές</h1>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem' }}>
-                {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData) : generatePaymentBoxesNanny(partnershipData)}
+                {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData)}
             </Box>
+            <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
+                <DialogTitle><strong>Επιβεβαίωση Πληρωμής</strong></DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Είστε σίγουροι πως θέλετε να στείλετε την πληρωμή για αυτόν τον μήνα;
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)'}}>
+                        <p className='button-text'>Ακύρωση</p>
+                    </Button>
+                    <Button variant='contained' onClick={handleConfirmPayment} sx={{ backgroundColor: 'var(--clr-violet)' }}>
+                        <p className='button-text'>Επιβεβαίωση</p>
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
