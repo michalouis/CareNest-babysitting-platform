@@ -14,7 +14,6 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     
     const [formData, setFormData] = useState(userData ? {
         profilePhoto: userData.profilePhoto,
-        score: userData.score,
         firstName: userData.firstName,
         lastName: userData.lastName,
         amka: userData.amka,
@@ -35,6 +34,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
         profileCreated: userData.profileCreated,
         partnershipActive: userData.partnershipActive,
         score: userData.score,
+        ratingsNum: userData.ratingsNum,
     } : {
         profilePhoto: '',
         firstName: firstName,
@@ -67,6 +67,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
         profileCreated: false,
         partnershipActive: false,
         score: 5,
+        ratingsNum: 5,
     });
     
     // error states for the form fields
@@ -344,6 +345,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     profileCreated: true,
                     partnershipActive: false,
                     score: (Math.random() * (4.99 - 2.01) + 2.01).toFixed(2),
+                    ratingsNum: Math.floor(Math.random() * 16) + 5,
                     uid: user.uid,
                 });
                 if (userData) {
