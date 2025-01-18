@@ -173,6 +173,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
 
                     // Create contract in Firebase
                     const contractData = { ...updatedApplicationData };
+                    delete contractData.submitted; // Remove submitted field from contract data
                     const contractDocRef = await addDoc(collection(FIREBASE_DB, 'contracts'), contractData);
 
                     // Update contract with contractId

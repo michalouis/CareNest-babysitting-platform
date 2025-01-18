@@ -112,7 +112,7 @@ function ViewContract() {
                     partnershipData.payments = payments;
     
                     const partnershipDocRef = await addDoc(collection(FIREBASE_DB, 'partnerships'), partnershipData);
-                    await updateDoc(partnershipDocRef, { partnershipId: partnershipDocRef.id });
+                    await updateDoc(partnershipDocRef, { partnershipId: partnershipDocRef.id, active: true });
     
                     const parentDocRef = doc(FIREBASE_DB, 'users', contractData.parentId);
                     const nannyDocRef = doc(FIREBASE_DB, 'users', contractData.nannyId);
