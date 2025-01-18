@@ -189,7 +189,7 @@ export default function ViewMeeting() {
                                     sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
                                     disabled={meetingData.meetingState !== 'accepted'}
                                 >
-                                    Σύνδεση στην Συνάντηση
+                                    <p className='small-button-text'>Σύνδεση στην Συνάντηση</p>
                                 </Button>
                             ) : (
                                 <Button

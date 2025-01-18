@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 import TodayIcon from '@mui/icons-material/Today';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
-import ReceiptIcon from '@mui/icons-material/Receipt';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PersonIcon from '@mui/icons-material/Person';
 
 const checkboxOptions = [
@@ -74,7 +74,7 @@ function ContractItem({ contract, userData }) {
                         <p style={{ fontSize: '1.3rem' }}>{`${months[contract.toDate.month]} ${contract.toDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                        <ReceiptIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
+                        <ReceiptLongIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης:</strong> {new Date(contract.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </Box>
                 </CardContent>
