@@ -18,33 +18,50 @@ import EventIcon from '@mui/icons-material/Event';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 // Render the profile picture & score
-const renderProfileScore = (userData) => (
-    <Box sx={{
-        display: 'flex', 
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'var(--clr-white)',
-        padding: '1rem',
-        borderRadius: '1rem',
-        boxShadow: '2',
-    }}>
-        <Box sx={{ 
-            display: 'flex',
+const ProfileOverview = (userData) => (
+    <>
+        <Box sx={{
+            display: 'flex', 
+            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            backgroundColor: 'var(--clr-white)',
+            padding: '1rem',
+            borderRadius: '1rem',
+            boxShadow: '2',
         }}>
-            <AccountCircleIcon style={{ fontSize: '7rem' }} />
-        </Box>
-        {userData.score && (
+            <Box sx={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+            }}>
+                <AccountCircleIcon style={{ fontSize: '7rem' }} />
+                {userData.score && (
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'var(--clr-gold)',
+                        marginLeft: '1rem',
+                    }}>
+                        <GradeIcon sx={{ fontSize: '2.5rem', marginRight: '0.5rem' }} />
+                        <p className='big-button-text-gold'>{userData.score}</p>
+                    </Box>
+                )}
+            </Box>
             <Box sx={{
                 display: 'flex',
-                alignItems: 'center',
-                color: 'var(--clr-gold)',
+                justifyContent: 'center',
+                width: '100%',
+                marginTop: '1rem',
+                textAlign: 'center',
             }}>
-                <GradeIcon sx={{ fontSize: '2.5rem', marginRight: '0.5rem' }} />
-                <p className='big-button-text-gold'>{userData.score}</p>
+                <p style={{ fontSize: '1.3rem', fontWeight: 'bold', wordBreak: 'break-word' }}>
+                    {userData.firstName} {userData.lastName}
+                </p>
             </Box>
-        )}
-    </Box>
+        </Box>
+    </>
 );
 
 export default function ViewProfile() {
@@ -103,7 +120,7 @@ export default function ViewProfile() {
                     gap: '0.5rem',
                     alignItems: 'center'
                 }}>
-                    {profileData && renderProfileScore(profileData)}
+                    {profileData && ProfileOverview(profileData)}
                     <Button
                         variant="contained"
                         sx={{

@@ -30,33 +30,50 @@ const translateMap = {
     flute: 'Φλάουτο'
 };
 
-const renderProfilePicture = (userData) => (
-    <Box sx={{
-        display: 'flex', 
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'var(--clr-white)',
-        padding: '1rem',
-        borderRadius: '1rem',
-        boxShadow: '2',
-    }}>
-        <Box sx={{ 
-            display: 'flex',
+const ProfileOverview = (userData) => (
+    <>
+        <Box sx={{
+            display: 'flex', 
+            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            backgroundColor: 'var(--clr-white)',
+            padding: '1rem',
+            borderRadius: '1rem',
+            boxShadow: '2',
         }}>
-            <AccountCircleIcon style={{ fontSize: '7rem' }} />
-        </Box>
-        {userData.score && (
+            <Box sx={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+            }}>
+                <AccountCircleIcon style={{ fontSize: '7rem' }} />
+                {userData.score && (
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: 'var(--clr-gold)',
+                        marginLeft: '1rem',
+                    }}>
+                        <GradeIcon sx={{ fontSize: '2.5rem', marginRight: '0.5rem' }} />
+                        <p className='big-button-text-gold'>{userData.score}</p>
+                    </Box>
+                )}
+            </Box>
             <Box sx={{
                 display: 'flex',
-                alignItems: 'center',
-                color: 'var(--clr-gold)',
+                justifyContent: 'center',
+                width: '100%',
+                marginTop: '1rem',
+                textAlign: 'center',
             }}>
-                <GradeIcon sx={{ fontSize: '2.5rem', marginRight: '0.5rem' }} />
-                <p className='big-button-text-gold'>{userData.score}</p>
+                <p style={{ fontSize: '1.3rem', fontWeight: 'bold', wordBreak: 'break-word' }}>
+                    {userData.firstName} {userData.lastName}
+                </p>
             </Box>
-        )}
-    </Box>
+        </Box>
+    </>
 );
 
 // data common to parents/nannies
@@ -66,8 +83,6 @@ export function renderCommonData(userData) {
             {/* Personal Data */}
             <h2>Προσωπικά Στοιχεία</h2>
             <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                <TextField label="Όνομα" value={userData.firstName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Επώνυμο" value={userData.lastName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
                 <TextField
                     label="Φύλο"
                     value={
@@ -306,7 +321,7 @@ export function Profile() {
                         gap: '0.5rem',
                         alignItems: 'center'
                     }}>
-                        {renderProfilePicture(userData)}    {/* Profile picture */}
+                        {ProfileOverview(userData)}    {/* Profile picture */}
                         <Button
                             variant="contained"
                             sx={{
