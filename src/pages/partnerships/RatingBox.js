@@ -101,7 +101,6 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
 
     return (
         <Box sx={{
-            width: '90%',
             maxWidth: '900px',
             display: 'flex',
             flexDirection: 'column',
@@ -111,15 +110,14 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
             padding: '1rem',
             borderRadius: '1rem',
             boxShadow: '2',
-            margin: '1rem auto'
         }}>
             <h1>Αξιολόγηση</h1>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: '1rem', maxHeight: '250px' }}>
                 {rating ? (
                     <>
                         <Rating value={rating.score} precision={0.5} style={{ fontSize: '3rem'}} readOnly />
                         <h3 style={{ alignSelf: 'flex-start', margin: '0 0 0.5rem 1rem', color: 'var(--clr-grey)' }}>Σχόλιο</h3>
-                        <Box sx={{ display: 'flex', margin: '0 1rem', padding: '0.5rem', border: '2px solid var(--clr-light-grey)', borderRadius: '1rem', width: '100%'}} >
+                        <Box sx={{ display: 'flex', margin: '0 1rem', padding: '0.5rem', border: '2px solid var(--clr-light-grey)', borderRadius: '1rem', width: '100%', overflow: 'auto'}} >
                             <p style={{ fontSize: '1.3rem', color: rating.comment ? 'var(--clr-black)' : 'var(--clr-grey)' }}>
                                 {rating.comment || 'Δεν υπάρχει σχόλιο...'}
                             </p>

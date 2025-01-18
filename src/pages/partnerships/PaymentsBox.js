@@ -26,7 +26,11 @@ const paymentStatusMessagesNanny = {
 };
 
 const getMonthYearString = (date) => {
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
+    return (
+        <>
+            {months[date.getMonth()]} <br /> {date.getFullYear()}
+        </>
+    );
 };
 
 const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
@@ -39,9 +43,9 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
 
         paymentBoxes.push(
             <>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%', gap: '1rem' }}>
-                    <p style={{ fontSize: '1.3rem', width: '20%', fontWeight: 'bold' }}>{getMonthYearString(currentDate)}</p>
-                    <p style={{ fontSize: '1.3rem', width: '60%' }}>{paymentStatus}</p>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
+                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>
+                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p>
                     <Button 
                         variant="contained" 
                         sx={{
@@ -76,9 +80,9 @@ const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) =
 
         paymentBoxes.push(
             <>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', width: '100%', gap: '1rem' }}>
-                    <p style={{ fontSize: '1.3rem', width: '20%', fontWeight: 'bold' }}>{getMonthYearString(currentDate)}</p>
-                    <p style={{ fontSize: '1.3rem', width: '60%' }}>{paymentStatus}</p>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
+                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>
+                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p>
                     <Button 
                         variant="contained" 
                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }} 
@@ -162,7 +166,6 @@ const PaymentsBox = ({ partnershipData, userData }) => {
 
     return (
         <Box sx={{
-            width: '90%',
             maxWidth: '900px',
             display: 'flex',
             flexDirection: 'column',
@@ -172,10 +175,9 @@ const PaymentsBox = ({ partnershipData, userData }) => {
             padding: '1rem',
             borderRadius: '1rem',
             boxShadow: '2',
-            margin: '1rem auto'
         }}>
             <h1>Πληρωμές</h1>
-            <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem', maxHeight: '800px', overflowY: 'auto' }}>
                 {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData, handlePaymentVerification)}
             </Box>
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>

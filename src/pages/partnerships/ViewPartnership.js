@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider } from '@mui/material';
+import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, useMediaQuery } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
@@ -29,6 +29,7 @@ export default function ViewPartnership() {
     const [partnerData, setPartnerData] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const isSmallScreen = useMediaQuery('(max-width:1450px)');
 
     useEffect(() => {
         const fetchPartnershipData = async () => {
@@ -118,98 +119,114 @@ export default function ViewPartnership() {
             {userData && partnershipData && (
                 <>
                     {message && (
-                        <Alert severity={message.type} sx={{ alignSelf: 'center', width: 'fit-content' }}>
+                        <Alert severity={message.type} sx={{ alignSelf: 'center', width: 'fit-content', marginTop: '1rem' }}>
                             {message.text}
                         </Alert>
                     )}
                     <Box sx={{
-                        width: '90%',
-                        maxWidth: '900px',
                         display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        backgroundColor: 'var(--clr-white)',
-                        padding: '1rem',
-                        borderRadius: '1rem',
-                        boxShadow: '2',
-                        margin: '1rem auto',
+                        flexDirection: isSmallScreen ? 'column' : 'row',
+                        justifyContent: 'flex-start',
+                        width: '100%-2rem',
+                        margin: '1rem',
                         gap: '1rem',
                     }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
-                            <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
-                            <h2 style={{
-                                fontWeight: 'bold',
-                                padding: '0.3rem 0.7rem',
-                                backgroundColor: partnershipData.active ? 'var(--clr-darker-green)' : 'var(--clr-grey)',
-                                color: 'var(--clr-white)',
-                                borderRadius: '1rem',
-                                display: 'inline-block'
-                            }}>
-                                {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
-                            </h2>
-                        </Box>
-                        {!partnershipData.active && userData.role === 'parent' && (
-                            <Button
-                                variant="contained"
-                                sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem', alignSelf: 'center' }}
-                                startIcon={<AutorenewIcon />}
-                                onClick={() => navigate(`/applications/create-application?uid=${partnershipData.nannyId}`)}
-                            >
-                                <p className='button-text'>Ανανέωση Συνεργασίας</p>
-                            </Button>
-                        )}
-                        <h2>Στοιχεία Συνεργάτη</h2> 
                         <Box sx={{
+                            height: 'auto',
+                            maxWidth: '900px',
                             display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
-                            width: '100%',
-                            gap: '2rem',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            justifyContent: 'center',
+                            backgroundColor: 'var(--clr-white)',
+                            padding: '1rem',
+                            borderRadius: '1rem',
+                            boxShadow: '2',
+                            gap: '1rem',
                         }}>
-                            <Box sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                                gap: '0.5rem',
-                            }}>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
-                                <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
+                            <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
+                                <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
+                                <h2 style={{
+                                    fontWeight: 'bold',
+                                    padding: '0.3rem 0.7rem',
+                                    backgroundColor: partnershipData.active ? 'var(--clr-darker-green)' : 'var(--clr-grey)',
+                                    color: 'var(--clr-white)',
+                                    borderRadius: '1rem',
+                                    display: 'inline-block'
+                                }}>
+                                    {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
+                                </h2>
                             </Box>
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: 'column',
-                                alignItems: 'flex-start',
-                                gap: '1rem',
-                            }}>
+                            {!partnershipData.active && userData.role === 'parent' && (
                                 <Button
                                     variant="contained"
-                                    startIcon={<PersonIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                    onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem', alignSelf: 'center' }}
+                                    startIcon={<AutorenewIcon />}
+                                    onClick={() => navigate(`/applications/create-application?uid=${partnershipData.nannyId}`)}
                                 >
-                                    <p className='small-button-text'>Προβολή Προφίλ</p>
+                                    <p className='button-text'>Ανανέωση Συνεργασίας</p>
                                 </Button>
-                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
-                                    <p className='small-button-text'>Αποστολή Μηνύματος</p>
-                                </Button>
+                            )}
+                            <h2>Στοιχεία Συνεργάτη</h2> 
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start',
+                                width: '100%',
+                                gap: '2rem',
+                            }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-start',
+                                    gap: '0.5rem',
+                                }}>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
+                                </Box>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-start',
+                                    gap: '1rem',
+                                }}>
+                                    <Button
+                                        variant="contained"
+                                        startIcon={<PersonIcon />}
+                                        sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
+                                        onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                    >
+                                        <p className='small-button-text'>Προβολή Προφίλ</p>
+                                    </Button>
+                                    <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
+                                        <p className='small-button-text'>Αποστολή Μηνύματος</p>
+                                    </Button>
+                                </Box>
                             </Box>
+                            <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
+                            <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
+                                <FormEmploymentType formData={partnershipData} />
+                                <FormBabysittingPlace formData={partnershipData} />
+                            </Box>
+                            <h2>Διάρκεια Συνεργασίας</h2>
+                            <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
+                            <h2>Ώρες Φροντίδας Παιδιού</h2>
+                            <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
                         </Box>
-                        <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
-                        <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <FormEmploymentType formData={partnershipData} />
-                            <FormBabysittingPlace formData={partnershipData} />
+                        <Box sx={{
+                            width: { xs: '100%', md: 'auto' },
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+                            flexGrowth: '1',
+                        }}>
+                            <PaymentsBox partnershipData={partnershipData} userData={userData} />
+                            <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} finishPartnership={finishPartnership} />
                         </Box>
-                        <h2>Διάρκεια Συνεργασίας</h2>
-                        <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
-                        <h2>Ώρες Φροντίδας Παιδιού</h2>
-                        <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
                     </Box>
-                    <PaymentsBox partnershipData={partnershipData} userData={userData} />
-                    <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} finishPartnership={finishPartnership} />
                 </>
             )}
         </>
