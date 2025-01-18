@@ -186,7 +186,7 @@ export default function ViewMeeting() {
                                 <Button
                                     variant="contained"
                                     startIcon={<VideocamIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
+                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}
                                     disabled={meetingData.meetingState !== 'accepted'}
                                 >
                                     <p className='small-button-text'>Σύνδεση στην Συνάντηση</p>
@@ -195,7 +195,7 @@ export default function ViewMeeting() {
                                 <Button
                                     variant="contained"
                                     startIcon={<NavigationIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                     disabled={meetingData.meetingState !== 'accepted'}
                                 >
                                     <p className='small-button-text'>Άνοιγμα διεύθυνσης στο χάρτη</p>
@@ -226,7 +226,7 @@ export default function ViewMeeting() {
                             <Button
                                 variant="contained"
                                 startIcon={<EventIcon />}
-                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}
+                                sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}
                                 disabled={meetingData.meetingState !== 'accepted'}
                             >
                                 <p className='small-button-text'>Προσθήκη στο Ημερολόγιο</p>
@@ -275,12 +275,12 @@ export default function ViewMeeting() {
                                 <Button
                                     variant="contained"
                                     startIcon={<PersonIcon />}
-                                    sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                    sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                     onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
                                 >
                                     <p className='small-button-text'>Προβολή Προφίλ</p>
                                 </Button>
-                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>
+                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
                                     <p className='small-button-text'>Αποστολή Μηνύματος</p>
                                 </Button>
                             </Box>

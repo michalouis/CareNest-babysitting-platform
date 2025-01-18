@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
@@ -8,6 +8,8 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { FormDateRange, FormTimeTable, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
+import PaymentsBox from './PaymentsBox';
+
 import PersonIcon from '@mui/icons-material/Person';
 import MessageIcon from '@mui/icons-material/Message';
 
@@ -93,13 +95,14 @@ export default function ViewPartnership() {
                             {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
                         </h2>
                     </Box>
+                    <h2>Στοιχεία Συνεργάτη</h2> 
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justifyContent: 'flex-start',
                         width: '100%',
-                        gap: '4rem',
+                        gap: '2rem',
                     }}>
                         <Box sx={{
                             display: 'flex',
@@ -107,26 +110,26 @@ export default function ViewPartnership() {
                             alignItems: 'flex-start',
                             gap: '0.5rem',
                         }}>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Όνομα {userData.role === 'parent' ? 'Νταντάς' : 'Γονέα'}: </strong>{partnerData.firstName} {partnerData.lastName}</p>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο {userData.role === 'parent' ? 'Νταντάς' : 'Γονέα'}: </strong>{partnerData.phoneNumber}</p>
-                            <p style={{ fontSize: '1.3rem' }}><strong>Email {userData.role === 'parent' ? 'Νταντάς' : 'Γονέα'}: </strong>{partnerData.email}</p>
+                            <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
+                            <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
+                            <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
                         </Box>
                         <Box sx={{
                             display: 'flex',
                             alignItems: 'center',
                             flexDirection: 'column',
-                            alignItems: 'flex-end',
+                            alignItems: 'flex-start',
                             gap: '1rem',
                         }}>
                             <Button
                                 variant="contained"
                                 startIcon={<PersonIcon />}
-                                sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem' }}
+                                sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                 onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
                             >
                                 <p className='small-button-text'>Προβολή Προφίλ</p>
                             </Button>
-                            <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-blue)', padding: '0.5rem 1rem'}}>
+                            <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
                                 <p className='small-button-text'>Αποστολή Μηνύματος</p>
                             </Button>
                         </Box>
@@ -141,7 +144,10 @@ export default function ViewPartnership() {
                     <h2>Ώρες Φροντίδας Παιδιού</h2>
                     <FormTimeTable formData={partnershipData} setFormData={setPartnershipData} nannyTimetable={partnershipData.timetable} editMode={false} errors={{}} />
                 </Box>
+                
             )}
+            {partnershipData && <PaymentsBox partnershipData={partnershipData} />}
+            
         </>
     );
 }
