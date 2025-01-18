@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
 import { FormDateRange, FormTimeTable } from '../applications/ApplicationFields';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getDoc, doc, updateDoc } from 'firebase/firestore';
+import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { FIREBASE_DB } from '../../firebase';
 import PageTitle from '../../PageTitle';
@@ -80,11 +80,58 @@ function ViewContract() {
         setOpenConfirmDialog(false);
         try {
             const userDocRef = doc(FIREBASE_DB, 'contracts', contractId);
-            const updateData = userData.role === 'parent' ? { signedDocParent: fileName } : { signedDocNanny: fileName };
+            const updateData = userData.role === 'parent' 
+                ? { signedDocParent: fileName, timestamp: new Date().toISOString() } 
+                : { signedDocNanny: fileName, timestamp: new Date().toISOString() };
             await updateDoc(userDocRef, updateData);
+            await createPartnership();
             window.location.reload();
         } catch (error) {
             console.error('Error updating contract:', error);
+        }
+    };
+
+    const createPartnership = async () => {
+        try {
+            const contractDoc = await getDoc(doc(FIREBASE_DB, 'contracts', contractId));
+            if (contractDoc.exists()) {
+                const contractData = contractDoc.data();
+    
+                if (contractData.signedDocParent && contractData.signedDocNanny) {
+                    const partnershipData = { ...contractData, timestamp: new Date().toISOString() };
+                    const fromDate = new Date(contractData.fromDate.year, contractData.fromDate.month);
+                    const toDate = new Date(contractData.toDate.year, contractData.toDate.month);
+                    const payments = [];
+                    const currentDate = new Date(fromDate);
+    
+                    while (currentDate <= toDate) {
+                        payments.push(payments.length === 0 ? 'current' : 'upcoming');
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                    }
+    
+                    partnershipData.payments = payments;
+    
+                    const partnershipDocRef = await addDoc(collection(FIREBASE_DB, 'partnerships'), partnershipData);
+                    await updateDoc(partnershipDocRef, { partnershipId: partnershipDocRef.id });
+    
+                    const parentDocRef = doc(FIREBASE_DB, 'users', contractData.parentId);
+                    const nannyDocRef = doc(FIREBASE_DB, 'users', contractData.nannyId);
+    
+                    await updateDoc(parentDocRef, {
+                        partnerships: arrayUnion(partnershipDocRef.id),
+                        partnershipActive: true
+                    });
+    
+                    await updateDoc(nannyDocRef, {
+                        partnerships: arrayUnion(partnershipDocRef.id),
+                        partnershipActive: true
+                    });
+                }
+            } else {
+                console.error('No such contract:', contractId);
+            }
+        } catch (error) {
+            console.error('Error creating partnership:', error);
         }
     };
 
