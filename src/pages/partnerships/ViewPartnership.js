@@ -9,6 +9,7 @@ import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { FormDateRange, FormTimeTable, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
 import PaymentsBox from './PaymentsBox';
+import RatingBox from './RatingBox';
 
 import PersonIcon from '@mui/icons-material/Person';
 import MessageIcon from '@mui/icons-material/Message';
@@ -146,8 +147,8 @@ export default function ViewPartnership() {
                 </Box>
                 
             )}
-            {partnershipData && <PaymentsBox partnershipData={partnershipData} />}
-            
+            <PaymentsBox partnershipData={partnershipData} userData={userData} />
+            <RatingBox partnershipData={partnershipData} rating={partnershipData.rating} userData={userData} />
         </>
     );
 }
