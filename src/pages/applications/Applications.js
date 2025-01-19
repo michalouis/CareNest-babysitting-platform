@@ -153,7 +153,7 @@ function Applications() {
         }
     }, [userData, filters]);
     
-    if (loading) {
+    if (isLoading) {
         return <Loading />;
     }
 

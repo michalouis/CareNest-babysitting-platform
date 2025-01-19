@@ -162,7 +162,7 @@ function Partnerships() {
         }
     }, [userData, filters]);
 
-    if (loading) {
+    if (isLoading) {
         return <Loading />;
     }
 

@@ -632,7 +632,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 label="Ηλικία"
                 variant="outlined"
                 fullWidth
-                type="number"
+                type="text"
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                 onBlur={handleAgeBlur}

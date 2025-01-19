@@ -41,6 +41,21 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
             return false;
         }
 
+        if ((localFromDate.day < 1 && fromDateFilled) || (localToDate.day < 1 && toDateFilled)) {
+            setError('Οι ημέρες πρέπει να είναι αριθμοί μεγαλύτεροι του 0.');
+            return false;
+        }
+
+        if ((localFromDate.day > 31 && fromDateFilled) || (localToDate.day > 31  && toDateFilled)) {
+            setError('Οι ημέρες πρέπει να είναι αριθμοί μικρότεροι του 32.');
+            return false;
+        }
+
+        if ((localFromDate.year < 2025 && fromDateFilled) || (localToDate.year < 2025 && toDateFilled)) {
+            setError('Οι χρονιές πρέπει να είναι αριθμοί μεγαλύτεροι του 2024.');
+            return false;
+        }
+
         // Check if from date is older than to date
         if (fromDateFilled && toDateFilled) {
             const fromDateObj = new Date(localFromDate.year, localFromDate.month, localFromDate.day);
@@ -85,8 +100,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
                         <TextField
                             label="Ημέρα"
-                            type="number"
-                            inputProps={{ min: 1, max: 31 }}
+                            type="text"
                             value={localFromDate.day}
                             onChange={(e) => setLocalFromDate({ ...localFromDate, day: e.target.value })}
                             fullWidth
@@ -104,8 +118,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                         </TextField>
                         <TextField
                             label="Χρονιά"
-                            type="number"
-                            inputProps={{ min: 2025, max: 2035 }}
+                            type="text"
                             value={localFromDate.year}
                             onChange={(e) => setLocalFromDate({ ...localFromDate, year: e.target.value })}
                             fullWidth
@@ -118,8 +131,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
                         <TextField
                             label="Ημέρα"
-                            type="number"
-                            inputProps={{ min: 1, max: 31 }}
+                            type="text"
                             value={localToDate.day}
                             onChange={(e) => setLocalToDate({ ...localToDate, day: e.target.value })}
                             fullWidth
@@ -137,8 +149,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                         </TextField>
                         <TextField
                             label="Χρονιά"
-                            type="number"
-                            inputProps={{ min: 2025, max: 2035 }}
+                            type="text"
                             value={localToDate.year}
                             onChange={(e) => setLocalToDate({ ...localToDate, year: e.target.value })}
                             fullWidth

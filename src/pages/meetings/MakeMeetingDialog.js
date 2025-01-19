@@ -59,7 +59,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
             setMonthError(false);
         }
 
-        if (!year || year < currentYear) {
+        if (!year || year < currentYear || year < 2025) {
             setYearError(true);
             isValid = false;
         } else {
@@ -198,8 +198,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
                         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                             <TextField
                                 label="Ημέρα"
-                                type="number"
-                                slotProps={{ input: { min: 1, max: 31 } }}
+                                type="text"
                                 value={day}
                                 onChange={(e) => { const value = e.target.value; setDay(value); if (value) {setDayError(false); setMonthError(false); setYearError(false);}; }}
                                 fullWidth
@@ -221,8 +220,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
                             </TextField>
                             <TextField
                                 label="Χρονιά"	
-                                type="number"
-                                slotProps={{ input: { min: 2025, max: 2035 } }}
+                                type="text"
                                 value={year}
                                 onChange={(e) => { const value = e.target.value; setYear(value); if (value) setYearError(false); }}
                                 fullWidth
