@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
 import { FormDateRange, VisualizeTimeTable } from '../applications/ApplicationFields';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { FIREBASE_DB } from '../../firebase';
@@ -17,8 +17,8 @@ import UploadIcon from '@mui/icons-material/Upload';
 function ViewContract() {
     const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const contractId = queryParams.get('contractId');
+    const { id } = useParams();
+    const contractId = id;
     const [contractData, setContractData] = useState(null);
     const [parentData, setParentData] = useState(null);
     const [nannyData, setNannyData] = useState(null);

@@ -38,27 +38,41 @@ function AppRoutes() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/create-profile" element={<CreateProfile />} />
                 <Route path="/signup-complete" element={<SignupComplete />} />
+
+                {/* Profile */}
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/edit-profile" element={<EditProfile />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/search/results" element={<Results />} />
-                <Route path="/search/view-profile" element={<ViewProfile />} />
-                <Route path="/search/view-profile/create-application" element={<CreateApplication />} />
-                <Route path="/search/favorites" element={<Favorites />} />
-                <Route path="/search/favorites/view-profile" element={<ViewProfile />} />
-                <Route path="/search/favorites/view-profile/create-application" element={<CreateApplication />} />
-                <Route path="/meetings" element={<Meetings />} />
-                <Route path="/meetings/view-meeting" element={<ViewMeeting />} />
-                <Route path="/meetings/view-meeting/view-profile" element={<ViewProfile />} />
-                <Route path="/applications" element={<Applications />} />
-                <Route path="/applications/view-application" element={<ViewApplication />} />
-                <Route path="/applications/create-application" element={<CreateApplication />} />
-                <Route path="/contracts" element={<Contracts />} />
-                <Route path="/contracts/view-contract" element={<ViewContract />} />
-                <Route path="/partnerships" element={<Partnerships />} />
-                <Route path="/partnerships/view-partnership" element={<ViewPartnership />} />
+                
+                {/* Job Posting */}
                 <Route path="/job-posting" element={<JobPosting />} />
                 <Route path="/job-posting/edit-job-posting" element={<EditJobPosting />} />
+
+                {/* Search */}
+                <Route path="/search" element={<Search />} />
+                <Route path="/search/favorites" element={<Favorites />} />
+                <Route path="/search/results" element={<Results />} />
+                <Route path="/search/view-profile/:id" element={<ViewProfile />} />
+                <Route path="/search/view-profile/:id/create-application/:id" element={<CreateApplication />} />
+
+                {/* Meetings */}
+                <Route path="/meetings" element={<Meetings />} />
+                <Route path="/meetings/view-meeting/:id" element={<ViewMeeting />} />
+                <Route path="/meetings/view-meeting/:id/view-profile/:id" element={<ViewProfile />} />
+
+                {/* Applications */}
+                <Route path="/applications" element={<Applications />} />
+                <Route path="/applications/view-application/:id" element={<ViewApplication />} />
+                <Route path="/applications/create-application/:id" element={<CreateApplication />} />
+
+                {/* Contracts */}
+                <Route path="/contracts" element={<Contracts />} />
+                <Route path="/contracts/view-contract/:id" element={<ViewContract />} />
+                
+                {/* Partnerships */}
+                <Route path="/partnerships" element={<Partnerships />} />
+                <Route path="/partnerships/view-partnership/:id" element={<ViewPartnership />} />
+
+                {/* Error 404 */}
                 <Route path="/error404" element={<Error404 />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

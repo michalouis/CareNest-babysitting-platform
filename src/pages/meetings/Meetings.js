@@ -43,7 +43,7 @@ function MeetingItem({ meeting, userData }) {
 
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/meetings/view-meeting?meetingId=${meeting.meetingId}`)}>
+            <CardActionArea onClick={() => navigate(`/meetings/view-meeting/${meeting.meetingId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>

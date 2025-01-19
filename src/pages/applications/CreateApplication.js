@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
@@ -10,8 +10,8 @@ import ApplicationForm from './ApplicationForm';
 function CreateApplication() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const nannyId = queryParams.get('uid');
+    const { id } = useParams();
+    const nannyId = id;
 
     if (isLoading) {
         return <Loading />;

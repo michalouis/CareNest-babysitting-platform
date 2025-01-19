@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, useMediaQuery } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
@@ -23,8 +23,8 @@ const months = [
 export default function ViewPartnership() {
     const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const partnershipId = queryParams.get('partnershipId');
+    const { id } = useParams();
+    const partnershipId = id;
     const [partnershipData, setPartnershipData] = useState(null);
     const [partnerData, setPartnerData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -162,7 +162,7 @@ export default function ViewPartnership() {
                                     variant="contained"
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem', alignSelf: 'center' }}
                                     startIcon={<AutorenewIcon />}
-                                    onClick={() => navigate(`/applications/create-application?uid=${partnershipData.nannyId}`)}
+                                    onClick={() => navigate(`/applications/create-application/${partnershipData.nannyId}`)}
                                 >
                                     <p className='button-text'>Ανανέωση Συνεργασίας</p>
                                 </Button>
@@ -197,11 +197,18 @@ export default function ViewPartnership() {
                                         variant="contained"
                                         startIcon={<PersonIcon />}
                                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                        onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                        onClick={() => navigate(`/search/view-profile/${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
                                     >
                                         <p className='small-button-text'>Προβολή Προφίλ</p>
                                     </Button>
-                                    <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
+                                    <Button 
+                                        variant="contained"
+                                        startIcon={<MessageIcon />}
+                                        onClick={() => navigate('/messages')}
+                                        sx={{
+                                            backgroundColor: 'var(--clr-violet)',
+                                            padding: '0.5rem 1rem'
+                                    }}>
                                         <p className='small-button-text'>Αποστολή Μηνύματος</p>
                                     </Button>
                                 </Box>

@@ -3,7 +3,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
@@ -23,8 +23,8 @@ export default function ViewMeeting() {
     const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
     const navigate = useNavigate();
-    const queryParams = new URLSearchParams(location.search);
-    const meetingId = queryParams.get('meetingId');
+    const { id } = useParams();
+    const meetingId = id;
     const [meetingData, setMeetingData] = useState(null);
     const [nannyData, setNannyData] = useState(null);
     const [parentData, setParentData] = useState(null);
@@ -303,7 +303,7 @@ export default function ViewMeeting() {
                                     variant="contained"
                                     startIcon={<PersonIcon />}
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                    onClick={() => navigate(`/search/view-profile?uid=${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
+                                    onClick={() => navigate(`/meetings/view-meeting/${meetingId}/view-profile/${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
                                 >
                                     <p className='small-button-text'>Προβολή Προφίλ</p>
                                 </Button>

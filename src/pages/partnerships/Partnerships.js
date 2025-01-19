@@ -35,7 +35,7 @@ function PartnershipItem({ partnership, userData }) {
 
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/partnerships/view-partnership?partnershipId=${partnership.partnershipId}`)}>
+            <CardActionArea onClick={() => navigate(`/partnerships/view-partnership/${partnership.partnershipId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>

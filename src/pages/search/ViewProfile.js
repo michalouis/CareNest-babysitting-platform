@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
@@ -98,8 +98,8 @@ export default function ViewProfile() {
     const { userData, isLoading } = AuthCheck(true, false, false);
     const location = useLocation();
     const navigate = useNavigate();
-    const queryParams = new URLSearchParams(location.search);
-    const profileId = queryParams.get('uid');
+    const { id } = useParams();
+    const profileId = id;
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -188,7 +188,7 @@ export default function ViewProfile() {
                                     padding: '0.5rem 0'
                                 }}
                                 startIcon={<AssignmentIcon />}
-                                onClick={() => navigate(`/search/view-profile/create-application?uid=${profileId}`)}
+                                onClick={() => navigate(`/search/view-profile/${profileId}/create-application/${profileId}`)}
                             >
                                 <p className="button-text">Αίτηση Ενδιαφέροντος</p>
                             </Button>

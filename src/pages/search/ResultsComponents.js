@@ -95,7 +95,7 @@ function ResultsItem({ item, favorites, setFavorites }) {
             padding: '0',
         }}>
             <CardActionArea
-                onClick={() => navigate(`/search/view-profile?uid=${uid}`)}
+                onClick={() => navigate(`/search/view-profile/${uid}`)}
             >
                 <CardContent sx={{
                     display: 'flex',

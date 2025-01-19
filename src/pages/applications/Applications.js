@@ -46,7 +46,7 @@ function ApplicationItem({ application }) {
 
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/applications/view-application?applicationId=${application.applicationId}`)}>
+            <CardActionArea onClick={() => navigate(`/applications/view-application/${application.applicationId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>

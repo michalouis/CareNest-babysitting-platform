@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Breadcrumbs as MUIBreadcrumbs, Link, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import "../style.css";
 
 const pathLabels = {
@@ -33,6 +33,8 @@ const pathLabels = {
     'error404': 'Σφάλμα 404',
 };
 
+const hasParams = ['create-application', 'view-profile', 'view-application', 'view-contract', 'view-partnership', 'view-meeting'];
+
 const getPageLabel = (path) => {
     const key = path === '/' ? '/' : path.split('/').pop();
     return pathLabels[key] || key;
@@ -41,6 +43,7 @@ const getPageLabel = (path) => {
 function Breadcrumbs({ showPopup = false }) {
     const navigate = useNavigate();
     const location = useLocation();
+    const params = useParams();
     const [openNavigateAwayDialog, setOpenNavigateAwayDialog] = useState(false);
     const [navigateTo, setNavigateTo] = useState(null); // store the path to navigate before asking the user to confirm
 
@@ -59,12 +62,16 @@ function Breadcrumbs({ showPopup = false }) {
     // Navigate to the previous page
     const navigateToPrevious = () => {
         const pathArray = location.pathname.split('/').filter(Boolean);
-        if (pathArray.length > 1) {     // if we are not at the root page (home page), navigate to the previous page
-            const previousPath = `/${pathArray.slice(0, -1).join('/')}`;
-            navigate(previousPath);
-        } else {    // if we are at the root page (home page), navigate to the home page
-            navigate('/');
+        let previousPathArray = pathArray.slice(0, -1);
+        let previousPath = `/${previousPathArray.join('/')}`;
+    
+        // Check if the current or previous path is a parameter
+        if (!pathLabels[pathArray[pathArray.length - 1]] || !pathLabels[previousPathArray[previousPathArray.length - 1]]) {
+            previousPathArray = pathArray.slice(0, -2);
+            previousPath = `/${previousPathArray.join('/')}`;
         }
+    
+        navigate(previousPath);
     };
 
     /////////////// BREADCRUMBS ///////////////
@@ -100,11 +107,22 @@ function Breadcrumbs({ showPopup = false }) {
 
     // Get the path array from the current location
     const pathArray = location.pathname.split('/').filter(Boolean);
+    const pages = [];
+    for (let i = 0; i < pathArray.length; i++) {
+        const page = pathArray[i];
+        if (hasParams.includes(page)) {
+            pages.push({ pagename: page, param: pathArray[i + 1] || '' });
+            i++; // skip the next element as it is a parameter
+        } else {
+            pages.push({ pagename: page, param: '' });
+        }
+    }
+
     const breadcrumbs = [
         { label: pathLabels['/'], path: '/' },
-        ...pathArray.map((path, index) => ({
-            label: getPageLabel(`/${pathArray.slice(0, index + 1).join('/')}`),
-            path: `/${pathArray.slice(0, index + 1).join('/')}`
+        ...pages.map((page, index) => ({
+            label: getPageLabel(page.pagename),
+            path: `/${pages.slice(0, index + 1).map(p => p.pagename + (p.param ? `/${p.param}` : '')).join('/')}`
         }))
     ];
 

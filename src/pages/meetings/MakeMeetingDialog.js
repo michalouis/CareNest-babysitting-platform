@@ -159,7 +159,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
             console.log('Meeting created successfully:', meetingDocRef.id);
 
             // Navigate to the view meeting page with the meetingId as a parameter
-            navigate(`/meetings/view-meeting?meetingId=${meetingDocRef.id}`);
+            navigate(`/meetings/view-meeting/${meetingDocRef.id}`);
         } catch (error) {
             console.error('Error creating meeting:', error);
         } finally {

@@ -37,7 +37,7 @@ function ContractItem({ contract, userData }) {
 
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/contracts/view-contract?contractId=${contract.contractId}`)}>
+            <CardActionArea onClick={() => navigate(`/contracts/view-contract/${contract.contractId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
