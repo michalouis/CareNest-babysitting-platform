@@ -77,7 +77,7 @@ const ProfileOverview = (userData) => (
 );
 
 // data common to parents/nannies
-export function renderCommonData(userData) {
+function renderCommonData(userData) {
     return (
         <>
             {/* Personal Data */}

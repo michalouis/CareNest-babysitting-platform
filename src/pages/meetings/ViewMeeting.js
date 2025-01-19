@@ -249,8 +249,22 @@ export default function ViewMeeting() {
                                     alignItems: 'flex-start',
                                 }}>
                                     <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Νταντάς: </strong>{nannyData.firstName} {nannyData.lastName}</p>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Νταντάς: </strong>{nannyData.phoneNumber}</p>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Email Νταντάς: </strong>{nannyData.email}</p>
+                                    <p style={{ fontSize: '1.3rem' }}>
+                                        <strong>Τηλέφωνο Νταντάς: </strong>
+                                        {meetingData.meetingState === 'accepted' ? (
+                                            nannyData.phoneNumber
+                                        ) : (
+                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                        )}
+                                    </p>
+                                    <p style={{ fontSize: '1.3rem' }}>
+                                        <strong>Email Νταντάς: </strong>
+                                        {meetingData.meetingState === 'accepted' ? (
+                                            nannyData.email
+                                        ) : (
+                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                        )}
+                                    </p>
                                 </Box>
                             )}
                             {parentData && (
@@ -260,8 +274,22 @@ export default function ViewMeeting() {
                                     alignItems: 'flex-start',
                                 }}>
                                     <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Γονέα: </strong>{parentData.firstName} {parentData.lastName}</p>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο Γονέα: </strong>{parentData.phoneNumber}</p>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Email Γονέα: </strong>{parentData.email}</p>
+                                    <p style={{ fontSize: '1.3rem' }}>
+                                        <strong>Τηλέφωνο Γονέα: </strong>
+                                        {meetingData.meetingState === 'accepted' ? (
+                                            parentData.phoneNumber
+                                        ) : (
+                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                        )}
+                                    </p>
+                                    <p style={{ fontSize: '1.3rem' }}>
+                                        <strong>Email Γονέα: </strong>
+                                        {meetingData.meetingState === 'accepted' ? (
+                                            parentData.email
+                                        ) : (
+                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                        )}
+                                    </p>
                                 </Box>
                             )}
                             <Box sx={{
