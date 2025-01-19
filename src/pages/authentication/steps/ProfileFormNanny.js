@@ -1132,7 +1132,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-error-main)' }}>
+                <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)' }}>
                     <p className='button-text'>Ακύρωση</p>
                 </Button>
                 <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} >

@@ -327,7 +327,7 @@ function CreateAccount({ role }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-error-main)' }}>
+                    <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)' }}>
                         <p className='button-text'>Ακύρωση</p>
                     </Button>
                     <Button variant='contained' onClick={handleConfirm} sx={{ backgroundColor: 'var(--clr-blue)', '&:hover': { opacity: 0.8 } }}>
