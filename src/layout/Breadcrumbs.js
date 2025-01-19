@@ -6,34 +6,36 @@ import "../style.css";
 
 const pathLabels = {
     '/': 'Αρχική Σελίδα',
-    '/contact': 'Επικοινωνία',
-    '/faq': 'Συχνές Ερωτήσεις',
-    '/messages': 'Μηνύματα',
-    '/login': 'Σύνδεση',
-    '/signup': 'Εγγραφή',
-    '/create-profile': 'Δημιουργία Προφίλ',
-    '/signup-complete': 'Ολοκλήρωση Εγγραφής',
-    '/profile': 'Προφίλ',
-    '/profile/edit-profile': 'Επεξεργασία Προφίλ',
-    '/search': 'Αναζήτηση Νταντάς',
-    '/search/results': 'Αποτελέσματα Αναζήτησης',
-    '/search/view-profile': 'Προβολή Προφίλ',
-    '/search/view-profile/create-application': 'Δημιουργία Αίτησης',
-    '/search/favorites': 'Αγαπημένα',
-    '/search/favorites/view-profile': 'Προβολή Προφίλ',
-    '/search/favorites/view-profile/create-application': 'Δημιουργία Αίτησης',
-    '/meetings': 'Ραντεβού Γνωριμίας',
-    '/meetings/view-meeting': 'Προβολή Ραντεβού',
-    '/applications': 'Αιτήσεις',
-    '/applications/view-application': 'Προβολή Αίτησης',
-    '/applications/create-application': 'Δημιουργία Αίτησης',
-    '/contracts': 'Συμφωνητικά',
-    '/contracts/view-contract': 'Προβολή Συμφωνητικού',
-    '/partnerships': 'Συνεργασίες',
-    '/partnerships/view-partnership': 'Προβολή Συνεργασίας',
-    '/job-posting': 'Αγγελία Εργασίας',
-    '/job-posting/edit-job-posting': 'Δημιουργία Αγγελίας',
-    '/error404': 'Σφάλμα 404',
+    'contact': 'Επικοινωνία',
+    'faq': 'Συχνές Ερωτήσεις',
+    'messages': 'Μηνύματα',
+    'login': 'Σύνδεση',
+    'signup': 'Εγγραφή',
+    'create-profile': 'Δημιουργία Προφίλ',
+    'signup-complete': 'Ολοκλήρωση Εγγραφής',
+    'profile': 'Προφίλ',
+    'edit-profile': 'Επεξεργασία Προφίλ',
+    'search': 'Αναζήτηση Νταντάς',
+    'results': 'Αποτελέσματα Αναζήτησης',
+    'view-profile': 'Προβολή Προφίλ',
+    'create-application': 'Δημιουργία Αίτησης',
+    'favorites': 'Αγαπημένα',
+    'meetings': 'Ραντεβού Γνωριμίας',
+    'view-meeting': 'Προβολή Ραντεβού',
+    'applications': 'Αιτήσεις',
+    'view-application': 'Προβολή Αίτησης',
+    'contracts': 'Συμφωνητικά',
+    'view-contract': 'Προβολή Συμφωνητικού',
+    'partnerships': 'Συνεργασίες',
+    'view-partnership': 'Προβολή Συνεργασίας',
+    'job-posting': 'Αγγελία Εργασίας',
+    'edit-job-posting': 'Δημιουργία Αγγελίας',
+    'error404': 'Σφάλμα 404',
+};
+
+const getPageLabel = (path) => {
+    const key = path === '/' ? '/' : path.split('/').pop();
+    return pathLabels[key] || key;
 };
 
 function Breadcrumbs({ showPopup = false }) {
@@ -101,7 +103,7 @@ function Breadcrumbs({ showPopup = false }) {
     const breadcrumbs = [
         { label: pathLabels['/'], path: '/' },
         ...pathArray.map((path, index) => ({
-            label: pathLabels[`/${pathArray.slice(0, index + 1).join('/')}`] || path,
+            label: getPageLabel(`/${pathArray.slice(0, index + 1).join('/')}`),
             path: `/${pathArray.slice(0, index + 1).join('/')}`
         }))
     ];
