@@ -86,7 +86,7 @@ function FormNannyName({ formData }) {
             label="Όνομα Νταντάς"
             value={formData.nannyName}
             fullWidth
-            InputProps={{ readOnly: true }}
+            slotProps={{ input: { readOnly: true } }}
             disabled={true}
         />
     );
@@ -99,7 +99,7 @@ function FormChildAgeGroup({ formData }) {
             label="Ηλικιακή Ομάδα Παιδιού"
             value={`${formData.childAgeGroup} χρονών`}
             fullWidth
-            InputProps={{ readOnly: true }}
+            slotProps={{ input: { readOnly: true } }}
             disabled={true}
         />
     );
@@ -116,7 +116,7 @@ function FormEmploymentType({ formData }) {
             label="Απασχόληση Νταντάς"
             value={employmentTypeText}
             fullWidth
-            InputProps={{ readOnly: true }}
+            slotProps={{ input: { readOnly: true } }}
             disabled={true}
         />
     );
@@ -135,7 +135,7 @@ function FormBabysittingPlace({ formData }) {
             label="Χώρος Φύλαξης"
             value={babysittingPlaceText}
             fullWidth
-            InputProps={{ readOnly: true }}
+            slotProps={{ input: { readOnly: true } }}
             disabled={true}
         />
     );

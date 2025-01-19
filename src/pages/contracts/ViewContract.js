@@ -258,30 +258,30 @@ function ViewContract() {
                     }}>
                         <h2>Πληροφορίες Γονέα</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Γονέα" value={parentData.firstName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Επώνυμο Γονέα" value={parentData.lastName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Φύλο Γονέα" value={translateMap[parentData.gender]} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Ηλικία Γονέα" value={parentData.age} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Διεύθυνση" value={parentData.address} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Ταχυδρομικός Κώδικας" value={parentData.postalCode} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Τηλέφωνο" value={parentData.phoneNumber} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Email" value={parentData.email} fullWidth variant="filled" InputProps={{ readOnly: true }} />
+                            <TextField label="Όνομα Γονέα" value={parentData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Επώνυμο Γονέα" value={parentData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Φύλο Γονέα" value={translateMap[parentData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Ηλικία Γονέα" value={parentData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Διεύθυνση" value={parentData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Ταχυδρομικός Κώδικας" value={parentData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Τηλέφωνο" value={parentData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Email" value={parentData.email} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
                         <h2>Πληροφορίες Νταντάς</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Νταντάς" value={nannyData.firstName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Επώνυμο Νταντάς" value={nannyData.lastName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Φύλο Νταντάς" value={translateMap[nannyData.gender]} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Ηλικία Νταντάς" value={nannyData.age} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Διεύθυνση" value={nannyData.address} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Ταχυδρομικός Κώδικας" value={nannyData.postalCode} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Τηλέφωνο" value={nannyData.phoneNumber} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Email" value={nannyData.email} fullWidth variant="filled" InputProps={{ readOnly: true }} />
+                            <TextField label="Όνομα Νταντάς" value={nannyData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Επώνυμο Νταντάς" value={nannyData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Φύλο Νταντάς" value={translateMap[nannyData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Ηλικία Νταντάς" value={nannyData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Διεύθυνση" value={nannyData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Ταχυδρομικός Κώδικας" value={nannyData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Τηλέφωνο" value={nannyData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Email" value={nannyData.email} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
                         <h2>Πληροφορίες Παιδιού</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Παιδιού" value={parentData.childName} fullWidth variant="filled" InputProps={{ readOnly: true }} />
-                            <TextField label="Φύλο Παιδιού" value={translateMap[parentData.childGender]} fullWidth variant="filled" InputProps={{ readOnly: true }} />
+                            <TextField label="Όνομα Παιδιού" value={parentData.childName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Φύλο Παιδιού" value={translateMap[parentData.childGender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
                         <h2>Διάρκεια Συνεργασίας</h2>
                         <FormDateRange formData={contractData} setFormData={setContractData} errors={{}} editMode={false} />
