@@ -155,98 +155,122 @@ export function renderNannyData(userData) {
             />
 
             <h2>Σπουδές</h2>
-            {userData.degrees.map((degree, index) => (
-                <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                        <strong>{index + 1}. {translateMap[degree.degreeLevel]}:</strong> {degree.degreeTitle}
-                    </p>
-                    <Button
-                        variant="contained"
-                        startIcon={<FileIcon />}
-                        sx={{ backgroundColor: 'var(--clr-violet)', }}
-                    >
-                        <p className="smaller-button-text">{degree.degreeFile}</p>
-                    </Button>
-                </Box>
-            ))}
+            {userData.degrees.length === 0 ? (
+                <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
+                    Δεν υπάρχουν Σπουδές
+                </p>
+            ) : (
+                userData.degrees.map((degree, index) => (
+                    <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                            <strong>{index + 1}. {translateMap[degree.degreeLevel]}:</strong> {degree.degreeTitle}
+                        </p>
+                        <Button
+                            variant="contained"
+                            startIcon={<FileIcon />}
+                            sx={{ backgroundColor: 'var(--clr-violet)' }}
+                        >
+                            <p className="smaller-button-text">{degree.degreeFile}</p>
+                        </Button>
+                    </Box>
+                ))
+            )}
 
             <h2>Πιστοποιητικά</h2>
-            {userData.certificates.map((certificate, index) => (
-                <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                        <strong>{index + 1}. {certificate.certificateTitle}: </strong>
-                    </p>
-                    <Button
-                        variant="contained"
-                        startIcon={<FileIcon />}
-                        sx={{ backgroundColor: 'var(--clr-violet)', }}
-                    >
-                        <p className="smaller-button-text">{certificate.certificateFile}</p>
-                    </Button>
-                </Box>
-            ))}
+            {userData.certificates.length === 0 ? (
+                <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
+                    Δεν υπάρχουν Πιστοποιητικά
+                </p>
+            ) : (
+                userData.certificates.map((certificate, index) => (
+                    <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                            <strong>{index + 1}. {certificate.certificateTitle}: </strong>
+                        </p>
+                        <Button
+                            variant="contained"
+                            startIcon={<FileIcon />}
+                            sx={{ backgroundColor: 'var(--clr-violet)' }}
+                        >
+                            <p className="smaller-button-text">{certificate.certificateFile}</p>
+                        </Button>
+                    </Box>
+                ))
+            )}
 
             <h2>Συστάσεις</h2>
-            {userData.recommendations.map((recommendation, index) => (
-                <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
-                        <strong>{index + 1}. {recommendation.recommendationTitle}: </strong>
-                    </p>
-                    <Button
-                        variant="contained"
-                        startIcon={<FileIcon />}
-                        sx={{ backgroundColor: 'var(--clr-violet)', }}
-                    >
-                        <p className="smaller-button-text">{recommendation.recommendationFile}</p>
-                    </Button>
-                </Box>
-            ))}
+            {userData.recommendations.length === 0 ? (
+                <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
+                    Δεν υπάρχουν Συστάσεις
+                </p>
+            ) : (
+                userData.recommendations.map((recommendation, index) => (
+                    <Box key={index} sx={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <p style={{ fontSize: '1.25rem', marginRight: '1rem' }}>
+                            <strong>{index + 1}. {recommendation.recommendationTitle}: </strong>
+                        </p>
+                        <Button
+                            variant="contained"
+                            startIcon={<FileIcon />}
+                            sx={{ backgroundColor: 'var(--clr-violet)' }}
+                        >
+                            <p className="smaller-button-text">{recommendation.recommendationFile}</p>
+                        </Button>
+                    </Box>
+                ))
+            )}
 
             <h2>Δεξιότητες</h2>
-            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
-                {Object.entries(userData.languages).map(([language, value]) => (
-                    value && (
-                        <Box
-                            key={language}
-                            sx={{
-                                backgroundColor: 'var(--clr-violet)',
-                                color: 'white',
-                                padding: '1rem',
-                                height: '40px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: '20px'
-                            }}
-                        >
-                            <p className="button-text">
-                                {translateMap[language]}
-                            </p>
-                        </Box>
-                    )
-                ))}
-                {Object.entries(userData.music).map(([music, value]) => (
-                    value && (
-                        <Box
-                            key={music}
-                            sx={{
-                                backgroundColor: 'var(--clr-violet)',
-                                color: 'white',
-                                padding: '1rem',
-                                height: '40px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: '20px'
-                            }}
-                        >
-                            <p className="button-text">
-                                {translateMap[music]}
-                            </p>
-                        </Box>
-                    )
-                ))}
-            </Box>
+            {Object.values(userData.languages).every(value => !value) && Object.values(userData.music).every(value => !value) ? (
+                <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
+                    Δεν υπάρχουν Δεξιότητες
+                </p>
+            ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
+                    {Object.entries(userData.languages).map(([language, value]) => (
+                        value && (
+                            <Box
+                                key={language}
+                                sx={{
+                                    backgroundColor: 'var(--clr-violet)',
+                                    color: 'white',
+                                    padding: '1rem',
+                                    height: '40px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '20px'
+                                }}
+                            >
+                                <p className="button-text">
+                                    {translateMap[language]}
+                                </p>
+                            </Box>
+                        )
+                    ))}
+                    {Object.entries(userData.music).map(([music, value]) => (
+                        value && (
+                            <Box
+                                key={music}
+                                sx={{
+                                    backgroundColor: 'var(--clr-violet)',
+                                    color: 'white',
+                                    padding: '1rem',
+                                    height: '40px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '20px'
+                                }}
+                            >
+                                <p className="button-text">
+                                    {translateMap[music]}
+                                </p>
+                            </Box>
+                        )
+                    ))}
+                </Box>
+            )}
         </>
     );
 }

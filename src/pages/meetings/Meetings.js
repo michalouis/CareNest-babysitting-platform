@@ -18,7 +18,7 @@ import PlaceRounded from '@mui/icons-material/PlaceRounded';
 const checkboxOptions = [
     { label: "Εγκρίθηκε", value: "accepted" },
     { label: "Σε αναμονή", value: "pending" },
-    { label: "Αππορίφθηκε", value: "rejected" }
+    { label: "Απορρίφθηκε", value: "rejected" }
 ];
 
 function MeetingItem({ meeting, userData }) {
@@ -57,7 +57,7 @@ function MeetingItem({ meeting, userData }) {
                         }}>
                             {meeting.meetingState === 'pending' ? 'Σε αναμονή' 
                                 : meeting.meetingState === 'accepted' ? 'Εγκρίθηκε' 
-                                : 'Αππορίφθηκε'}
+                                : 'Απορρίφθηκε'}
                         </h2>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>

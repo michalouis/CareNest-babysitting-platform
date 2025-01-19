@@ -285,7 +285,7 @@ function ViewContract() {
                         </Box>
                         <h2>Διάρκεια Συνεργασίας</h2>
                         <FormDateRange formData={contractData} setFormData={setContractData} errors={{}} editMode={false} />
-                        <h2>Ώρες Φροντίδας Παιδιού</h2>
+                        <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
                         <VisualizeTimeTable formData={contractData} />
                     </Box>
                 </>

@@ -174,7 +174,7 @@ function Partnerships() {
                     <Breadcrumbs />
                     <h1 style={{ marginLeft: '1rem' }}>Συνεργασίες</h1>
                     <p style={{ fontSize: '1.2rem', maxWidth: '1150px', alignSelf: 'center', textAlign: 'center', marginTop: '1rem' }}>
-                        Εδώ μπορείτε να δείτε όλες τις συνεργασίες που έχετε με τους συνεργάτες σας.
+                        Εδώ μπορείτε να βρείτε την ενεργή σας συνεργασία ή να ανατρέξτε σε κάποια παλαιότερη.
                     </p>
                     
                     <Box sx={{

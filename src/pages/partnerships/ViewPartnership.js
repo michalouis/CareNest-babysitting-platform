@@ -213,7 +213,7 @@ export default function ViewPartnership() {
                             </Box>
                             <h2>Διάρκεια Συνεργασίας</h2>
                             <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
-                            <h2>Ώρες Φροντίδας Παιδιού</h2>
+                            <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
                             <VisualizeTimeTable formData={partnershipData} />
                         </Box>
                         <Box sx={{

@@ -248,7 +248,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             }}>
                 {!applicationData.submitted && (
                     <h1 style={{ alignSelf: 'center' }}>
-                        {editMode ? 'Επεξεργασία' : 'Προεπισκόπηση'}
+                        Κατάσταση: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Σε Επεξεργασία' : 'Προεπισκόπηση'}</span>
                     </h1>
                 )}
                 {!editMode && <LastModification timestamp={applicationData.timestamp} />}
@@ -274,9 +274,8 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                     </Box>
                 </Box>
                 <h2>Διάρκεια Συνεργασίας</h2>
-                <p>Επιλέξτε το χρονικό διάστημα που επιθυμείτε να συνεργαστείτε με τη νταντά.</p>
                 <FormDateRange formData={applicationData} setFormData={setApplicationData} errors={errors} editMode={editMode} />
-                <h2>Διαθεσιμότητα</h2>
+                <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
                 {!applicationData.submitted ? (
                     <FormTimeTable formData={applicationData} setFormData={setApplicationData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
                 ) : (

@@ -201,7 +201,7 @@ function JobPostingForm({ userData, setSaved }) {
             margin: '2rem',
         }}>
             <h1 style={{ alignSelf: 'center' }}>
-                {editMode ? 'Επεξεργασία' : 'Προεπισκόπηση'}
+                Κατάσταση: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Σε Επεξεργασία' : 'Προεπισκόπηση'}</span>
             </h1>
             <p style={{color: 'var(--clr-grey)'}}>Όλα τα πεδία είναι υποχρεωτικά.</p>
 

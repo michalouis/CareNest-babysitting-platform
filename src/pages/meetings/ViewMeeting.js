@@ -159,7 +159,7 @@ export default function ViewMeeting() {
                             }}>
                                 {meetingData.meetingState === 'pending' ? 'Σε αναμονή' 
                                     : meetingData.meetingState === 'accepted' ? 'Εγκρίθηκε' 
-                                    : 'Αππορίφθηκε'}
+                                    : 'Απορρίφθηκε'}
                             </span>
                         </p>
                         <h1 style={{ margin: '1rem 0'}}>Τύπος Ραντεβού</h1>
