@@ -140,7 +140,7 @@ function ResultsItem({ item, favorites, setFavorites }) {
                     onClick={handleFavoriteClick}
                     sx={{ justifyItems: 'center' }}
                 >
-                    <FavoriteIcon sx={{ fontSize: '3rem', color: isFavorited ? 'red' : '' }} />
+                    <FavoriteIcon sx={{ fontSize: '3rem', color: isFavorited ? 'var(--clr-error)' : '' }} />
                 </IconButton>
             </CardActions>
         </Card>

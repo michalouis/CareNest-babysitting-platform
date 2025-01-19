@@ -585,7 +585,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.aboutMe}
                 helperText={
                     <div style={{ textAlign: 'right' }}>
-                        <span style={{ color: formData.aboutMe.length > 500 ? 'red' : 'inherit' }}>
+                        <span style={{ color: formData.aboutMe.length > 500 ? 'var(--clr-error)' : 'var(--clr-black)' }}>
                             {formData.aboutMe.length} / 500
                         </span>
                     </div>

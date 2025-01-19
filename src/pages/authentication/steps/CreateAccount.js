@@ -281,10 +281,10 @@ function CreateAccount({ role }) {
                 />
                 <p style={{ alignSelf: 'flex-start', margin: 0, textAlign: 'left' }}><b>Ο κωδικός πρέπει:</b></p>
                 <ul style={{ alignSelf: 'flex-start', margin: 0, paddingLeft: '1.5rem', textAlign: 'left' }}>
-                    <li style={{ color: passwordErrors.length ? 'red' : 'inherit' }}>Να περιέχει τουλάχιστον 8 χαρακτήρες.</li>
-                    <li style={{ color: passwordErrors.number ? 'red' : 'inherit' }}>Να περιέχει τουλάχιστον ένα αριθμό.</li>
-                    <li style={{ color: passwordErrors.letter ? 'red' : 'inherit' }}>Να περιέχει τουλάχιστον ένα γράμμα.</li>
-                    <li style={{ color: passwordErrors.specialChar ? 'red' : 'inherit' }}>Να περιέχει τουλάχιστον ένα ειδικό χαρακτήρα (! @ # $ % _ -).</li>
+                    <li style={{ color: passwordErrors.length ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον 8 χαρακτήρες.</li>
+                    <li style={{ color: passwordErrors.number ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα αριθμό.</li>
+                    <li style={{ color: passwordErrors.letter ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα γράμμα.</li>
+                    <li style={{ color: passwordErrors.specialChar ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα ειδικό χαρακτήρα (! @ # $ % _ -).</li>
                 </ul>
                 <TextField
                     id="repeat-password-input"

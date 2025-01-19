@@ -130,7 +130,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
             <Dialog open={ratingDialogOpen} onClose={handleRatingDialogClose} PaperProps={{ style: { resize: 'none' } }}>
                 <DialogTitle><strong>Προσθήκη Αξιολόγησης</strong></DialogTitle>
                 <DialogContent>
-                    {ratingError && <p style={{ color: 'red' }}>Εισάγετε μια βαθμολογία για να συνεχίσετε</p>}
+                    {ratingError && <p style={{ color: 'var(--clr-error)' }}>Εισάγετε μια βαθμολογία για να συνεχίσετε</p>}
                     <Rating
                         value={newRating}
                         precision={0.5}

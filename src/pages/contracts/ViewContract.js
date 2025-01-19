@@ -189,7 +189,7 @@ function ViewContract() {
                                 {contractData.signedDocParent ? (
                                     <CheckCircleIcon sx={{ color: 'green', fontSize: '2rem' }} />
                                 ) : (
-                                    <CancelIcon sx={{ color: 'red', fontSize: '2rem' }} />
+                                    <CancelIcon sx={{ color: 'var(--clr-error)', fontSize: '2rem' }} />
                                 )}
                                 <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Υπογεγραμμένο από Γονέα</p>
                             </Box>
@@ -197,7 +197,7 @@ function ViewContract() {
                                 {contractData.signedDocNanny ? (
                                     <CheckCircleIcon sx={{ color: 'green', fontSize: '2rem' }} />
                                 ) : (
-                                    <CancelIcon sx={{ color: 'red', fontSize: '2rem' }} />
+                                    <CancelIcon sx={{ color: 'var(--clr-error)', fontSize: '2rem' }} />
                                 )}
                                 <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Υπογεγραμμένο από Νταντά</p>
                             </Box>
