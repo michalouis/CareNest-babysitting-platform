@@ -111,8 +111,7 @@ export default function ViewMeeting() {
                     {userData.role === 'parent' && meetingData.meetingState === 'pending' && (
                         <>
                             <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
-                                Tο ραντεβού σας βρίσκεται σε αναμονή, μέχρι να εγκριθεί από τη νταντά. <br />
-                                Αν δεν έχετε έρθει σε επαφή με τη νταντά, μπορείτε να την επικοινωνήσετε μέσω του συστήματος μηνυμάτων.
+                                Tο ραντεβού σας βρίσκεται σε αναμονή, μέχρι να εγκριθεί από τη νταντά.
                             </Alert>
                         </>
                     )}

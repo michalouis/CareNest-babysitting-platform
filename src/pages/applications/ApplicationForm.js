@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import Loading from '../../layout/Loading';
@@ -226,7 +226,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
         <>
             {applicationData.submitted && (
                 <Alert severity="success" sx={{ marginBottom: '1rem' }}>
-                    Οριστικοποιήσατε την αίτηση σας με επιτυχία. Το συμφωνητικό που πρέπει να υπογράψετε έχει εκδοθεί και βρίσκεται στην ενότητα “Συμφωνητικά”.
+                    Οριστικοποιήσατε την αίτηση σας με επιτυχία. Το συμφωνητικό που πρέπει να υπογράψετε έχει εκδοθεί και βρίσκεται στην ενότητα <Link to="/contracts" style={{ color: 'inherit'}}>'Συμφωνητικά'</Link>.
                 </Alert>
             )}
             {!editMode && !applicationData.submitted && (

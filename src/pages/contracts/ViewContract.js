@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
 import { FormDateRange, VisualizeTimeTable } from '../applications/ApplicationFields';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { FIREBASE_DB } from '../../firebase';
@@ -168,7 +168,7 @@ function ViewContract() {
                     )}
                     {userSignedDoc && partnerSignedDoc && (
                         <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα 'Συνεργασίες'.
+                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα <Link to="/path-to-agreements" style={{ color: 'inherit' }}>'Συνεργασίες'</Link>.
                         </Alert>
                     )}
                     <Box sx={{
