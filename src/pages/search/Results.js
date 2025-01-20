@@ -13,7 +13,7 @@ import Loading from '../../layout/Loading';
 
 /////////////// PARSE FUNCTIONS ///////////////
 
-// turn the timetable  back to normal
+// turn the timetable back to normal
 const parseTimetable = (params) => {
     // Initialize an empty object to store the parsed timetable
     const timetable = {};
@@ -23,7 +23,9 @@ const parseTimetable = (params) => {
         // Check if the key starts with 'timetable_'
         if (key.startsWith('timetable_')) {
             // Split the key into parts to extract the day and time
-            const [_, day, time] = key.split('_');
+            const parts = key.split('_');
+            const day = parts[1];
+            const time = parts[2];
             
             // If the day is not already in the timetable, initialize it with an empty array
             if (!timetable[day]) {
