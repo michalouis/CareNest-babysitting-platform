@@ -128,7 +128,7 @@ export default function ViewProfile() {
                             '&:hover': { opacity: 0.8 },
                             padding: '0.5rem 0'
                         }}
-                        // onClick={() => navigate(`/messages?recipientId=${profileId}`)}
+                        onClick={() => navigate('/messages')}
                         startIcon={<MessageIcon />}
                     >
                         <p className="button-text">Μήνυμα</p>

@@ -313,7 +313,14 @@ export default function ViewMeeting() {
                                 >
                                     <p className='small-button-text'>Προβολή Προφίλ</p>
                                 </Button>
-                                <Button variant="contained" startIcon={<MessageIcon />} sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<MessageIcon />}
+                                    onClick={() => navigate('/messages')}
+                                    sx={{
+                                        backgroundColor: 'var(--clr-violet)',
+                                        padding: '0.5rem 1rem'
+                                }}>
                                     <p className='small-button-text'>Αποστολή Μηνύματος</p>
                                 </Button>
                             </Box>
