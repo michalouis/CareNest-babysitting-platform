@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+Μέλη Ομάδας:
+Μιχαήλ Αρετάκης - Α.Μ.: 1115202100007
+Γεώργιος Παπαϊωάννου - Α.Μ.: 1115202100222
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Active Accounts:
 
-## Available Scripts
+Γονείς:
+(Main) parent1@carenest.com - Ενεργή Συνεργασία με ntanta1@carenest.com
+goneas2@carenest.com - No active partnership
 
-In the project directory, you can run:
+Νταντάδες:
+(Main) ntanta2@carenest.com - job posted & no active partnership
+ntanta1@carenest.com - Ενεργή Συνεργασία με parent1@carenest.com
+ntanta3@carenest.com - job posted & no active partnership
 
-### `npm start`
+Κωδικός: Kodikos123!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Αρχεία:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+public φάκελος : Εικόνες logo & hero image
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+src/
+• AuthChecks.js : Ελέγχει αν επιτρέπεται η πρόσβαση του χρήστη στη συγκεκριμένη σελίδα και επιστρέφει τα userData.
+• PageTitle.js : Προσθέτει τίτλο στη σελίδα
+• App.js : Root file
+• hooks/useBeforeRender.js : συνάρτηση που χρησιμοποιούμε στο App.js για να αποκρύψουμε γνώστο error message από το χρήστη (δες σύνδεσμο μέσα στο αρχείο)
 
-### `npm run build`
+components/
+• FilterBox.js: Filter Element που βρίσκουμε στις σελίδες Applications, Meetings, Partnerships για να προσθέσουμε/αφαιρέσουμε φίλτρα στα αποτελέσματα μας.
+• GenericContainer.js : Εμφανίζει τα αποτελέσματα των Applications, Meetings, Partnerships σε σελίδες
+• ProfileComponents.js : Συναρτήσεις για να προβάλουμε διάφορα δεδομένα του χρήστη
+• VisualizeTimeTable.js : Προβάλει το πίνακα με τις τελικές εβδομαδιαίες ώρες φροντίδας του παιδιού. (found in Applications, Meetings, Partnerships)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+layout/
+• Breadcrumbs.js : Διαχειρίζεται την προβολή των Breadcrumbs στην οθόνη του χρήστη αλλά και τη μετάβαση του χρήστη σε άλλη σελίδα μέσω αυτών.
+• Drawer.js : Το "συρτάρι" που ανοίγει όταν πατάμε το κουμπί μενού από το navigation bar. Περιέχει κουμπιά για να πάμε σε βασικές σελίδες όπως προφίλ, αναζήτηση νταντάς, Αγγελία εργασίας, Ραντεβού γνωριμίας, Αιτήσεις, συμφωνητικά, Συνεργασίες. Επιπλέον, υπάρχει κουμπί αποσύνδεσης (υπάρχει και στη σελίδα προφίλ) 
+• Footer.js
+• Header.js : Navigation Bar
+• HeaderButtons.js Διαχειρίζεται τα κουμπιά που φαίνονται στο χρήστη πάνω στο navigation bar ανάλογα με το αν είναι συνδεδεμένος ή όχι.
+• Loading.js : Οθόνη που φαίνεται στο χρήστη όσο ανακτάμε δεδομένα από τη βάση στο παρασκήνιο.
+• ScrolltoTop.js : Κουμπί που "ανεβάζει" το χρήστη στη αρχή της οθόνης αν έχει κάνει πολύ  scroll κάτω.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+pages/
+applications/
+• ApplicationFields.js : Συναρτήσεις για τα πεδία που βρίσκουμε στη φόρμα της αίτησης + validation συνάρτηση για αυτά τα πεδία
+• ApplicationForm.js : Η φόρμα της αίτησης του γονέα + alerts και κουμπιά (επεξεργασία, υποβολή) σχετικά με αυτή
+• Applications.js : Σελίδα που εμφανίζεται τις αιτήσεις του χρήστη με τη βοήθεια του GenericContainer.js & FilterBox.js
+• CreateApplications.js : Σελίδα για τη δημιουργία αίτησης
+• ViewApplications.js :	Σελίδα για την επεξεργασία/προβολή ήδη υπάρχουσας αίτησης.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+authentication/
+• Login.js : Σελίδα Σύνδεσης
+• Signup.js : Σελίδα Εγγραφής (χρησιμοποιεί τα αρχεία του steps φάκελου για κάθε βήμα)
+• StepperComponent.js : Μπάρα βημάτων/προόδου για την εγγραφή
+	steps/ : Βήματα εγγραφής
+	• RoleSelection.js : Επιλογή ρόλου
+	• Infromation.js : Πληροφορίες πριν την εγγραφή του χρήστη
+	• CreateAccount.js : Φόρμα για τη δημιουργία λογαριασμού (credentials, όνομα)
+	• CreateProfile.js : Σελίδα δημιουργίας προφίλ, δείχνει διαφορετική φόρμα συμπλήρωσης ανάλογα με το ρόλο του χρήστη
+	• ProfileFormNanny.js : Φόρμα συμπλήρωσης για το προφίλ της νταντάς
+	• ProfileFormParent.js : Φόρμα συμπλήρωσης για το προφίλ του γονέα
+	• SignupComplete.js : Σελίδα μετά την εγγραφή, που λέει στο χρήστη πως ολοκλήρωσε την εγγραφή του
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+contact/
+• Contact.js: Σελίδα επικοινωνίας 
+• ContactBox.js : Φόρμα Επικοινωνίας
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+contracts/
+• Contracts.js : Σελίδα που εμφανίζεται τα συμφωνητικά του χρήστη με τη βοήθεια του GenericContainer.js & FilterBox.js
+• ViewContract.js : Εμφάνιση Συμφωνητικού
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+error404/
+• error404.js : Σελίδα error404 (περιέχει highlighted text για μετάβαση στην αρχική οθόνη)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+faq/
+• Faq.js : Σελίδα συχνών ερωτήσεων (ίδιο περιεχόμενο με τις πληροφορίες κατά την εγγραφή του χρήστη)
+• FaqItem.js : Dropdown που προβάλει την απάντηση στην ερώτηση που έκανε κλικ ο χρήστης
+• FaqTab.js :  Tab για αλλαγή από τις πληροφορίες των γονιών στις πληροφορίες των νταντάδων
 
-## Learn More
+job_posting/
+• EditJobPosting.js : Σελίδα για την επεξεργασία της αγγελίας (χρησιμοποιεί τη jobPostingForm.js)
+• JobPosting.js : Σελίδα που εμφανίζει είτε τα κουμπιά για τη δημιουργία/επεξεργασία της αγγελίας είτε χρησιμοποιεί το ViewJobPosting.js για να προβάλλει τη τελική αγγελία
+• JobPostingForm.js : Φόρμα αγγελίας (με ελέγχους και validation)
+• ViewJobPosting.js : Φόρμα αγγελίας (μόνο για προβολή αγγελίας)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+landingpage/
+• LandingPage.js : Αρχική σελίδα, ανάλογα με το αν είναι authenticated ο χρήστης ή όχι δείχνει μια από τις παρακάτω σελίδες
+• LoggedinNanny.js : Κείμενο, hero images και κουμπιά ανάλογα με το αν έχει δημοσιεύσει την αγγελία του ή οχι
+• LoggedinParent.js : Κείμενο, hero image και κουμπί για μετάβαση στην αναζήτηση νταντάς, αν ο χρήστης δεν έχει ενεργή συνεργασία
+• Loggedout.js : Σελίδα αποσυνδεδεμένου χρήστη- Καλωσόρισμα, Πληροφορίες για το πως λειτουργεί το website, κουμπί εγγραφής, φόρμα επικοινωνίας
+• PartnershipActiveContent.js : Αν ο χρήστης έχει ενεργή συνεργασία δείξε τις εβδομαδιαίες ώρες φροντίδας και κουμπί για μετάβαση στην ενεργή συνεργασία (και για γονείς και για νταντάδες)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+meetings/
+• MakeMeetingDialog.js : Παράθυρο που ανοίγει στη σελίδα για να δημιουργήσει ο γονέας ραντεβού γνωριμίας με τη νταντά (χρησιμοποιείται στο search/ViewProfile.js αρχείο αλλά βρίσκεται εδώ το αρχείο)
+• Meetings.js : Σελίδα που εμφανίζεται τα ραντεβού γνωριμίας του χρήστη με τη βοήθεια του GenericContainer.js & FilterBox.js
+• ViewMeeting.js : Προβολή ραντεβού γνωριμίας - Εμφανίζει κουμπιά αποδοχής και απόρριψης ραντεβού για τη νταντά, περιέχει κουμπιά για σύνδεση στη βιντεοκλήση ή άνοιγμα διεύθυνσης στους χάρτες (ανάλογα τον τύπο ραντεβού) που ενεργοποιούνται αν αποδεχθεί η νταντά το ραντεβού. Επιπλέον τα στοιχεία επικοινωνίας δεν εμφανίζονται μέχρι η νταντά να αποδεχθεί το ραντεβού για λόγους ασφαλείας.
 
-### Code Splitting
+messages/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+partnerships/
+• Partnerships.js : Σελίδα που εμφανίζεται τις συνεργασίες του χρήστη με τη βοήθεια του GenericContainer.js & FilterBox.js
+• PaymentsBox.js : Component που δείχνει και διαχειρίζεται τις πληρωμές κάθε μήνα
+• RatingBox.js : Component που δείχνει και διαχειρίζεται την αξιολόγηση του γονέα στο τέλος της συνεργασίας
+• ViewPartnership.js : Σελίδα προβολής της συνεργασίας
 
-### Analyzing the Bundle Size
+profile/
+• EditProfile.js : Σελίδα επεξεργασίας προφίλ του χρήστη
+• Profile.js : Σελίδα προβολής προφίλ (του ίδιου του χρήστη)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+search/
+• Favorites.js : Σελίδα που εμφανίζει τις νταντάδες που ο γονέας έχει προσθέσει στη λίστα με τα αγαπημένα του
+• Filters.js : Τα πεδία που συμπληρώνει ο γονέας για να κάνει την αναζήτηση του
+• Results.js : Σελίδα εμφάνισης των αποτελεσμάτων αναζήτησης - Παίρνει τα δεδομένα αναζήτησης από το url και επιστρέφει από τη βάση τα αποτελέσματα (από εδώ μπορεί ο χρήστης να κάνει και νέα αναζήτηση, επεξεργάζοντας τα δεδομένα του)
+• ResultsComponents.js : ResultsContainer (εμφανίζει/ταξινομεί τα αποτελέσματα σε σελίδες), ResultsItem (το περιεχόμενο που εμφανίζεται για κάθε αποτέλεσμα αναζήτησης)
+• Search.js : Σελίδα για την αναζήτηση νταντάδων - Περιέχει φίλτρα από το Filters.js για να κάνει την αναζήτηση ο γονέας με βάση τις ανάγκες του (τα φίλτρα τα περνάμε στο url σαν parameters)
+• ViewProfile.js : Σελίδα προβολής προφίλ (άλλου χρήστη). Εδώ υπάρχουν κουμπιά για δημιουργία ραντεβού γνωριμίας και αίτησης
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
