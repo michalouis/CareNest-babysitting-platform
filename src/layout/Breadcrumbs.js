@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Breadcrumbs as MUIBreadcrumbs, Link, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import "../style.css";
 
 const pathLabels = {
@@ -35,15 +35,16 @@ const pathLabels = {
 
 const hasParams = ['create-application', 'view-profile', 'view-application', 'view-contract', 'view-partnership', 'view-meeting'];
 
+// Match the path to the corresponding label
 const getPageLabel = (path) => {
     const key = path === '/' ? '/' : path.split('/').pop();
     return pathLabels[key] || key;
 };
 
+// Breadcrumbs component
 function Breadcrumbs({ showPopup = false }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const params = useParams();
     const [openNavigateAwayDialog, setOpenNavigateAwayDialog] = useState(false);
     const [navigateTo, setNavigateTo] = useState(null); // store the path to navigate before asking the user to confirm
 
@@ -52,7 +53,7 @@ function Breadcrumbs({ showPopup = false }) {
     // Handle the back button
     const handleBackButton = () => {
         if (showPopup) {    // show warning dialog before navigating away
-            setNavigateTo('previous');  // navigate to the previous page
+            setNavigateTo('previous');  // navigate to the previous page (back button)
             setOpenNavigateAwayDialog(true);
         } else {
             navigateToPrevious();
@@ -62,8 +63,8 @@ function Breadcrumbs({ showPopup = false }) {
     // Navigate to the previous page
     const navigateToPrevious = () => {
         const pathArray = location.pathname.split('/').filter(Boolean);
-        let previousPathArray = pathArray.slice(0, -1);
-        let previousPath = `/${previousPathArray.join('/')}`;
+        let previousPathArray = pathArray.slice(0, -1);     // remove the current page
+        let previousPath = `/${previousPathArray.join('/')}`;   
     
         // Check if the current or previous path is a parameter
         if (!pathLabels[pathArray[pathArray.length - 1]] || !pathLabels[previousPathArray[previousPathArray.length - 1]]) {
@@ -74,8 +75,8 @@ function Breadcrumbs({ showPopup = false }) {
         navigate(previousPath);
     };
 
-    /////////////// BREADCRUMBS ///////////////
-
+    /////////////// POPUP ///////////////
+    
     // Handle when the user confirms the navigation
     const handleNavigateConfirm = () => {
         setOpenNavigateAwayDialog(false);
@@ -85,14 +86,15 @@ function Breadcrumbs({ showPopup = false }) {
             navigate(navigateTo);
         }
     };
-
-    /////////////// POPUP ///////////////
-
+    
+    
     // Handle when the user cancels the navigation
     const handleNavigateCancel = () => {
         setOpenNavigateAwayDialog(false);
         setNavigateTo(null);    // reset the path to navigate
     };
+    
+    /////////////// BREADCRUMB CLICK ///////////////
 
     // Handle when one of the breadcrumbs is clicked
     const handleBreadcrumbClick = (event, path) => {
@@ -105,7 +107,7 @@ function Breadcrumbs({ showPopup = false }) {
         }
     };
 
-    // Get the path array from the current location
+    // Get the path array from the current location, page -> { pagename: '...', param: '...' }
     const pathArray = location.pathname.split('/').filter(Boolean);
     const pages = [];
     for (let i = 0; i < pathArray.length; i++) {
@@ -118,9 +120,10 @@ function Breadcrumbs({ showPopup = false }) {
         }
     }
 
+    // Create the breadcrumbs
     const breadcrumbs = [
-        { label: pathLabels['/'], path: '/' },
-        ...pages.map((page, index) => ({
+        { label: pathLabels['/'], path: '/' },  // add landing page as the first breadcrumb
+        ...pages.map((page, index) => ({        // add the rest of the pages
             label: getPageLabel(page.pagename),
             path: `/${pages.slice(0, index + 1).map(p => p.pagename + (p.param ? `/${p.param}` : '')).join('/')}`
         }))
@@ -130,7 +133,7 @@ function Breadcrumbs({ showPopup = false }) {
         <>
             {/* Breadcrumbs */}
             <MUIBreadcrumbs sx={{ marginTop: '1rem', marginLeft: '0.5rem', display: 'flex', alignItems: 'center' }}>
-                <IconButton onClick={handleBackButton}>
+                <IconButton onClick={handleBackButton}> {/* back button */}
                     <NavigateBeforeIcon />
                 </IconButton>
                 {breadcrumbs.slice(0, -1).map((breadcrumb, index) => (  // exclude the current page
@@ -144,7 +147,7 @@ function Breadcrumbs({ showPopup = false }) {
                         {breadcrumb.label}
                     </Link>
                 ))}
-                <p style={{ color: 'var(--clr-black)', }}>
+                <p style={{ color: 'var(--clr-black)', }}>  {/* current page, not interactable */}
                     {breadcrumbs[breadcrumbs.length - 1].label}
                 </p>
             </MUIBreadcrumbs>

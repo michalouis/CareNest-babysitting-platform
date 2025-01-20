@@ -4,10 +4,10 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box } from '@mui/material';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
-import FilterBox from '../meetings/FilterBox';
-import GenericContainer from '../meetings/GenericContainer';
+import FilterBox from '../../components/FilterBox';
+import GenericContainer from '../../components/GenericContainer';
 import { Card, CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import UpdateIcon from '@mui/icons-material/Update';
 import PersonIcon from '@mui/icons-material/Person';
 
+// filter options
 const checkboxOptions = [
     { label: "Πρόχειρο", value: "draft" },
     { label: "Υποβλήθηκε", value: "submitted" }
@@ -26,6 +27,7 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// Last modification of application in greek
 const LastModification = ({ timestamp }) => {
     if (!timestamp) return null;
 
@@ -37,13 +39,15 @@ const LastModification = ({ timestamp }) => {
     );
 };
 
+// Application item component
 function ApplicationItem({ application }) {
     const navigate = useNavigate();
 
-    const getApplicationStateColor = (submitted) => {
+    const getApplicationStateColor = (submitted) => {   // Get color based on application state
         return submitted ? 'var(--clr-darker-green)' : 'var(--clr-orange)';
     };
 
+    // show application details
     return (
         <Card sx={{ marginBottom: '1rem' }}>
             <CardActionArea onClick={() => navigate(`/applications/view-application/${application.applicationId}`)}>
@@ -61,11 +65,13 @@ function ApplicationItem({ application }) {
                             {application.submitted ? 'Υποβλήθηκε' : 'Πρόχειρο'}
                         </h2>
                     </Box>
+                    {/* Nanny Name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Νταντά:</h2>
                         <p style={{ fontSize: '1.3rem' }}>{application.nannyName}</p>
                     </Box>
+                    {/* Dates of potential partnership */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από:</p>
@@ -76,6 +82,7 @@ function ApplicationItem({ application }) {
                         <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι:</p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[application.toDate.month]} ${application.toDate.year}`}</p>
                     </Box>
+                    {/* Last modification */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <UpdateIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <LastModification timestamp={application.timestamp} />
@@ -106,6 +113,7 @@ function Applications() {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Fetch applications and filter them based on the filters
     useEffect(() => {
         const fetchApplications = async () => {
             try {
@@ -121,9 +129,11 @@ function Applications() {
                         const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
                         const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
     
+                        // Check if the application is within the date range and matches the status
                         const isWithinDateRange = (!filters.fromDate.year || applicationDate >= fromDate) &&
                                                   (!filters.toDate.year || applicationDate <= toDate);
     
+                        // Check if the application status matches the filters
                         const isStatusMatch = (filters.draft && !application.submitted) ||
                                                 (filters.submitted && application.submitted);
     
@@ -183,6 +193,7 @@ function Applications() {
                         setFilters={setFilters}
                         checkboxOptions={checkboxOptions}
                     />
+                    {/* Container to show results in pages */}
                     <GenericContainer userData={userData} items={applications} itemFunction={(item) => <ApplicationItem application={item} />} loading={loading} />
                 </Box>
             </>

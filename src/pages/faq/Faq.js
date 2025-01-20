@@ -8,6 +8,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 
+// Faq component
 export default function Faq() {
     const { isLoading } = AuthCheck();
     const [selectedTab, setSelectedTab] = useState(0);

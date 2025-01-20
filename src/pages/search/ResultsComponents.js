@@ -23,10 +23,12 @@ const translateMap = {
     flute: 'Φλάουτο'
 };
 
+// Display the info of the result item
 function ResultsItem({ item, favorites, setFavorites }) {
     const navigate = useNavigate();
     const { firstName, lastName, experience, degrees, languages, music, score, uid } = item;
 
+    // show skills in a row
     const ShowSkills = (languages, music) => {
         const skills = { ...languages, ...music };
         const skillArray = Object.entries(skills)
@@ -86,6 +88,7 @@ function ResultsItem({ item, favorites, setFavorites }) {
     const isFavorited = favorites.includes(uid);
 
     return (
+        // show the profile info
         <Card sx={{
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
@@ -281,7 +284,7 @@ function ResultsContainer({ filterData }) {
         });
     
         return () => unsubscribe();
-    }, []);
+    },);
 
     const handleChange = (event, value) => {
         setPage(value);

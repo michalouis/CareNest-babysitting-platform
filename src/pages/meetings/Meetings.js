@@ -4,8 +4,8 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box, Card, CardActionArea, CardContent } from '@mui/material';
-import FilterBox from './FilterBox';
-import GenericContainer from './GenericContainer';
+import FilterBox from '../../components/FilterBox';
+import GenericContainer from '../../components/GenericContainer';
 import { getDocs, collection } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -15,12 +15,14 @@ import EventRoundedIcon from '@mui/icons-material/EventRounded';
 import AccessTimeFilled from '@mui/icons-material/AccessTimeFilled';
 import PlaceRounded from '@mui/icons-material/PlaceRounded';
 
+// filter options
 const checkboxOptions = [
     { label: "Εγκρίθηκε", value: "accepted" },
     { label: "Σε αναμονή", value: "pending" },
     { label: "Απορρίφθηκε", value: "rejected" }
 ];
 
+// Meeting item component
 function MeetingItem({ meeting, userData }) {
     const navigate = useNavigate();
     const months = [
@@ -41,10 +43,12 @@ function MeetingItem({ meeting, userData }) {
         }
     };
 
+    // show meeting details
     return (
         <Card sx={{ marginBottom: '1rem' }}>
             <CardActionArea onClick={() => navigate(`/meetings/view-meeting/${meeting.meetingId}`)}>
                 <CardContent>
+                    {/* status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
                         <h2 style={{
@@ -60,24 +64,27 @@ function MeetingItem({ meeting, userData }) {
                                 : 'Απορρίφθηκε'}
                         </h2>
                     </Box>
+                    {/* partner name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
                         <p style={{ fontSize: '1.3rem' }}>
-                            <strong>{userData.role === 'parent' ? 'Νταντά:' : 'Γονέας:'}</strong> 
+                            <strong>{userData.role === 'parent' ? 'Νταντά: ' : 'Γονέας: '}</strong> 
                             {userData.role === 'parent' ? `${meeting.nannyFirstName} ${meeting.nannyLastName}` : `${meeting.parentFirstName} ${meeting.parentLastName}`}
                         </p>
                     </Box>
+                    {/* meeting date */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <EventRoundedIcon style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία:</strong> {meeting.dateTime.day} {months[meeting.dateTime.month]} {meeting.dateTime.year}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία: </strong> {meeting.dateTime.day} {months[meeting.dateTime.month]} {meeting.dateTime.year}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <AccessTimeFilled style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ώρα:</strong> {meeting.dateTime.hour}:{meeting.dateTime.minute}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Ώρα: </strong> {meeting.dateTime.hour}:{meeting.dateTime.minute}</p>
                     </Box>
+                    {/* Type of meeting */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PlaceRounded style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Τύπος Ραντεβού:</strong> {meeting.meetingType === 'in-person' ? 'Δια ζώσης' : 'Διαδικτυακό'}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Τύπος Ραντεβού: </strong> {meeting.meetingType === 'in-person' ? 'Δια ζώσης' : 'Διαδικτυακό'}</p>
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -110,9 +117,11 @@ function Meetings() {
         const fetchMeetings = async () => {
             try {
                 setLoading(true);
+                // Fetch all meetings
                 const meetingsCollection = await getDocs(collection(FIREBASE_DB, 'meetings'));
                 const meetingsData = meetingsCollection.docs.map(doc => doc.data());
 
+                // Filter meetings based on the user's id & role
                 const filteredMeetings = meetingsData.filter(meeting => {
                     if (userData.role === 'parent') {
                         return meeting.parentId === userData.uid;
@@ -125,9 +134,11 @@ function Meetings() {
                     const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
                     const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
 
+                    // Check if the meeting is within the date range
                     const isWithinDateRange = (!filters.fromDate.year || meetingDate >= fromDate) &&
                                               (!filters.toDate.year || meetingDate <= toDate);
 
+                    // Check if the meeting status matches the filters
                     const isStatusMatch = (filters.accepted && meeting.meetingState === 'accepted') ||
                                           (filters.pending && meeting.meetingState === 'pending') ||
                                           (filters.rejected && meeting.meetingState === 'rejected');
@@ -184,6 +195,7 @@ function Meetings() {
                         setFilters={setFilters}
                         checkboxOptions={checkboxOptions}
                     />
+                    {/* Container to show results in pages */}
                     <GenericContainer userData={userData} items={meetings} itemFunction={(item, userData) => <MeetingItem meeting={item} userData={userData} />} loading={loading} />
                 </Box>
             </>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, Alert } from '@mui/material';
-import { FormDateRange, VisualizeTimeTable } from '../applications/ApplicationFields';
-import { useNavigate, useLocation, Link, useParams } from 'react-router-dom';
+import { FormDateRange } from '../applications/ApplicationFields';
+import VisualizeTimeTable from '../../components/VisualizeTimeTable';
+import { Link, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import { FIREBASE_DB } from '../../firebase';
@@ -16,8 +17,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 
 function ViewContract() {
     const { userData, isLoading } = AuthCheck(true, false, false);
-    const location = useLocation();
-    const { id } = useParams();
+    const { id } = useParams(); // Get contract ID from URL
     const contractId = id;
     const [contractData, setContractData] = useState(null);
     const [parentData, setParentData] = useState(null);
@@ -32,6 +32,7 @@ function ViewContract() {
         Other: 'Άλλο'
     };
 
+    // Fetch contract data
     useEffect(() => {
         const fetchContractData = async () => {
             try {
@@ -40,6 +41,7 @@ function ViewContract() {
                     const contract = contractDoc.data();
                     setContractData(contract);
 
+                    // Fetch parent and nanny data
                     const parentDoc = await getDoc(doc(FIREBASE_DB, 'users', contract.parentId));
                     if (parentDoc.exists()) {
                         setParentData(parentDoc.data());
@@ -68,6 +70,7 @@ function ViewContract() {
         }
     }, [contractId]);
 
+    // Handle file upload
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -77,6 +80,7 @@ function ViewContract() {
         }
     };
 
+    // Handle confirm upload
     const handleConfirmUpload = async () => {
         setOpenConfirmDialog(false);
         try {
@@ -92,6 +96,7 @@ function ViewContract() {
         }
     };
 
+    // Create partnership
     const createPartnership = async () => {
         try {
             const contractDoc = await getDoc(doc(FIREBASE_DB, 'contracts', contractId));
@@ -105,6 +110,7 @@ function ViewContract() {
                     const payments = [];
                     const currentDate = new Date(fromDate);
     
+                    // Create payment schedule
                     while (currentDate <= toDate) {
                         payments.push(payments.length === 0 ? 'current' : 'upcoming');
                         currentDate.setMonth(currentDate.getMonth() + 1);
@@ -112,9 +118,11 @@ function ViewContract() {
     
                     partnershipData.payments = payments;
     
+                    // Add partnership to database
                     const partnershipDocRef = await addDoc(collection(FIREBASE_DB, 'partnerships'), partnershipData);
                     await updateDoc(partnershipDocRef, { partnershipId: partnershipDocRef.id, active: true });
-    
+                    
+                    // Update parent & nanny to include partnershipId
                     const parentDocRef = doc(FIREBASE_DB, 'users', contractData.parentId);
                     const nannyDocRef = doc(FIREBASE_DB, 'users', contractData.nannyId);
     
@@ -150,6 +158,7 @@ function ViewContract() {
             <h1 style={{ marginLeft: '1rem' }}>Προβολή Συμφωνητικού</h1>
             {contractData && parentData && nannyData && (
                 <>
+                    {/* Alerts based on contract status */}
                     {!userSignedDoc && (
                         userData.partnershipActive ? (
                             <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
@@ -168,7 +177,7 @@ function ViewContract() {
                     )}
                     {userSignedDoc && partnerSignedDoc && (
                         <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα <Link to="/path-to-agreements" style={{ color: 'inherit' }}>'Συνεργασίες'</Link>.
+                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα <Link to="/partnerships" style={{ color: 'inherit' }}>'Συνεργασίες'</Link>.
                         </Alert>
                     )}
                     <Box sx={{
@@ -184,6 +193,7 @@ function ViewContract() {
                         boxShadow: '2',
                         margin: '1rem auto'
                     }}>
+                        {/* Display contract status */}
                         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 {contractData.signedDocParent ? (
@@ -203,6 +213,7 @@ function ViewContract() {
                             </Box>
                         </Box>
                         <Divider sx={{ width: '90%', margin: '1rem' }} />
+                        {/* Download & Upload Contract buttons */}
                         {(userData.role === 'parent' && !contractData.signedDocParent) || (userData.role === 'nanny' && !contractData.signedDocNanny) ? (
                             <>
                                 <h3>1. Κατεβάστε το συμφωνητικό, διαβάστε το και υπογράψτε το.</h3>
@@ -229,7 +240,7 @@ function ViewContract() {
                                     />
                                 </Button>
                             </>
-                        ) : (
+                        ) : (   // If both users have signed the contract, show download signed contract button
                             <>
                                 <h3>Μπορείτε να κατεβάσετε το υπογεγραμμένο συμφωνητικό σας εδώ.</h3>
                                 <Button
@@ -242,6 +253,7 @@ function ViewContract() {
                             </>
                         )}
                     </Box>
+                    {/* Contract Preview */}
                     <h1 style={{ textAlign: 'center' }}>Προεπισκόπηση Συμφωνητικού</h1>
                     <Box sx={{
                         width: '90%',
@@ -290,6 +302,7 @@ function ViewContract() {
                     </Box>
                 </>
             )}
+            {/* Confirm Dialog */}
             <Dialog
                 open={openConfirmDialog}
                 onClose={() => {

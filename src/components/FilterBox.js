@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, IconButton, Radio, RadioGroup, FormControl, FormLabel } from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, IconButton, Radio, RadioGroup, FormControl } from '@mui/material';
 
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -10,6 +10,7 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// DateRangeDialog: Dialog to select a date range
 function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange }) {
     const [localFromDate, setLocalFromDate] = useState(fromDate);
     const [localToDate, setLocalToDate] = useState(toDate);
@@ -41,6 +42,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
             return false;
         }
 
+        // check if values are out of bounds
         if ((localFromDate.day < 1 && fromDateFilled) || (localToDate.day < 1 && toDateFilled)) {
             setError('Οι ημέρες πρέπει να είναι αριθμοί μεγαλύτεροι του 0.');
             return false;
@@ -51,8 +53,8 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
             return false;
         }
 
-        if ((localFromDate.year < 2025 && fromDateFilled) || (localToDate.year < 2025 && toDateFilled)) {
-            setError('Οι χρονιές πρέπει να είναι αριθμοί μεγαλύτεροι του 2024.');
+        if ((localFromDate.year < 2000 && fromDateFilled) || (localToDate.year < 2000 && toDateFilled)) {
+            setError('Οι χρονιές πρέπει να είναι αριθμοί μεγαλύτεροι του 2000.');
             return false;
         }
 
@@ -74,9 +76,9 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
     // Save the date range
     const handleSave = () => {
         if (validateFields()) {
-            onDateRangeChange(localFromDate, localToDate);
-            setLocalFromDate({ day: '', month: '', year: '' });
-            setLocalToDate({ day: '', month: '', year: '' });
+            onDateRangeChange(localFromDate, localToDate);  // Update the actual date range
+            setLocalFromDate({ day: '', month: '', year: '' }); // Reset the local date range
+            setLocalToDate({ day: '', month: '', year: '' });   // Reset the local date range
             onClose();
         }
     };
@@ -91,11 +93,12 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
     };
 
     return (
+        // Date Range Dialog
         <Dialog open={open} onClose={onClose}>
             <DialogTitle><strong>Επιλογή Χρονικού Εύρους</strong></DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {error && <p style={{ color: 'var(--clr-error)' }}>{error}</p>}
+                    {error && <p style={{ color: 'var(--clr-error)' }}>{error}</p>} {/* Error message */}
                     <p><strong>Από:</strong></p>
                     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
                         <TextField
@@ -172,9 +175,11 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
     );
 }
 
+// FilterBox: Component found in Application, Contracts, and Partnerships pages to filter results
 function FilterBox({ filters, setFilters, checkboxOptions }) {
     const [dateRangeDialogOpen, setDateRangeDialogOpen] = useState(false);
 
+    // Handle the change of the checkboxes
     const handleCheckboxChange = (event) => {
         setFilters({
             ...filters,
@@ -182,6 +187,7 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
         });
     };
 
+    // Handle the change of the date range
     const handleDateRangeChange = (newFromDate, newToDate) => {
         setFilters({
             ...filters,
@@ -190,6 +196,7 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
         });
     };
 
+    // Handle the change of the sort order
     const handleSortOrderChange = (event) => {
         setFilters({
             ...filters,
@@ -214,6 +221,8 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                 <h2>Φίλτρα</h2>
             </Box>
             <Divider sx={{ width: '80%' }} />
+
+            {/* CheckBoxes */}
             <h3>Κατάσταση</h3>
             <FormGroup>
                 {checkboxOptions.map((option) => (
@@ -230,6 +239,8 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                     />
                 ))}
             </FormGroup>
+
+            {/* Sort */}
             <h3>Ταξινόμηση κατά</h3>
             <FormControl component="fieldset">
                 <RadioGroup
@@ -241,6 +252,8 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                     <FormControlLabel value="older" control={<Radio />} label="Παλαιότερα πρώτα" />
                 </RadioGroup>
             </FormControl>
+
+            {/* Date Range */}
             <h3>Χρονικό Εύρος</h3>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.5rem' }}>
                 <h4>
@@ -252,6 +265,8 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                         `${filters.toDate.day} ${months[filters.toDate.month]} ${filters.toDate.year}` : '-'}
                 </h4>
             </Box>
+
+            {/* Button to open date range dialog */}
             <Button
                 variant="contained"
                 startIcon={<CalendarMonthIcon />}

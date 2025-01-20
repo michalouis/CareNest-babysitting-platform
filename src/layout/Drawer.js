@@ -45,6 +45,7 @@ function AppDrawer({ open, onClose }) {
     const [userRole, setUserRole] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
 
+    // Get user role to determine what to show in the drawer
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
             if (user) {
@@ -126,10 +127,12 @@ function AppDrawer({ open, onClose }) {
 
     return (
         <>
+            {/* Drawer */}
             <Drawer anchor="right" open={open} onClose={onClose}>
                 {DrawerList}
             </Drawer>
 
+            {/* Logout Confirm Dialog */}
             <Dialog
                 open={dialogOpen}
                 onClose={handleDialogClose}

@@ -3,11 +3,12 @@ import { Box, Button, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { getDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
-import { VisualizeTimeTable } from '../applications/ApplicationFields';
+import VisualizeTimeTable from '../../components/VisualizeTimeTable';
 import '../../style.css';
 
 import GroupIcon from '@mui/icons-material/Group';
 
+// LandingPage for both parents and nannies for when they have an active partnership (show timetable)
 export default function PartnershipActiveContent({ userData }) {
     const [partnershipData, setPartnershipData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -57,7 +58,7 @@ export default function PartnershipActiveContent({ userData }) {
           </p>
           <Button
             component={Link}
-            // to="/partnerships/view-partnership"
+            to={`/partnerships/view-partnership/${userData.partnerships[userData.partnerships.length - 1]}`}
             variant="contained"
             startIcon={<GroupIcon style={{ fontSize: '1.8rem'}} />}
             sx={{

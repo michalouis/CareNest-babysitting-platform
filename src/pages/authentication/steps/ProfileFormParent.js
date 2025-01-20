@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+// Parent Profile Creation Form
 function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // if userData is passed function is used for editing profile,
     // else for creating profile

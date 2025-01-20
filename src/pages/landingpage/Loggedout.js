@@ -61,6 +61,7 @@ function LearnMoreButton({ to, text}) {
     );
 }
 
+// Welcome's user, signup button, learn more buttons (scroll to learn more)
 function WelcomeBox() {
     return (
         <Box className='welcome-box' sx={{

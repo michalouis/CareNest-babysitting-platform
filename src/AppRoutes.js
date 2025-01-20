@@ -27,6 +27,7 @@ import ViewPartnership from './pages/partnerships/ViewPartnership';
 import JobPosting from './pages/job_posting/JobPosting';
 import EditJobPosting from './pages/job_posting/EditJobPosting';
 
+// App routes
 function AppRoutes() {
     return (
             <Routes>

@@ -5,6 +5,8 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 
+
+// Contact page
 function Contact() {
     const { isLoading } = AuthCheck();
 
@@ -16,7 +18,7 @@ function Contact() {
         <>
             <PageTitle title="CareNest - Επικοινωνία" />
             <Breadcrumbs />
-            <ContactBox />
+            <ContactBox />  {/* Contact form - in separate file bc its used also in HomePage */}
         </>
     );
 }

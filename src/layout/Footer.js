@@ -8,6 +8,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import './layout.css';
 
+// Footer component
 function Footer() {
     const location = useLocation();
     const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile' || location.pathname === '/profile/edit-profile';

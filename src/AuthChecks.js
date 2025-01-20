@@ -4,6 +4,12 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from './firebase';
 
+// Check if the user is authenticated/authenticated + return user data
+// loginRequired: Redirect to login page if user is not authenticated
+// logoutRequired: Redirect to home page if user is authenticated and the page is for logged out users
+// createProfilePage: Redirect to create profile page if user is authenticated and profile is not created
+// role: Redirect to 404 page if user role is not the same as the role passed
+
 export function useAuthCheck(loginRequired = false, logoutRequired = false, createProfilePage = false, role = '') {
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);

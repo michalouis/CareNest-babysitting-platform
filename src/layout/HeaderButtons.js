@@ -99,9 +99,9 @@ function LoginButton() {
     );
 }
 
-// Menu Button (shows only if user logged in)
+// Menu Button to open drawer (shows only if user logged in)
 function MenuButton() {
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);    // Drawer state
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true);
@@ -142,13 +142,14 @@ function HeaderButtons() {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            setIsLoggedIn(!!user);  // !! converts user to boolean
+            setIsLoggedIn(!!user);  // !! converts user's existance by turning it to boolean
             setIsLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
+    // Show loading skeleton while checking if user is logged in
     if (isLoading) {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -161,13 +162,13 @@ function HeaderButtons() {
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {isLoggedIn ? (
+            {isLoggedIn ? (   // Show menu, faq and messages buttons if user logged in
                 <>
                     <FaqButton />
                     <MessagesButton />
                     <MenuButton />
                 </>
-            ) : (
+            ) : (   // Show login button if user not logged in
                 <>
                     <FaqButton />
                     <LoginButton />

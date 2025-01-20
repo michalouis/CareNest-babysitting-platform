@@ -73,21 +73,32 @@ function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
 /////////////// FLATTEN FUNCTIONS ///////////////
 ///// (to pass the data as url parameters) /////
 
+// Function to flatten the timetable object into a single-level object
 function FlattenTimetable(timetable) {
+    // Initialize an empty object to store the flattened timetable
     const flatTimetable = {};
+    // Iterate over each day in the timetable
     Object.keys(timetable).forEach(day => {
+        // Iterate over each time period for the current day
         timetable[day].forEach(time => {
+            // Create a key in the format 'timetable_day_time' and set its value to true
             flatTimetable[`timetable_${day}_${time}`] = true;
         });
     });
+    // Return the flattened timetable object
     return flatTimetable;
 }
 
+// Function to flatten the skills object with a given prefix
 function FlattenSkills(obj, prefix) {
+    // Initialize an empty object to store the flattened skills
     const flatObject = {};
+    // Iterate over each key in the skills object
     Object.keys(obj).forEach(key => {
+        // Create a new key in the format 'prefix_key' and set its value to the original value
         flatObject[`${prefix}_${key}`] = obj[key];
     });
+    // Return the flattened skills object
     return flatObject;
 }
 
@@ -287,7 +298,9 @@ const validateTimeTable = ({ timeTable, workTime }) => {
     return { hasError: invalid, message: errorMessage };
 };
 
+// Timetable (cells are buttons, can be clicked to select/deselect)
 function FormTimeTable({ formData, setFormData, errors }) {
+    // Handle cell click
     const handleCellClick = (day, time) => {
         setFormData((prevFormData) => {
             const newTimetable = { ...prevFormData.timeTable };
@@ -319,7 +332,7 @@ function FormTimeTable({ formData, setFormData, errors }) {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            {daysOfWeek.map((day) => (
+                            {daysOfWeek.map((day) => (  // Render the days of the week
                                 <TableCell
                                     key={day}
                                     align="center"
@@ -334,7 +347,7 @@ function FormTimeTable({ formData, setFormData, errors }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {timePeriods.map((time) => (
+                        {timePeriods.map((time) => (    // Render the time periods + 7 cells for each day
                             <TableRow key={time}>
                                 <TableCell 
                                     component="th"
@@ -347,7 +360,7 @@ function FormTimeTable({ formData, setFormData, errors }) {
                                     }}>
                                         {time}
                                     </TableCell>
-                                {daysOfWeek.map((day) => (
+                                {daysOfWeek.map((day) => (  // green color selected, grey color unselected
                                     <TableCell key={day} align="center" sx={{ padding: '5px' }}>
                                         <Button
                                             sx={{
@@ -361,7 +374,6 @@ function FormTimeTable({ formData, setFormData, errors }) {
                                                 margin: '1px',
                                             }}
                                             onClick={() => handleCellClick(day, time)}
-                                            // disabled={!editMode}
                                         >
                                         </Button>
                                     </TableCell>
@@ -371,7 +383,7 @@ function FormTimeTable({ formData, setFormData, errors }) {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {errors.timeTable.hasError && (
+            {errors.timeTable.hasError && ( // make border red if there is error
                 <p style={{ color: 'var(--clr-error)', fontSize: '1.2rem'}}>
                     {errors.timeTable.message}
                 </p>

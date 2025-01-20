@@ -9,6 +9,7 @@ import PageTitle from '../../PageTitle';
 
 import '../../style.css';
 
+// EditProfile page
 function EditProfile() {
     const { userData, isLoading } = AuthCheck( true );
 
@@ -29,8 +30,9 @@ function EditProfile() {
                 alignItems: 'center',
                 marginTop: '2rem'
             }}>
-                {userData.role === 'parent' ? (
-                    <ProfileFormParent userData={userData} />
+                {/* Use profile forms from signup to edit data */}
+                {userData.role === 'parent' ? ( 
+                    <ProfileFormParent userData={userData} />   
                 ) : (
                     <ProfileFormNanny userData={userData} />
                 )}

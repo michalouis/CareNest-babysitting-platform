@@ -10,8 +10,10 @@ import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
+// Nanny Profile Creation Form
 function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
-    
+    // if userData is passed function is used for editing profile,
+    // else for creating profile
     const [formData, setFormData] = useState(userData ? {
         profilePhoto: userData.profilePhoto,
         firstName: userData.firstName,
@@ -96,7 +98,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     
     /////////////// DEGREES, CERTIFICATES, RECOMMENDATIONS ///////////////
     
-    // ADD
+    // ADD (up to 3)
     const addDegree = () => {
         if (formData.degrees.length < 3) {
             setFormData((prevFormData) => ({
@@ -254,7 +256,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     
         ///// Validate degrees /////
         const newDegreeErrors = formData.degrees.map((degree) => {
-            if (!degree.degreeLevel || !degree.degreeTitle || !degree.degreeFile) {
+            if (!degree.degreeLevel || !degree.degreeTitle || !degree.degreeFile) {   // if any of the fields is empty
                
                 return { error: true };
             }
@@ -276,7 +278,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
 
         ///// Validate Certificates /////
         const newCertificateErrors = formData.certificates.map((certificate) => {
-            if (!certificate.certificateTitle || !certificate.certificateFile) {
+            if (!certificate.certificateTitle || !certificate.certificateFile) {    // if any of the fields is empty
                
                 return { error: true };
             }
@@ -298,7 +300,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
 
         ///// Validate Recommendations /////
         const newRecommendationErrors = formData.recommendations.map((recommendation) => {
-            if (!recommendation.recommendationTitle || !recommendation.recommendationFile) {
+            if (!recommendation.recommendationTitle || !recommendation.recommendationFile) {    // if any of the fields is empty
                
                 return { error: true };
             }
@@ -719,6 +721,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 <MenuItem value="36+">36+ μήνες</MenuItem>
             </TextField>
 
+            {/* Use map to show degrees(degree level(dropdown), degree title(text), degree file(file upload) */}
             <h2>Σπουδές</h2>
             <p style={{color: 'var(--clr-grey)'}}>Αν έχετε σπουδάσει ανεβάστε έως και 3 πτυχία.</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
@@ -797,6 +800,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     </Box>
                 ))}
             </Box>
+            {/* Button to add more degrees (up to 3) */}
             {formData.degrees.length < 3 && (
                 <Button
                     variant="contained"
@@ -814,6 +818,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 </Button>
             )}
 
+            {/* The same as the degree, but no dropdown menu */}
             <h2>Πιστοποιητικά</h2>
             <p style={{color: 'var(--clr-grey)'}}>Μπορείτε να ανεβάσετε έως 3 πιστοποιητικά (π.χ. σεμινάρια, πιστοποιητικό ξένης γλώσσας)</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
@@ -878,6 +883,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     </Box>
                 ))}
             </Box>
+            {/* Button to add more certificates (up to 3) */}
             {formData.certificates.length < 3 && (
                 <Button
                     variant="contained"
@@ -895,6 +901,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 </Button>
             )}
 
+            {/* The same as the degree, but no dropdown menu */}
             <h2>Συστάσεις</h2>
             <p style={{color: 'var(--clr-grey)'}}>Μπορείτε να ανεβάσετε έως 3 συστάσεις.</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
@@ -959,6 +966,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     </Box>
                 ))}
             </Box>
+            {/* Button to add more recmmendation (up to 3) */}
             {formData.recommendations.length < 3 && (
                 <Button
                     variant="contained"
@@ -976,6 +984,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 </Button>
             )}
 
+            {/* Languages, Music - checkboxes */}
             <h2>Δεξιότητες</h2>
             <h3 style={{fontWeight: '400'}}><u>Ξένες Γλώσσες</u></h3>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>

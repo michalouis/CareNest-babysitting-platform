@@ -13,6 +13,7 @@ const months = [
 const hours = ['06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
 const minutes = ['00', '15', '30', '45'];
 
+// Component to create a meeting
 function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLastName, nannyFirstName, nannyLastName }) {
     // State variables for the form fields
     const [day, setDay] = useState('');
@@ -45,6 +46,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
         const selectedDate = new Date(year, month, day, hour, minute);
         const currentDate = new Date();
 
+        // check if the selected day is valid
         if (!day || day < 1 || day > 31) {
             setDayError(true);
             isValid = false;
@@ -59,6 +61,7 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
             setMonthError(false);
         }
 
+        // check if year if valid
         if (!year || year < currentYear || year < 2025) {
             setYearError(true);
             isValid = false;

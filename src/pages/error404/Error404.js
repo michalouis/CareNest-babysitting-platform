@@ -5,6 +5,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 
+// Error 404 page
 function Error404() {
     const { isLoading } = AuthCheck();
 

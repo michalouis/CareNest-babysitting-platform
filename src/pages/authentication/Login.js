@@ -17,7 +17,7 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     
-    const { isLoading } = AuthCheck( false, true );
+    const { isLoading } = AuthCheck( false, true ); // user should not be logged in to access this page
 
     if (isLoading) {
         return <Loading />;

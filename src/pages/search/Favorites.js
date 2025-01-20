@@ -9,6 +9,7 @@ import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { ResultsItem } from './ResultsComponents';
 import { onAuthStateChanged } from 'firebase/auth';
 
+// Favorites page
 export default function Favorites() {
     const { isLoading } = AuthCheck(true, false, false, 'parent');
     const [favorites, setFavorites] = useState([]);
@@ -17,6 +18,7 @@ export default function Favorites() {
     const [page, setPage] = useState(1);
     const itemsPerPage = 6;
 
+    // Fetch favorites of user
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user) => {
             if (user) {
@@ -67,6 +69,7 @@ export default function Favorites() {
         setPage(value);
     };
 
+    // Paginate the favorites
     const paginatedFavorites = favorites.slice((page - 1) * itemsPerPage, page * itemsPerPage);
     const totalPages = Math.ceil(favorites.length / itemsPerPage);
 

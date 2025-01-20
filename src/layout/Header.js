@@ -7,7 +7,7 @@ import { LogoButton, HeaderButtons } from "./HeaderButtons";
 function Header() {
     const location = useLocation();
 
-    // Different header for the login, signup and profile creation pages (forces user to complete their profile)
+    // Different header for the login, signup and profile creation pages (signup/login header not interactive)
     const showLogoOnly = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile' || location.pathname === '/profile/edit-profile';
 
     if (showLogoOnly) {

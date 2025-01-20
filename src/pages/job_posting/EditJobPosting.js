@@ -18,7 +18,7 @@ function EditJobPosting() {
             setSaved(!!userData.jobPostingData);    // !! to turn to boolean
             setInitiatedSave(true);
         }
-    }, [userData]);
+    }, [userData, isLoading, initiatedSave]);
 
     if (isLoading) {
         return <Loading />;
@@ -31,14 +31,14 @@ function EditJobPosting() {
             <PageTitle title="CareNest - Δημιουργία Αγγελίας" />
             <Breadcrumbs showPopup={!saved}/>
             <h1 style={{ margin: '1rem' }}>Δημιουργία Αγγελίας</h1>
-            {userData && userData.jobPosted ? (
+            {userData && userData.jobPosted ? ( // if job posted, show message
                 <>         
                     <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center' }}>
                         Έχετε ήδη υποβάλει την αγγελία σας. Επιστρέψτε στην ενότητα Αγγελία Εργασίας για να τη δείτε.
                     </p>
                     <img src='/question-mark.png' alt="Question Mark" style={{ width: '500px', margin: '1rem auto', alignSelf: 'center' }} />
                 </>
-            ) : (
+            ) : (   // if job not posted, show form
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'center'

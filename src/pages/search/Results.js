@@ -13,28 +13,50 @@ import Loading from '../../layout/Loading';
 
 /////////////// PARSE FUNCTIONS ///////////////
 
+// turn the timetable  back to normal
 const parseTimetable = (params) => {
+    // Initialize an empty object to store the parsed timetable
     const timetable = {};
+
+    // Iterate over each key in the params object
     Object.keys(params).forEach(key => {
+        // Check if the key starts with 'timetable_'
         if (key.startsWith('timetable_')) {
+            // Split the key into parts to extract the day and time
             const [_, day, time] = key.split('_');
+            
+            // If the day is not already in the timetable, initialize it with an empty array
             if (!timetable[day]) {
                 timetable[day] = [];
             }
+            
+            // Push the time into the array for the corresponding day
             timetable[day].push(time);
         }
     });
+
+    // Return the parsed timetable object
     return timetable;
 };
 
+// turn the skills back to normal
 const parseSkills = (params, prefix) => {
+    // Initialize an empty object to store the parsed skills
     const skills = {};
+
+    // Iterate over each key in the params object
     Object.keys(params).forEach(key => {
+        // Check if the key starts with the given prefix
         if (key.startsWith(prefix)) {
+            // Split the key to extract the skill name
             const skill = key.split('_')[1];
+            
+            // Set the skill in the skills object with a boolean value based on the params value
             skills[skill] = params[key] === 'true';
         }
     });
+
+    // Return the parsed skills object
     return skills;
 };
 
@@ -116,20 +138,24 @@ function Results() {
         setOpenDialog(false);
     };
 
+    // Handle the new search submit
     const handleNewSearchSubmit = () => {
+        // Validate the filter data
         if (!ValidateFilterData(newFilterData, errors, setErrors, setSnackbarMessage)) return;
 
+        // Flatten the timetable, languages, and music data
         const flatTimetable = FlattenTimetable(newFilterData.timeTable);
         const flatLanguages = FlattenSkills(newFilterData.languages, 'languages');
         const flatMusic = FlattenSkills(newFilterData.music, 'music');
 
+        // Create the query parameters
         const queryParams = new URLSearchParams({
             ...newFilterData,
             ...flatTimetable,
             ...flatLanguages,
             ...flatMusic
         }).toString();
-        window.location.href = `/search/results?${queryParams}`;
+        window.location.href = `/search/results?${queryParams}`;    // Redirect to the results page
     };
 
     if (isLoading) {
@@ -140,6 +166,7 @@ function Results() {
         <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
             <DialogTitle><p className='button-text'>Αναζήτηση Νταντάς</p></DialogTitle>
             <DialogContent>
+                {/* Filters from Filters.js */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
                     <h1>Φίλτρα Φύλαξης</h1>
@@ -194,6 +221,7 @@ function Results() {
                     gap: '0.5rem',
                     alignItems: 'center',
                 }}>
+                    {/* Opens new search dialog box */}
                     <Button
                         variant="contained"
                         onClick={handleOpenDialog}
@@ -207,6 +235,7 @@ function Results() {
                         <SearchIcon sx={{ fontSize: 35 }} />
                         <p className="big-button-text">Νέα Αναζήτηση</p>
                     </Button>
+                    {/* Go to favorites button */}
                     <Button
                         variant="contained"
                         onClick={() => navigate('/search/favorites')}
@@ -222,8 +251,8 @@ function Results() {
                     </Button>
                 </Box>
             </Box>
-            {renderDialog()}
-            <ResultsContainer filterData={filterData} />
+            {renderDialog()}    {/* New Search Dialog box */}
+            <ResultsContainer filterData={filterData} />    {/* Results Container: Shows resutls in pages */}
             <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
         </>
     );

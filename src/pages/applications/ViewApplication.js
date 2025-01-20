@@ -1,15 +1,15 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import Loading from '../../layout/Loading';
 import ApplicationForm from './ApplicationForm';
 
+// View application page
 function ViewApplication() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
-    const location = useLocation();
     const { id } = useParams();
     const applicationId = id;
 
@@ -29,7 +29,7 @@ function ViewApplication() {
                     alignItems: 'center',
                     margin: '1rem'
                 }}>
-                    <ApplicationForm userData={userData} applicationId={applicationId} />
+                    <ApplicationForm userData={userData} applicationId={applicationId} />   {/* Show application form */}
                 </Box>
             )}
         </>

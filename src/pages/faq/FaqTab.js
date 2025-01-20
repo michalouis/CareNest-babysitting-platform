@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import './faq.css';
 
+// FAQ tab to change from parents to nannies FAQs
 function FaqTab({ onTabChange }) {
     const [selectedTab, setSelectedTab] = useState(0);
 

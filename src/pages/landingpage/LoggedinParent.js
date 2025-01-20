@@ -6,6 +6,7 @@ import '../../style.css';
 
 import SearchIcon from '@mui/icons-material/Search';
 
+// LandingPage for parents when they have no active partnership (show search button to find a nanny)
 function NoNannyContent({ userData }) {
 	return (
 		<>
@@ -19,7 +20,8 @@ function NoNannyContent({ userData }) {
 				alignItems: 'flex-start', // Left-align the elements
 				textAlign: { xs: 'center', md: 'left' }, // Center text for small screens, left-align for medium and up
 			}}
-			>
+			>	
+				{/* text */}
 				<h1>
 					Καλησπέρα, <br />{userData.firstName}!
 				</h1>
@@ -29,6 +31,7 @@ function NoNannyContent({ userData }) {
 				<p style={{ fontSize: 'larger' }}>
 					<br />Αναζητήστε το κατάλληλο άτομο που θα φροντίσει με αγάπη και ασφάλεια το παιδί σας.
 				</p>
+				{/* Search Nanny button */}
 				<Button
 					component={Link}
 					to="/search"
@@ -48,6 +51,7 @@ function NoNannyContent({ userData }) {
 					<p className='big-button-text'>Αναζήτηση Νταντάς</p>
 				</Button>
 			</Box>
+			{/* Hero image */}
 			<Box
 				sx={{
 				width: { xs: '100%', md: '50%' }, // Full width for small screens, 50% for medium and up

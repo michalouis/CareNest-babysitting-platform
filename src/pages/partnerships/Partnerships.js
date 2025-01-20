@@ -4,10 +4,10 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box } from '@mui/material';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
-import FilterBox from '../meetings/FilterBox';
-import GenericContainer from '../meetings/GenericContainer';
+import FilterBox from '../../components/FilterBox';
+import GenericContainer from '../../components/GenericContainer';
 import { Card, CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PersonIcon from '@mui/icons-material/Person';
 
+// filter options
 const checkboxOptions = [
     { label: "Ενεργή", value: "active" },
     { label: "Ολοκληρωμένη", value: "completed" }
@@ -26,17 +27,16 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// PartnershipItem component
 function PartnershipItem({ partnership, userData }) {
     const navigate = useNavigate();
 
-    const getPartnershipStateColor = (active) => {
-        return active ? 'var(--clr-darker-green)' : 'var(--clr-grey)';
-    };
-
+    // show partnership info
     return (
         <Card sx={{ marginBottom: '1rem' }}>
             <CardActionArea onClick={() => navigate(`/partnerships/view-partnership/${partnership.partnershipId}`)}>
                 <CardContent>
+                    {/* status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
                         <h2 style={{
@@ -50,28 +50,31 @@ function PartnershipItem({ partnership, userData }) {
                             {partnership.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
                         </h2>
                     </Box>
+                    {/* partner name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>
-                            {userData.role === 'parent' ? 'Νταντά:' : 'Γονέας:'}
+                            {userData.role === 'parent' ? 'Νταντά: ' : 'Γονέας: '}
                         </h2>
                         <p style={{ fontSize: '1.3rem' }}>
                             {userData.role === 'parent' ? partnership.nannyName : partnership.parentName}
                         </p>
                     </Box>
+                    {/* Duration */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[partnership.fromDate.month]} ${partnership.fromDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <InsertInvitationIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[partnership.toDate.month]} ${partnership.toDate.year}`}</p>
                     </Box>
+                    {/* timestamp */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <ReceiptLongIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης:</strong> {new Date(partnership.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης: </strong> {new Date(partnership.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -99,6 +102,7 @@ function Partnerships() {
     const [partnerships, setPartnerships] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // fetch partnerships
     useEffect(() => {
         const fetchPartnerships = async () => {
             try {
@@ -110,6 +114,7 @@ function Partnerships() {
                     const partnershipIds = userData.partnerships || [];
                     const partnershipsData = [];
 
+                    // fetch user's partnerships
                     for (const partnershipId of partnershipIds) {
                         const partnershipDocRef = doc(FIREBASE_DB, 'partnerships', partnershipId);
                         const partnershipDoc = await getDoc(partnershipDocRef);
@@ -123,19 +128,20 @@ function Partnerships() {
                         }
                     }
 
+                    // filter partnerships
                     const filteredPartnerships = partnershipsData.filter(partnership => {
                         const partnershipDate = new Date(partnership.timestamp);
                         const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
                         const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
 
+                        // check if partnership is within date range
                         const isWithinDateRange = (!filters.fromDate.year || partnershipDate >= fromDate) &&
                                                   (!filters.toDate.year || partnershipDate <= toDate);
 
+                        // check if partnership status matches filter
                         let isStatusMatch = false;
-                        if (userData.role === 'parent' || userData.role === 'nanny') {
-                            isStatusMatch = (filters.active && partnership.active) ||
-                                            (filters.completed && !partnership.active);
-                        }
+                        isStatusMatch = (filters.active && partnership.active) ||
+                                        (filters.completed && !partnership.active);
 
                         return isWithinDateRange && isStatusMatch;
                     });
@@ -190,6 +196,7 @@ function Partnerships() {
                             setFilters={setFilters}
                             checkboxOptions={checkboxOptions}
                         />
+                        {/* Container to show results in pages */}
                         <GenericContainer userData={userData} items={partnerships} itemFunction={(item) => <PartnershipItem partnership={item} userData={userData} />} loading={loading} />
                     </Box>
                 </>

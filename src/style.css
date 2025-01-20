@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+/* Fix ResizeObserver loop limit exceeded error (https://stackoverflow.com/questions/75774800/how-to-stop-resizeobserver-loop-limit-exceeded-error-from-appearing-in-react-a) */
+.hide-resize-observer {
+    display: none !important;
+  }
+
 :root {
     /* monochrome */
     --clr-black: #000000;

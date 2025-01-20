@@ -88,7 +88,7 @@ function JobPostingForm({ userData, setSaved }) {
                     ...jobPostingData,
                 });
                     
-                navigate('/job-posting');
+                navigate('/job-posting');   // redirect to job posting page, after submitting job posting
             }
         } catch (error) {
             console.error('Error submitting job posting:', error);
@@ -99,11 +99,13 @@ function JobPostingForm({ userData, setSaved }) {
         }
     };
 
+    // save draft of job posting
     const handleSave = async () => {
         if (!validate()) return;
     
         setLoading(true);
         try {
+            // save to user data
             const user = FIREBASE_AUTH.currentUser;
             if (user) {
                 const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
@@ -115,6 +117,7 @@ function JobPostingForm({ userData, setSaved }) {
                     await setDoc(userDocRef, { jobPostingData });
                 }
     
+                // show success message, turn off edit mode, and scroll to top
                 setEditMode(false);
                 setSaved(true);
                 window.scrollTo(0, 0);
@@ -128,6 +131,7 @@ function JobPostingForm({ userData, setSaved }) {
         }
     };
 
+    // Validate timetable
     const validate = () => {
         const newErrors = {};
         const newSnackbarMessages = [];
@@ -140,16 +144,16 @@ function JobPostingForm({ userData, setSaved }) {
             if (selectedTimes.length > 0) {
                 selectedDays++;
                 newTimetable[day] = selectedTimes;
-                if (jobPostingData.employmentType === 'full-time' && selectedTimes.length < 2) {
+                if (jobPostingData.employmentType === 'full-time' && selectedTimes.length < 2) {    // must select 2 time periods for full-time
                     newErrors.timetable = true;
-                } else if (jobPostingData.employmentType === 'part-time' && selectedTimes.length < 1) {
+                } else if (jobPostingData.employmentType === 'part-time' && selectedTimes.length < 1) {   // must select 1 time period for part-time
                     newErrors.timetable = true;
                 }
             }
         });
     
         // Timetable error messages
-        if (selectedDays < 5) {
+        if (selectedDays < 5) { // must select hours for at least 5 days
             newErrors.timetable = true;
             setTimetableError('Πρέπει να διαλέξετε ώρες για  τουλάχιστον 5 μέρες');
         } else if (newErrors.timetable) {
@@ -354,6 +358,7 @@ function JobPostingForm({ userData, setSaved }) {
             </TableContainer>
             {timetableError && <p style={{ color: 'var(--clr-error)' }}>{timetableError}</p>}
 
+            {/* Save draft, edit and submit buttons */}
             {editMode ? (
                 <Button
                     variant="contained"

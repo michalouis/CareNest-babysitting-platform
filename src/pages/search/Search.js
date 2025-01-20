@@ -27,7 +27,7 @@ function ErrorSnackbar({ snackbarMessage, setSnackbarMessage }) {
     );
 }
 
-// Main component
+// Search Page
 function Search() {
     const { userData, isLoading } = AuthCheck(true, false, false, 'parent');
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -131,6 +131,7 @@ function Search() {
             }}>
                 { userData && (
                     <>
+                        {/* Filters from Filters.js */}
                         <Box sx={{
                             flexGrow: 1,
                             display: 'flex',
@@ -179,6 +180,7 @@ function Search() {
                             gap: '0.5rem',
                             alignItems: 'center'
                         }}>
+                            {/* Submit button */}
                             <Button
                                 variant="contained"
                                 onClick={handleSubmit}
@@ -192,6 +194,7 @@ function Search() {
                                 <SearchIcon sx={{ fontSize: 35 }}/>
                                 <p className="big-button-text">Αναζήτηση</p>
                             </Button>
+                            {/* Favorites Button */}
                             <Button
                                 variant="contained"
                                 onClick={() => navigate('/search/favorites')}
@@ -211,7 +214,7 @@ function Search() {
                 )}
             </Box>
 
-            <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
+            <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} /> {/* Snackbar for errors */}
         </>
     );
 }

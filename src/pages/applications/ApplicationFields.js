@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, TextField, MenuItem, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
-import ClearIcon from '@mui/icons-material/Clear';
 import CheckIcon from '@mui/icons-material/Check';
 
 const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
@@ -12,10 +11,12 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// Validate Application Fields and show error messages
 function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) {
     const newErrors = {};
     const newSnackbarMessages = [];
 
+    // Check if dates are filled and valid
     const fromMonthFilled = formData.fromDate.month !== '';
     const toMonthFilled = formData.toDate.month !== '';
 
@@ -49,15 +50,15 @@ function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) 
         const selectedTimes = timePeriods.filter((time) => formData.timetable[day]?.includes(time));
         if (selectedTimes.length > 0) {
             selectedDays++;
-            if (formData.employmentType === 'part-time' && selectedTimes.length !== 1) {
+            if (formData.employmentType === 'part-time' && selectedTimes.length !== 1) {    // Part-time: 4 hours per day (1 time period)
                 timetableError = true;
-            } else if (formData.employmentType === 'full-time' && selectedTimes.length !== 2) {
+            } else if (formData.employmentType === 'full-time' && selectedTimes.length !== 2) {   // Full-time: 8 hours per day (2 time periods)
                 timetableError = true;
             }
         }
     });
 
-    if (selectedDays !== 5) {
+    if (selectedDays !== 5) {   // User must pick 5 days
         setSnackbarSeverity('error');
         newErrors.timetable = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
         newSnackbarMessages.push('Χρονοδιάγραμμα');
@@ -79,6 +80,9 @@ function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) 
     return Object.keys(newErrors).length === 0;
 }
 
+////// Application Fields //////
+
+// Display Nanny's Name (cannot be edited, fetched from userData)
 function FormNannyName({ formData }) {
     return (
         <TextField
@@ -92,6 +96,7 @@ function FormNannyName({ formData }) {
     );
 }
 
+// Display Child's Age Group (cannot be edited, fetched from userData)
 function FormChildAgeGroup({ formData }) {
     return (
         <TextField
@@ -105,6 +110,7 @@ function FormChildAgeGroup({ formData }) {
     );
 }
 
+// Display Employment Type (cannot be edited, fetched from nanny's job posting)
 function FormEmploymentType({ formData }) {
     const employmentTypeText = formData.employmentType === 'part-time' 
         ? 'Μερική Απασχόληση (4 ώρες)' 
@@ -122,6 +128,7 @@ function FormEmploymentType({ formData }) {
     );
 }
 
+// Display Babysitting Place (cannot be edited, fetched from nanny's job posting)
 function FormBabysittingPlace({ formData }) {
     const babysittingPlaceText = formData.babysittingPlace === 'parents-home'
         ? 'Σπίτι Γονέα'
@@ -141,6 +148,8 @@ function FormBabysittingPlace({ formData }) {
     );
 }
 
+// Date Range (from - to) fields
+// Month - dropdown, Year - textfield
 function FormDateRange({ formData, setFormData, errors, editMode }) {
     const handleDateChange = (field, type, value) => {
         setFormData((prevFormData) => ({
@@ -212,7 +221,9 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
     );
 }
 
+// Timetable (cells are buttons, can be clicked to select/deselect)
 function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors }) {
+    // Handle cell click
     const handleCellClick = (day, time) => {
         setFormData((prevFormData) => {
             const newTimetable = { ...prevFormData.timetable };
@@ -243,7 +254,7 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        {daysOfWeek.map((day) => (
+                        {daysOfWeek.map((day) => (  // Display days of the week
                             <TableCell
                                 key={day}
                                 align="center"
@@ -258,7 +269,7 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {timePeriods.map((time) => (
+                    {timePeriods.map((time) => (    // Display time periods + buttons
                         <TableRow key={time}>
                             <TableCell 
                                 component="th"
@@ -272,9 +283,12 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors
                                     {time}
                                 </TableCell>
                             {daysOfWeek.map((day) => (
+                                // If time period not available make it grey
+                                // If time period available by nanny and user make it green
+                                // If time period selected by paretn add a check on it
                                 <TableCell key={day} align="center" sx={{ padding: '5px' }}>
                                     <Button
-                                        sx={{
+                                            sx={{
                                             backgroundColor: nannyTimetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
                                             '&:hover': {
                                                 backgroundColor: nannyTimetable[day]?.includes(time) ? 'var(--clr-dark-green)' : 'var(--clr-dark-grey)',
@@ -304,75 +318,4 @@ function FormTimeTable({ formData, setFormData, nannyTimetable, editMode, errors
     );
 }
 
-function VisualizeTimeTable({ formData }) {
-    return (
-        <TableContainer
-            component={Paper}
-            sx={{
-                margin: '1rem 0',
-                borderRadius: '1rem',
-                boxShadow: '3',
-                backgroundColor: "#fafafa",
-            }}
-        >
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        {daysOfWeek.map((day) => (
-                            <TableCell
-                                key={day}
-                                align="center"
-                                sx={{ 
-                                    padding: '5px',
-                                    fontWeight: 'bold',
-                                    fontSize: '1.2rem' 
-                                }}>
-                                {day}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {timePeriods.map((time) => (
-                        <TableRow key={time}>
-                            <TableCell 
-                                component="th"
-                                scope="row" 
-                                sx={{ 
-                                    padding: '5px', 
-                                    fontWeight: 'bold',
-                                    fontSize: '1.25rem', 
-                                    width: '5px'
-                                }}>
-                                    {time}
-                                </TableCell>
-                            {daysOfWeek.map((day) => (
-                                <TableCell key={day} align="center" sx={{ padding: '5px' }}>
-                                    <Button
-                                        sx={{
-                                            backgroundColor: formData.timetable[day]?.includes(time) ? 'var(--clr-brat-green)' : 'var(--clr-grey)',
-                                            '&:hover': {
-                                                backgroundColor: formData.timetable[day]?.includes(time) ? 'var(--clr-dark-green)' : 'var(--clr-dark-grey)',
-                                            },
-                                            width: '100px',
-                                            height: '40px',
-                                            borderRadius: '0.5rem',
-                                            margin: '1px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                        disabled
-                                    />
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-}
-
-export { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, VisualizeTimeTable, validate };
+export { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, validate };

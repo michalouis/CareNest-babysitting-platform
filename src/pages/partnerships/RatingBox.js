@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Rating, Divider } from '@mui/material';
+import { Box, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Rating } from '@mui/material';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 
 import GradeIcon from '@mui/icons-material/Grade';
 
+// Display the rating of a partnership and allow the parent to rate the nanny
 const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => {
     const [ratingDialogOpen, setRatingDialogOpen] = useState(false);
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -74,6 +75,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
         }
     };
 
+    // Render the rating box for the parent (beofre the partnership is finished)
     const renderParentRating = () => (
         <>
             <Button 
@@ -85,6 +87,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
             >
                 <p className='big-button-text'>Προσθήκη Αξιολόγησης</p>
             </Button>
+            {/* inform user */}
             <p style={{ fontSize: '1.3rem' }}>
                 {lastPaymentStatus === 'verified' 
                     ? 'Για να ολοκληρώσετε την συνεργασία σας αξιολογήστε πως ήταν η εμπειρία σας με τη νταντά.' 
@@ -93,6 +96,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
         </>
     );
 
+    // Render the rating box for the nanny (before the partnership is finished)
     const renderNannyRating = () => (
         <p style={{ fontSize: '1.3rem' }}>
             Η αξιολογηση του γονέα θα εμφανιστεί εδω πέρα στο τέλος της συνεργασίας σας.
@@ -113,7 +117,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
         }}>
             <h1>Αξιολόγηση</h1>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: '1rem', maxHeight: '250px' }}>
-                {rating ? (
+                {rating ? ( // after rating is submitted
                     <>
                         <Rating value={rating.score} precision={0.5} style={{ fontSize: '3rem'}} readOnly />
                         <h3 style={{ alignSelf: 'flex-start', margin: '0 0 0.5rem 1rem', color: 'var(--clr-grey)' }}>Σχόλιο</h3>
@@ -123,10 +127,12 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
                             </p>
                         </Box>
                     </>
-                ) : (
+                ) : (   // before rating is submitted
                     userData.role === 'parent' ? renderParentRating() : renderNannyRating()
                 )}
             </Box>
+
+            {/* Rating Dialog Box */}
             <Dialog open={ratingDialogOpen} onClose={handleRatingDialogClose} PaperProps={{ style: { resize: 'none' } }}>
                 <DialogTitle><strong>Προσθήκη Αξιολόγησης</strong></DialogTitle>
                 <DialogContent>

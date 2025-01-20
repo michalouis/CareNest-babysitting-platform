@@ -11,6 +11,7 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// Messages for the different payment statuses for parents
 const paymentStatusMessagesParent = {
     upcoming: 'Ολοκληρώστε πρώτα τη πληρωμή του προηγούμενου μήνα.',
     current: 'Όταν ολοκληρωθεί ο μήνας πατήστε πληρωμή για να στείλετε την ανταμοιβή στη νταντά σας.',
@@ -18,6 +19,7 @@ const paymentStatusMessagesParent = {
     verified: 'Ολοκληρωμένη - Η πληρωμή επιβεβαιώθηκε από τη νταντά.',
 };
 
+// Messages for the different payment statuses for nannies
 const paymentStatusMessagesNanny = {
     upcoming: 'Αναμένεται η ολοκλήρωση της πληρωμής του προηγούμενου μήνα.',
     current: 'Η πληρωμή σας θα εμφανιστεί εδώ όταν σας σταλεί από τον γονιό.',
@@ -33,20 +35,24 @@ const getMonthYearString = (date) => {
     );
 };
 
+// Function to generate the payment boxes for a partnership (for parents)
 const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
     const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
 
+    // for each month in the partnership, generate a payment box (date, status, pay/verify button)
     for (let i = 0; i < partnershipData.payments.length; i++) {
+        // Get the payment status message for each payment
         const paymentStatus = paymentStatusMessagesParent[partnershipData.payments[i]] || 'Ολοκληρώστε τη πληρωμή του προηγούμενου μήνα';
 
         paymentBoxes.push(
             <>
                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
-                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>
-                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p>
-                    <Button 
+                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>   { /* Display the month and year of the payment */ }
+                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p>  { /* Display the payment status message */ }
+                    { /* Display the payment/verification button */ }
+                    <Button
                         variant="contained" 
                         sx={{
                             backgroundColor: partnershipData.payments[i] === 'current' ? 'var(--clr-blue-light)' : 'var(--clr-violet)',
@@ -70,20 +76,24 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
     return paymentBoxes;
 };
 
+// Function to generate the payment boxes for a partnership (for nannies)
 const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) => {
     const fromDate = new Date(partnershipData.fromDate.year, partnershipData.fromDate.month);
     const paymentBoxes = [];
     const currentDate = new Date(fromDate);
 
+    // for each month in the partnership, generate a payment box (date, status, pay/verify button)
     for (let i = 0; i < partnershipData.payments.length; i++) {
+        // Get the payment status message for each payment
         const paymentStatus = paymentStatusMessagesNanny[partnershipData.payments[i]] || 'Ολοκληρώστε τη πληρωμή του προηγούμενου μήνα';
 
         paymentBoxes.push(
             <>
                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
-                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>
-                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p>
-                    <Button 
+                    <p style={{ fontSize: '1.2rem', width: '25%', fontWeight: 'bold', wordWrap: 'break-word' }}>{getMonthYearString(currentDate)}</p>   { /* Display the month and year of the payment */ }
+                    <p style={{ fontSize: '1.2rem', width: '55%' }}>{paymentStatus}</p> { /* Display the payment status message */ }
+                    { /* Display the payment/verification button */ }
+                    <Button
                         variant="contained" 
                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }} 
                         disabled={partnershipData.payments[i] === 'upcoming' || partnershipData.payments[i] === 'current'}
@@ -110,6 +120,7 @@ const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) =
     return paymentBoxes;
 };
 
+// Component that displays the payments for a partnership
 const PaymentsBox = ({ partnershipData, userData }) => {
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
     const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(null);
@@ -129,12 +140,14 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         setSelectedPaymentIndex(null);
     };
 
+    // Function to handle the payment confirmation
     const handleConfirmPayment = async () => {
         if (selectedPaymentIndex !== null) {
             const updatedPayments = [...partnershipData.payments];
             updatedPayments[selectedPaymentIndex] = 'paid';
 
-            try {
+            try { 
+                // Update the payments array in the partnership document
                 await updateDoc(doc(FIREBASE_DB, 'partnerships', partnershipData.partnershipId), {
                     payments: updatedPayments
                 });
@@ -145,6 +158,7 @@ const PaymentsBox = ({ partnershipData, userData }) => {
         }
     };
 
+    // Function to handle the payment verification (for nannies)
     const handleConfirmVerification = async () => {
         if (selectedPaymentIndex !== null) {
             const updatedPayments = [...partnershipData.payments];
@@ -180,6 +194,8 @@ const PaymentsBox = ({ partnershipData, userData }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem', maxHeight: '800px', overflowY: 'auto' }}>
                 {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData, handlePaymentVerification)}
             </Box>
+
+            {/* Confirm Dialog */}
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
                 <DialogTitle><strong>Επιβεβαίωση Πληρωμής</strong></DialogTitle>
                 <DialogContent>

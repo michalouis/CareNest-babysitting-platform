@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Snackbar, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getDoc, doc, updateDoc, addDoc, collection, arrayUnion } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import Loading from '../../layout/Loading';
-import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, VisualizeTimeTable, validate } from './ApplicationFields';
+import { FormNannyName, FormChildAgeGroup, FormEmploymentType, FormBabysittingPlace, FormDateRange, FormTimeTable, validate } from './ApplicationFields';
+import VisualizeTimeTable from '../../components/VisualizeTimeTable';
 
+// show last edit time in greek
 const LastModification = ({ timestamp }) => {
     if (!timestamp) return null;
 
@@ -18,9 +20,9 @@ const LastModification = ({ timestamp }) => {
     );
 };
 
+// Pass nannyId if making a new application, or applicationId if editing an existing application
 function ApplicationForm({ userData, nannyId, applicationId }) {
     const [editMode, setEditMode] = useState(!!nannyId);
-    const navigate = useNavigate();
     const [nannyData, setNannyData] = useState(null);
     const [applicationData, setApplicationData] = useState({
         applicationId: '',
@@ -99,7 +101,9 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
         }
     }, [nannyId, applicationId, userData]);
 
+    // save draft application
     const handleSave = async () => {
+        // Validate application data
         const isValid = validate(applicationData, setErrors, setSnackbarMessage, setSnackbarSeverity);
         if (!isValid) return;
 
@@ -110,7 +114,6 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             if (user) {
                 const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
                 const userDoc = await getDoc(userDocRef);
-                console.log('Application Data:', applicationData);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     applicationData.applicationId = applicationData.applicationId || Date.now().toString(); // Use existing applicationId or generate a new one
@@ -122,12 +125,14 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                         ? [...userData.applications.filter(app => app.applicationId !== applicationData.applicationId), applicationData]
                         : [applicationData];
                 
+                    // update application data in Firebase
                     await updateDoc(userDocRef, { applications: updatedApplications });
-                    console.log('Temporary Save:', applicationData);
-                    setEditMode(false);
+
+                    // turn off edit mode, show success message and update local applicationData to reflect the changes
+                    setEditMode(false); 
                     setSnackbarMessage('Η αίτηση σας αποθηκεύτηκε προσωρινά με επιτυχία! Μπορείτε να τη βρείτε στην ενότητα \'Αιτήσεις\'. Για να την οριστικοποιήστε πατήστε υποβολή.');
                     setSnackbarSeverity('success');
-                    window.scrollTo(0, 0);
+                    window.scrollTo(0, 0);  // scroll to top of the page
                 } else {
                     console.error('No such user:', user.uid);
                 }
@@ -141,6 +146,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
         }
     };
 
+    // Validate application data, show confirmation dialog and submit application
     const handleSubmit = async () => {
         const isValid = validate(applicationData, setErrors, setSnackbarMessage);
         if (!isValid) return;
@@ -148,6 +154,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
         setOpenConfirmDialog(true);
     };
 
+    // Submit application
     const handleConfirmSubmit = async () => {
         setOpenConfirmDialog(false);
         setIsSaving(true);
@@ -162,7 +169,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                     const updatedApplicationData = {
                         ...applicationData,
                         submitted: true,
-                        timestamp: new Date().toISOString(),
+                        timestamp: new Date().toISOString(),    // update timestamp to reflect the submission time
                     };
 
                     const updatedApplications = userData.applications.map(app => 
@@ -224,6 +231,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
 
     return (
         <>
+            {/* Alerts based on application status */}
             {applicationData.submitted && (
                 <Alert severity="success" sx={{ marginBottom: '1rem' }}>
                     Οριστικοποιήσατε την αίτηση σας με επιτυχία. Το συμφωνητικό που πρέπει να υπογράψετε έχει εκδοθεί και βρίσκεται στην ενότητα <Link to="/contracts" style={{ color: 'inherit'}}>'Συμφωνητικά'</Link>.
@@ -233,7 +241,8 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                 <Alert severity="warning" sx={{ marginBottom: '1rem' }}>
                     Η αίτηση σας δεν έχει οριστικοποιηθεί πατήστε 'Υποβολή' για να εκδοθεί το συφμωνητικό της.
                 </Alert>
-            )} 
+            )}
+            {/* Application form - get fields from ApplicationFields.js */}
             <Box sx={{
                 width: '90%',
                 maxWidth: '1080px',
@@ -279,13 +288,14 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                 {!applicationData.submitted ? (
                     <FormTimeTable formData={applicationData} setFormData={setApplicationData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
                 ) : (
-                    <VisualizeTimeTable formData={applicationData} />
+                    <VisualizeTimeTable formData={applicationData} />   // If submitted, show finalized timetable (no check icons)
                 )}
                 {errors.timetable && (
                     <p style={{ color: 'var(--clr-error)', fontSize: '1.2rem' }}>
                         {errors.timetable}
                     </p>
                 )}
+                {/* Edit, Save, Submit Buttons - don't show them if application submitted */}
                 {!applicationData.submitted && editMode && (
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <Button
@@ -322,6 +332,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                     </Box>
                 )}
             </Box>
+            {/* Snackbar and Confirmation Dialog */}
             <Snackbar
                 open={!!snackbarMessage}
                 autoHideDuration={6000}

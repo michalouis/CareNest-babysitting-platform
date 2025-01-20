@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField } from '@mui/material';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Box, Button } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { renderNannyData, renderParentData } from '../profile/Profile';
+import { renderNonSensitiveCommonData, renderNannyData, renderParentData } from '../../components/ProfileComponents';
 import ViewJobPosting from '../job_posting/ViewJobPosting';
 import MakeMeetingDialog from '../meetings/MakeMeetingDialog';
 
@@ -16,36 +16,6 @@ import GradeIcon from '@mui/icons-material/Grade';
 import MessageIcon from '@mui/icons-material/Message';
 import EventIcon from '@mui/icons-material/Event';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-
-// data common to parents/nannies
-function renderCommonData(userData) {
-    return (
-        <>
-            {/* Personal Data */}
-            <h2>Πληροφορίες</h2>
-            <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                <TextField
-                    label="Φύλο"
-                    value={
-                        userData.gender === 'Male' ? 'Άντρας' :
-                        userData.gender === 'Female' ? 'Γυναίκα' :
-                        userData.gender === 'Other' ? 'Άλλο' :
-                        ''
-                    }
-                    slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
-                    fullWidth
-                    variant="outlined"
-                />
-                <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-            </Box>
-
-            <h2>Σχετικά με μένα</h2>
-            <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
-        </>
-    );
-}
 
 // Render the profile picture & score
 const ProfileOverview = (userData) => (
@@ -96,7 +66,6 @@ const ProfileOverview = (userData) => (
 
 export default function ViewProfile() {
     const { userData, isLoading } = AuthCheck(true, false, false);
-    const location = useLocation();
     const navigate = useNavigate();
     const { id } = useParams();
     const profileId = id;
@@ -218,7 +187,7 @@ export default function ViewProfile() {
                         boxShadow: '2',
                         marginBottom: '1rem',
                     }}>
-                        {renderCommonData(profileData)}
+                        {renderNonSensitiveCommonData(profileData)}
                         {profileData.role === 'nanny' ? renderNannyData(profileData) : renderParentData(profileData)}
                     </Box>
                     {profileData.role === 'nanny' && (

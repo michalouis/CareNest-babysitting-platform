@@ -4,6 +4,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import '../../style.css';
 
+// Contact form component
 function ContactBox() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ function ContactBox() {
         return re.test(String(email).toLowerCase());
     };
 
+    // Check if all fields are filled and email is valid, then send the message
     const handleSubmit = async () => {
         const newErrors = {};
         if (!name) newErrors.name = 'You have to fill the text field';
@@ -37,7 +39,7 @@ function ContactBox() {
                     message,
                     timestamp: new Date(),  // date it was sent
                 });
-                setOpen(true);
+                setOpen(true);  // show success popup
                 setName('');
                 setEmail('');
                 setMessage('');

@@ -4,10 +4,10 @@ import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
 import { Box } from '@mui/material';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
-import FilterBox from '../meetings/FilterBox';
-import GenericContainer from '../meetings/GenericContainer';
+import FilterBox from '../../components/FilterBox';
+import GenericContainer from '../../components/GenericContainer';
 import { Card, CardActionArea, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PersonIcon from '@mui/icons-material/Person';
 
+// filter options
 const checkboxOptions = [
     { label: "Απαιτεί Υπογραφή", value: "needSignature" },
     { label: "Απαιτεί Υπογραφή Συνεργάτη", value: "needSignaturePartner" },
@@ -27,18 +28,21 @@ const months = [
     'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
 ];
 
+// Contract item component
 function ContractItem({ contract, userData }) {
     const navigate = useNavigate();
 
-    const getContractStateColor = (signedDocParent, signedDocNanny) => {
+    const getContractStateColor = (signedDocParent, signedDocNanny) => {    // returns the color of the contract state
         if (signedDocParent && signedDocNanny) return 'var(--clr-darker-green)';
         return 'var(--clr-orange)';
     };
 
+    // show some info about the contract
     return (
         <Card sx={{ marginBottom: '1rem' }}>
             <CardActionArea onClick={() => navigate(`/contracts/view-contract/${contract.contractId}`)}>
                 <CardContent>
+                    {/* Status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
                         <h2 style={{
@@ -54,28 +58,31 @@ function ContractItem({ contract, userData }) {
                             'Απαιτεί Υπογραφή Συνεργάτη' : 'Απαιτεί Υπογραφή'}
                         </h2>
                     </Box>
+                    {/* Partner name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>
-                            {userData.role === 'parent' ? 'Νταντά:' : 'Γονέας:'}
+                            {userData.role === 'parent' ? 'Νταντά: ' : 'Γονέας:'}
                         </h2>
                         <p style={{ fontSize: '1.3rem' }}>
                             {userData.role === 'parent' ? contract.nannyName : contract.parentName}
                         </p>
                     </Box>
+                    {/* Duration Date */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[contract.fromDate.month]} ${contract.fromDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <InsertInvitationIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[contract.toDate.month]} ${contract.toDate.year}`}</p>
                     </Box>
+                    {/* Timestamp */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <ReceiptLongIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης:</strong> {new Date(contract.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης: </strong> {new Date(contract.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -107,6 +114,7 @@ function Contracts() {
     useEffect(() => {
         const fetchContracts = async () => {
             try {
+                // Fetch contracts
                 setLoading(true);
                 const userDocRef = doc(FIREBASE_DB, 'users', userData.uid);
                 const userDoc = await getDoc(userDocRef);
@@ -115,6 +123,7 @@ function Contracts() {
                     const contractIds = userData.contracts || [];
                     const contractsData = [];
 
+                    // Fetch contracts user is related to
                     for (const contractId of contractIds) {
                         const contractDocRef = doc(FIREBASE_DB, 'contracts', contractId);
                         const contractDoc = await getDoc(contractDocRef);
@@ -134,14 +143,17 @@ function Contracts() {
 
                     console.log('Contracts data:', contractsData);
                 
+                    // Filter contracts based on the filters
                     const filteredContracts = contractsData.filter(contract => {
                         const contractDate = new Date(contract.timestamp);
                         const fromDate = new Date(filters.fromDate.year, filters.fromDate.month, filters.fromDate.day);
                         const toDate = new Date(filters.toDate.year, filters.toDate.month, filters.toDate.day);
 
+                        // Check if the contract is within the date range
                         const isWithinDateRange = (!filters.fromDate.year || contractDate >= fromDate) &&
                                                   (!filters.toDate.year || contractDate <= toDate);
 
+                        // Check if the contract status matches the filters
                         let isStatusMatch = false;
                         if (userData.role === 'parent') {
                             isStatusMatch = (filters.needSignature && !contract.signedDocParent) ||
@@ -225,6 +237,7 @@ function Contracts() {
                             setFilters={setFilters}
                             checkboxOptions={checkboxOptions}
                         />
+                        {/* Container to show contracts in pages */}
                         <GenericContainer userData={userData} items={contracts} itemFunction={(item) => <ContractItem contract={item} userData={userData} />} loading={loading} />
                     </Box>
                 </>

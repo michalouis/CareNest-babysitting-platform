@@ -3,7 +3,7 @@ import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
@@ -21,9 +21,8 @@ const months = [
 
 export default function ViewMeeting() {
     const { userData, isLoading } = AuthCheck(true, false, false);
-    const location = useLocation();
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { id } = useParams(); // Get the meeting ID from the URL
     const meetingId = id;
     const [meetingData, setMeetingData] = useState(null);
     const [nannyData, setNannyData] = useState(null);
@@ -32,6 +31,7 @@ export default function ViewMeeting() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [actionType, setActionType] = useState('');
 
+    // Fetch meeting data
     useEffect(() => {
         const fetchMeetingData = async () => {
             try {
@@ -40,7 +40,7 @@ export default function ViewMeeting() {
                     const data = meetingDoc.data();
                     setMeetingData(data);
 
-                    // Fetch user data based on role
+                    // Fetch other person's data
                     const userDoc = await getDoc(doc(FIREBASE_DB, 'users', userData.role === 'parent' ? data.nannyId : data.parentId));
                     if (userDoc.exists()) {
                         if (userData.role === 'parent') {
@@ -108,6 +108,7 @@ export default function ViewMeeting() {
                 <h1 style={{ marginLeft: '1rem' }}>Προβολή Ραντεβού</h1>
                 
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                    {/* Warning Alert */}
                     {userData.role === 'parent' && meetingData.meetingState === 'pending' && (
                         <>
                             <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
@@ -116,6 +117,7 @@ export default function ViewMeeting() {
                         </>
                     )}
 
+                    {/* If user is nanny, show accept or decline buttons */}
                     {userData.role === 'nanny' && meetingData.meetingState === 'pending' && (
                         <>
                         <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
@@ -132,6 +134,7 @@ export default function ViewMeeting() {
                         </Box>
                         </>
                     )}
+                    {/* Meeting data */}
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -145,6 +148,7 @@ export default function ViewMeeting() {
                         boxShadow: '3',
                         gap: '0.5rem',
                     }}>
+                        {/* status */}
                         <p style={{ fontSize: '2.2rem', lineHeight: '2.5rem', alignItems: 'center' }}>
                             <strong>Κατάσταση Ραντεβού: </strong>
                             <span style={{
@@ -171,6 +175,7 @@ export default function ViewMeeting() {
                             width: '100%',
                             gap: '2rem',
                         }}>
+                            {/* Type of meeting */}
                             <Box sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -179,7 +184,7 @@ export default function ViewMeeting() {
                                 <p style={{ fontSize: '1.3rem' }}>
                                     <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingType === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
                                 </p>
-                                {meetingData.meetingType == 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
+                                {meetingData.meetingType === 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
                             </Box>
                             {meetingData.meetingType === 'online' ? (
                                 <Button
@@ -201,6 +206,7 @@ export default function ViewMeeting() {
                                 </Button>
                             )}
                         </Box>
+                        {/* Meeting Date */}
                         <h1 style={{ margin: '1rem 0'}}>Ημερομηνία και Ώρα</h1>
                         <Box sx={{
                             display: 'flex',
@@ -242,6 +248,7 @@ export default function ViewMeeting() {
                             width: '100%',
                             gap: '4rem',
                         }}>
+                            {/* Show other person's data - hide sensitive data if meeting is not accepted */}
                             {nannyData && (
                                 <Box sx={{
                                     display: 'flex',
@@ -294,7 +301,6 @@ export default function ViewMeeting() {
                             )}
                             <Box sx={{
                                 display: 'flex',
-                                alignItems: 'center',
                                 flexDirection: 'column',
                                 alignItems: 'flex-end',
                                 gap: '1rem',
@@ -314,6 +320,7 @@ export default function ViewMeeting() {
                         </Box>
                     </Box>
                 </Box>
+                {/* Confirm dialog */}
                 <Dialog open={dialogOpen} onClose={handleDialogClose}>
                     <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
                     <DialogContent>

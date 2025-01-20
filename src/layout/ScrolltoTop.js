@@ -3,6 +3,7 @@ import { Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import '../style.css';
 
+// Scroll to top button component
 const ScrolltoTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, useMediaQuery } from '@mui/material';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Box, Button, Alert, useMediaQuery } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAuthCheck as AuthCheck } from '../../AuthChecks';
 import Loading from '../../layout/Loading';
 import PageTitle from '../../PageTitle';
 import Breadcrumbs from '../../layout/Breadcrumbs';
-import { FormDateRange, VisualizeTimeTable, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
+import { FormDateRange, FormEmploymentType, FormBabysittingPlace } from '../applications/ApplicationFields';
+import VisualizeTimeTable from '../../components/VisualizeTimeTable';
 import PaymentsBox from './PaymentsBox';
 import RatingBox from './RatingBox';
 
@@ -15,15 +16,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import MessageIcon from '@mui/icons-material/Message';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
-const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
-];
-
 export default function ViewPartnership() {
     const { userData, isLoading } = AuthCheck(true, false, false);
-    const location = useLocation();
-    const { id } = useParams();
+    const { id } = useParams(); // get partnership id from URL
     const partnershipId = id;
     const [partnershipData, setPartnershipData] = useState(null);
     const [partnerData, setPartnerData] = useState(null);
@@ -31,6 +26,7 @@ export default function ViewPartnership() {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery('(max-width:1450px)');
 
+    // Fetch partnership data
     useEffect(() => {
         const fetchPartnershipData = async () => {
             try {
@@ -39,6 +35,7 @@ export default function ViewPartnership() {
                     const data = partnershipDoc.data();
                     setPartnershipData(data);
 
+                    // Fetch partner data
                     const partnerId = userData.role === 'parent' ? data.nannyId : data.parentId;
                     const partnerDoc = await getDoc(doc(FIREBASE_DB, 'users', partnerId));
                     if (partnerDoc.exists()) {
@@ -61,6 +58,7 @@ export default function ViewPartnership() {
         }
     }, [partnershipId, userData]);
 
+    // Finish partnership
     const finishPartnership = async () => {
         try {
             // Update partnership data
@@ -95,6 +93,7 @@ export default function ViewPartnership() {
 
     let message = null;
 
+    // Display alerts based on partnership status
     if (userData.role === 'parent') {
         if (partnershipData.payments.some(payment => payment === 'paid') && partnershipData.payments[partnershipData.payments.length - 1] !== 'verified') {
             message = { type: 'info', text: 'Μη ξεχάσετε στο τέλος κάθε μήνα να πληρώσετε τη νταντά.' };
@@ -118,11 +117,13 @@ export default function ViewPartnership() {
             <h1 style={{ marginLeft: '1rem' }}>Προβολή Συνεργασίας</h1>
             {userData && partnershipData && (
                 <>
+                    {/* Alerts */}
                     {message && (
                         <Alert severity={message.type} sx={{ alignSelf: 'center', width: 'fit-content', marginTop: '1rem' }}>
                             {message.text}
                         </Alert>
                     )}
+                    {/* Bento Box appearance (for big displayes only) */}
                     <Box sx={{
                         display: 'flex',
                         flexDirection: isSmallScreen ? 'column' : 'row',
@@ -131,6 +132,7 @@ export default function ViewPartnership() {
                         margin: '1rem',
                         gap: '1rem',
                     }}>
+                        {/* partnership info */}
                         <Box sx={{
                             height: 'auto',
                             maxWidth: '900px',
@@ -144,6 +146,7 @@ export default function ViewPartnership() {
                             boxShadow: '2',
                             gap: '1rem',
                         }}>
+                            {/* status */}
                             <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
                                 <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
                                 <h2 style={{
@@ -157,6 +160,7 @@ export default function ViewPartnership() {
                                     {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
                                 </h2>
                             </Box>
+                            {/* if complete, add renewal button - takes you to create new application */}
                             {!partnershipData.active && userData.role === 'parent' && (
                                 <Button
                                     variant="contained"
@@ -167,6 +171,7 @@ export default function ViewPartnership() {
                                     <p className='button-text'>Ανανέωση Συνεργασίας</p>
                                 </Button>
                             )}
+                            {/* partner info */}
                             <h2>Στοιχεία Συνεργάτη</h2> 
                             <Box sx={{
                                 display: 'flex',
@@ -188,7 +193,6 @@ export default function ViewPartnership() {
                                 </Box>
                                 <Box sx={{
                                     display: 'flex',
-                                    alignItems: 'center',
                                     flexDirection: 'column',
                                     alignItems: 'flex-start',
                                     gap: '1rem',
@@ -213,6 +217,7 @@ export default function ViewPartnership() {
                                     </Button>
                                 </Box>
                             </Box>
+                            {/* partnership info */}
                             <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
                             <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                                 <FormEmploymentType formData={partnershipData} />

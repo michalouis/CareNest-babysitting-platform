@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// Set the page title
 function PageTitle({ title }) {
     useEffect(() => {
         document.title = title;

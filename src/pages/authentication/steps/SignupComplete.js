@@ -7,6 +7,7 @@ import PageTitle from '../../../PageTitle';
 
 import '../../../style.css';
 
+// This page is displayed after the user completes the signup process (has buttons to guide user what to do next)
 function SignupComplete() {
     const navigate = useNavigate();
 
