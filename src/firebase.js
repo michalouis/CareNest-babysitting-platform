@@ -3,6 +3,7 @@ import {browserLocalPersistence} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
 import { initializeAuth } from 'firebase/auth';
 
+// Firebase configuration object
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
