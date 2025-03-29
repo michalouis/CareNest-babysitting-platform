@@ -4,7 +4,7 @@ This project was developed as part of the final assignment for the Human-Compute
 
 The front end was developed with React, leveraging Google's Material UI library to create responsive and accessible components. For the back end, we utilized Firebase to handle user authentication, real-time database interactions, and secure data storage. This combination of technologies allowed us to deliver a seamless and dynamic user experience while maintaining a scalable and reliable infrastructure. The result is a platform that not only simplifies the process of finding and hiring nannies but also ensures transparency and trust between users.
 
-Created by: Michail Aretakis, Georgios Papioannou
+Created by: Michail Aretakis & Georgios Papioannou
 
 <img src="https://github.com/user-attachments/assets/0c911a86-2e33-4a16-a8ef-04d217ce37c2" width="48%">
 <img src="https://github.com/user-attachments/assets/de2d39c1-b0ee-4aa4-b043-b85117f4b801" width="48%">
