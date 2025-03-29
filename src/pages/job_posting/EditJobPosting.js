@@ -28,13 +28,13 @@ function EditJobPosting() {
         <>
         {userData && (
             <>
-            <PageTitle title="CareNest - Δημιουργία Αγγελίας" />
+            <PageTitle title="CareNest - Create Job Listing" />
             <Breadcrumbs showPopup={!saved}/>
-            <h1 style={{ margin: '1rem' }}>Δημιουργία Αγγελίας</h1>
+            <h1 style={{ margin: '1rem' }}>Create Job Listing</h1>
             {userData && userData.jobPosted ? ( // if job posted, show message
                 <>         
                     <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center' }}>
-                        Έχετε ήδη υποβάλει την αγγελία σας. Επιστρέψτε στην ενότητα Αγγελία Εργασίας για να τη δείτε.
+                        You have already submitted your job listing. Go back to the Job Posting section to view it.
                     </p>
                     <img src='/question-mark.png' alt="Question Mark" style={{ width: '500px', margin: '1rem auto', alignSelf: 'center' }} />
                 </>
@@ -49,7 +49,7 @@ function EditJobPosting() {
             </>
         )}
         </>
-    );
+    );    
 }
 
 export default EditJobPosting;

@@ -65,10 +65,10 @@ function ColorlibStepIcon(props) {
 }
 
 const signupSteps = [
-    { label: 'Επιλογή Ομάδας', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
-    { label: 'Πληροφορίες', icon: <InfoIcon style={{ fontSize: 40 }} /> },
-    { label: 'Εγγραφή', icon: <LoginIcon style={{ fontSize: 40 }} /> },
-    { label: 'Δημιουργία Προφίλ', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
+    { label: 'Choose Role', icon: <PsychologyAltIcon style={{ fontSize: 50 }} /> },
+    { label: 'Info', icon: <InfoIcon style={{ fontSize: 40 }} /> },
+    { label: 'Sign Up', icon: <LoginIcon style={{ fontSize: 40 }} /> },
+    { label: 'Create Profile', icon: <AccountCircleIcon style={{ fontSize: 40 }} /> },
 ];
 
 function StepperComponent({ activeStep }) {

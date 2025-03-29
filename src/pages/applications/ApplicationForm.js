@@ -12,11 +12,11 @@ const LastModification = ({ timestamp }) => {
     if (!timestamp) return null;
 
     const date = new Date(timestamp);
-    const formattedDate = date.toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' });
-    const formattedTime = date.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit' });
+    const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
     return (
-        <p><strong>Τελευταία ενημέρωση:</strong> {formattedDate} {formattedTime}</p>
+        <p><strong>Last Edited:</strong> {formattedDate} {formattedTime}</p>
     );
 };
 
@@ -130,7 +130,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
 
                     // turn off edit mode, show success message and update local applicationData to reflect the changes
                     setEditMode(false); 
-                    setSnackbarMessage('Η αίτηση σας αποθηκεύτηκε προσωρινά με επιτυχία! Μπορείτε να τη βρείτε στην ενότητα \'Αιτήσεις\'. Για να την οριστικοποιήστε πατήστε υποβολή.');
+                    setSnackbarMessage('Your application has been successfully saved temporarily! You can find it in the "Applications" section. To finalize it, click Submit.');
                     setSnackbarSeverity('success');
                     window.scrollTo(0, 0);  // scroll to top of the page
                 } else {
@@ -139,7 +139,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             }
         } catch (error) {
             console.error('Error saving application:', error);
-            setSnackbarMessage('Υπήρξε σφάλμα κατά την αποθήκευση της αίτησης.');
+            setSnackbarMessage('An error occurred while saving the application.');
             setSnackbarSeverity('error');
         } finally {
             setIsSaving(false);
@@ -208,7 +208,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                     }));
 
                     console.log('Submit:', updatedApplicationData);
-                    setSnackbarMessage('Η αίτηση σας υποβλήθηκε με επιτυχία!');
+                    setSnackbarMessage('Your application has been successfully submitted!');
                     setSnackbarSeverity('success');
                 } else {
                     console.error('No such user:', user.uid);
@@ -216,7 +216,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             }
         } catch (error) {
             console.error('Error submitting application:', error);
-            setSnackbarMessage('Υπήρξε σφάλμα κατά την υποβολή της αίτησης.');
+            setSnackbarMessage('An error occurred while submitting the application.');
             setSnackbarSeverity('error');
         } finally {
             setIsSaving(false);
@@ -234,12 +234,12 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             {/* Alerts based on application status */}
             {applicationData.submitted && (
                 <Alert severity="success" sx={{ marginBottom: '1rem' }}>
-                    Οριστικοποιήσατε την αίτηση σας με επιτυχία. Το συμφωνητικό που πρέπει να υπογράψετε έχει εκδοθεί και βρίσκεται στην ενότητα <Link to="/contracts" style={{ color: 'inherit'}}>'Συμφωνητικά'</Link>.
-                </Alert>
+                    You have successfully finalized your application. The contract you need to sign has been issued and can be found in the <Link to="/contracts" style={{ color: 'inherit' }}>'Contracts'</Link> section.
+                </Alert>            
             )}
             {!editMode && !applicationData.submitted && (
                 <Alert severity="warning" sx={{ marginBottom: '1rem' }}>
-                    Η αίτηση σας δεν έχει οριστικοποιηθεί πατήστε 'Υποβολή' για να εκδοθεί το συφμωνητικό της.
+                    Your application has not been finalized. Click 'Submit' to issue the contract.
                 </Alert>
             )}
             {/* Application form - get fields from ApplicationFields.js */}
@@ -257,14 +257,14 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
             }}>
                 {!applicationData.submitted && (
                     <h1 style={{ alignSelf: 'center' }}>
-                        Κατάσταση: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Σε Επεξεργασία' : 'Προεπισκόπηση'}</span>
+                        Status: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Editing' : 'Preview'}</span>
                     </h1>
                 )}
                 {!editMode && <LastModification timestamp={applicationData.timestamp} />}
                 {!applicationData.submitted && (
-                    <p style={{color: 'var(--clr-grey)'}}>Όλα τα πεδία είναι υποχρεωτικά.</p>
+                    <p style={{color: 'var(--clr-grey)'}}>All fields are mandatory.</p>
                 )}
-                <h2>Όνομα Νταντάς & Ηλικία Παιδιού</h2>
+                <h2>Nanny's Name & Child's Age</h2>
                 <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                     <Box>
                         <FormNannyName formData={applicationData} />
@@ -273,7 +273,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                         <FormChildAgeGroup formData={applicationData} />
                     </Box>
                 </Box>
-                <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
+                <h2>Type of Employment & Place of Employment</h2>
                 <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                     <Box>
                         <FormEmploymentType formData={applicationData} />
@@ -282,9 +282,9 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                         <FormBabysittingPlace formData={applicationData} />
                     </Box>
                 </Box>
-                <h2>Διάρκεια Συνεργασίας</h2>
+                <h2>Duration of Partnership</h2>
                 <FormDateRange formData={applicationData} setFormData={setApplicationData} errors={errors} editMode={editMode} />
-                <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
+                <h2>Weekly Childcare Schedule</h2>
                 {!applicationData.submitted ? (
                     <FormTimeTable formData={applicationData} setFormData={setApplicationData} nannyTimetable={nannyData.jobPostingData.timetable} editMode={editMode} errors={errors} />
                 ) : (
@@ -304,7 +304,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                             sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
                             disabled={isSaving}
                         >
-                            <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
+                            <p className='big-button-text'>Save Draft</p>
                         </Button>
                     </Box>
                 )}
@@ -319,7 +319,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                             sx={{ backgroundColor: 'var(--clr-blue-lighter)', '&:hover': { opacity: 0.8 } }}
                             disabled={isSaving}
                         >
-                            <p className='big-button-text'>Επεξεργασία</p>
+                            <p className='big-button-text'>Edit</p>
                         </Button>
                         <Button
                             variant="contained"
@@ -327,7 +327,7 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                             sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
                             disabled={isSaving}
                         >
-                            <p className='big-button-text'>Υποβολή</p>
+                            <p className='big-button-text'>Submit</p>
                         </Button>
                     </Box>
                 )}
@@ -348,18 +348,18 @@ function ApplicationForm({ userData, nannyId, applicationId }) {
                 open={openConfirmDialog}
                 onClose={() => setOpenConfirmDialog(false)}
             >
-                <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                <DialogTitle><strong>Warning!</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουροι πως θέλετε να υποβάλετε την αίτηση σας; Μετά την υποβολή, δεν θα μπορείτε να την επεξεργαστείτε.
+                        Are you sure you want to submit your application? After submission, you will not be able to edit it.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpenConfirmDialog(false)} sx={{ color: 'var(--clr-black)' }}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}>
-                        <p className='button-text'>Υποβολή</p>
+                        <p className='button-text'>Submit</p>
                     </Button>
                 </DialogActions>
             </Dialog>

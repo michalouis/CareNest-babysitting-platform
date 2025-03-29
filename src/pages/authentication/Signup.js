@@ -38,13 +38,13 @@ function Signup() {
     // Handle the next button (check for errors)
     const handleNext = () => {
         if (activeStep === 0 && !signupData.selectedRole) {
-            setErrorMessage('Διαλέξτε μια ομάδα για να συνεχίσετε.');
+            setErrorMessage('Please select a group to continue.');
             setError(true);
             setShowError(true);
         } else if (activeStep === 0 && signupData.selectedRole) {
             setOpenConfirmModal(true);
         } else if (activeStep === 1 && !signupData.isInfoRead) {
-            setErrorMessage('Επιβεβαιώστε πως διαβάσατε τις πληροφορίες.');
+            setErrorMessage('Please confirm that you have read the terms.');
             setError(true);
             setShowError(true);
         } else {
@@ -92,7 +92,7 @@ function Signup() {
 
     return (
         <>
-            <PageTitle title="CareNest - Εγγραφή" />
+            <PageTitle title="CareNest - Sign up" />
             <Breadcrumbs showPopup={true} />
             <Box sx={{
                 display: 'flex',
@@ -107,9 +107,9 @@ function Signup() {
                     alignItems: 'baseline',
                     gap: '1rem'
                 }}>
-                    <h1 className="login-header">Εγγραφή</h1>
+                    <h1 className="login-header">Sign up</h1>
                     <p className="login-text">
-                        Έχετε κάνει εγγραφή; <Link to="/login" className="signup-link">Συνδεθείτε</Link>
+                        Already have an account? <Link to="/login" className="signup-link">Log in</Link>
                     </p>
                 </Box>
 
@@ -158,7 +158,7 @@ function Signup() {
                             }}
                             startIcon={<ArrowBackIosIcon />}
                         >
-                            <p className='big-button-text'>Πίσω</p>
+                            <p className='big-button-text'>Back</p>
                         </Button>
                     )}
 
@@ -177,7 +177,7 @@ function Signup() {
                             }}
                             endIcon={<ArrowForwardIosIcon />}
                         >
-                            <p className='big-button-text'>Συνέχεια</p>
+                            <p className='big-button-text'>Next</p>
                         </Button>
                     )}
                 </Box>
@@ -194,19 +194,19 @@ function Signup() {
                     open={openConfirmModal}
                     onClose={handleCloseDialog}
                 >
-                    <DialogTitle id="confirm-role-title"><strong>Είστε σίγουρος;</strong></DialogTitle>
+                    <DialogTitle id="confirm-role-title"><strong>Are you sure?</strong></DialogTitle>
                     <DialogContent>
                         <DialogContentText id="confirm-role-description">
-                        Διαλέξατε την ομάδα <strong>{signupData.selectedRole === 'parent' ? 'Γονέας' : 'Νταντά'}</strong>.
-                        Είστε σίγουρος πως θέλετε να συνεχίσετε;<br /> <strong>ΔΕΝ ΜΠΟΡΕΙΤΕ ΝΑ ΑΛΛΑΞΕΤΕ ΤΗΝ ΕΠΙΛΟΓΗ ΣΑΣ ΑΡΓΟΤΕΡΑ!</strong>
+                            You have selected the role <strong>{signupData.selectedRole === 'parent' ? 'Parent' : 'Nanny'}</strong>.
+                            Are you sure you want to continue?<br /> <strong>YOU CANNOT CHANGE YOUR SELECTION AFTER SINGING UP!</strong>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button variant='text' onClick={handleCloseDialog} sx={{ color: 'var(--clr-black)' }}>
-                            <p className='button-text'>Ακύρωση</p>
+                            <p className='button-text'>Cancel</p>
                         </Button>
                         <Button variant='contained' onClick={handleConfirmRole} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} >
-                            <p className='button-text'>Συνέχεια</p>
+                            <p className='button-text'>Confirm</p>
                         </Button>
                     </DialogActions>
                 </Dialog>

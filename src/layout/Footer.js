@@ -29,7 +29,7 @@ function Footer() {
                             Error404
                         </Link>
                         <Link to="/contact" className="footer-link">
-                            Επικοινωνία
+                            Contact us
                         </Link>
                     </Box>
                     <IconButton color="inherit" href="https://www.facebook.com" target="_blank">

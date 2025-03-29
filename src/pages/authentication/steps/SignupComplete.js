@@ -39,7 +39,7 @@ function SignupComplete() {
 
     return (
         <>
-            <PageTitle title="CareNest - Ολοκληρώσατε το προφίλ σας!" />
+            <PageTitle title="CareNest - Sign up Complete!" />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -52,19 +52,19 @@ function SignupComplete() {
             }}>
                 {/* Text */}
                 <h1 style={{ marginBottom: '1rem' }}>
-                    Συγχαρητήρια! Ολοκληρώσατε την εγγραφή σας στη πλατφόρμα.
+                    Congratulations! You have successfully completed your registration on the platform.
                 </h1>
 
                 { userData && (
                     <>
                     <h2>
                         {userData.role === 'parent' ? (
-                            'Μπορείτε να ξεκινήστε την εύρεση νταντάς τώρα.'
+                            'You can begin your search for a nanny now.'
                         ) : (
-                            'Μπορείτε να ξεκινήστε να φτιάχνετε την αγγελία σας.'
+                            'You can start creating your job listing now.'
                         )}
                     </h2>
-                
+
                     {/* Buttons */}
                     <Box sx={{
                         marginTop: '2rem',
@@ -75,10 +75,10 @@ function SignupComplete() {
                         gap: '1rem'
                     }}>
                         {renderButton(
-                            userData.role === 'parent' ? 'Αναζήτηση Νταντάς' : 'Αγγελία Εργασίας',
+                            userData.role === 'parent' ? 'Search for a Nanny' : 'Create Job Listing',
                             userData.role === 'parent' ? '/search' : '/job-posting'
                         )}
-                        {renderButton('Αρχική Σελίδα', '/')}
+                        {renderButton('Home Page', '/')}
                     </Box>
                     </>
                 )}

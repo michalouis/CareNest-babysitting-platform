@@ -23,7 +23,7 @@ function LandingPage() {
 
     return (
         <>
-            <PageTitle title="CareNest - Αρχική Σελίδα" />
+            <PageTitle title="CareNest - Home Page" />
             {userData ? (
                 <>
                     {userData.role === 'parent' ? (

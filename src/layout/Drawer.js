@@ -85,25 +85,25 @@ function AppDrawer({ open, onClose }) {
 
                 {/* Takes you to the following pages */}
                 <List>
-                    <DrawerItem to="/profile" icon={AccountCircleIcon} title="Προφίλ" />
+                    <DrawerItem to="/profile" icon={AccountCircleIcon} title="Profile" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     {userRole === 'parent' ? (
-                        <DrawerItem to="/search" icon={SearchIcon} title="Αναζήτηση Νταντάς" />
+                        <DrawerItem to="/search" icon={SearchIcon} title="Find Nanny" />
                     ) : (
-                        <DrawerItem to="/job-posting" icon={WorkIcon} title="Αγγελία Εργασίας" />
+                        <DrawerItem to="/job-posting" icon={WorkIcon} title="Job Posting" />
                     )}
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/meetings" icon={EventIcon} title="Ραντεβού Γνωριμίας" />
+                    <DrawerItem to="/meetings" icon={EventIcon} title="Meetings" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     {userRole === 'parent' && (
                         <>
-                        <DrawerItem to="/applications" icon={AssignmentIcon} title="Αιτήσεις" />
+                        <DrawerItem to="/applications" icon={AssignmentIcon} title="Applications" />
                         <Divider sx={{ width: '80%', margin: '0 auto' }} />
                         </>
                     )}
-                    <DrawerItem to="/contracts" icon={DrawRoundedIcon} title="Συμφωνητικά" />
+                    <DrawerItem to="/contracts" icon={DrawRoundedIcon} title="Contracts" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/partnerships" icon={GroupIcon} title="Συνεργασίες" />
+                    <DrawerItem to="/partnerships" icon={GroupIcon} title="Partnerships" />
                 </List>
             </>
             {/* Logout button */}
@@ -118,7 +118,7 @@ function AppDrawer({ open, onClose }) {
                         fontWeight: 'bold',
                         color: 'var(--clr-error-main)'
                     }}>
-                        Αποσύνδεση
+                        Log out
                     </p>
                 </ListItemText>
             </ListItem>
@@ -137,18 +137,18 @@ function AppDrawer({ open, onClose }) {
                 open={dialogOpen}
                 onClose={handleDialogClose}
             >
-                <DialogTitle><strong>Επιβεβαίωση Αποσύνδεσης</strong></DialogTitle>
+                <DialogTitle><strong>Logout Confirmation</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουρος ότι θέλετε να αποσυνδεθείτε;
+                        Are you sure you want to log out?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button onClick={handleLogout} sx={{ backgroundColor: 'var(--clr-error-main)', color: 'var(--clr-white)' }}>
-                        <p className='button-text'>Αποσύνδεση</p>
+                        <p className='button-text'>Log out</p>
                     </Button>
                 </DialogActions>
             </Dialog>

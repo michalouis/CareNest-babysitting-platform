@@ -96,25 +96,25 @@ export default function ViewPartnership() {
     // Display alerts based on partnership status
     if (userData.role === 'parent') {
         if (partnershipData.payments.some(payment => payment === 'paid') && partnershipData.payments[partnershipData.payments.length - 1] !== 'verified') {
-            message = { type: 'info', text: 'Μη ξεχάσετε στο τέλος κάθε μήνα να πληρώσετε τη νταντά.' };
+            message = { type: 'info', text: 'Don’t forget to pay the nanny at the end of each month.' };
         } else if (partnershipData.payments[partnershipData.payments.length - 1] === 'verified' && !partnershipData.rating) {
-            message = { type: 'info', text: 'Έχετε πραγματοποιήσει όλες τις πληρωμές! Προσθέστε μια αξιολόγηση για να ολοκληρώσετε τη συνεργασία σας.' };
+            message = { type: 'info', text: 'You have completed all payments! Add a review to finalize your partnership.' };
         } else if (!partnershipData.active) {
-            message = { type: 'success', text: 'Η συνεργασία έχει ολοκληρωθεί! Μπορείτε να φτιάξετε νέα αίτηση για να την ανανεώστε σας πατώντας \'Ανανέωση Συνεργασίας\'.' };
+            message = { type: 'success', text: 'The partnership has been completed! You can create a new application to renew it by clicking "Renew Partnership".' };
         }
     } else if (userData.role === 'nanny') {
         if (partnershipData.payments.some(payment => payment === 'paid')) {
-            message = { type: 'info', text: 'Ο γονέας έχει στείλει την ανταμοιβή σας! Παρακαλώ επιβεβαιώστε πως τη λάβατε.' };
+            message = { type: 'info', text: 'The parent has sent your payment! Please confirm that you have received it.' };
         } else if (!partnershipData.active) {
-            message = { type: 'success', text: 'Η συνεργασία έχει ολοκληρωθεί. Στην ενότητα \'Αξιολόγηση\' μπορείτε να δείτε τη κριτική που σας άφησε ο γονέας.' };
+            message = { type: 'success', text: 'The partnership has been completed. You can view the review left by the parent in the "Rating" section.' };
         }
     }
 
     return (
         <>
-            <PageTitle title="CareNest - Προβολή Συνεργασίας" />
+            <PageTitle title="CareNest - View Partnership" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Προβολή Συνεργασίας</h1>
+            <h1 style={{ marginLeft: '1rem' }}>View Partnership</h1>
             {userData && partnershipData && (
                 <>
                     {/* Alerts */}
@@ -123,7 +123,7 @@ export default function ViewPartnership() {
                             {message.text}
                         </Alert>
                     )}
-                    {/* Bento Box appearance (for big displayes only) */}
+                    {/* Bento Box appearance (for big displays only) */}
                     <Box sx={{
                         display: 'flex',
                         flexDirection: isSmallScreen ? 'column' : 'row',
@@ -148,7 +148,7 @@ export default function ViewPartnership() {
                         }}>
                             {/* status */}
                             <Box sx={{ display: 'flex', alignItems: 'center', alignSelf: 'center' }}>
-                                <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση Συνεργασίας:</h1>
+                                <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Partnership Status:</h1>
                                 <h2 style={{
                                     fontWeight: 'bold',
                                     padding: '0.3rem 0.7rem',
@@ -157,7 +157,7 @@ export default function ViewPartnership() {
                                     borderRadius: '1rem',
                                     display: 'inline-block'
                                 }}>
-                                    {partnershipData.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
+                                    {partnershipData.active ? 'Active' : 'Completed'}
                                 </h2>
                             </Box>
                             {/* if complete, add renewal button - takes you to create new application */}
@@ -168,11 +168,11 @@ export default function ViewPartnership() {
                                     startIcon={<AutorenewIcon />}
                                     onClick={() => navigate(`/applications/create-application/${partnershipData.nannyId}`)}
                                 >
-                                    <p className='button-text'>Ανανέωση Συνεργασίας</p>
+                                    <p className='button-text'>Renew Partnership</p>
                                 </Button>
                             )}
                             {/* partner info */}
-                            <h2>Στοιχεία Συνεργάτη</h2> 
+                            <h2>Partner Information</h2> 
                             <Box sx={{
                                 display: 'flex',
                                 flexDirection: 'row',
@@ -187,8 +187,8 @@ export default function ViewPartnership() {
                                     alignItems: 'flex-start',
                                     gap: '0.5rem',
                                 }}>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα: </strong>{partnerData.firstName} {partnerData.lastName}</p>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Τηλέφωνο: </strong>{partnerData.phoneNumber}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Name: </strong>{partnerData.firstName} {partnerData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Phone: </strong>{partnerData.phoneNumber}</p>
                                     <p style={{ fontSize: '1.3rem' }}><strong>Email: </strong>{partnerData.email}</p>
                                 </Box>
                                 <Box sx={{
@@ -203,7 +203,7 @@ export default function ViewPartnership() {
                                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                         onClick={() => navigate(`/search/view-profile/${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
                                     >
-                                        <p className='small-button-text'>Προβολή Προφίλ</p>
+                                        <p className='small-button-text'>View Profile</p>
                                     </Button>
                                     <Button 
                                         variant="contained"
@@ -213,19 +213,19 @@ export default function ViewPartnership() {
                                             backgroundColor: 'var(--clr-violet)',
                                             padding: '0.5rem 1rem'
                                     }}>
-                                        <p className='small-button-text'>Αποστολή Μηνύματος</p>
+                                        <p className='small-button-text'>Send Message</p>
                                     </Button>
                                 </Box>
                             </Box>
                             {/* partnership info */}
-                            <h2>Είδος Απασχόλησης & Χώρος Απασχόλησης</h2>
+                            <h2>Employment Type & Babysitting Place</h2>
                             <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                                 <FormEmploymentType formData={partnershipData} />
                                 <FormBabysittingPlace formData={partnershipData} />
                             </Box>
-                            <h2>Διάρκεια Συνεργασίας</h2>
+                            <h2>Partnership Duration</h2>
                             <FormDateRange formData={partnershipData} setFormData={setPartnershipData} errors={{}} editMode={false} />
-                            <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
+                            <h2>Weekly Childcare Schedule</h2>
                             <VisualizeTimeTable formData={partnershipData} />
                         </Box>
                         <Box sx={{

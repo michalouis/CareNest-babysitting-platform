@@ -6,8 +6,8 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // DateRangeDialog: Dialog to select a date range
@@ -33,28 +33,28 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
         const toDateFilled = localToDate.day || toMonthFilled || localToDate.year;
 
         if (fromDateFilled && (!localFromDate.day || !fromMonthFilled || !localFromDate.year)) {
-            setError('Όλα τα πεδία της ημερομηνίας "Από" πρέπει να είναι συμπληρωμένα ή να μη συμπληρωθεί κανένα.');
+            setError('All fields for the "From" date must be filled or none should be filled.');
             return false;
         }
 
         if (toDateFilled && (!localToDate.day || !toMonthFilled || !localToDate.year)) {
-            setError('Όλα τα πεδία της ημερομηνίας "Μέχρι" πρέπει να είναι συμπληρωμένα ή να μη συμπληρωθεί κανένα.');
+            setError('All fields for the "To" date must be filled or none should be filled.');
             return false;
         }
 
         // check if values are out of bounds
         if ((localFromDate.day < 1 && fromDateFilled) || (localToDate.day < 1 && toDateFilled)) {
-            setError('Οι ημέρες πρέπει να είναι αριθμοί μεγαλύτεροι του 0.');
+            setError('Days must be greater than 0.');
             return false;
         }
 
         if ((localFromDate.day > 31 && fromDateFilled) || (localToDate.day > 31  && toDateFilled)) {
-            setError('Οι ημέρες πρέπει να είναι αριθμοί μικρότεροι του 32.');
+            setError('Days must be less than 32.');
             return false;
         }
 
         if ((localFromDate.year < 2000 && fromDateFilled) || (localToDate.year < 2000 && toDateFilled)) {
-            setError('Οι χρονιές πρέπει να είναι αριθμοί μεγαλύτεροι του 2000.');
+            setError('Years must be greater than 2000.');
             return false;
         }
 
@@ -64,7 +64,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
             const toDateObj = new Date(localToDate.year, localToDate.month, localToDate.day);
 
             if (fromDateObj > toDateObj) {
-                setError('Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".');
+                setError('The "From" date must be earlier than the "To" date.');
                 return false;
             }
         }
@@ -95,21 +95,21 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
     return (
         // Date Range Dialog
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle><strong>Επιλογή Χρονικού Εύρους</strong></DialogTitle>
+            <DialogTitle><strong>Select Date Range</strong></DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {error && <p style={{ color: 'var(--clr-error)' }}>{error}</p>} {/* Error message */}
-                    <p><strong>Από:</strong></p>
+                    <p><strong>From:</strong></p>
                     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
                         <TextField
-                            label="Ημέρα"
+                            label="Day"
                             type="text"
                             value={localFromDate.day}
                             onChange={(e) => setLocalFromDate({ ...localFromDate, day: e.target.value })}
                             fullWidth
                         />
                         <TextField
-                            label="Μήνας"
+                            label="Month"
                             value={localFromDate.month}
                             onChange={(e) => setLocalFromDate({ ...localFromDate, month: e.target.value })}
                             select
@@ -120,7 +120,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                             ))}
                         </TextField>
                         <TextField
-                            label="Χρονιά"
+                            label="Year"
                             type="text"
                             value={localFromDate.year}
                             onChange={(e) => setLocalFromDate({ ...localFromDate, year: e.target.value })}
@@ -130,17 +130,17 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                             <ClearIcon />
                         </IconButton>
                     </Box>
-                    <p><strong>Μέχρι:</strong></p>
+                    <p><strong>To:</strong></p>
                     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '1rem', alignItems: 'center' }}>
                         <TextField
-                            label="Ημέρα"
+                            label="Day"
                             type="text"
                             value={localToDate.day}
                             onChange={(e) => setLocalToDate({ ...localToDate, day: e.target.value })}
                             fullWidth
                         />
                         <TextField
-                            label="Μήνας"
+                            label="Month"
                             value={localToDate.month}
                             onChange={(e) => setLocalToDate({ ...localToDate, month: e.target.value })}
                             select
@@ -151,7 +151,7 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
                             ))}
                         </TextField>
                         <TextField
-                            label="Χρονιά"
+                            label="Year"
                             type="text"
                             value={localToDate.year}
                             onChange={(e) => setLocalToDate({ ...localToDate, year: e.target.value })}
@@ -165,10 +165,10 @@ function DateRangeDialog({ open, onClose, fromDate, toDate, onDateRangeChange })
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} sx={{ color: 'var(--clr-black)' }}>
-                    <p className='button-text'>Ακύρωση</p>
+                    <p className='button-text'>Cancel</p>
                 </Button>
                 <Button variant="contained" onClick={handleSave} sx={{ backgroundColor: 'var(--clr-blue)' }}>
-                    <p className='button-text'>Αποθήκευση</p>
+                    <p className='button-text'>Save</p>
                 </Button>
             </DialogActions>
         </Dialog>
@@ -218,12 +218,12 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
         }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <FilterAltIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                <h2>Φίλτρα</h2>
+                <h2>Filters</h2>
             </Box>
             <Divider sx={{ width: '80%' }} />
 
             {/* CheckBoxes */}
-            <h3>Κατάσταση</h3>
+            <h3>Status</h3>
             <FormGroup>
                 {checkboxOptions.map((option) => (
                     <FormControlLabel
@@ -241,27 +241,27 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
             </FormGroup>
 
             {/* Sort */}
-            <h3>Ταξινόμηση κατά</h3>
+            <h3>Sort by</h3>
             <FormControl component="fieldset">
                 <RadioGroup
                     name="sortOrder"
                     value={filters.newerFirst ? 'newer' : 'older'}
                     onChange={handleSortOrderChange}
                 >
-                    <FormControlLabel value="newer" control={<Radio />} label="Νεότερα πρώτα" />
-                    <FormControlLabel value="older" control={<Radio />} label="Παλαιότερα πρώτα" />
+                    <FormControlLabel value="newer" control={<Radio />} label="Newest First" />
+                    <FormControlLabel value="older" control={<Radio />} label="Oldest First" />
                 </RadioGroup>
             </FormControl>
 
             {/* Date Range */}
-            <h3>Χρονικό Εύρος</h3>
+            <h3>Date Range</h3>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.5rem' }}>
                 <h4>
-                    Από: {filters.fromDate.day && filters.fromDate.month !== '' && filters.fromDate.year ?
+                    From: {filters.fromDate.day && filters.fromDate.month !== '' && filters.fromDate.year ? 
                         `${filters.fromDate.day} ${months[filters.fromDate.month]} ${filters.fromDate.year}` : '-'}
                 </h4>
                 <h4>
-                    Μέχρι: {filters.toDate.day && filters.toDate.month !== '' && filters.toDate.year ?
+                    To: {filters.toDate.day && filters.toDate.month !== '' && filters.toDate.year ? 
                         `${filters.toDate.day} ${months[filters.toDate.month]} ${filters.toDate.year}` : '-'}
                 </h4>
             </Box>
@@ -275,7 +275,7 @@ function FilterBox({ filters, setFilters, checkboxOptions }) {
                 }}
                 onClick={() => setDateRangeDialogOpen(true)}
             >
-                <p className="small-button-text">Επεξεργασία</p>
+                <p className="small-button-text">Edit</p>
             </Button>
             <DateRangeDialog
                 open={dateRangeDialogOpen}

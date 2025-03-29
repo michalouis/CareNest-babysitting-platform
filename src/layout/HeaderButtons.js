@@ -26,7 +26,7 @@ function LogoButton() {
                     gap: 0.5
                 }}
             >
-                <img src="/logo3.png" style={{ width: '200px', height: '48px' }} alt="Αρχική Σελίδα" />
+                <img src="/logo3.png" style={{ width: '200px', height: '48px' }} alt="Home Page" />
             </Button>
         </Box>
     );
@@ -46,7 +46,7 @@ function FaqButton() {
                 }}
             >
                 <HelpIcon sx={{ marginRight: 0.5 }} />
-                <p className="header-button-text">{'Συχνές Ερωτήσεις'}</p>
+                <p className="header-button-text">{'FAQs'}</p>
             </Button>
         </Box>
     );
@@ -66,7 +66,7 @@ function MessagesButton() {
                 }}
             >
                 <MessageIcon sx={{ marginRight: 0.5 }} />
-                <p className="header-button-text">{'Μηνύματα'}</p>
+                <p className="header-button-text">{'Messages'}</p>
             </Button>
         </Box>
     );
@@ -93,7 +93,7 @@ function LoginButton() {
                 disableElevation
             >
                 <LoginIcon sx={{ marginRight: 0.5 }} />
-                <p className="header-button-text">Σύνδεση</p>
+                <p className="header-button-text">Login</p>
             </Button>
         </Box>
     );
@@ -129,7 +129,7 @@ function MenuButton() {
                 disableElevation
             >
                 <MenuIcon sx={{ marginRight: 0.5 }} />
-                <p className="header-button-text">Μενού</p>
+                <p className="header-button-text">Menu</p>
             </Button>
             <AppDrawer open={drawerOpen} onClose={handleDrawerClose} />
         </Box>

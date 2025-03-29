@@ -81,7 +81,7 @@ export default function Favorites() {
         <>
             <PageTitle title="CareNest - Αγαπημένα" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Αγαπημένα</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Favorites</h1>
             <Box sx={{ flexGrow: 1, margin: '1rem' }}>
                 <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5 }}>
                     {loading ? (
@@ -101,7 +101,7 @@ export default function Favorites() {
                             // Display no favorites message
                             <Box sx={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
                                 <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                                    Δεν έχετε προσθέσει αγαπημένα!
+                                    You haven't added any nannies to your favorites!
                                 </p>
                             </Box>
                         )

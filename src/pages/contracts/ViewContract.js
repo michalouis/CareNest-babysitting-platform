@@ -27,9 +27,9 @@ function ViewContract() {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
     const translateMap = {
-        Male: 'Άνδρας',
-        Female: 'Γυναίκα',
-        Other: 'Άλλο'
+        Male: 'Male',
+        Female: 'Female',
+        Other: 'Other'
     };
 
     // Fetch contract data
@@ -153,31 +153,31 @@ function ViewContract() {
 
     return (
         <>
-            <PageTitle title="CareNest - Προβολή Συμφωνητικού" />
+            <PageTitle title="CareNest - View Contract" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Προβολή Συμφωνητικού</h1>
+            <h1 style={{ marginLeft: '1rem' }}>View Contract</h1>
             {contractData && parentData && nannyData && (
                 <>
                     {/* Alerts based on contract status */}
                     {!userSignedDoc && (
                         userData.partnershipActive ? (
                             <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                                Έχετε ήδη μια ενεργή συνεργασία! Πρέπει να την τερματίσετε πριν υποβάλετε νέο συμφωνητικό.
+                                You already have an active partnership! You must terminate it before submitting a new agreement.
                             </Alert>
                         ) : (
                             <Alert severity="warning" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                                Παρακαλώ υπογράψτε το συμφωνητικό σας για να ξεκινήσει η συνεργασία σας.
+                                Please sign your agreement to begin your partnership.
                             </Alert>
                         )
                     )}
                     {userSignedDoc && !partnerSignedDoc && (
                         <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                            Έχετε υποβάλει το υπογεγραμμένο συμφωνητικό με επιτυχία. Μόλις το υπογράψει και ο συνεργάτης σας θα ξεκινήσει η συνεργασία σας.
+                            You have successfully submitted the signed agreement. Once your partner signs it, your partnership will begin.
                         </Alert>
                     )}
                     {userSignedDoc && partnerSignedDoc && (
                         <Alert severity="success" sx={{ marginTop: '1rem', alignSelf: 'center', width: 'fit-content' }}>
-                            Τα συμφωνητικά έχουν υποβληθεί με επιτυχία. Μπορείτε να δείτε τη συνεργασία σας στην ενότητα <Link to="/partnerships" style={{ color: 'inherit' }}>'Συνεργασίες'</Link>.
+                            The agreements have been successfully submitted. You can view your partnership in the <Link to="/partnerships" style={{ color: 'inherit' }}>'Partnerships'</Link> section.
                         </Alert>
                     )}
                     <Box sx={{
@@ -201,7 +201,7 @@ function ViewContract() {
                                 ) : (
                                     <CancelIcon sx={{ color: 'var(--clr-error)', fontSize: '2rem' }} />
                                 )}
-                                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Υπογεγραμμένο από Γονέα</p>
+                                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Signed by Parent</p>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 {contractData.signedDocNanny ? (
@@ -209,22 +209,22 @@ function ViewContract() {
                                 ) : (
                                     <CancelIcon sx={{ color: 'var(--clr-error)', fontSize: '2rem' }} />
                                 )}
-                                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Υπογεγραμμένο από Νταντά</p>
+                                <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Signed by Nanny</p>
                             </Box>
                         </Box>
                         <Divider sx={{ width: '90%', margin: '1rem' }} />
                         {/* Download & Upload Contract buttons */}
                         {(userData.role === 'parent' && !contractData.signedDocParent) || (userData.role === 'nanny' && !contractData.signedDocNanny) ? (
                             <>
-                                <h3>1. Κατεβάστε το συμφωνητικό, διαβάστε το και υπογράψτε το.</h3>
+                                <h3>1. Download the contract, read it, and sign it.</h3>
                                 <Button
                                     variant="contained"
                                     sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
                                     startIcon={<DownloadIcon />}
                                 >
-                                    <p className='button-text'>Συμφωνητικό</p>
+                                    <p className='button-text'>Contract</p>
                                 </Button>
-                                <h3 style={{marginTop: '1rem'}}>2. Ανεβάστε το υπογεγραμμένο συμφωνητικό.</h3>
+                                <h3 style={{marginTop: '1rem'}}>2. Upload the signed contract.</h3>
                                 <Button
                                     variant="contained"
                                     component="label"
@@ -232,7 +232,7 @@ function ViewContract() {
                                     startIcon={<UploadIcon />}
                                     disabled={userData.partnershipActive}
                                 >
-                                    <p className='button-text'>Υποβολή υπογεγραμμένο συμφωνητικό</p>
+                                    <p className='button-text'>Submit signed contract</p>
                                     <input
                                         type="file"
                                         hidden
@@ -242,19 +242,19 @@ function ViewContract() {
                             </>
                         ) : (   // If both users have signed the contract, show download signed contract button
                             <>
-                                <h3>Μπορείτε να κατεβάσετε το υπογεγραμμένο συμφωνητικό σας εδώ.</h3>
+                                <h3>You can download your signed agreement here.</h3>
                                 <Button
                                     variant="contained"
                                     sx={{ marginTop: '1rem', backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}
                                     startIcon={<DownloadIcon />}
                                 >
-                                    <p className='button-text'>Υπογεγραμμένο Συμφωνητικό</p>
+                                    <p className='button-text'>Signed Contract</p>
                                 </Button>
                             </>
                         )}
                     </Box>
                     {/* Contract Preview */}
-                    <h1 style={{ textAlign: 'center' }}>Προεπισκόπηση Συμφωνητικού</h1>
+                    <h1 style={{ textAlign: 'center' }}>Contract Preview</h1>
                     <Box sx={{
                         width: '90%',
                         maxWidth: '1080px',
@@ -268,36 +268,36 @@ function ViewContract() {
                         boxShadow: '2',
                         margin: '1rem auto'
                     }}>
-                        <h2>Πληροφορίες Γονέα</h2>
+                        <h2>Parent Information</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Γονέα" value={parentData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Επώνυμο Γονέα" value={parentData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Φύλο Γονέα" value={translateMap[parentData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Ηλικία Γονέα" value={parentData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Διεύθυνση" value={parentData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Ταχυδρομικός Κώδικας" value={parentData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Τηλέφωνο" value={parentData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Parent's First Name" value={parentData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Parent's Last Name" value={parentData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Parent's Gender" value={translateMap[parentData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Parent's Age" value={parentData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Address" value={parentData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Postal Code" value={parentData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Phone Number" value={parentData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                             <TextField label="Email" value={parentData.email} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
-                        <h2>Πληροφορίες Νταντάς</h2>
+                        <h2>Nanny Information</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Νταντάς" value={nannyData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Επώνυμο Νταντάς" value={nannyData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Φύλο Νταντάς" value={translateMap[nannyData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Ηλικία Νταντάς" value={nannyData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Διεύθυνση" value={nannyData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Ταχυδρομικός Κώδικας" value={nannyData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Τηλέφωνο" value={nannyData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Nanny's First Name" value={nannyData.firstName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Nanny's Last Name" value={nannyData.lastName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Nanny's Gender" value={translateMap[nannyData.gender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Nanny's Age" value={nannyData.age} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Address" value={nannyData.address} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Postal Code" value={nannyData.postalCode} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Phone Number" value={nannyData.phoneNumber} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                             <TextField label="Email" value={nannyData.email} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
-                        <h2>Πληροφορίες Παιδιού</h2>
+                        <h2>Child Information</h2>
                         <Box sx={{ display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                            <TextField label="Όνομα Παιδιού" value={parentData.childName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
-                            <TextField label="Φύλο Παιδιού" value={translateMap[parentData.childGender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Child's First Name" value={parentData.childName} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
+                            <TextField label="Child's Gender" value={translateMap[parentData.childGender]} fullWidth variant="filled" slotProps={{ input: { readOnly: true } }} />
                         </Box>
-                        <h2>Διάρκεια Συνεργασίας</h2>
+                        <h2>Partnership Duration</h2>
                         <FormDateRange formData={contractData} setFormData={setContractData} errors={{}} editMode={false} />
-                        <h2>Εβδομαδιαίο Πρόγραμμα Φροντίδας Παιδιού</h2>
+                        <h2>Weekly Child Care Schedule</h2>
                         <VisualizeTimeTable formData={contractData} />
                     </Box>
                 </>
@@ -310,18 +310,18 @@ function ViewContract() {
                     setFileName('');
                 }}
             >
-                <DialogTitle><strong>Επιβεβαίωση</strong></DialogTitle>
+                <DialogTitle><strong>Confirmation</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουροι πως θέλετε να ανεβάσετε το αρχείο <strong>{fileName}</strong>;
+                    Are you sure you want to upload the file <strong>{fileName}</strong>;
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpenConfirmDialog(false)} sx={{ color: 'var(--clr-black)' }}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={handleConfirmUpload} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}>
-                        <p className='button-text'>Υποβολή</p>
+                        <p className='button-text'>Submit</p>
                     </Button>
                 </DialogActions>
             </Dialog>

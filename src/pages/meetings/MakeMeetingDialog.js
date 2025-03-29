@@ -5,8 +5,8 @@ import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // hour and minutes choices
@@ -188,73 +188,72 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
         <>
             {/* Main dialog for creating a new meeting */}
             <Dialog open={open} onClose={onClose}>
-                <DialogTitle><strong>Δημιουργία Ραντεβού Γνωριμίας</strong></DialogTitle>
+                <DialogTitle><strong>Create Introduction Meeting</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: '1rem' }}>
-                        Δημιουργήστε ένα ραντεβού γνωριμίας για να έρθετε σε επαφή με τη
-                        νταντά που επιθυμείτε να αναλάβει τη φροντίδα του παιδιού σας! <br />
-                        <strong>Προσοχή! Για θεωρηθεί το ραντεβού εγκεκριμένο, θα πρέπει να το αποδεχτεί η νταντά αφού το υποβάλετε.</strong>
+                        Create an introduction meeting to get in touch with the nanny you want to take care of your child! <br />
+                        <strong>Attention! For the meeting to be considered approved, the nanny must accept it after submission.</strong>
                     </DialogContentText>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {/* Date */}
-                        <p><strong>Επιλέξτε ημερομηνία για το ραντεβού:</strong></p>
+                        <p><strong>Select a date for the meeting:</strong></p>
                         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                             <TextField
-                                label="Ημέρα"
+                                label="Day"
                                 type="text"
                                 value={day}
                                 onChange={(e) => { const value = e.target.value; setDay(value); if (value) {setDayError(false); setMonthError(false); setYearError(false);}; }}
                                 fullWidth
                                 error={dayError}
-                                helperText={dayError ? 'Παρακαλώ εισάγετε μια έγκυρη ημερομηνία' : ''}
+                                helperText={dayError ? 'Please enter a valid date' : ''}
                             />
                             <TextField
-                                label="Μήνας"
+                                label="Month"
                                 value={month}
                                 onChange={(e) => { const value = e.target.value; setMonth(value); if (value) setMonthError(false); }}
                                 select
                                 fullWidth
                                 error={monthError}
-                                helperText={monthError ? 'Παρακαλώ εισάγετε μια έγκυρη ημερομηνία' : ''}
+                                helperText={monthError ? 'Please enter a valid date' : ''}
                                 >
                                 {months.map((month, index) => (
                                     <MenuItem key={index} value={index}>{month}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
-                                label="Χρονιά"	
+                                label="Year"	
                                 type="text"
                                 value={year}
                                 onChange={(e) => { const value = e.target.value; setYear(value); if (value) setYearError(false); }}
                                 fullWidth
                                 error={yearError}
-                                helperText={yearError ? 'Παρακαλώ εισάγετε μια έγκυρη ημερομηνία' : ''}
+                                helperText={yearError ? 'Please enter a valid date' : ''}
                             />
                         </Box>
                         {/* Time */}
-                        <p><strong>Επιλέξτε ώρα για το ραντεβού:</strong></p>
+                        <p><strong>Select a time for the meeting:</strong></p>
                         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                             <TextField
-                                label="Ώρα"
+                                label="Hour"
                                 value={hour}
                                 onChange={(e) => { const value = e.target.value; setHour(value); if (value) setHourError(false); }}
                                 select
                                 fullWidth
                                 error={hourError}
-                                helperText={hourError ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                                helperText={hourError ? 'This field is required' : ''}
                             >
                                 {hours.map((hour) => (
                                     <MenuItem key={hour} value={hour}>{hour}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
-                                label="Λεπτά"
+                                label="Minutes"
                                 value={minute}
                                 onChange={(e) => { const value = e.target.value; setMinute(value); if (value) setMinuteError(false); }}
                                 select
                                 fullWidth
                                 error={minuteError}
-                                helperText={minuteError ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                                helperText={minuteError ? 'This field is required' : ''}
                             >
                                 {minutes.map((minute) => (
                                     <MenuItem key={minute} value={minute}>{minute}</MenuItem>
@@ -262,50 +261,50 @@ function MakeMeetingDialog({ open, onClose, nannyId, parentFirstName, parentLast
                             </TextField>
                         </Box>
                         {/* Meeting Type */}
-                        <p style={{ color: meetingTypeError ? 'var(--clr-error)' : 'var(--clr-black)' }}><strong>Επιλέξτε τον τύπο του ραντεβού:</strong></p>
+                        <p style={{ color: meetingTypeError ? 'var(--clr-error)' : 'var(--clr-black)' }}><strong>Select the type of meeting:</strong></p>
                         <RadioGroup
                             value={meetingType}
                             onChange={(e) => { const value = e.target.value; setMeetingType(value); if (value) setMeetingTypeError(false); }}
                         >
-                            <FormControlLabel value="online" control={<Radio />} label="Διαδυκτιακό" />
-                            <FormControlLabel value="in-person" control={<Radio />} label="Δια ζώσης" />
+                            <FormControlLabel value="online" control={<Radio />} label="Online" />
+                            <FormControlLabel value="in-person" control={<Radio />} label="In-person" />
                         </RadioGroup>
                         {meetingType === 'in-person' && (
                             <TextField
-                                label="Διεύθυνση Συνάντησης"
+                                label="Meeting Address"
                                 value={address}
                                 onChange={(e) => { const value = e.target.value; setAddress(value); if (value) setAddressError(false); }}
                                 fullWidth
                                 error={addressError}
-                                helperText={addressError ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                                helperText={addressError ? 'This field is required' : ''}
                             />
                         )}
                     </Box>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose} sx={{ color: 'var(--clr-black)' }} disabled={confirmDialogOpen}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant="contained" onClick={handleOpenConfirmDialog} sx={{ backgroundColor: 'var(--clr-violet)' }} disabled={confirmDialogOpen}>
-                        <p className='button-text'>Δημιουργία</p>
+                        <p className='button-text'>Create</p>
                     </Button>
                 </DialogActions>
             </Dialog>
 
             {/* Second dialog to confirm the meeting creation */}
             <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmDialog}>
-                <DialogTitle><strong>Επιβεβαίωση Δημιουργίας Ραντεβού</strong></DialogTitle>
+                <DialogTitle><strong>Confirm Meeting Creation</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουροι ότι θέλετε να δημιουργήσετε αυτό το ραντεβού;
+                        Are you sure you want to create this meeting?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseConfirmDialog} sx={{ color: 'var(--clr-black)' }} disabled={isSubmitting}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant="contained" onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)' }} disabled={isSubmitting}>
-                        <p className='button-text'>Επιβεβαίωση</p>
+                        <p className='button-text'>Confirm</p>
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
 // Job Posting For view only
@@ -21,7 +21,7 @@ function ViewJobPosting({ jobPostingData }) {
             boxShadow: '2',
         }}>
             {/* Age Groups */}
-            <h2>Ηλικιακές Ομάδες Φροντίδας</h2>
+            <h2>Age Groups</h2>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 {jobPostingData.ageGroups.map((ageGroup) => (
                     <Box
@@ -38,10 +38,10 @@ function ViewJobPosting({ jobPostingData }) {
                         }}
                     >
                         <p className="button-text">
-                            {ageGroup === '1-2' ? '1-2 χρονών' :
-                            ageGroup === '3-6' ? '3-6 χρονών' :
-                            ageGroup === '7-12' ? '7-12 χρονών' :
-                            ageGroup === '13-16' ? '13-16 χρονών' :
+                            {ageGroup === '1-2' ? '1-2 years old' :
+                            ageGroup === '3-6' ? '3-6 years old' :
+                            ageGroup === '7-12' ? '7-12 years old' :
+                            ageGroup === '13-16' ? '13-16 years old' :
                             ''}
                         </p>
                     </Box>
@@ -49,34 +49,34 @@ function ViewJobPosting({ jobPostingData }) {
             </Box>
 
             {/* Employment Type */}
-            <h2>Χρόνος Απασχόλησης</h2>
+            <h2>Employment Type</h2>
             <TextField
-                label="Χρόνος Απασχόλησης"
+                label="Employment Type"
                 name="employmentType"
                 value={
-                    jobPostingData.employmentType === 'part-time' ? 'Μερική Απασχόληση (4 ώρες)' :
-                    jobPostingData.employmentType === 'full-time' ? 'Πλήρης Απασχόληση (8 ώρες)' :
+                    jobPostingData.employmentType === 'part-time' ? 'Part-time (4 hours)' :
+                    jobPostingData.employmentType === 'full-time' ? 'Full-time (8 hours)' :
                     ''
                 }
                 fullWidth
-            ></TextField>
+            />
 
             {/* Babysitting Place */}
-            <h2>Χώρος Φύλαξης</h2>
+            <h2>Babysitting Place</h2>
             <TextField
-                label="Χώρος Φύλαξης"
+                label="Babysitting Place"
                 name="babysittingPlace"
                 value={
-                    jobPostingData.babysittingPlace === 'parents-home' ? 'Σπίτι Γονέα' :
-                    jobPostingData.babysittingPlace === 'nanny-home' ? 'Σπίτι Νταντάς' :
-                    jobPostingData.babysittingPlace === 'both' ? 'Σπίτι Γονέα & Νταντάς' :
+                    jobPostingData.babysittingPlace === 'parents-home' ? 'Parent\'s Home' :
+                    jobPostingData.babysittingPlace === 'nanny-home' ? 'Nanny\'s Home' :
+                    jobPostingData.babysittingPlace === 'both' ? 'Parent\'s & Nanny\'s Home' :
                     ''
                 }
                 fullWidth
-            ></TextField>
+            />
 
             {/* Timetable */}
-            <h2>Χρονοδιάγραμμα Διαθεσιμότητας</h2>
+            <h2>Availability Timetable</h2>
             <TableContainer component={Paper} sx={{ margin: '1rem 0', borderRadius: '1rem', boxShadow: '3', backgroundColor: "#fafafa" }}>
                 <Table>
                     <TableHead>

@@ -220,44 +220,43 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     
         if (!formData.gender || errorStates.gender) {
             setErrorStates((prevStates) => ({ ...prevStates, gender: true }));
-            newErrors.gender = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Φύλο');
+            newErrors.gender = 'This field is required';
+            newSnackbarMessages.push('Gender');
         }
         if (!formData.age || errorStates.age) {
             setErrorStates((prevStates) => ({ ...prevStates, age: true }));
-            newErrors.age = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Ηλικία');
+            newErrors.age = 'This field is required';
+            newSnackbarMessages.push('Age');
         }
         if (!formData.address || errorStates.address) {
             setErrorStates((prevStates) => ({ ...prevStates, address: true }));
-            newErrors.address = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Διεύθυνση');
+            newErrors.address = 'This field is required';
+            newSnackbarMessages.push('Address');
         }
         if (!formData.postalCode || errorStates.postalCode) {
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
-            newErrors.postalCode = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Ταχυδρομικός Κώδικας');
+            newErrors.postalCode = 'This field is required';
+            newSnackbarMessages.push('Postal Code');
         }
         if (!formData.town || errorStates.town) {
             setErrorStates((prevStates) => ({ ...prevStates, town: true }));
-            newErrors.town = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Πόλη');
+            newErrors.town = 'This field is required';
+            newSnackbarMessages.push('Town');
         }
         if (!formData.phoneNumber || errorStates.phoneNumber) {
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
-            newErrors.phoneNumber = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Τηλέφωνο');
+            newErrors.phoneNumber = 'This field is required';
+            newSnackbarMessages.push('Phone Number');
         }
         if (!formData.experience || errorStates.experience) {
             setErrorStates((prevStates) => ({ ...prevStates, experience: true }));
-            newErrors.experience = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Εμπειρία');
+            newErrors.experience = 'This field is required';
+            newSnackbarMessages.push('Experience');
         }
     
-        ///// Validate degrees /////
+        ///// Validate Degrees /////
         const newDegreeErrors = formData.degrees.map((degree) => {
             if (!degree.degreeLevel || !degree.degreeTitle || !degree.degreeFile) {   // if any of the fields is empty
-               
                 return { error: true };
             }
             return { error: false };
@@ -273,13 +272,12 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
         const hasDegreeErrors = newDegreeErrors.some((degreeErrors) => degreeErrors.error);
     
         if (hasDegreeErrors) {
-            newSnackbarMessages.push('Σπουδές');
+            newSnackbarMessages.push('Degrees');
         }
 
         ///// Validate Certificates /////
         const newCertificateErrors = formData.certificates.map((certificate) => {
             if (!certificate.certificateTitle || !certificate.certificateFile) {    // if any of the fields is empty
-               
                 return { error: true };
             }
             return { error: false };
@@ -295,13 +293,12 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
         const hasCertificateErrors = newCertificateErrors.some((certificateErrors) => certificateErrors.error);
     
         if (hasCertificateErrors) {
-            newSnackbarMessages.push('Πιστοποιητικά');
+            newSnackbarMessages.push('Certificates');
         }
 
         ///// Validate Recommendations /////
         const newRecommendationErrors = formData.recommendations.map((recommendation) => {
             if (!recommendation.recommendationTitle || !recommendation.recommendationFile) {    // if any of the fields is empty
-               
                 return { error: true };
             }
             return { error: false };
@@ -313,21 +310,21 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
             recommendations: newRecommendationErrors,
         }));
     
-        // Check if there are any recommendations errors
+        // Check if there are any recommendation errors
         const hasRecommendationErrors = newRecommendationErrors.some((recommendationErrors) => recommendationErrors.error);
     
         if (hasRecommendationErrors) {
-            newSnackbarMessages.push('Συστάσεις');
+            newSnackbarMessages.push('Recommendations');
         }
     
         if (formData.aboutMe.length > 500 || errorStates.aboutMe) {
             setErrorStates((prevStates) => ({ ...prevStates, aboutMe: true }));
-            newSnackbarMessages.push('Σχετικά με μένα');
+            newSnackbarMessages.push('About Me');
         }
     
         setErrors(newErrors);
         if (newSnackbarMessages.length > 0) {
-            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+            setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
         }
         return Object.keys(newErrors).length === 0;
     };
@@ -388,7 +385,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleGenderBlur = () => {
         if (!formData.gender) {     // if the field is empty
-            setErrors((prevErrors) => ({ ...prevErrors, gender: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, gender: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, gender: true }));
         } else {        // if the field is not empty, remove error message & set error state to false
             setErrors((prevErrors) => {
@@ -402,12 +399,12 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty & age is a number above 18 
     const handleAgeBlur = () => {
         if (!formData.age) {    //check if field is empty
-            setErrors((prevErrors) => ({ ...prevErrors, age: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, age: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, age: true }));
         } else {
             const age = parseInt(formData.age, 10);
             if (isNaN(age) || age < 18) {   //check if age is a number and above 18
-                setErrors((prevErrors) => ({ ...prevErrors, age: 'Η ηλικία πρέπει να είναι άνω των 18' }));
+                setErrors((prevErrors) => ({ ...prevErrors, age: 'Age must be above 18' }));
                 setErrorStates((prevStates) => ({ ...prevStates, age: true }));
             } else {    // field is valid
                 setErrors((prevErrors) => {
@@ -422,7 +419,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleAddressBlur = () => {
         if (!formData.address) {
-            setErrors((prevErrors) => ({ ...prevErrors, address: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, address: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, address: true }));
         } else {
             setErrors((prevErrors) => {
@@ -436,10 +433,10 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty & postal code is a 5-digit number
     const handlePostalCodeBlur = () => {
         if (!formData.postalCode) {
-            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
         } else if (!/^\d{5}$/.test(formData.postalCode)) {
-            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Ο ταχυδρομικός κώδικας πρέπει να αποτελείτε από 5 ψηφία' }));
+            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Postal code must be 5 digits' }));
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
         } else {
             setErrors((prevErrors) => {
@@ -453,7 +450,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleTownBlur = () => {
         if (!formData.town) {
-            setErrors((prevErrors) => ({ ...prevErrors, town: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, town: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, town: true }));
         } else {
             setErrors((prevErrors) => {
@@ -467,10 +464,10 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty & phone number is a 10-digit number
     const handlePhoneNumberBlur = () => {
         if (!formData.phoneNumber) {
-            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
         } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
-            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Το τηλέφωνο πρέπει πρέπει να αποτελείτε από 10 ψηφία' }));
+            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Phone number must be 10 digits' }));
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
         } else {
             setErrors((prevErrors) => {
@@ -484,7 +481,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleExperienceBlur = () => {
         if (!formData.experience) {
-            setErrors((prevErrors) => ({ ...prevErrors, experience: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, experience: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, experience: true }));
         } else {
             setErrors((prevErrors) => {
@@ -509,7 +506,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty & only contains letters
     const handleAboutMeBlur = () => {
         if (formData.aboutMe.length > 500) {
-            setErrors((prevErrors) => ({ ...prevErrors, aboutMe: 'Το πεδίο δέχεται μέχρι 500 χαρακτήρες' }));
+            setErrors((prevErrors) => ({ ...prevErrors, aboutMe: 'The field accepts up to 500 characters' }));
             setErrorStates((prevStates) => ({ ...prevStates, aboutMe: true }));
         } else {
             setErrors((prevErrors) => {
@@ -562,7 +559,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
             position: 'relative',
             textAlign: 'left',
         }}>
-            <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+            <p style={{color: 'var(--clr-grey)'}}>Mandatory Fields: *</p>
             <Box sx={{ 
                 display: 'flex',
                 alignItems: 'center', 
@@ -575,7 +572,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     sx={{ backgroundColor: 'var(--clr-violet)' }}
                     startIcon={<UploadIcon />}
                 >
-                    <p className='button-text'>Ανεβάστε φωτογραφία</p>
+                    <p className='button-text'>Upload Photo</p>
                     <input
                         type="file"
                         hidden
@@ -585,7 +582,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 {formData.profilePhoto ? (
                     <p>{formData.profilePhoto}</p>
                 ) : (
-                    <p>Δεν έχετε ανεβάσει φωτογραφία</p>
+                    <p>No photo is uploaded</p>
                 )}
             </Box>
             <Button
@@ -594,10 +591,10 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 startIcon={<DeleteIcon />}
                 onClick={() => setFormData({ ...formData, profilePhoto: '' })}
             >
-                <p className='button-text'>Διαγραφή φωτογραφίας</p>
+                <p className='button-text'>Delete Photo</p>
             </Button>
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
-            <h2>Προσωπικά Στοιχεία</h2>
+            <h2>Personal Information</h2>
             <Tooltip title="This field can't be changed" arrow>
                 <TextField label="First Name" value={formData.firstName} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
@@ -608,12 +605,12 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 <TextField label="AMKA" value={formData.amka} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="Role" value="Νταντά" slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
+                <TextField label="Role" value="Nanny" slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* Gender - dropdown menu, 3 options */}
             <TextField
-                label="Φύλο*"
+                label="Gender*"
                 name="gender"
                 select
                 value={formData.gender}
@@ -624,14 +621,14 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.gender}
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="Male">Άντρας</MenuItem>
-                <MenuItem value="Female">Γυναίκα</MenuItem>
-                <MenuItem value="Other">Άλλο</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
             </TextField>
 
             {/* Age */}
             <TextField
-                label="Ηλικία"
+                label="Age"
                 variant="outlined"
                 fullWidth
                 type="text"
@@ -641,11 +638,11 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.age}
                 helperText={errors.age}
             />
-                            
-            {/* Address, Postal Code, Town, Phone Number, Email(can't be changed) */}
-            <h2>Διεύθυνση & Στοιχεία Επικοινωνίας</h2>
+
+            {/* Address, Postal Code, Town, Phone Number, Email (can't be changed) */}
+            <h2>Address & Contact Information</h2>
             <TextField
-                label="Διεύθυνση*"
+                label="Address*"
                 name="address"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -655,7 +652,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.address}
             />
             <TextField
-                label="Ταχυδρομικός Κώδικας*"
+                label="Postal Code*"
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
@@ -664,7 +661,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.postalCode}
                 helperText={errors.postalCode}
             />
-            <p style={{ fontSize: '1.15rem' }}>Διαλέξτε μια από τις πόλεις της λίστας στα αγγλικά.</p>
+            <p style={{ fontSize: '1.15rem' }}>Select a city from the list in English.</p>
             <Autocomplete
                 options={towns}
                 getOptionLabel={(option) => option}
@@ -677,7 +674,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 renderInput={(params) => (          // for error
                     <TextField
                         {...params}
-                        label="Πόλη*"
+                        label="Town*"
                         error={errorStates.town}
                         helperText={errors.town}
                     />
@@ -685,7 +682,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 onBlur={handleTownBlur}
             />
             <TextField
-                label="Τηλέφωνο*"
+                label="Phone Number*"
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
@@ -694,15 +691,15 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.phoneNumber}
                 helperText={errors.phoneNumber}
             />
-            <Tooltip title="This field can't be changed"  arrow>
+            <Tooltip title="This field can't be changed" arrow>
                 <TextField label="Email" value={formData.email} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* dropdown months of experience */}
-            <h2>Εμπειρία</h2>
-            <p style={{color: 'var(--clr-grey)'}}>Καταχωρήστε την εμπειρία σας ως νταντά σε μήνες.</p>
+            <h2>Experience</h2>
+            <p style={{ color: 'var(--clr-grey)' }}>Enter your experience as a nanny in months.</p>
             <TextField
-                label="Εμπειρία*"
+                label="Experience*"
                 name="experience"
                 select
                 value={formData.experience}
@@ -713,17 +710,17 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.experience}
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="0-6">0-6 μήνες</MenuItem>
-                <MenuItem value="6-12">6-12 μήνες</MenuItem>
-                <MenuItem value="12-18">12-18 μήνες</MenuItem>
-                <MenuItem value="18-24">18-24 μήνες</MenuItem>
-                <MenuItem value="24-36">24-36 μήνες</MenuItem>
-                <MenuItem value="36+">36+ μήνες</MenuItem>
+                <MenuItem value="0-6">0-6 months</MenuItem>
+                <MenuItem value="6-12">6-12 months</MenuItem>
+                <MenuItem value="12-18">12-18 months</MenuItem>
+                <MenuItem value="18-24">18-24 months</MenuItem>
+                <MenuItem value="24-36">24-36 months</MenuItem>
+                <MenuItem value="36+">36+ months</MenuItem>
             </TextField>
 
-            {/* Use map to show degrees(degree level(dropdown), degree title(text), degree file(file upload) */}
-            <h2>Σπουδές</h2>
-            <p style={{color: 'var(--clr-grey)'}}>Αν έχετε σπουδάσει ανεβάστε έως και 3 πτυχία.</p>
+            {/* Use map to show degrees (degree level dropdown, degree title text, degree file upload) */}
+            <h2>Education</h2>
+            <p style={{ color: 'var(--clr-grey)' }}>Upload up to three degrees if you have completed any studies.</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
                 {formData.degrees.map((degree, index) => (
                     <Box key={index} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '0.5rem' }}>
@@ -731,22 +728,22 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             <h3>{index + 1}.</h3>
                             <TextField
                                 select
-                                label="Επίπεδο Πτυχίου"
+                                label="Degree Level"
                                 name={`degreeLevel-${index}`}
                                 value={degree.degreeLevel}
                                 onChange={(e) => handleDegreeChange(index, 'degreeLevel', e.target.value)}
                                 fullWidth
                                 error={errorStates.degrees[index]?.error}
-                                helperText={errorStates.degrees[index]?.error ? 'Συμπληρώστε όλα τα πεδία ή πατήστε "Διαγραφή Πεδίου Σπουδών"' : ''}
+                                helperText={errorStates.degrees[index]?.error ? 'Fill in all fields or click "Delete Degree Field"' : ''}
                             >
-                                <MenuItem value="school">Απολυτήριο Λυκείου</MenuItem>
-                                <MenuItem value="college">Κολλέγιο</MenuItem>
-                                <MenuItem value="tei">ΤΕΙ</MenuItem>
-                                <MenuItem value="university">Πανεπιστήμιο</MenuItem>
+                                <MenuItem value="school">High School Diploma</MenuItem>
+                                <MenuItem value="college">College</MenuItem>
+                                <MenuItem value="tei">TEI</MenuItem>
+                                <MenuItem value="university">University</MenuItem>
                             </TextField>
                         </Box>
                         <TextField
-                            label="Τίτλος Πτυχίου"
+                            label="Degree Title"
                             name={`degreeTitle-${index}`}
                             value={degree.degreeTitle}
                             onChange={(e) => handleDegreeChange(index, 'degreeTitle', e.target.value)}
@@ -766,7 +763,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 }}
                                 startIcon={<UploadIcon />}
                             >
-                                <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
+                                <p className='button-text'>Upload Proof</p>
                                 <input
                                     type="file"
                                     hidden
@@ -777,7 +774,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 <p>{degree.degreeFile}</p>
                             ) : (
                                 <p style={{ color: errorStates.degrees[index]?.error ? 'var(--clr-error)' : 'var(--clr-black)' }}>
-                                    Δεν έχετε ανεβάσει κάποιο έγγραφο
+                                    No document uploaded
                                 </p>
                             )}
                         </Box>
@@ -794,7 +791,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             }}
                             startIcon={<DeleteIcon />}
                         >
-                            <p className='button-text'>Διαγραφή πεδίου σπουδών</p>
+                            <p className='button-text'>Delete Degree Field</p>
                         </Button>
                         <Divider />
                     </Box>
@@ -814,26 +811,26 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     }}
                     startIcon={<AddIcon />}
                 >
-                    <p className='button-text'>Προσθήκη Σπουδών</p>
+                    <p className='button-text'>Add Degree</p>
                 </Button>
             )}
 
-            {/* The same as the degree, but no dropdown menu */}
-            <h2>Πιστοποιητικά</h2>
-            <p style={{color: 'var(--clr-grey)'}}>Μπορείτε να ανεβάσετε έως 3 πιστοποιητικά (π.χ. σεμινάρια, πιστοποιητικό ξένης γλώσσας)</p>
+            {/* Certificates */}
+            <h2>Certificates</h2>
+            <p style={{ color: 'var(--clr-grey)' }}>You can upload up to 3 certificates (e.g., seminars, language proficiency certificates).</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
                 {formData.certificates.map((certificate, index) => (
                     <Box key={index} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '0.5rem' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <h3>{index + 1}.</h3>
                             <TextField
-                                label="Όνομα Πιστοποιητικού"
+                                label="Certificate Name"
                                 name={`certificateTitle-${index}`}
                                 value={certificate.certificateTitle}
                                 onChange={(e) => handleCertificateChange(index, 'certificateTitle', e.target.value)}
                                 fullWidth
                                 error={errorStates.certificates[index]?.error}
-                                helperText={errorStates.certificates[index]?.error ? 'Συμπληρώστε όλα τα πεδία ή πατήστε "Διαγραφή Πεδίου Πιστοποιητικού"' : ''}
+                                helperText={errorStates.certificates[index]?.error ? 'Fill in all fields or click "Delete Certificate Field"' : ''}
                             />
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'baseline', gap: '1rem' }}>
@@ -849,7 +846,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 }}
                                 startIcon={<UploadIcon />}
                             >
-                                <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
+                                <p className='button-text'>Upload Proof</p>
                                 <input
                                     type="file"
                                     hidden
@@ -860,7 +857,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 <p>{certificate.certificateFile}</p>
                             ) : (
                                 <p style={{ color: errorStates.certificates[index]?.error ? 'var(--clr-error)' : 'var(--clr-black)' }}>
-                                    Δεν έχετε ανεβάσει κάποιο έγγραφο
+                                    No document uploaded
                                 </p>
                             )}
                         </Box>
@@ -877,7 +874,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             }}
                             startIcon={<DeleteIcon />}
                         >
-                            <p className='button-text'>Διαγραφή Πεδίου Πιστοποιητικού</p>
+                            <p className='button-text'>Delete Certificate Field</p>
                         </Button>
                         <Divider />
                     </Box>
@@ -897,26 +894,26 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     }}
                     startIcon={<AddIcon />}
                 >
-                    <p className='button-text'>Προσθήκη Πιστοποιητικού</p>
+                    <p className='button-text'>Add Certificate</p>
                 </Button>
             )}
 
             {/* The same as the degree, but no dropdown menu */}
-            <h2>Συστάσεις</h2>
-            <p style={{color: 'var(--clr-grey)'}}>Μπορείτε να ανεβάσετε έως 3 συστάσεις.</p>
+            <h2>Recommendations</h2>
+            <p style={{ color: 'var(--clr-grey)' }}>You can upload up to three recommendations.</p>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column', gap: '0.5rem' }}>
                 {formData.recommendations.map((recommendation, index) => (
                     <Box key={index} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '0.5rem' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <h3>{index + 1}.</h3>
                             <TextField
-                                label="Όνομα Σύστασης"
+                                label="Recommendation Name"
                                 name={`recommendationTitle-${index}`}
                                 value={recommendation.recommendationTitle}
                                 onChange={(e) => handleRecommendationChange(index, 'recommendationTitle', e.target.value)}
                                 fullWidth
                                 error={errorStates.recommendations[index]?.error}
-                                helperText={errorStates.recommendations[index]?.error ? 'Συμπληρώστε όλα τα πεδία ή πατήστε "Διαγραφή Πεδίου Σύστασης"' : ''}
+                                helperText={errorStates.recommendations[index]?.error ? 'Fill in all fields or click "Delete Recommendation Field"' : ''}
                             />
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'baseline', gap: '1rem' }}>
@@ -932,7 +929,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 }}
                                 startIcon={<UploadIcon />}
                             >
-                                <p className='button-text'>Ανέβασμα Αποδεικτικού</p>
+                                <p className='button-text'>Upload Proof</p>
                                 <input
                                     type="file"
                                     hidden
@@ -943,7 +940,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                                 <p>{recommendation.recommendationFile}</p>
                             ) : (
                                 <p style={{ color: errorStates.recommendations[index]?.error ? 'var(--clr-error)' : 'var(--clr-black)' }}>
-                                    Δεν έχετε ανεβάσει κάποιο έγγραφο
+                                    No document uploaded
                                 </p>
                             )}
                         </Box>
@@ -960,13 +957,13 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             }}
                             startIcon={<DeleteIcon />}
                         >
-                            <p className='button-text'>Διαγραφή Πεδίου Σύστασης</p>
+                            <p className='button-text'>Delete Recommendation Field</p>
                         </Button>
                         <Divider />
                     </Box>
                 ))}
             </Box>
-            {/* Button to add more recmmendation (up to 3) */}
+            {/* Button to add more recommendations (up to 3) */}
             {formData.recommendations.length < 3 && (
                 <Button
                     variant="contained"
@@ -980,13 +977,13 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     }}
                     startIcon={<AddIcon />}
                 >
-                    <p className='button-text'>Προσθήκη Σύστασης</p>
+                    <p className='button-text'>Add Recommendation</p>
                 </Button>
             )}
 
             {/* Languages, Music - checkboxes */}
-            <h2>Δεξιότητες</h2>
-            <h3 style={{fontWeight: '400'}}><u>Ξένες Γλώσσες</u></h3>
+            <h2>Skills</h2>
+            <h3 style={{ fontWeight: '400' }}><u>Foreign Languages</u></h3>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
                     control={
@@ -996,7 +993,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="english"
                         />
                     }
-                    label="Αγγλικά"
+                    label="English"
                 />
                 <FormControlLabel
                     control={
@@ -1006,7 +1003,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="german"
                         />
                     }
-                    label="Γερμανικά"
+                    label="German"
                 />
                 <FormControlLabel
                     control={
@@ -1016,7 +1013,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="french"
                         />
                     }
-                    label="Γαλλικά"
+                    label="French"
                 />
                 <FormControlLabel
                     control={
@@ -1026,11 +1023,11 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="spanish"
                         />
                     }
-                    label="Ισπανικά"
+                    label="Spanish"
                 />
             </Box>
 
-            <h3 style={{fontWeight: '400'}}><u>Μουσικά Όργανα</u></h3>
+            <h3 style={{ fontWeight: '400' }}><u>Musical Instruments</u></h3>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
                     control={
@@ -1040,7 +1037,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="piano"
                         />
                     }
-                    label="Πιάνο"
+                    label="Piano"
                 />
                 <FormControlLabel
                     control={
@@ -1050,7 +1047,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="guitar"
                         />
                     }
-                    label="Κιθάρα"
+                    label="Guitar"
                 />
                 <FormControlLabel
                     control={
@@ -1060,7 +1057,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="violin"
                         />
                     }
-                    label="Βιολί"
+                    label="Violin"
                 />
                 <FormControlLabel
                     control={
@@ -1070,14 +1067,14 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                             name="flute"
                         />
                     }
-                    label="Φλάουτο"
+                    label="Flute"
                 />
             </Box>
 
             {/* About Me - multiline text field */}
-            <h2>Σχετικά με μένα</h2>
+            <h2>About Me</h2>
             <TextField
-                label="Σχετικά με μένα"
+                label="About Me"
                 name="aboutMe"
                 value={formData.aboutMe}
                 onChange={(e) => setFormData({ ...formData, aboutMe: e.target.value })}
@@ -1110,7 +1107,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 }}
                 disabled={loading}
             >
-                <p className='big-button-text'>Υποβολή</p>
+                <p className='big-button-text'>Submit</p>
             </Button>
             {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
         </Box>
@@ -1133,19 +1130,19 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
             open={openConfirmDialog}
             onClose={handleConfirmDialogClose}
         >
-            <DialogTitle><strong>Είστε σίγουρος;</strong></DialogTitle>
+            <DialogTitle><strong>Are you sure?</strong></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Είστε σίγουρος πως θέλετε να συνεχίσετε;<br />
-                    <strong>Παρακαλώ ελέγξτε τα στοιχεία σας πριν τα υποβάλετε.</strong>
+                    Are you sure you want to proceed?<br />
+                    <strong>Please review your details before submitting.</strong>
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                    <p className='button-text'>Ακύρωση</p>
+                    <p className='button-text'>Cancel</p>
                 </Button>
                 <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} >
-                    <p className='button-text'>Υποβολή</p>
+                    <p className='button-text'>Submit</p>
                 </Button>
             </DialogActions>
         </Dialog>

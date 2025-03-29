@@ -3,12 +3,12 @@ import { Box, Button, TextField, MenuItem, TableContainer, Table, TableHead, Tab
 
 import CheckIcon from '@mui/icons-material/Check';
 
-const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // Validate Application Fields and show error messages
@@ -22,13 +22,13 @@ function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) 
 
     if (!fromMonthFilled || !formData.fromDate.year || formData.fromDate.year < 2025) {
         setSnackbarSeverity('error');
-        newErrors.fromDate = 'Βάλτε μια έγκυρη ημερομηνία.';
-        newSnackbarMessages.push('Από Μήνας/Έτος');
+        newErrors.fromDate = 'Enter a valid date.';
+        newSnackbarMessages.push('From Month/Year');
     }
     if (!toMonthFilled || !formData.toDate.year || formData.toDate.year < 2025) {
         setSnackbarSeverity('error');
-        newErrors.toDate = 'Βάλτε μια έγκυρη ημερομηνία.';
-        newSnackbarMessages.push('Μέχρι Μήνας/Έτος');
+        newErrors.toDate = 'Enter a valid date.';
+        newSnackbarMessages.push('To Month/Year');
     }
 
     // Check if "from" date is earlier than "to" date
@@ -37,9 +37,9 @@ function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) 
         const toDate = new Date(formData.toDate.year, formData.toDate.month);
         if (fromDate > toDate) {
             setSnackbarSeverity('error');
-            newErrors.fromDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
-            newErrors.toDate = 'Η ημερομηνία "Από" πρέπει να είναι πιο παλιά από την ημερομηνία "Μέχρι".';
-            newSnackbarMessages.push('Ημερομηνία "Από" και "Μέχρι"');
+            newErrors.fromDate = 'The "From" date must be earlier than the "To" date.';
+            newErrors.toDate = 'The "From" date must be earlier than the "To" date.';
+            newSnackbarMessages.push('"From" and "To" date');
         }
     }
 
@@ -60,22 +60,22 @@ function validate(formData, setErrors, setSnackbarMessage, setSnackbarSeverity) 
 
     if (selectedDays !== 5) {   // User must pick 5 days
         setSnackbarSeverity('error');
-        newErrors.timetable = 'Πρέπει να διαλέξετε ώρες για τουλάχιστον 5 μέρες';
-        newSnackbarMessages.push('Χρονοδιάγραμμα');
+        newErrors.timetable = 'You must select hours for at least 5 days.';
+        newSnackbarMessages.push('Timetable');
     } else if (timetableError) {
         setSnackbarSeverity('error');
-        newErrors.timetable = 'Για μερική απασχόληση μπορείτε να διαλέξετε 4 ώρες ανά ημέρα και για πλήρη απασχόληση 8 ώρες ανά ημέρα.';
-        newSnackbarMessages.push('Χρονοδιάγραμμα');
+        newErrors.timetable = 'For part-time work, you can select 4 hours per day, and for full-time work, 8 hours per day.';
+        newSnackbarMessages.push('Timetable');
     }
-
+    
     setErrors(newErrors);
-
+    
     if (newSnackbarMessages.length > 0) {
         setSnackbarSeverity('error');
-        setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+        setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
     } else {
         setSnackbarMessage('');
-    }
+    }    
 
     return Object.keys(newErrors).length === 0;
 }
@@ -87,7 +87,7 @@ function FormNannyName({ formData }) {
     return (
         <TextField
             variant="filled"
-            label="Όνομα Νταντάς"
+            label="Nanny's Name"
             value={formData.nannyName}
             fullWidth
             slotProps={{ input: { readOnly: true } }}
@@ -101,7 +101,7 @@ function FormChildAgeGroup({ formData }) {
     return (
         <TextField
             variant="filled"
-            label="Ηλικιακή Ομάδα Παιδιού"
+            label="Child's Age Group"
             value={`${formData.childAgeGroup} χρονών`}
             fullWidth
             slotProps={{ input: { readOnly: true } }}
@@ -113,13 +113,13 @@ function FormChildAgeGroup({ formData }) {
 // Display Employment Type (cannot be edited, fetched from nanny's job posting)
 function FormEmploymentType({ formData }) {
     const employmentTypeText = formData.employmentType === 'part-time' 
-        ? 'Μερική Απασχόληση (4 ώρες)' 
-        : 'Πλήρης Απασχόληση (8 ώρες)';
+        ? 'Part Time (4 hours)' 
+        : 'Full Time (8 hours)';
 
     return (
         <TextField
             variant="filled"
-            label="Απασχόληση Νταντάς"
+            label="Employment Type"
             value={employmentTypeText}
             fullWidth
             slotProps={{ input: { readOnly: true } }}
@@ -131,15 +131,15 @@ function FormEmploymentType({ formData }) {
 // Display Babysitting Place (cannot be edited, fetched from nanny's job posting)
 function FormBabysittingPlace({ formData }) {
     const babysittingPlaceText = formData.babysittingPlace === 'parents-home'
-        ? 'Σπίτι Γονέα'
+        ? 'Parent\'s Home'
         : formData.babysittingPlace === 'nanny-home'
-        ? 'Σπίτι Νταντάς'
-        : 'Σπίτι Γονέα & Νταντάς';
+        ? 'Naany\'s Home'
+        : 'Parent\'s or Nanny\'s Home';
 
     return (
         <TextField
             variant="filled"
-            label="Χώρος Φύλαξης"
+            label="Babysitting Place"
             value={babysittingPlaceText}
             fullWidth
             slotProps={{ input: { readOnly: true } }}
@@ -163,10 +163,10 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
 
     return (
         <>
-            <h3>Από</h3>
+            <h3>From</h3>
             <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
                 <TextField
-                    label="Μήνας"
+                    label="Month"
                     select
                     value={formData.fromDate.month}
                     onChange={(e) => handleDateChange('fromDate', 'month', e.target.value)}
@@ -180,7 +180,7 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
                     ))}
                 </TextField>
                 <TextField
-                    label="Έτος"
+                    label="Year"
                     type="text"
                     value={formData.fromDate.year}
                     onChange={(e) => handleDateChange('fromDate', 'year', e.target.value)}
@@ -190,10 +190,10 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
                     disabled={!editMode}
                 />
             </Box>
-            <h3>Mέχρι</h3>
+            <h3>To</h3>
             <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
                 <TextField
-                    label="Μήνας"
+                    label="Month"
                     select
                     value={formData.toDate.month}
                     onChange={(e) => handleDateChange('toDate', 'month', e.target.value)}
@@ -207,7 +207,7 @@ function FormDateRange({ formData, setFormData, errors, editMode }) {
                     ))}
                 </TextField>
                 <TextField
-                    label="Έτος"
+                    label="Year"
                     type="text"
                     value={formData.toDate.year}
                     onChange={(e) => handleDateChange('toDate', 'year', e.target.value)}

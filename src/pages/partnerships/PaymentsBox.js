@@ -7,24 +7,24 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // Messages for the different payment statuses for parents
 const paymentStatusMessagesParent = {
-    upcoming: 'Ολοκληρώστε πρώτα τη πληρωμή του προηγούμενου μήνα.',
-    current: 'Όταν ολοκληρωθεί ο μήνας πατήστε πληρωμή για να στείλετε την ανταμοιβή στη νταντά σας.',
-    paid: 'Η πληρωμή στάλθηκε με επιτυχία! Παρακαλώ περιμένετε την επιβεβαίωση της νταντάς.',
-    verified: 'Ολοκληρωμένη - Η πληρωμή επιβεβαιώθηκε από τη νταντά.',
+    upcoming: 'Complete the payment for the previous month first.',
+    current: 'When the month is completed, click pay to send the reward to your nanny.',
+    paid: 'The payment was successfully sent! Please wait for the nanny to confirm it.',
+    verified: 'Completed - The payment was confirmed by the nanny.',
 };
 
 // Messages for the different payment statuses for nannies
 const paymentStatusMessagesNanny = {
-    upcoming: 'Αναμένεται η ολοκλήρωση της πληρωμής του προηγούμενου μήνα.',
-    current: 'Η πληρωμή σας θα εμφανιστεί εδώ όταν σας σταλεί από τον γονιό.',
-    paid: 'Επιβεβαιώστε την πληρωμή που λάβατε από τον γονιό.',
-    verified: 'Ολοκληρωμένη! - Η πληρωμή έχει ολοκληρωθεί.',
+    upcoming: 'Waiting for the completion of the payment for the previous month.',
+    current: 'Your payment will appear here when it is sent by the parent.',
+    paid: 'Confirm the payment you received from the parent.',
+    verified: 'Completed! - The payment has been finalized.',
 };
 
 const getMonthYearString = (date) => {
@@ -44,7 +44,7 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
     // for each month in the partnership, generate a payment box (date, status, pay/verify button)
     for (let i = 0; i < partnershipData.payments.length; i++) {
         // Get the payment status message for each payment
-        const paymentStatus = paymentStatusMessagesParent[partnershipData.payments[i]] || 'Ολοκληρώστε τη πληρωμή του προηγούμενου μήνα';
+        const paymentStatus = paymentStatusMessagesParent[partnershipData.payments[i]] || 'Complete the payment for the previous month';
 
         paymentBoxes.push(
             <>
@@ -63,7 +63,7 @@ const generatePaymentBoxesParent = (partnershipData, handlePaymentConfirm) => {
                         onClick={partnershipData.payments[i] === 'current' ? () => handlePaymentConfirm(i) : null}
                     >
                         <p className='button-text'>
-                            {partnershipData.payments[i] === 'current' || partnershipData.payments[i] === 'upcoming' ? 'Πληρωμή' : 'Απόδειξη'}
+                            {partnershipData.payments[i] === 'current' || partnershipData.payments[i] === 'upcoming' ? 'Pay' : 'Receipt'}
                         </p>
                     </Button>
                 </Box>
@@ -85,7 +85,7 @@ const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) =
     // for each month in the partnership, generate a payment box (date, status, pay/verify button)
     for (let i = 0; i < partnershipData.payments.length; i++) {
         // Get the payment status message for each payment
-        const paymentStatus = paymentStatusMessagesNanny[partnershipData.payments[i]] || 'Ολοκληρώστε τη πληρωμή του προηγούμενου μήνα';
+        const paymentStatus = paymentStatusMessagesNanny[partnershipData.payments[i]] || 'Complete the payment for the previous month';
 
         paymentBoxes.push(
             <>
@@ -108,7 +108,7 @@ const generatePaymentBoxesNanny = (partnershipData, handlePaymentVerification) =
                         sx={{ backgroundColor: 'var(--clr-blue-light)', padding: '0.5rem 1rem', width: 'fit-content', alignSelf: 'flex-end' }}
                         onClick={() => handlePaymentVerification(i)}
                     >
-                        <p className='small-button-text'>Επιβεβαίωση Πληρωμής</p>
+                        <p className='small-button-text'>Confirm Payment</p>
                     </Button>
                 )}
                 {i < partnershipData.payments.length - 1 && <Divider sx={{ width: '100%', backgroundColor: 'var(--clr-black)', borderBottomWidth: 2 }} />}
@@ -190,27 +190,27 @@ const PaymentsBox = ({ partnershipData, userData }) => {
             borderRadius: '1rem',
             boxShadow: '2',
         }}>
-            <h1>Πληρωμές</h1>
+            <h1>Payments</h1>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: '2rem', gap: '1rem', maxHeight: '800px', overflowY: 'auto' }}>
                 {userData.role === 'parent' ? generatePaymentBoxesParent(partnershipData, handlePaymentConfirm) : generatePaymentBoxesNanny(partnershipData, handlePaymentVerification)}
             </Box>
 
             {/* Confirm Dialog */}
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
-                <DialogTitle><strong>Επιβεβαίωση Πληρωμής</strong></DialogTitle>
+                <DialogTitle><strong>Payment Confirmation</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {userData.role === 'parent' 
-                            ? 'Είστε σίγουροι πως θέλετε να στείλετε την πληρωμή για αυτόν τον μήνα;'
-                            : 'Είστε σίγουροι πως θέλετε να επιβεβαιώσετε την πληρωμή για αυτόν τον μήνα;'}
+                            ? 'Are you sure you want to send the payment for this month?'
+                            : 'Are you sure you want to confirm the payment for this month?'}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)'}}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={userData.role === 'parent' ? handleConfirmPayment : handleConfirmVerification} sx={{ backgroundColor: 'var(--clr-blue-light)' }}>
-                        <p className='button-text'>Επιβεβαίωση</p>
+                        <p className='button-text'>Confirm</p>
                     </Button>
                 </DialogActions>
             </Dialog>

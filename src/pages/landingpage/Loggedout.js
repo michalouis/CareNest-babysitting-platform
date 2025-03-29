@@ -33,12 +33,12 @@ function SignupButton() {
                 },
             }}
         >
-            <p className='big-button-text'>Εγγραφή</p>
+            <p className='big-button-text'>Sign Up</p>
         </Button>
     )
 }
 
-function LearnMoreButton({ to, text}) {
+function LearnMoreButton({ to, text }) {
     return (
         <Button
             component="a"
@@ -78,19 +78,19 @@ function WelcomeBox() {
         }}>
             {/* Welcome Text */}
             <img className="welcome-logo" src="logo1.png" alt="CareNest Logo" />
-            <h2>Η φωλιά της φροντίδας</h2>
+            <h2>A Safe Haven for Your Little Ones</h2>
             <p>
-                Η πλατφόρμα που παρέχει το gov.gr, συνδέει οικογένειες με έμπειρες νταντάδες στη
-                γειτονιά σας. Είτε αναζητάτε αξιόπιστη φροντίδα παιδιών είτε ψάχνετε για ευκαιρίες
-                εργασίας, είμαστε εδώ για να σας βοηθήσουμε!
+                The platform provided by gov.gr connects families with experienced nannies in
+                your neighborhood. Whether you are looking for reliable childcare or searching for
+                job opportunities, we are here to help you!
             </p>
 
             {/* Learn More Text */}
-            <h1>Μάθετε πως λειτουργεί!</h1>
+            <h1>Learn How It Works!</h1>
             <p>
-                Ανακαλύψτε πώς η πλατφόρμα CareNest μπορεί να σας βοηθήσει! Μάθετε περισσότερα για
-                το πώς μπορείτε να συνδέσετε την οικογένειά σας με έμπειρες νταντάδες ή να βρείτε
-                την ιδανική ευκαιρία εργασίας στον χώρο της φροντίδας.
+                Discover how the CareNest platform can help you! Learn more about
+                how you can connect your family with experienced nannies or find
+                the ideal job opportunity in the field of care.
             </p>
             <Box
                 sx={{
@@ -102,16 +102,16 @@ function WelcomeBox() {
                     gap: 5,
                 }}
             >
-                <LearnMoreButton to="#info-parent" text="Για τους γονείς" />
-                <LearnMoreButton to="#info-ntanta" text="Για τις νταντάδες" />
+                <LearnMoreButton to="#info-parent" text="For Parents" />
+                <LearnMoreButton to="#info-ntanta" text="For Nannies" />
             </Box>
 
             {/* Signup Text */}
-            <h1>Η φροντίδα των μικρών μας φίλων ξεκινάει εδώ!</h1>
+            <h1>The care of our little friends starts here!</h1>
             <p>
-                Η εγγραφή σας στην πλατφόρμα γίνεται εύκολα και γρήγορα μέσω του TaxisNet και διαρκεί
-                λιγότερο από 10 λεπτά! Είτε είστε γονέας είτε νταντά, αποκτήστε πρόσβαση στις υπηρεσίες
-                μας άμεσα και με ασφάλεια.
+                Signing up on the platform is easy and fast through TaxisNet and takes
+                less than 10 minutes! Whether you are a parent or a nanny, gain access to our services
+                immediately and securely.
             </p>
             <SignupButton />
             <img className="right-aligned-image" src="mom.png" alt="Nanny with kids" />
@@ -124,18 +124,18 @@ function WelcomeBox() {
 
 // Information for Parents
 const infoParents = [
-    { icon: <LocalPoliceIcon style={{ fontSize: 50 }} />, text: 'Ανακαλύψτε αξιόπιστες νταντάδες στη γειτονιά σας, βασισμένες σε κριτικές και συστάσεις' },
-    { icon: <PersonSearchIcon style={{ fontSize: 50 }} />, text: 'Βρείτε την ιδανική νταντά για εσάς μέσα από φίλτρα όπως εμπειρία, τοποθεσία και διαθεσιμότητα' },
-    { icon: <ConnectWithoutContactIcon style={{ fontSize: 50 }} />, text: 'Κλείστε ένα ραντεβού και γνωριστείτε με τη νταντά πριν την έναρξη της συνεργασίας σας, για να νιώσετε άνετα και σίγουροι για την επιλογή σας' },
-    { icon: <DescriptionIcon style={{ fontSize: 50 }} />, text: 'Ελέγξτε τα συμφωνητικά και οργανώστε όλες τις συνεργασίες σας μέσω της πλατφόρμας για μεγαλύτερη ασφάλεια και διαφάνεια' }
+    { icon: <LocalPoliceIcon style={{ fontSize: 50 }} />, text: 'Discover reliable nannies in your neighborhood, based on reviews and recommendations' },
+    { icon: <PersonSearchIcon style={{ fontSize: 50 }} />, text: 'Find the ideal nanny for you through filters such as experience, location, and availability' },
+    { icon: <ConnectWithoutContactIcon style={{ fontSize: 50 }} />, text: 'Book an appointment and meet the nanny before starting the collaboration, so you can feel comfortable and confident in your choice' },
+    { icon: <DescriptionIcon style={{ fontSize: 50 }} />, text: 'Check the agreements and organize all your collaborations through the platform for greater security and transparency' }
 ];
 
 // Information for Nannies
 const infoNannies = [
-    { icon: <BadgeIcon style={{ fontSize: 50 }} />, text: 'Δημιουργήστε ένα πλήρες προφίλ, ανεβάστε τα πτυχία και τις πιστοποιήσεις σας, και μοιραστείτε τις εμπειρίες σας, για να ξεχωρίσετε και να εντυπωσιάσετε τους γονείς' },
-    { icon: <ForumIcon style={{ fontSize: 50 }} />, text: 'Επικοινωνήστε με τους γονείς μέσω της πλατφόρμας με την αποστολή και κανονίστε ένα ραντεβού γνωριμίας για να συζητήσετε τις ανάγκες και τις προσδοκίες σας' },
-    { icon: <AccessTimeIcon style={{ fontSize: 50 }} />, text: 'Απολαύστε την ελευθερία να επιλέξετε το πρόγραμμα και τις ώρες που ταιριάζουν καλύτερα στις ανάγκες σας για να δουλέψετε' },
-    { icon: <LocalAtmIcon style={{ fontSize: 50 }} />, text: 'Απολαύστε άμεση και σίγουρη πληρωμή μέσω voucher στο τέλος κάθε μήνα' }
+    { icon: <BadgeIcon style={{ fontSize: 50 }} />, text: 'Create a complete profile, upload your degrees and certifications, and share your experiences to stand out and impress parents' },
+    { icon: <ForumIcon style={{ fontSize: 50 }} />, text: 'Communicate with parents through the platform by sending messages and arrange a meeting to discuss your needs and expectations' },
+    { icon: <AccessTimeIcon style={{ fontSize: 50 }} />, text: 'Enjoy the freedom to choose the schedule and hours that best fit your needs to work' },
+    { icon: <LocalAtmIcon style={{ fontSize: 50 }} />, text: 'Enjoy immediate and secure payment via voucher at the end of each month' }
 ];
 
 // Information Box Component
@@ -209,8 +209,8 @@ function Loggedout() {
     return (
         <>
             <WelcomeBox />
-            <LearnMoreSection section="info-parent" title="Ως γονείς μπορείτε:" info={infoParents} />
-            <LearnMoreSection section="info-ntanta" title="Ως νταντά μπορείτε:" info={infoNannies} />
+            <LearnMoreSection section="info-parent" title="As parents, you can:" info={infoParents} />
+            <LearnMoreSection section="info-ntanta" title="As a nanny, you can:" info={infoNannies} />
             <ContactBox />
         </>
     );

@@ -6,29 +6,27 @@ import { Box, TextField, Button, List, ListItem, Divider } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
 // chat list dummy data
 const conversations = [
-    { name: "Γεώργιος Παπαδόπουλος", message: "Καλησπέρα, πώς είσαι;" },
-    { name: "Μαρία Παπακωνσταντίνου", message: "Θα ήθελα να κανονίσουμε μια συνάντηση." },
-    { name: "Νικόλαος Δημητρίου", message: "Ευχαριστώ για την απάντηση." },
-    { name: "Ελένη Καραγιάννη", message: "Θα μιλήσουμε σύντομα." },
-    { name: "Κωνσταντίνος Παπαγεωργίου", message: "Καλημέρα, τι κάνεις;" },
-    { name: "Αναστασία Παπαδοπούλου", message: "Είμαι διαθέσιμη για συνάντηση." },
-    { name: "Δημήτριος Παπαδημητρίου", message: "Θα ήθελα να συζητήσουμε περαιτέρω." },
-    { name: "Αικατερίνη Παπαδοπούλου", message: "Ευχαριστώ για την ενημέρωση." },
-    { name: "Ιωάννης Παπαδόπουλος", message: "Θα επικοινωνήσω σύντομα." },
-    { name: "Σοφία Παπακωνσταντίνου", message: "Καλησπέρα, πώς είσαι;" }
+    { name: "George Papadopoulos", message: "Good evening, how are you?" },
+    { name: "Maria Papakonstantinou", message: "I would like to arrange a meeting." },
+    { name: "Nikolaos Dimitriou", message: "Thank you for the reply." },
+    { name: "Eleni Karagianni", message: "We will speak soon." },
+    { name: "Konstantinos Papageorgiou", message: "Good morning, how are you?" },
+    { name: "Anastasia Papadopoulou", message: "I am available for a meeting." },
+    { name: "Dimitrios Papadimitriou", message: "I would like to discuss further." },
+    { name: "Aikaterini Papadopoulou", message: "Thank you for the update." },
+    { name: "Ioannis Papadopoulos", message: "I will contact you soon." },
+    { name: "Sophia Papakonstantinou", message: "Good evening, how are you?" }
 ];
-
 
 // Messages page (static - to make it dynamic, we need to fetch data from a database with isn't the focus of this project)
 function Messages() {
     return (
         <>
-            <PageTitle title="CareNest - Μηνύματα" />
+            <PageTitle title="CareNest - Messages" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Μηνύματα</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Messages</h1>
             <Box sx={{
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
@@ -56,7 +54,7 @@ function Messages() {
                                         <AccountCircleIcon sx={{ fontSize: '3rem', marginRight: '1rem' }} />
                                         <h2>{msg.name}</h2>
                                     </Box>
-                                    <p style={{ fontSize: '0.8rem' }}><strong>Τελευταίο Μήνυμα:</strong> {msg.message}</p>
+                                    <p style={{ fontSize: '0.8rem' }}><strong>Last Message:</strong> {msg.message}</p>
                                 </ListItem>
                                 <Divider />
                             </React.Fragment>
@@ -85,9 +83,9 @@ function Messages() {
                         gap: '1rem',
                     }}>
                         <AccountCircleIcon sx={{ fontSize: '5rem' }} />
-                        <h1>Χριστίνα Καρκάνη</h1>
+                        <h1>Christina Karkani</h1>
                         <Button variant="contained" sx={{ backgroundColor: 'var(--clr-violet)' }}>
-                           <p className="button-text">Προβολή Προφίλ</p>
+                           <p className="button-text">View Profile</p>
                         </Button>
                     </Box>
                     <Divider sx={{ width: '100%', backgroundColor: 'var(--clr-black)', borderRadius: '1rem', marginBottom: '0.5rem' }}/>
@@ -110,7 +108,7 @@ function Messages() {
                             alignSelf: 'flex-end',
                             marginLeft: '5rem'
                         }}>
-                            <p><strong>Καλησπέρα, είδα το προφίλ σας και θα ήθελα να κανονίσουμε ένα ραντεβού γνωριμίας αν είστε διαθέσιμη!</strong></p>
+                            <p><strong>Good evening, I saw your profile and would like to arrange a meeting if you're available!</strong></p>
                         </Box>
                         <Box sx={{
                             backgroundColor: 'var(--clr-blue-light)',
@@ -122,7 +120,7 @@ function Messages() {
                             alignSelf: 'flex-start',
                             marginRight: '5rem'
                         }}>
-                            <p><strong>Εννοείται! Μπορώ αύριο το πρωί αν θέλετε, αλλά μόνο διαδυκτιακά.</strong></p>
+                            <p><strong>Of course! I can tomorrow morning if you want, but only online.</strong></p>
                         </Box>
                         <Box sx={{
                             backgroundColor: 'var(--clr-violet)',
@@ -134,7 +132,7 @@ function Messages() {
                             alignSelf: 'flex-end',
                             marginLeft: '5rem'
                         }}>
-                            <p><strong>Ωραία! Να πούμε 9;</strong></p>
+                            <p><strong>Great! How about 9 AM?</strong></p>
                         </Box>
                         <Box sx={{
                             backgroundColor: 'var(--clr-blue-light)',
@@ -146,7 +144,7 @@ function Messages() {
                             alignSelf: 'flex-start',
                             marginRight: '5rem'
                         }}>
-                            <p><strong>Ναι μια χαρά είναι.</strong></p>
+                            <p><strong>Yes, that works fine.</strong></p>
                         </Box>
                         <Box sx={{
                             backgroundColor: 'var(--clr-violet)',
@@ -158,7 +156,7 @@ function Messages() {
                             alignSelf: 'flex-end',
                             marginLeft: '5rem'
                         }}>
-                            <p><strong>Τέλεια! Σας έχω στείλει ραντεβού γνωριμίας, όποτε έχετε χρόνο αποδεχθείτε το!</strong></p>
+                            <p><strong>Perfect! I have sent you the meeting invite, please accept it when you have time!</strong></p>
                         </Box>
                     </Box>
                     <Box sx={{
@@ -167,7 +165,7 @@ function Messages() {
                     }}>
                         <TextField
                             variant="outlined"
-                            placeholder="Μήνυμα..."
+                            placeholder="Message..."
                             fullWidth
                             sx={{ marginRight: '1rem', backgroundColor: 'var(--clr-grey-light)', boxShadow: 2 }}
                         />

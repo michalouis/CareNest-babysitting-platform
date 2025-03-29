@@ -75,7 +75,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
         }
     };
 
-    // Render the rating box for the parent (beofre the partnership is finished)
+    // Render the rating box for the parent (before the partnership is finished)
     const renderParentRating = () => (
         <>
             <Button 
@@ -85,13 +85,13 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
                 startIcon={<GradeIcon style={{ fontSize: '2.2rem'}} />}
                 onClick={handleRatingDialogOpen}
             >
-                <p className='big-button-text'>Προσθήκη Αξιολόγησης</p>
+                <p className='big-button-text'>Add Rating</p>
             </Button>
             {/* inform user */}
             <p style={{ fontSize: '1.3rem' }}>
                 {lastPaymentStatus === 'verified' 
-                    ? 'Για να ολοκληρώσετε την συνεργασία σας αξιολογήστε πως ήταν η εμπειρία σας με τη νταντά.' 
-                    : 'Ολοκληρώστε τις πληρωμές σας για να να μπορέσετε να αξιολογήστε τη συνεργασία σας.'}
+                    ? 'To complete your partnership, rate your experience with the nanny.' 
+                    : 'Complete your payments to be able to rate your partnership.'}
             </p>
         </>
     );
@@ -99,7 +99,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
     // Render the rating box for the nanny (before the partnership is finished)
     const renderNannyRating = () => (
         <p style={{ fontSize: '1.3rem' }}>
-            Η αξιολογηση του γονέα θα εμφανιστεί εδω πέρα στο τέλος της συνεργασίας σας.
+            The parent's rating will appear here at the end of your partnership.
         </p>
     );
 
@@ -115,15 +115,15 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
             borderRadius: '1rem',
             boxShadow: '2',
         }}>
-            <h1>Αξιολόγηση</h1>
+            <h1>Rating</h1>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', marginTop: '1rem', maxHeight: '250px' }}>
                 {rating ? ( // after rating is submitted
                     <>
                         <Rating value={rating.score} precision={0.5} style={{ fontSize: '3rem'}} readOnly />
-                        <h3 style={{ alignSelf: 'flex-start', margin: '0 0 0.5rem 1rem', color: 'var(--clr-grey)' }}>Σχόλιο</h3>
+                        <h3 style={{ alignSelf: 'flex-start', margin: '0 0 0.5rem 1rem', color: 'var(--clr-grey)' }}>Comment</h3>
                         <Box sx={{ display: 'flex', margin: '0 1rem', padding: '0.5rem', border: '2px solid var(--clr-light-grey)', borderRadius: '1rem', width: '100%', overflow: 'auto'}} >
                             <p style={{ fontSize: '1.3rem', color: rating.comment ? 'var(--clr-black)' : 'var(--clr-grey)' }}>
-                                {rating.comment || 'Δεν υπάρχει σχόλιο...'}
+                                {rating.comment || 'No comment...'}
                             </p>
                         </Box>
                     </>
@@ -134,9 +134,9 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
 
             {/* Rating Dialog Box */}
             <Dialog open={ratingDialogOpen} onClose={handleRatingDialogClose} PaperProps={{ style: { resize: 'none' } }}>
-                <DialogTitle><strong>Προσθήκη Αξιολόγησης</strong></DialogTitle>
+                <DialogTitle><strong>Add Rating</strong></DialogTitle>
                 <DialogContent>
-                    {ratingError && <p style={{ color: 'var(--clr-error)' }}>Εισάγετε μια βαθμολογία για να συνεχίσετε</p>}
+                    {ratingError && <p style={{ color: 'var(--clr-error)' }}>Enter a rating to continue</p>}
                     <Rating
                         value={newRating}
                         precision={0.5}
@@ -144,7 +144,7 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
                         sx={{ fontSize: '3rem'}}
                     />
                     <TextField
-                        label="Σχόλιο"
+                        label="Comment"
                         multiline
                         rows={4}
                         value={newComment}
@@ -155,26 +155,26 @@ const RatingBox = ({ partnershipData, rating, userData, finishPartnership }) => 
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleRatingDialogClose} sx={{ color: 'var(--clr-black)'}}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={handleConfirmDialogOpen} sx={{ backgroundColor: 'var(--clr-violet)' }}>
-                        <p className='button-text'>Υποβολή</p>
+                        <p className='button-text'>Submit</p>
                     </Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
-                <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                <DialogTitle><strong>Warning!</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουροι πως θέλετε να υποβάλετε την αξιολόγηση; <strong>Δεν θα μπορείτε να την επεξεργαστείτε μετά την υποβολή.</strong>
+                        Are you sure you want to submit the rating? <strong>You will not be able to edit it after submission.</strong>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)'}}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={handleSubmitRating} sx={{ backgroundColor: 'var(--clr-violet)' }} disabled={loading}>
-                        <p className='button-text'>Επιβεβαίωση</p>
+                        <p className='button-text'>Confirm</p>
                     </Button>
                 </DialogActions>
             </Dialog>

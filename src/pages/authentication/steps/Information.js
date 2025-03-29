@@ -3,17 +3,17 @@ import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import FaqItem from '../../faq/FaqItem';
 
 const infoItemsParent = [
-    { question: "Ποια είναι τα κριτήρια επιλεξιμότητας;", answer: "Η δυνατότητα πρόσβασης στις υπηρεσίες της πλατφόρμας εξαρτάται από το εισόδημα και την κατάσταση της οικογένειας. Αν πληρείτε τα κριτήρια επιλεξιμότητας, θα έχετε την δυνατότητα να χρησιμοποιήσετε την πλατφόρμα για να βρείτε και να συνεργαστείτε με νταντάδες που καλύπτουν τις ανάγκες σας." },
-    { question: "Ποια διαδικασία πρέπει να ακολουθήσω;", answer: "Αρχικά, πρέπει να αναζητήσετε μια νταντά με βάση τις ανάγκες σας και τα κριτήρια που επιλέγετε (π.χ. ωράρια, εμπειρία). Στη συνέχεια, θα πρέπει να κανονίσετε ένα ραντεβού γνωριμίας, το οποίο μπορεί να γίνει είτε δια ζώσης είτε διαδικτυακά. Όταν βρείτε μια νταντά που σας ταιριάζει, θα πρέπει να δημιουργήσετε μια αίτηση και να την στείλετε. Αφού υπογράψετε το συμφωνητικό, η συνεργασία θα ξεκινήσει και θα διαρκέσει για τον μήνα που έχετε συμφωνήσει." },
-    { question: "Τι κάνω στο τέλος της συνεργασίας;", answer: "Στο τέλος της συνεργασίας, πρέπει να πάτε στη \"τρέχουσα συνεργασία\" σας και να την ολοκληρώσετε. Έτσι, η νταντά θα μπορέσει να πληρωθεί και εσείς θα έχετε την δυνατότητα να ξεκινήσετε μια νέα συνεργασία με μια άλλη νταντά, εφόσον το επιθυμείτε. Μην ξεχάσετε να αφήσετε και μια κριτική για την εμπειρία σας με τη νταντά!" },
-    { question: "Τι λειτουργίες παρέχει η πλατφόρμα;", answer: "Η πλατφόρμα παρέχει μια τεράστια ομάδα νταντάδων που μπορείτε να επιλέξετε για μερική ή πλήρη απασχόληση, για να φροντίζουν τα παιδιά σας με ασφάλεια. Είτε πρόκειται για καθημερινή φύλαξη είτε για ειδικές ανάγκες, η πλατφόρμα εξασφαλίζει μια ασφαλή και ευέλικτη εμπειρία για τους γονείς." }
+    { question: "What are the eligibility criteria?", answer: "Access to the platform's services depends on income and family status. If you meet the eligibility criteria, you will be able to use the platform to find and collaborate with nannies who meet your needs." },
+    { question: "What process should I follow?", answer: "First, you need to search for a nanny based on your needs and selected criteria (e.g., schedules, experience). Then, you should arrange a meet-and-greet appointment, which can be done either in person or online. Once you find a nanny that suits you, you need to create and send a request. After signing the agreement, the collaboration will begin and will last for the agreed month." },
+    { question: "What do I do at the end of the collaboration?", answer: "At the end of the collaboration, you need to go to your 'current collaboration' and complete it. This way, the nanny will be able to get paid, and you will have the opportunity to start a new collaboration with another nanny if you wish. Don’t forget to leave a review about your experience with the nanny!" },
+    { question: "What features does the platform provide?", answer: "The platform provides a large network of nannies that you can choose from for part-time or full-time employment to take care of your children safely. Whether it is for daily care or special needs, the platform ensures a safe and flexible experience for parents." }
 ];
 
 const infoItemsNanny = [
-    { question: "Ποια είναι τα κριτήρια επιλεξιμότητας;", answer: "Η πλατφόρμα είναι ανοιχτή σε όλους όσοι έχουν εμπειρία στη φροντίδα παιδιών ή κάποιο σχετικό πτυχίο. Το βασικότερο είναι να έχετε όρεξη για δουλειά και να αγαπάτε αυτό που κάνετε, ώστε να παρέχετε ποιοτική φροντίδα στα παιδιά." },
-    { question: "Ποια διαδικασία πρέπει να ακολουθήσω;", answer: "Ξεκινήστε δημιουργώντας το προφίλ σας και στη συνέχεια δημοσιεύστε την αγγελία σας για τις υπηρεσίες που προσφέρετε. Όταν κάποιοι γονείς ενδιαφερθούν, θα σας στείλουν αίτημα για ραντεβού γνωριμίας, το οποίο μπορείτε να αποδεχθείτε ή να απορρίψετε. Εφόσον συμφωνήσετε να συνεργαστείτε, ο γονέας θα σας στείλει το συμφωνητικό συνεργασίας, το οποίο υπογράφετε για να ξεκινήσει η συνεργασία σας." },
-    { question: "Τι κάνω στο τέλος της συνεργασίας;", answer: "Μετά την ολοκλήρωση της συνεργασίας από τον γονέα, θα πρέπει να επιβεβαιώσετε ότι έχετε λάβει το voucher πληρωμής σας μέσω της πλατφόρμας. Μόλις γίνει αυτό, μπορείτε να προχωρήσετε σε νέες συνεργασίες με άλλους γονείς που ενδιαφέρονται για τις υπηρεσίες σας." },
-    { question: "Τι λειτουργίες παρέχει η πλατφόρμα;", answer: "Η πλατφόρμα σας επιτρέπει να προβάλλετε το προφίλ σας σε εκατοντάδες γονείς, να διαχειρίζεστε αιτήσεις συνεργασίας, να επικοινωνείτε με γονείς, και να οργανώνετε το πρόγραμμά σας εύκολα. Παρέχει επίσης εργαλεία για την ασφαλή υπογραφή συμφωνητικών και τη διασφάλιση των πληρωμών σας." }
+    { question: "What are the eligibility criteria?", answer: "The platform is open to anyone with experience in childcare or a related degree. The most important thing is to have a passion for the job and love what you do, so you can provide quality care for children." },
+    { question: "What process should I follow?", answer: "Start by creating your profile and then post your advertisement for the services you offer. When parents are interested, they will send you a request for a meet-and-greet appointment, which you can accept or decline. Once you agree to collaborate, the parent will send you the cooperation agreement, which you sign to start your collaboration." },
+    { question: "What do I do at the end of the collaboration?", answer: "After the collaboration is completed by the parent, you need to confirm that you have received your payment voucher through the platform. Once this is done, you can proceed with new collaborations with other parents interested in your services." },
+    { question: "What features does the platform provide?", answer: "The platform allows you to showcase your profile to hundreds of parents, manage collaboration requests, communicate with parents, and organize your schedule easily. It also provides tools for securely signing agreements and ensuring your payments." }
 ];
 
 function Information({ selectedRole, isInfoRead, onInfoRead, showError }) {
@@ -37,9 +37,8 @@ function Information({ selectedRole, isInfoRead, onInfoRead, showError }) {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box sx={{ width: '80%', maxWidth: '1000px', textAlign: 'center' }}>
                 <p className='description'>
-                    Διαβάστε τις παρακάτω πληροφορίες για τα κριτήρια επιλεξιμότητας, τη διαδικασία
-                    που πρέπει να ακολουθήσετε και τις λειτουργίες της πλατφόρμας, ώστε να γνωρίζετε
-                    πως να την χρησιμοποιήσετε σωστά πριν την εγγραφή σας.
+                    Read the following information about eligibility criteria, the process you need to follow,
+                    and the platform’s features, so you know how to use it properly before registering.
                 </p>
 
                 {/* Information */}
@@ -55,7 +54,7 @@ function Information({ selectedRole, isInfoRead, onInfoRead, showError }) {
                         sx={{
                             color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)'
                     }} />}
-                    label="Έχω διαβάσει και κατανοώ τις πληροφορίες"
+                    label="I have read and understand the information"
                     sx={{ marginTop: '2rem', color: showError && !checked ? 'var(--clr-error)' : 'var(--clr-black)' }}
                 />
             </Box>

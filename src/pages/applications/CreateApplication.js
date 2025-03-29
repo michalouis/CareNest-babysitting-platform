@@ -19,8 +19,8 @@ function CreateApplication() {
 
     return (
         <>
-            <PageTitle title="CareNest - Δημιουργία Αίτησης" />
-            <h1 style={{ marginLeft: '1rem' }}>Δημιουργία Αίτησης</h1>
+            <PageTitle title="CareNest - Create Application" />
+            <h1 style={{ marginLeft: '1rem' }}>Create Application</h1>
             <Breadcrumbs showPopup={true} />
             {userData && (
                 <Box sx={{

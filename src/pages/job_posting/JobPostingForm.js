@@ -4,7 +4,7 @@ import { updateDoc, getDoc, setDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_AUTH } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 
-const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
 function JobPostingForm({ userData, setSaved }) {
@@ -93,7 +93,7 @@ function JobPostingForm({ userData, setSaved }) {
         } catch (error) {
             console.error('Error submitting job posting:', error);
             setSnackbarState('error');
-            setSnackbarMessage('Υπήρξε σφάλμα κατά την υποβολή της αγγελίας σας.');
+            setSnackbarMessage('There was an error submitting your job posting.');
         } finally {
             setLoading(false);
         }
@@ -122,7 +122,7 @@ function JobPostingForm({ userData, setSaved }) {
                 setSaved(true);
                 window.scrollTo(0, 0);
                 setSnackbarState('success');
-                setSnackbarMessage('Η αγγελία σας αποθηκεύτηκε προσωρινά με επιτυχία! Για να την δημοσιεύστε πατήστε υποβολή.');
+                setSnackbarMessage('Your job posting has been successfully saved temporarily! To publish it, press submit.');
             }
         } catch (error) {
             console.error('Error updating job posting:', error);
@@ -155,9 +155,9 @@ function JobPostingForm({ userData, setSaved }) {
         // Timetable error messages
         if (selectedDays < 5) { // must select hours for at least 5 days
             newErrors.timetable = true;
-            setTimetableError('Πρέπει να διαλέξετε ώρες για  τουλάχιστον 5 μέρες');
+            setTimetableError('You must select hours for at least 5 days');
         } else if (newErrors.timetable) {
-            setTimetableError('Πρέπει στις μέρες που έχετε διαλέξει να βάλετε αρκετές ώρες για να καλύπτουν τους χρόνους απασχόλησης που έχετε επιλέξει');
+            setTimetableError('On the days you have selected, you must assign enough hours to cover the employment duration you chose');
         } else {
             setTimetableError('');
             setjobPostingData((prevData) => ({ ...prevData, timetable: newTimetable }));
@@ -166,24 +166,24 @@ function JobPostingForm({ userData, setSaved }) {
         // Other fields validation & snackbar error messages
         if (!jobPostingData.ageGroups.length) {
             newErrors.ageGroups = true;
-            newSnackbarMessages.push('Ηλικιακές Ομάδες Φροντίδας');
+            newSnackbarMessages.push('Care Age Groups');
         }
         if (!jobPostingData.employmentType) {
             newErrors.employmentType = true;
-            newSnackbarMessages.push('Χρόνος Απασχόλησης');
+            newSnackbarMessages.push('Employment Type');
         }
         if (!jobPostingData.babysittingPlace) {
             newErrors.babysittingPlace = true;
-            newSnackbarMessages.push('Χώρος Φύλαξης');
+            newSnackbarMessages.push('Babysitting Location');
         }
         if (newErrors.timetable) {
-            newSnackbarMessages.push('Χρονοδιάγραμμα Διαθεσιμότητας');
+            newSnackbarMessages.push('Availability Schedule');
         }
     
         setErrorStates(newErrors);
         if (newSnackbarMessages.length > 0) {
             setSnackbarState('error');
-            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+            setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
         } else {
             setSnackbarMessage('');
         }
@@ -205,13 +205,13 @@ function JobPostingForm({ userData, setSaved }) {
             margin: '2rem',
         }}>
             <h1 style={{ alignSelf: 'center' }}>
-                Κατάσταση: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Σε Επεξεργασία' : 'Προεπισκόπηση'}</span>
+                Status: <span style={{ fontWeight: 'normal' }}>{editMode ? 'Editing' : 'Preview'}</span>
             </h1>
-            <p style={{color: 'var(--clr-grey)'}}>Όλα τα πεδία είναι υποχρεωτικά.</p>
+            <p style={{ color: 'var(--clr-grey)' }}>All fields are required.</p>
 
             {/* Age Groups */}
-            <h2>Ηλικιακές Ομάδες Φροντίδας</h2>
-            <p style={{ fontSize: '1.15rem' }}>Ηλικιακές ομάδες παιδιών που νιώθετε άνετα να φροντίσετε</p>
+            <h2>Age Groups for Care</h2>
+            <p style={{ fontSize: '1.15rem' }}>Age groups of children you feel comfortable caring for.</p>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
                     control={
@@ -223,7 +223,7 @@ function JobPostingForm({ userData, setSaved }) {
                             disabled={!editMode}
                         />
                     }
-                    label="1-2 χρονών"
+                    label="1-2 years old"
                 />
                 <FormControlLabel
                     control={
@@ -235,7 +235,7 @@ function JobPostingForm({ userData, setSaved }) {
                             disabled={!editMode}
                         />
                     }
-                    label="3-6 χρονών"
+                    label="3-6 years old"
                 />
                 <FormControlLabel
                     control={
@@ -247,7 +247,7 @@ function JobPostingForm({ userData, setSaved }) {
                             disabled={!editMode}
                         />
                     }
-                    label="7-12 χρονών"
+                    label="7-12 years old"
                 />
                 <FormControlLabel
                     control={
@@ -259,15 +259,15 @@ function JobPostingForm({ userData, setSaved }) {
                             disabled={!editMode}
                         />
                     }
-                    label="13-16 χρονών"
+                    label="13-16 years old"
                 />
             </Box>
 
             {/* Employment Type */}
-            <h2>Χρόνος Απασχόλησης</h2>
-            <p style={{ fontSize: '1.15rem' }}>Ο χρόνος που απασχολείστε την ημέρα εργασίας σας</p>
+            <h2>Employment Type</h2>
+            <p style={{ fontSize: '1.15rem' }}>The number of hours you work per day.</p>
             <TextField
-                label="Χρόνος Απασχόλησης"
+                label="Employment Type"
                 name="employmentType"
                 select
                 value={jobPostingData.employmentType}
@@ -275,18 +275,18 @@ function JobPostingForm({ userData, setSaved }) {
                 onBlur={() => handleBlur('employmentType')}
                 fullWidth
                 error={errorStates.employmentType}
-                helperText={errorStates.employmentType ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                helperText={errorStates.employmentType ? 'This field is required' : ''}
                 disabled={!editMode}
             >
-                <MenuItem value="part-time">Μερική Απασχόληση (4 ώρες)</MenuItem>
-                <MenuItem value="full-time">Πλήρης Απασχόληση (8 ώρες)</MenuItem>
+                <MenuItem value="part-time">Part-Time (4 hours)</MenuItem>
+                <MenuItem value="full-time">Full-Time (8 hours)</MenuItem>
             </TextField>
 
             {/* Babysitting Place */}
-            <h2>Χώρος Φύλαξης</h2>
-            <p style={{ fontSize: '1.15rem' }}>Ο χώρος που θέλετε να εργάζεστε</p>
+            <h2>Work Location</h2>
+            <p style={{ fontSize: '1.15rem' }}>Where you prefer to work.</p>
             <TextField
-                label="Χώρος Φύλαξης"
+                label="Work Location"
                 name="babysittingPlace"
                 select
                 value={jobPostingData.babysittingPlace}
@@ -294,20 +294,20 @@ function JobPostingForm({ userData, setSaved }) {
                 onBlur={() => handleBlur('babysittingPlace')}
                 fullWidth
                 error={errorStates.babysittingPlace}
-                helperText={errorStates.babysittingPlace ? 'Το πεδίο είναι υποχρεωτικό' : ''}
+                helperText={errorStates.babysittingPlace ? 'This field is required' : ''}
                 disabled={!editMode}
             >
-                <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
-                <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
-                <MenuItem value="both">Σπίτι Γονέα & Νταντάς</MenuItem>
+                <MenuItem value="parents-home">Parent's Home</MenuItem>
+                <MenuItem value="nanny-home">Nanny's Home</MenuItem>
+                <MenuItem value="both">Both Locations</MenuItem>
             </TextField>
 
             {/* Timetable */}
-            <h2>Χρονοδιάγραμμα Διαθεσιμότητας</h2>
+            <h2>Availability Schedule</h2>
             <p style={{ fontSize: '1.15rem' }}>
-                Διαλέξτε τα χρονικά διαστήματα και μέρες που είστε πρόθυμοι να δουλέψετε.
-                Ο γονέας θα μπορεί να διαλέξει από αυτές τις ώρες/μέρες
-                να σας προσλάβει για να φυλάξετε το παιδί του. (Πρέπει να διαλέξετε ώρες για 5 από τις μέρες της εβδομάδας)
+                Select the time slots and days you are available to work.
+                The parent will be able to choose from these hours/days
+                to hire you for childcare. (You must select hours for at least 5 days of the week.)
             </p>
             <TableContainer
                 component={Paper}
@@ -374,7 +374,7 @@ function JobPostingForm({ userData, setSaved }) {
                     }}
                     disabled={loading}
                 >
-                    <p className='big-button-text'>Προσωρινή Αποθήκευση</p>
+                    <p className='big-button-text'>Save Draft</p>
                 </Button>
             ) : (
                 <Box sx={{ display: 'flex', gap: '2rem', alignSelf: 'center' }}>
@@ -395,7 +395,7 @@ function JobPostingForm({ userData, setSaved }) {
                             },
                         }}
                     >
-                        <p className='big-button-text'>Επεξεργασία</p>
+                        <p className='big-button-text'>Edit</p>
                     </Button>
                     <Button
                         variant="contained"
@@ -410,7 +410,7 @@ function JobPostingForm({ userData, setSaved }) {
                             },
                         }}
                     >
-                        <p className='big-button-text'>Υποβολή</p>
+                        <p className='big-button-text'>Submit</p>
                     </Button>
                 </Box>
             )}

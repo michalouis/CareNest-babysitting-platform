@@ -55,7 +55,7 @@ function CreateAccount({ role }) {
             // Check if AMKA is unique
             const amkaDoc = await getDoc(doc(FIREBASE_DB, 'users', amka));
             if (amkaDoc.exists()) {
-                throw new Error('Υπάρχει ήδη λογαριασμός με αυτό το ΑΜΚΑ.');
+                throw new Error('Account with this AMKA already exists.');
             }
 
             // Store user data in the database
@@ -90,14 +90,14 @@ function CreateAccount({ role }) {
     
         if (firstNameError || !firstName) {
             hasError = true;
-            newSnackbarMessages.push('Όνομα');
+            newSnackbarMessages.push('First Name');
         }
         if (lastNameError || !lastName) {
             hasError = true;
-            newSnackbarMessages.push('Επίθετο');
+            newSnackbarMessages.push('Last Name');
         if (amkaError || !amka) {
             hasError = true;
-            newSnackbarMessages.push('ΑΜΚΑ');
+            newSnackbarMessages.push('AMKA');
         }
         if (emailError || !email) {
             hasError = true;
@@ -105,16 +105,16 @@ function CreateAccount({ role }) {
         }
         if (passwordError || !password) {
             hasError = true;
-            newSnackbarMessages.push('Κωδικός');
+            newSnackbarMessages.push('Password');
         }
         if (repeatPasswordError || !repeatPassword || repeatPassword !== password) {
             hasError = true;
-            newSnackbarMessages.push('Επανάληψη Κωδικού');
+            newSnackbarMessages.push('Repeat Password');
         }
         }
     
         if (newSnackbarMessages.length > 0) {
-            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+            setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
         }
         if (!hasError) {
             handleConfirmDialogOpen();
@@ -190,7 +190,7 @@ function CreateAccount({ role }) {
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-            <p className='description'>Συμπληρώστε τα στοιχεία για να εγγραφείτε στο σύστημα.</p>
+            <p className='description'>Fill in the details to finish your registration.</p>
 
             {/* Form */}
             <Box sx={{
@@ -208,12 +208,12 @@ function CreateAccount({ role }) {
                 overflow: 'hidden'
             }}>
                 <p style={{color: 'var(--clr-grey)'}}>
-                    Τύπος Λογαριασμού: <strong>{role === 'parent' ? 'Γονέας' : 'Νταντά'}</strong>
+                    Account Type: <strong>{role === 'parent' ? 'Parent' : 'Nanny'}</strong>
                 </p>
                 {/* First & Last Name */}
                 <TextField
                     id="first-name-input"
-                    label="Όνομα"
+                    label="First Name"
                     type="text"
                     variant="outlined"
                     fullWidth
@@ -221,12 +221,12 @@ function CreateAccount({ role }) {
                     onChange={(e) => setFirstName(e.target.value)}
                     onBlur={handleFirstNameBlur}
                     error={firstNameError}
-                    helperText={firstNameError ? 'Παρακαλώ εισάγετε ένα έγκυρο όνομα (μόνο γράμματα)' : ''}
+                    helperText={firstNameError ? 'Please enter a valid name (letters only)' : ''}
                 />
-
+    
                 <TextField
                     id="last-name-input"
-                    label="Επίθετο"
+                    label="Last Name"
                     type="text"
                     variant="outlined"
                     fullWidth
@@ -234,13 +234,13 @@ function CreateAccount({ role }) {
                     onChange={(e) => setLastName(e.target.value)}
                     onBlur={handleLastNameBlur}
                     error={lastNameError}
-                    helperText={lastNameError ? 'Εισάγετε ένα έγκυρο επώνυμο (μόνο γράμματα)' : ''}
+                    helperText={lastNameError ? 'Please enter a valid last name (letters only)' : ''}
                 />
                 
                 {/* AMKA */}
                 <TextField
                     id="amka-input"
-                    label="ΑΜΚΑ"
+                    label="AMKA"
                     type="text"
                     variant="outlined"
                     fullWidth
@@ -248,7 +248,7 @@ function CreateAccount({ role }) {
                     onChange={(e) => setAmka(e.target.value)}
                     onBlur={handleAmkaBlur}
                     error={amkaError}
-                    helperText={amkaError ? 'Εισάγετε ένα έγκυρο ΑΜΚΑ (11 αριθμοί)' : ''}
+                    helperText={amkaError ? 'Please enter a valid AMKA (11 digits)' : ''}
                 />
                     
                 {/* Email */}
@@ -263,13 +263,13 @@ function CreateAccount({ role }) {
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={handleEmailBlur}
                     error={emailError}
-                    helperText={emailError ? 'Εισάγετε μια έγκυρη διεύθυνση mail' : ''}
+                    helperText={emailError ? 'Please enter a valid email address' : ''}
                 />
-
+    
                 {/* Password, Password Requirements & Password Repeat */}
                 <TextField
                     id="password-input"
-                    label="Κωδικός"
+                    label="Password"
                     type="password"
                     variant="outlined"
                     fullWidth
@@ -277,18 +277,18 @@ function CreateAccount({ role }) {
                     onChange={(e) => setPassword(e.target.value)}
                     onBlur={handlePasswordBlur}
                     error={passwordError}
-                    helperText={passwordError ? 'Ο κωδικός πρέπει να πληρεί τις παρακάτω προϋθέσεις' : ''}
+                    helperText={passwordError ? 'The password must meet the following requirements' : ''}
                 />
-                <p style={{ alignSelf: 'flex-start', margin: 0, textAlign: 'left' }}><b>Ο κωδικός πρέπει:</b></p>
+                <p style={{ alignSelf: 'flex-start', margin: 0, textAlign: 'left' }}><b>Password must:</b></p>
                 <ul style={{ alignSelf: 'flex-start', margin: 0, paddingLeft: '1.5rem', textAlign: 'left' }}>
-                    <li style={{ color: passwordErrors.length ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον 8 χαρακτήρες.</li>
-                    <li style={{ color: passwordErrors.number ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα αριθμό.</li>
-                    <li style={{ color: passwordErrors.letter ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα γράμμα.</li>
-                    <li style={{ color: passwordErrors.specialChar ? 'var(--clr-error)' : 'var(--clr-black)' }}>Να περιέχει τουλάχιστον ένα ειδικό χαρακτήρα (! @ # $ % _ -).</li>
+                    <li style={{ color: passwordErrors.length ? 'var(--clr-error)' : 'var(--clr-black)' }}>Be at least 8 characters long.</li>
+                    <li style={{ color: passwordErrors.number ? 'var(--clr-error)' : 'var(--clr-black)' }}>Contain at least one number.</li>
+                    <li style={{ color: passwordErrors.letter ? 'var(--clr-error)' : 'var(--clr-black)' }}>Contain at least one letter.</li>
+                    <li style={{ color: passwordErrors.specialChar ? 'var(--clr-error)' : 'var(--clr-black)' }}>Contain at least one special character (! @ # $ % _ -).</li>
                 </ul>
                 <TextField
                     id="repeat-password-input"
-                    label="Επαναλάβετε τον κωδικό"
+                    label="Repeat Password"
                     type="password"
                     variant="outlined"
                     fullWidth
@@ -299,7 +299,7 @@ function CreateAccount({ role }) {
                     helperText={repeatPasswordError ? 'Passwords do not match' : ''}
                 />
 
-                {/* Sumbit Button */}
+                {/* Submit Button */}
                 <Button
                     variant="contained"
                     onClick={handleSubmit}
@@ -312,26 +312,26 @@ function CreateAccount({ role }) {
                     }}
                     disabled={loading}
                 >
-                    <p className='big-button-text'>Εγγραφή</p>
+                    <p className='big-button-text'>Sign up</p>
                 </Button>
                 {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
             </Box>
             
             {/* Confirm Submit Dialog */}
             <Dialog open={confirmDialogOpen} onClose={handleConfirmDialogClose}>
-                <DialogTitle><strong>Είστε σίγουρος;</strong></DialogTitle>
+                <DialogTitle><strong>Are you sure?</strong></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Είστε σίγουρος πως θέλετε να συνεχίσετε;<br />
-                        <strong>Παρακαλώ ελέγξτε τα στοιχεία σας πριν τα υποβάλετε.</strong>
+                        Are you sure you want to proceed?<br />
+                        <strong>Please check your details before submitting.</strong>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                        <p className='button-text'>Ακύρωση</p>
+                        <p className='button-text'>Cancel</p>
                     </Button>
                     <Button variant='contained' onClick={handleConfirm} sx={{ backgroundColor: 'var(--clr-blue)', '&:hover': { opacity: 0.8 } }}>
-                        <p className='button-text'>Υποβολή</p>
+                        <p className='button-text'>Submit</p>
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -349,7 +349,7 @@ function CreateAccount({ role }) {
                 </Alert>
             </Snackbar>
         </Box>
-    );
+    );    
 }
 
 export default CreateAccount;

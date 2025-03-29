@@ -4,7 +4,7 @@ import { Button, Autocomplete, TextField, MenuItem, TableContainer, Table, Table
 import ClearIcon from '@mui/icons-material/Clear';
 import '../../style.css';
 
-const daysOfWeek = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timePeriods = ['00:00-04:00', '04:00-08:00', '08:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-00:00'];
 
 /////////////// VALIDATION ///////////////
@@ -19,38 +19,38 @@ function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
         pass = false;
         updatedErrors = {
             ...updatedErrors,
-            town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            town: { hasError: true, message: 'This field is required' }
         };
         setErrors(updatedErrors);
-        newSnackbarMessages.push('Πόλη');
+        newSnackbarMessages.push('City');
     }
     if (!filterData.childAgeGroup || errors.childAgeGroup.hasError) {
         pass = false;
         updatedErrors = {
             ...updatedErrors,
-            childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            childAgeGroup: { hasError: true, message: 'This field is required' }
         };
         setErrors(updatedErrors);
-        newSnackbarMessages.push('Ηλικιακή Ομάδα');
+        newSnackbarMessages.push('Age Group');
     }
     if (!filterData.workTime || errors.workTime.hasError) {
         pass = false;
         updatedErrors = {
             ...updatedErrors,
-            workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            workTime: { hasError: true, message: 'This field is required' }
         };
         setErrors(updatedErrors);
-        newSnackbarMessages.push('Ώρες Εργασίας');
+        newSnackbarMessages.push('Work Hours');
     }
     if (!filterData.babysittingPlace || errors.babysittingPlace.hasError) {
         pass = false;
         updatedErrors = {
             ...updatedErrors,
-            babysittingPlace: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+            babysittingPlace: { hasError: true, message: 'This field is required' }
         };
         setErrors(updatedErrors);
-        newSnackbarMessages.push('Χώρος Φύλαξης');
-    }
+        newSnackbarMessages.push('Childcare Location');
+    }    
     const validationResult = validateTimeTable({ timeTable: filterData.timeTable, workTime: filterData.workTime });
     updatedErrors = {
         ...updatedErrors,
@@ -59,11 +59,11 @@ function ValidateFilterData(filterData, errors, setErrors, setSnackbarMessage) {
     setErrors(updatedErrors);
     if (validationResult.hasError) {
         pass = false;
-        newSnackbarMessages.push('Χρονοδιάγραμμα');
+        newSnackbarMessages.push('Timetable');
     }
 
     if (newSnackbarMessages.length > 0) {
-        setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+        setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
     } else {
         setSnackbarMessage('');
     }
@@ -119,7 +119,7 @@ function FormTown({ formData, setFormData, errors, setErrors }) {
         if (!formData.town) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
-                town: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+                town: { hasError: true, message: 'Field is mandatory' }
             }));
         } else {
             setErrors((prevErrors) => ({
@@ -142,7 +142,7 @@ function FormTown({ formData, setFormData, errors, setErrors }) {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Πόλη*"
+                    label="Town*"
                     error={errors.town.hasError}
                     helperText={errors.town.message}
                 />
@@ -158,7 +158,7 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
         if (!formData.childAgeGroup) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
-                childAgeGroup: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+                childAgeGroup: { hasError: true, message: 'Field is mandatory' }
             }));
         } else {
             setErrors((prevErrors) => ({
@@ -170,7 +170,7 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
 
     return (
         <TextField
-            label="Ηλικιακή Ομάδα*"
+            label="Child's Age Group*"
             select
             value={formData.childAgeGroup}
             onChange={(e) => setFormData({
@@ -183,10 +183,10 @@ function FormChildAgeGroup({ formData, setFormData, errors, setErrors }) {
             helperText={errors.childAgeGroup.message}
             slotProps={{ input: { style: { textAlign: 'left' } } }}
         >
-            <MenuItem value="1-2">1-2 χρονών</MenuItem>
-            <MenuItem value="3-6">3-6 χρονών</MenuItem>
-            <MenuItem value="7-12">7-12 χρονών</MenuItem>
-            <MenuItem value="13-16">13-16 χρονών</MenuItem>
+            <MenuItem value="1-2">1-2 years old</MenuItem>
+            <MenuItem value="3-6">3-6 years old</MenuItem>
+            <MenuItem value="7-12">7-12 years old</MenuItem>
+            <MenuItem value="13-16">13-16 years old</MenuItem>
         </TextField>
     );
 }
@@ -208,7 +208,7 @@ function FormBabysittingPlace({ formData, setFormData, errors, setErrors }) {
 
     return (
         <TextField
-            label="Χώρος Φύλαξης"
+            label="Childcare Location"
             name="babysittingPlace"
             select
             value={formData.babysittingPlace}
@@ -222,9 +222,9 @@ function FormBabysittingPlace({ formData, setFormData, errors, setErrors }) {
             helperText={errors.babysittingPlace.message}
             slotProps={{ input: { style: { textAlign: 'left' } } }}
         >
-            <MenuItem value="parents-home">Σπίτι Γονέα</MenuItem>
-            <MenuItem value="nanny-home">Σπίτι Νταντάς</MenuItem>
-            <MenuItem value="both">Σπίτι Γονέα & Νταντάς</MenuItem>
+            <MenuItem value="parents-home">Parent's House</MenuItem>
+            <MenuItem value="nanny-home">Nanny's House</MenuItem>
+            <MenuItem value="both">Parent's & Nanny's House</MenuItem>
         </TextField>
     );
 }
@@ -234,7 +234,7 @@ function FormWorkTime({ formData, setFormData, errors, setErrors }) {
         if (!formData.workTime) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
-                workTime: { hasError: true, message: 'Το πεδίο είναι υποχρεωτικό' }
+                workTime: { hasError: true, message: 'Field is mandatory' }
             }));
         } else {
             setErrors((prevErrors) => ({
@@ -246,7 +246,7 @@ function FormWorkTime({ formData, setFormData, errors, setErrors }) {
 
     return (
         <TextField
-            label="Ώρες Εργασίας*"
+            label="Work Hours*"
             select
             value={formData.workTime}
             onChange={(e) => setFormData({
@@ -258,8 +258,8 @@ function FormWorkTime({ formData, setFormData, errors, setErrors }) {
             error={errors.workTime.hasError}
             helperText={errors.workTime.message}
         >
-            <MenuItem value="part-time">4 ώρες (Μερική Απασχόληση)</MenuItem>
-            <MenuItem value="full-time">8 ώρες (Πλήρης Απασχόληση)</MenuItem>
+            <MenuItem value="part-time">4 hours (Part Time)</MenuItem>
+            <MenuItem value="full-time">8 hours (Full Time)</MenuItem>
         </TextField>
     );
 }
@@ -290,9 +290,9 @@ const validateTimeTable = ({ timeTable, workTime }) => {
     // Timetable error messages
     if (selectedDays !== 5) {
         invalid = true;
-        errorMessage = 'Πρέπει να διαλέξετε ώρες για ακριβώς 5 μέρες.';
+        errorMessage = 'You must select hours for exactly 5 days.';
     } else if (invalid) {
-        errorMessage = 'Για μερική απασχόληση μπορείτε να διαλέξετε 4 ώρες ανά ημέρα και για πλήρη απασχόληση 8 ώρες ανά ημέρα.';
+        errorMessage = 'For part-time work, you can select 4 hours per day, and for full-time work, 8 hours per day.';
     }
 
     return { hasError: invalid, message: errorMessage };
@@ -403,7 +403,7 @@ function FormExperience({ formData, setFormData }) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
             <TextField
-                label="Εμπειρία"
+                label="Experience"
                 select
                 value={formData.experience}
                 onChange={(e) => setFormData({
@@ -413,12 +413,12 @@ function FormExperience({ formData, setFormData }) {
                 fullWidth
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
                 >
-                <MenuItem value="0-6">0-6 μήνες</MenuItem>
-                <MenuItem value="6-12">6-12 μήνες</MenuItem>
-                <MenuItem value="12-18">12-18 μήνες</MenuItem>
-                <MenuItem value="18-24">18-24 μήνες</MenuItem>
-                <MenuItem value="24-36">24-36 μήνες</MenuItem>
-                <MenuItem value="36+">36+ μήνες</MenuItem>
+                <MenuItem value="0-6">0-6 months</MenuItem>
+                <MenuItem value="6-12">6-12 months</MenuItem>
+                <MenuItem value="12-18">12-18 months</MenuItem>
+                <MenuItem value="18-24">18-24 months</MenuItem>
+                <MenuItem value="24-36">24-36 months</MenuItem>
+                <MenuItem value="36+">36+ months</MenuItem>
             </TextField>
             <Button
                 variant="contained"
@@ -431,7 +431,7 @@ function FormExperience({ formData, setFormData }) {
                     },
                 }}
             >
-                <p className='button-text'>Διαγραφή</p>
+                <p className='button-text'>Delete</p>
                 <ClearIcon />
             </Button>
         </Box>
@@ -449,7 +449,7 @@ function FormDegree({ formData, setFormData }) {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%' }}>
             <TextField
-                label="Σπουδές"
+                label="Degrees"
                 select
                 value={formData.degree}
                 onChange={(e) => setFormData({
@@ -459,22 +459,21 @@ function FormDegree({ formData, setFormData }) {
                 fullWidth
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="school">Απολυτήριο Λυκείου</MenuItem>
-                <MenuItem value="college">Κολλέγιο</MenuItem>
-                <MenuItem value="tei">ΤΕΙ</MenuItem>
-                <MenuItem value="university">Πανεπιστήμιο</MenuItem>
+                <MenuItem value="school">High School Diploma</MenuItem>
+                <MenuItem value="college">College</MenuItem>
+                <MenuItem value="tei">TEI</MenuItem>
+                <MenuItem value="university">University</MenuItem>
             </TextField>
             <Button
             variant="contained"
             onClick={handleDelete}
             sx={{
                 backgroundColor: 'var(--clr-error-main)',
-                // color: 'var(--clr-white)',
                 '&:hover': {
                     opacity: 0.8,
                 },
             }} >
-                <p className='button-text'>Διαγραφή</p>
+                <p className='button-text'>Delete</p>
                 <ClearIcon />
             </Button>
         </Box>
@@ -494,7 +493,7 @@ function FormSkills({ formData, setFormData }) {
 
     return(
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <p><u>Ξένες Γλώσσες</u></p>
+            <p><u>Foreign Languages</u></p>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
                     control={
@@ -503,7 +502,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('languages', 'english')}
                         name="english"
                     />}
-                    label="Αγγλικά"
+                    label="English"
                 />
                 <FormControlLabel
                     control={
@@ -512,7 +511,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('languages', 'german')}
                         name="german"
                     />}
-                    label="Γερμανικά"
+                    label="German"
                 />
                 <FormControlLabel
                     control={
@@ -521,7 +520,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('languages', 'french')}
                         name="french"
                     />}
-                    label="Γαλλικά"
+                    label="French"
                 />
                 <FormControlLabel
                     control={
@@ -530,11 +529,11 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('languages', 'spanish')}
                         name="spanish"
                     />}
-                    label="Ισπανικά"
+                    label="Spanish"
                 />
             </Box>
             
-            <p><u>Μουσική</u></p>
+            <p><u>Music</u></p>
             <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>
                 <FormControlLabel
                     control={
@@ -543,7 +542,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('music', 'piano')}
                         name="piano"
                     />}
-                    label="Πιάνο"
+                    label="Piano"
                 />
                 <FormControlLabel
                     control={
@@ -552,7 +551,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('music', 'guitar')}
                         name="guitar"
                     />}
-                    label="Κιθάρα"
+                    label="Guitar"
                 />
                 <FormControlLabel
                     control={
@@ -561,7 +560,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('music', 'violin')}
                         name="violin"
                     />}
-                    label="Βιολί"
+                    label="Violin"
                 />
                 <FormControlLabel
                     control={
@@ -570,7 +569,7 @@ function FormSkills({ formData, setFormData }) {
                         onChange={() => handleToggleChange('music', 'flute')}
                         name="flute"
                     />}
-                    label="Φλάουτο"
+                    label="Flute"
                 />
             </Box>
         </Box>
@@ -613,7 +612,7 @@ function FormRating({ formData, setFormData }) {
                     height: '80%'
                 }}
             >
-                <p className='button-text'>Διαγραφή</p>
+                <p className='button-text'>Delete</p>
                 <ClearIcon />
             </Button>
         </Box>

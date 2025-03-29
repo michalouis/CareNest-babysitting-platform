@@ -16,7 +16,7 @@ function Contact() {
     
     return (
         <>
-            <PageTitle title="CareNest - Επικοινωνία" />
+            <PageTitle title="CareNest - Contact us" />
             <Breadcrumbs />
             <ContactBox />  {/* Contact form - in separate file bc its used also in HomePage */}
         </>

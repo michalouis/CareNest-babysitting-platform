@@ -15,8 +15,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import MessageIcon from '@mui/icons-material/Message';
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 export default function ViewMeeting() {
@@ -103,16 +103,16 @@ export default function ViewMeeting() {
         <>
         {userData && (
             <>
-                <PageTitle title="CareNest - Προβολή Ραντεβού" />
+                <PageTitle title="CareNest - View Meeting" />
                 <Breadcrumbs />
-                <h1 style={{ marginLeft: '1rem' }}>Προβολή Ραντεβού</h1>
+                <h1 style={{ marginLeft: '1rem' }}>View Meeting</h1>
                 
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
                     {/* Warning Alert */}
                     {userData.role === 'parent' && meetingData.meetingState === 'pending' && (
                         <>
                             <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
-                                Tο ραντεβού σας βρίσκεται σε αναμονή, μέχρι να εγκριθεί από τη νταντά.
+                                Your meeting is pending approval from the nanny.
                             </Alert>
                         </>
                     )}
@@ -121,15 +121,15 @@ export default function ViewMeeting() {
                     {userData.role === 'nanny' && meetingData.meetingState === 'pending' && (
                         <>
                         <Alert severity="warning" sx={{ margin: '0.5rem 1rem', maxWidth: 'fit-content' }}>
-                            Παρακαλώ αποδεχθείτε ή απορίψτε το ραντεβού που σας έστειλε ο γονέας. <br />
-                            Πληροφορίες για αυτόν μπορείτε να βρείτε παρακάτω.
+                            Please accept or reject the meeting request sent by the parent. <br />
+                            You can find their information below.
                         </Alert>
                         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', margin: '1rem' }}>
                             <Button variant="contained" sx={{ backgroundColor: "var(--clr-darker-green)" }} onClick={handleAccept}>
-                                <p className='big-button-text'>Αποδοχή</p>
+                                <p className='big-button-text'>Accept</p>
                             </Button>
                             <Button variant="contained" sx={{ backgroundColor: "var(--clr-error-main)" }} onClick={handleReject}>
-                                <p className='big-button-text'>Απόρριψη</p>
+                                <p className='big-button-text'>Reject</p>
                             </Button>
                         </Box>
                         </>
@@ -150,7 +150,7 @@ export default function ViewMeeting() {
                     }}>
                         {/* status */}
                         <p style={{ fontSize: '2.2rem', lineHeight: '2.5rem', alignItems: 'center' }}>
-                            <strong>Κατάσταση Ραντεβού: </strong>
+                            <strong>Meeting Status: </strong>
                             <span style={{
                                 fontWeight: 'bold',
                                 padding: '0.3rem 0.7rem',
@@ -161,12 +161,12 @@ export default function ViewMeeting() {
                                 display: 'inline-block',
                                 alignSelf: 'center',
                             }}>
-                                {meetingData.meetingState === 'pending' ? 'Σε αναμονή' 
-                                    : meetingData.meetingState === 'accepted' ? 'Εγκρίθηκε' 
-                                    : 'Απορρίφθηκε'}
+                                {meetingData.meetingState === 'pending' ? 'Pending' 
+                                    : meetingData.meetingState === 'accepted' ? 'Accepted' 
+                                    : 'Rejected'}
                             </span>
                         </p>
-                        <h1 style={{ margin: '1rem 0'}}>Τύπος Ραντεβού</h1>
+                        <h1 style={{ margin: '1rem 0'}}>Meeting Type</h1>
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',
@@ -182,9 +182,9 @@ export default function ViewMeeting() {
                                 alignItems: 'flex-start',
                             }}>
                                 <p style={{ fontSize: '1.3rem' }}>
-                                    <strong>Τύπος Ραντεβού: </strong>{meetingData.meetingType === 'online' ? 'Διαδυκτιακό' : 'Δια ζώσης'}
+                                    <strong>Meeting Type: </strong>{meetingData.meetingType === 'online' ? 'Online' : 'In-person'}
                                 </p>
-                                {meetingData.meetingType === 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Διεύθυνση Συνάντησης: </strong>{meetingData.address}</p>}
+                                {meetingData.meetingType === 'in-person' && <p style={{ fontSize: '1.3rem' }}><strong>Meeting Address: </strong>{meetingData.address}</p>}
                             </Box>
                             {meetingData.meetingType === 'online' ? (
                                 <Button
@@ -193,7 +193,7 @@ export default function ViewMeeting() {
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}
                                     disabled={meetingData.meetingState !== 'accepted'}
                                 >
-                                    <p className='small-button-text'>Σύνδεση στην Συνάντηση</p>
+                                    <p className='small-button-text'>Join Meeting</p>
                                 </Button>
                             ) : (
                                 <Button
@@ -202,12 +202,12 @@ export default function ViewMeeting() {
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                     disabled={meetingData.meetingState !== 'accepted'}
                                 >
-                                    <p className='small-button-text'>Άνοιγμα διεύθυνσης στο χάρτη</p>
+                                    <p className='small-button-text'>Open Address in Maps</p>
                                 </Button>
                             )}
                         </Box>
                         {/* Meeting Date */}
-                        <h1 style={{ margin: '1rem 0'}}>Ημερομηνία και Ώρα</h1>
+                        <h1 style={{ margin: '1rem 0'}}>Date and Time</h1>
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',
@@ -222,10 +222,10 @@ export default function ViewMeeting() {
                                 alignItems: 'flex-start',
                             }}>
                                 <p style={{ fontSize: '1.3rem' }}>
-                                    <strong>Ημερομηνία: </strong>{meetingData.dateTime.day} {months[meetingData.dateTime.month]} {meetingData.dateTime.year}
+                                    <strong>Date: </strong>{meetingData.dateTime.day} {months[meetingData.dateTime.month]} {meetingData.dateTime.year}
                                 </p>
                                 <p style={{ fontSize: '1.3rem' }}>
-                                    <strong>Ώρα: </strong>{meetingData.dateTime.hour}:{meetingData.dateTime.minute}
+                                    <strong>Time: </strong>{meetingData.dateTime.hour}:{meetingData.dateTime.minute}
                                 </p>
                             </Box>
                             <Button
@@ -234,11 +234,11 @@ export default function ViewMeeting() {
                                 sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem'}}
                                 disabled={meetingData.meetingState !== 'accepted'}
                             >
-                                <p className='small-button-text'>Προσθήκη στο Ημερολόγιο</p>
+                                <p className='small-button-text'>Add to Calendar</p>
                             </Button>
                         </Box>
                         <h1 style={{ margin: '1rem 0' }}>
-                            {userData.role === 'parent' ? 'Πληροφορίες Νταντάς' : 'Πληροφορίες Γονέα'}
+                            {userData.role === 'parent' ? 'Nanny Information' : 'Parent Information'}
                         </h1>
                         <Box sx={{
                             display: 'flex',
@@ -255,21 +255,21 @@ export default function ViewMeeting() {
                                     flexDirection: 'column',
                                     alignItems: 'flex-start',
                                 }}>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Νταντάς: </strong>{nannyData.firstName} {nannyData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Nanny Name: </strong>{nannyData.firstName} {nannyData.lastName}</p>
                                     <p style={{ fontSize: '1.3rem' }}>
-                                        <strong>Τηλέφωνο Νταντάς: </strong>
+                                        <strong>Nanny Phone: </strong>
                                         {meetingData.meetingState === 'accepted' ? (
                                             nannyData.phoneNumber
                                         ) : (
-                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                            <span style={{ color: 'var(--clr-orange)' }}>Meeting approval required</span>
                                         )}
                                     </p>
                                     <p style={{ fontSize: '1.3rem' }}>
-                                        <strong>Email Νταντάς: </strong>
+                                        <strong>Nanny Email: </strong>
                                         {meetingData.meetingState === 'accepted' ? (
                                             nannyData.email
                                         ) : (
-                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                            <span style={{ color: 'var(--clr-orange)' }}>Meeting approval required</span>
                                         )}
                                     </p>
                                 </Box>
@@ -280,21 +280,21 @@ export default function ViewMeeting() {
                                     flexDirection: 'column',
                                     alignItems: 'flex-start',
                                 }}>
-                                    <p style={{ fontSize: '1.3rem' }}><strong>Όνομα Γονέα: </strong>{parentData.firstName} {parentData.lastName}</p>
+                                    <p style={{ fontSize: '1.3rem' }}><strong>Parent Name: </strong>{parentData.firstName} {parentData.lastName}</p>
                                     <p style={{ fontSize: '1.3rem' }}>
-                                        <strong>Τηλέφωνο Γονέα: </strong>
+                                        <strong>Parent Phone: </strong>
                                         {meetingData.meetingState === 'accepted' ? (
                                             parentData.phoneNumber
                                         ) : (
-                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                            <span style={{ color: 'var(--clr-orange)' }}>Meeting approval required</span>
                                         )}
                                     </p>
                                     <p style={{ fontSize: '1.3rem' }}>
-                                        <strong>Email Γονέα: </strong>
+                                        <strong>Parent Email: </strong>
                                         {meetingData.meetingState === 'accepted' ? (
                                             parentData.email
                                         ) : (
-                                            <span style={{ color: 'var(--clr-orange)' }}>Απαιτείται έγκριση ραντεβού</span>
+                                            <span style={{ color: 'var(--clr-orange)' }}>Meeting approval required</span>
                                         )}
                                     </p>
                                 </Box>
@@ -311,7 +311,7 @@ export default function ViewMeeting() {
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
                                     onClick={() => navigate(`/meetings/view-meeting/${meetingId}/view-profile/${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
                                 >
-                                    <p className='small-button-text'>Προβολή Προφίλ</p>
+                                    <p className='small-button-text'>View Profile</p>
                                 </Button>
                                 <Button
                                     variant="contained"
@@ -321,7 +321,7 @@ export default function ViewMeeting() {
                                         backgroundColor: 'var(--clr-violet)',
                                         padding: '0.5rem 1rem'
                                 }}>
-                                    <p className='small-button-text'>Αποστολή Μηνύματος</p>
+                                    <p className='small-button-text'>Send Message</p>
                                 </Button>
                             </Box>
                         </Box>
@@ -329,18 +329,18 @@ export default function ViewMeeting() {
                 </Box>
                 {/* Confirm dialog */}
                 <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                    <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                    <DialogTitle><strong>Warning!</strong></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Είστε σίγουροι ότι θέλετε να {actionType === 'accept' ? 'αποδεχθείτε' : 'απορρίψετε'} αυτό το ραντεβού;
+                            Are you sure you want to {actionType === 'accept' ? 'accept' : 'reject'} this meeting?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                            <p className='button-text'>Ακύρωση</p>
+                            <p className='button-text'>Cancel</p>
                         </Button>
                         <Button variant="contained" onClick={handleDialogConfirm} sx={{ backgroundColor: actionType === 'accept' ? 'var(--clr-darker-green)' : 'var(--clr-error-main)' }}>
-                            <p className='button-text'>{actionType === 'accept' ? 'Αποδοχή' : 'Απόρριψη'}</p>
+                            <p className='button-text'>{actionType === 'accept' ? 'Accept' : 'Reject'}</p>
                         </Button>
                     </DialogActions>
                 </Dialog>

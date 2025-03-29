@@ -54,9 +54,9 @@ function JobPosting() {
         <>
         {userData && (
             <>
-            <PageTitle title="CareNest - Αγγελία Εργασίας" />
+            <PageTitle title="CareNest - Job Posting" />
             <Breadcrumbs />
-            <h1 style={{ margin: '1rem' }}>Αγγελία Εργασίας</h1>
+            <h1 style={{ margin: '1rem' }}>Job Posting</h1>
             <Box
                 sx={{
                     display: 'flex',
@@ -69,21 +69,18 @@ function JobPosting() {
                 {userData && userData.jobPosted ? (
                     <>
                         <p style={{ fontSize: '1.2rem', maxWidth: '1080px', marginBottom: '1rem' }}>
-                            <strong>Έχετε δημοσιεύσει την αγγελία σας με επιτυχία!</strong><br />
-                            Μπορείτε να τη δείτε παρακάτω.
+                            <strong>You have successfully posted your job listing!</strong><br />
+                            You can view it below.
                         </p>
                         <ViewJobPosting jobPostingData={userData.jobPostingData} />
                     </>
                 ) : (
                     <>
                     <p style={{ fontSize: '1.2rem', maxWidth: '1080px' }}>
-                        <strong>Δημιουργήστε την αγγελία σας και βρείτε την ιδανική συνεργασία!</strong><br />
-                        Δηλώστε τις προτιμήσεις και τη διαθεσιμότητά σας, ώστε να σας
-                        βρουν οι κατάλληλες οικογένειες. Συμπληρώστε στοιχεία όπως τον
-                        χρόνο απασχόλησης, την τοποθεσία εργασίας και το ηλικιακό γκρουπ
-                        που προτιμάτε να φροντίζετε.
+                        <strong>Create your job listing and find the perfect match!</strong><br />
+                        Set your preferences and availability so the right families can find you. Fill in details such as employment time, work location, and the age group you prefer to care for.
                     </p>
-
+    
                     {/* New Posting */}
                     <Button
                         variant="contained"
@@ -95,9 +92,9 @@ function JobPosting() {
                         }}
                         onClick={handleNewPostingClick}
                     >
-                        <p className="big-button-text">Δημιουργία Νέας Αγγελίας</p>
+                        <p className="big-button-text">Create New Listing</p>
                     </Button>
-
+    
                     {/* Open saved posting */}
                     <Button
                         variant="contained"
@@ -109,7 +106,7 @@ function JobPosting() {
                         disabled={userData && !userData.jobPostingData}
                         onClick={() => navigate('/job-posting/edit-job-posting')}
                     >
-                        <p className="big-button-text">Προσωρινά Αποθηκευμένη Αγγελία</p>
+                        <p className="big-button-text">Save Draft</p>
                     </Button>
 
                     {/* Dialog for new posting button */}
@@ -117,18 +114,18 @@ function JobPosting() {
                         open={openDialog}
                         onClose={() => setOpenDialog(false)}
                         >
-                        <DialogTitle><strong>Προσοχή!</strong></DialogTitle>
+                        <DialogTitle><strong>Warning!</strong></DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Υπάρχει ήδη αποθηκευμένη αγγελία. Αν δημιουργήσετε νέα αγγελία, <strong>η παλιά θα διαγραφεί.</strong>
+                                There is already a saved draft listing. If you create a new listing, <strong>the old one will be deleted.</strong>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => setOpenDialog(false)} sx={{ color: 'var(--clr-black)' }}>
-                                <p className="button-text">Ακύρωση</p>
+                                <p className="button-text">Cancel</p>
                             </Button>
                             <Button variant='contained' onClick={handleDialogClose} sx={{ backgroundColor: 'var(--clr-error)' }}>
-                                <p className="button-text">Δημιουργία Νέας Αγγελίας</p>
+                                <p className="button-text">Create New Listing</p>
                             </Button>
                         </DialogActions>
                     </Dialog>
@@ -138,7 +135,7 @@ function JobPosting() {
             </>
         )}
         </>
-    );
+    );    
 }
 
 export default JobPosting;

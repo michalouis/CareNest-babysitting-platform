@@ -17,14 +17,14 @@ function Error404() {
         <div className="error404-container">
             <PageTitle title="CareNest - Error 404" />
             <h1 className="error404-title">ERROR 404 :(</h1>
-            <h2 className="error404-subtitle">Η σελίδα δεν βρέθηκε.</h2>
-            <p className="error404-text">Λυπούμαστε, αλλά η σελίδα που αναζητάτε δεν υπάρχει ή έχει μετακινηθεί.</p>
+            <h2 className="error404-subtitle">Page not found.</h2>
+            <p className="error404-text">Sorry, but the page you are looking for does not exist or has been moved.</p>
             <p className="error404-text">
-                <strong>Μη κλαις!</strong> Μπορείτε να επιστρέψετε στην <Link to="/" className="link">αρχική σελίδα</Link> ή να χρησιμοποιήσετε το μενού για να βρείτε αυτό που ψάχνετε.
+                <strong>Don't cry!</strong> You can return to the <Link to="/" className="link">homepage</Link> or use the menu to find what you're looking for.
             </p>
             <img src='/error404.jpg' alt='crying baby' className="image" />
         </div>
-    );
+    );    
 }
 
 export default Error404;

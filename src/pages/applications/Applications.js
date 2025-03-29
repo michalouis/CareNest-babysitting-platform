@@ -18,24 +18,24 @@ import PersonIcon from '@mui/icons-material/Person';
 
 // filter options
 const checkboxOptions = [
-    { label: "Πρόχειρο", value: "draft" },
-    { label: "Υποβλήθηκε", value: "submitted" }
+    { label: "Draft", value: "draft" },
+    { label: "Submitted", value: "submitted" }
 ];
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-// Last modification of application in greek
+// Last modification of application
 const LastModification = ({ timestamp }) => {
     if (!timestamp) return null;
 
     const date = new Date(timestamp);
-    const formattedDate = date.toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
-        <p style={{ fontSize: '1.3rem' }}><strong>Τελευταία ενημέρωση:</strong> {formattedDate}</p>
+        <p style={{ fontSize: '1.3rem' }}><strong>Last Edited:</strong> {formattedDate}</p>
     );
 };
 
@@ -53,7 +53,7 @@ function ApplicationItem({ application }) {
             <CardActionArea onClick={() => navigate(`/applications/view-application/${application.applicationId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
+                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Status:</h1>
                         <h2 style={{
                             fontWeight: 'bold',
                             padding: '0.3rem 0.7rem',
@@ -62,24 +62,24 @@ function ApplicationItem({ application }) {
                             borderRadius: '1rem',
                             display: 'inline-block'
                         }}>
-                            {application.submitted ? 'Υποβλήθηκε' : 'Πρόχειρο'}
+                            {application.submitted ? 'Submitted' : 'Draft'}
                         </h2>
                     </Box>
                     {/* Nanny Name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Νταντά:</h2>
+                        <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Nanny:</h2>
                         <p style={{ fontSize: '1.3rem' }}>{application.nannyName}</p>
                     </Box>
                     {/* Dates of potential partnership */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>From:</p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[application.fromDate.month]} ${application.fromDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <InsertInvitationIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι:</p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>To:</p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[application.toDate.month]} ${application.toDate.year}`}</p>
                     </Box>
                     {/* Last modification */}
@@ -171,15 +171,14 @@ function Applications() {
         <>
         {userData && (
             <>
-                <PageTitle title="CareNest - Αιτήσεις" />
+                <PageTitle title="CareNest - Applications" />
                 <Breadcrumbs />
-                <h1 style={{ marginLeft: '1rem' }}>Αιτήσεις</h1>
+                <h1 style={{ marginLeft: '1rem' }}>Applications</h1>
                 <p style={{ fontSize: '1.2rem', maxWidth: '1150px', alignSelf: 'center', textAlign: 'center', marginTop: '1rem' }}>
-                Εδώ μπορείτε να δείτε όλες τις αιτήσεις που έχετε υποβάλει για τη συνεργασία με νταντάδες.
-                Μπορείτε να επεξεργαστείτε και να ενημερώσετε τις προσωρινά αποθηκευμένες αιτήσεις σας ή να δείτε τις
-                οριστικοποιημένες αιτήσεις σας.
+                    Here you can view all the applications you have submitted for nanny collaborations.
+                    You can edit and update your temporarily saved applications or view your finalized applications.
                 </p>
-                
+
                 <Box sx={{
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },

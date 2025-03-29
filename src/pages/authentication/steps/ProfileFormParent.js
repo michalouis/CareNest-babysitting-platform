@@ -87,57 +87,57 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     
         if (!formData.gender || errorStates.gender) {
             setErrorStates((prevStates) => ({ ...prevStates, gender: true }));
-            newErrors.gender = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Φύλο');
+            newErrors.gender = 'This field is required';
+            newSnackbarMessages.push('Gender');
         }
         if (!formData.age || errorStates.age) {
             setErrorStates((prevStates) => ({ ...prevStates, age: true }));
-            newErrors.age = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Ηλικία');
+            newErrors.age = 'This field is required';
+            newSnackbarMessages.push('Age');
         }
         if (!formData.address || errorStates.address) {
             setErrorStates((prevStates) => ({ ...prevStates, address: true }));
-            newErrors.address = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Διεύθυνση');
+            newErrors.address = 'This field is required';
+            newSnackbarMessages.push('Address');
         }
         if (!formData.postalCode || errorStates.postalCode) {
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
-            newErrors.postalCode = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Ταχυδρομικός Κώδικας');
+            newErrors.postalCode = 'This field is required';
+            newSnackbarMessages.push('Postal Code');
         }
         if (!formData.town || errorStates.town) {
             setErrorStates((prevStates) => ({ ...prevStates, town: true }));
-            newErrors.town = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Πόλη');
+            newErrors.town = 'This field is required';
+            newSnackbarMessages.push('Town');
         }
         if (!formData.phoneNumber || errorStates.phoneNumber) {
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
-            newErrors.phoneNumber = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Τηλέφωνο');
+            newErrors.phoneNumber = 'This field is required';
+            newSnackbarMessages.push('Phone Number');
         }
         if (!formData.childName || errorStates.childName) {
             setErrorStates((prevStates) => ({ ...prevStates, childName: true }));
-            newErrors.childName = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Όνομα Παιδιού');
+            newErrors.childName = 'This field is required';
+            newSnackbarMessages.push('Child Name');
         }
         if (!formData.childGender || errorStates.childGender) {
             setErrorStates((prevStates) => ({ ...prevStates, childGender: true }));
-            newErrors.childGender = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Φύλο Παιδιού');
+            newErrors.childGender = 'This field is required';
+            newSnackbarMessages.push('Child Gender');
         }
         if (!formData.childAgeGroup || errorStates.childAgeGroup) {
             setErrorStates((prevStates) => ({ ...prevStates, childAgeGroup: true }));
-            newErrors.childAgeGroup = 'Το πεδίο είναι υποχρεωτικό';
-            newSnackbarMessages.push('Ηλικιακή Ομάδα Παιδιού');
+            newErrors.childAgeGroup = 'This field is required';
+            newSnackbarMessages.push('Child Age Group');
         }
         if (formData.aboutMe.length > 500 || errorStates.aboutMe) {
             setErrorStates((prevStates) => ({ ...prevStates, aboutMe: true }));
-            newSnackbarMessages.push('Σχετικά με μένα');
-        } 
+            newSnackbarMessages.push('About Me');
+        }
     
         setErrors(newErrors);
         if (newSnackbarMessages.length > 0) {
-            setSnackbarMessage(`Τα παρακάτω πεδία είναι λανθασμένα: ${newSnackbarMessages.join(', ')}`);
+            setSnackbarMessage(`The following fields are incorrect: ${newSnackbarMessages.join(', ')}`);
         }
         return Object.keys(newErrors).length === 0;
     };
@@ -197,7 +197,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleGenderBlur = () => {
         if (!formData.gender) {     // if the field is empty
-            setErrors((prevErrors) => ({ ...prevErrors, gender: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, gender: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, gender: true }));
         } else {        // if the field is not empty, remove error message & set error state to false
             setErrors((prevErrors) => {
@@ -207,16 +207,16 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, gender: false }));
         }
     };
-    
+
     // Check if field is empty & age is a number above 18 
     const handleAgeBlur = () => {
-        if (!formData.age) {    //check if field is empty
-            setErrors((prevErrors) => ({ ...prevErrors, age: 'Το πεδίο είναι υποχρεωτικό' }));
+        if (!formData.age) {    // check if field is empty
+            setErrors((prevErrors) => ({ ...prevErrors, age: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, age: true }));
         } else {
             const age = parseInt(formData.age, 10);
-            if (isNaN(age) || age < 18) {   //check if age is a number and above 18
-                setErrors((prevErrors) => ({ ...prevErrors, age: 'Η ηλικία πρέπει να είναι άνω των 18' }));
+            if (isNaN(age) || age < 18) {   // check if age is a number and above 18
+                setErrors((prevErrors) => ({ ...prevErrors, age: 'Age must be above 18' }));
                 setErrorStates((prevStates) => ({ ...prevStates, age: true }));
             } else {    // field is valid
                 setErrors((prevErrors) => {
@@ -227,11 +227,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             }
         }
     };
-    
+
     // Check if field is empty
     const handleAddressBlur = () => {
         if (!formData.address) {
-            setErrors((prevErrors) => ({ ...prevErrors, address: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, address: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, address: true }));
         } else {
             setErrors((prevErrors) => {
@@ -241,14 +241,14 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, address: false }));
         }
     };
-    
+
     // Check if field is empty & postal code is a 5-digit number
     const handlePostalCodeBlur = () => {
         if (!formData.postalCode) {
-            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
         } else if (!/^\d{5}$/.test(formData.postalCode)) {
-            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Ο ταχυδρομικός κώδικας πρέπει να αποτελείτε από 5 ψηφία' }));
+            setErrors((prevErrors) => ({ ...prevErrors, postalCode: 'Postal code must be 5 digits' }));
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: true }));
         } else {
             setErrors((prevErrors) => {
@@ -258,11 +258,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, postalCode: false }));
         }
     };
-    
+
     // Check if field is empty
     const handleTownBlur = () => {
         if (!formData.town) {
-            setErrors((prevErrors) => ({ ...prevErrors, town: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, town: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, town: true }));
         } else {
             setErrors((prevErrors) => {
@@ -272,14 +272,14 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, town: false }));
         }
     };
-    
+
     // Check if field is empty & phone number is a 10-digit number
     const handlePhoneNumberBlur = () => {
         if (!formData.phoneNumber) {
-            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
         } else if (!/^\d{10}$/.test(formData.phoneNumber)) {
-            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Το τηλέφωνο πρέπει πρέπει να αποτελείτε από 10 ψηφία' }));
+            setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: 'Phone number must be 10 digits' }));
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: true }));
         } else {
             setErrors((prevErrors) => {
@@ -289,14 +289,14 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, phoneNumber: false }));
         }
     };
-    
+
     // Check if field is empty & only contains letters
     const handleChildNameBlur = () => {
         if (!formData.childName) {
-            setErrors((prevErrors) => ({ ...prevErrors, childName: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, childName: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, childName: true }));
         } else if (!/^[a-zA-Zα-ωΑ-ΩάέήίόύώΆΈΉΊΌΎΏ]+$/.test(formData.childName)) {
-            setErrors((prevErrors) => ({ ...prevErrors, childName: 'Το όνομα πρέπει να αποτελείται μόνο απο γράμματα' }));
+            setErrors((prevErrors) => ({ ...prevErrors, childName: 'The name must contain only letters' }));
             setErrorStates((prevStates) => ({ ...prevStates, childName: true }));
         } else {
             setErrors((prevErrors) => {
@@ -306,11 +306,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, childName: false }));
         }
     };
-    
+
     // Check if field is empty
     const handleChildGenderBlur = () => {
         if (!formData.childGender) {
-            setErrors((prevErrors) => ({ ...prevErrors, childGender: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, childGender: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, childGender: true }));
         } else {
             setErrors((prevErrors) => {
@@ -324,7 +324,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     // Check if field is empty
     const handleChildAgeGroupBlur = () => {
         if (!formData.childAgeGroup) {
-            setErrors((prevErrors) => ({ ...prevErrors, childAgeGroup: 'Το πεδίο είναι υποχρεωτικό' }));
+            setErrors((prevErrors) => ({ ...prevErrors, childAgeGroup: 'This field is required' }));
             setErrorStates((prevStates) => ({ ...prevStates, childAgeGroup: true }));
         } else {
             setErrors((prevErrors) => {
@@ -334,11 +334,11 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             setErrorStates((prevStates) => ({ ...prevStates, childAgeGroup: false }));
         }
     };
-    
+
     // Check if field is empty & only contains letters
     const handleAboutMeBlur = () => {
         if (formData.aboutMe.length > 500) {
-            setErrors((prevErrors) => ({ ...prevErrors, aboutMe: 'Το πεδίο δέχεται μέχρι 500 χαρακτήρες' }));
+            setErrors((prevErrors) => ({ ...prevErrors, aboutMe: 'This field accepts up to 500 characters' }));
             setErrorStates((prevStates) => ({ ...prevStates, aboutMe: true }));
         } else {
             setErrors((prevErrors) => {
@@ -390,7 +390,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             justifyContent: 'space-around',
             position: 'relative'
         }}>
-            <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
+            <p style={{color: 'var(--clr-grey)'}}>Mandatory Fields: *</p>
             <Box sx={{ 
                 display: 'flex',
                 alignItems: 'center', 
@@ -403,7 +403,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                     sx={{ backgroundColor: 'var(--clr-violet)' }}
                     startIcon={<UploadIcon />}
                 >
-                    <p className='button-text'>Ανεβάστε φωτογραφία</p>
+                    <p className='button-text'>Upload Photo</p>
                     <input
                         type="file"
                         hidden
@@ -413,7 +413,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 {formData.profilePhoto ? (
                     <p>{formData.profilePhoto}</p>
                 ) : (
-                    <p>Δεν έχετε ανεβάσει φωτογραφία</p>
+                    <p>No photo is uploaded</p>
                 )}
             </Box>
             <Button
@@ -422,9 +422,9 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 startIcon={<DeleteIcon />}
                 onClick={() => setFormData({ ...formData, profilePhoto: '' })}
             >
-                <p className='button-text'>Διαγραφή φωτογραφίας</p>
+                <p className='button-text'>Delete Photo</p>
             </Button>
-            <h2>Προσωπικά Στοιχεία</h2>
+            <h2>Personal Details</h2>
             {/* First & Last Name, Amka, Role - can't be changed, tied to account */}
             <Tooltip title="This field can't be changed" arrow>
                 <TextField label="First Name" value={formData.firstName} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
@@ -436,12 +436,12 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 <TextField label="AMKA" value={formData.amka} slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
             <Tooltip title="This field can't be changed" arrow>
-                <TextField label="Role" value="Γονέας" slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
+                <TextField label="Role" value="Parent" slotProps={{ input: { readOnly: true } }} fullWidth disabled variant="filled" />
             </Tooltip>
 
             {/* Gender - dropdown menu, 3 options */}
             <TextField
-                label="Φύλο*"
+                label="Gender*"
                 name="gender"
                 select
                 value={formData.gender}
@@ -452,14 +452,14 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.gender}
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="Male">Άντρας</MenuItem>
-                <MenuItem value="Female">Γυναίκα</MenuItem>
-                <MenuItem value="Other">Άλλο</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
             </TextField>
 
             {/* Age */}
             <TextField
-                label="Ηλικία"
+                label="Age"
                 variant="outlined"
                 fullWidth
                 type="text"
@@ -471,9 +471,9 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             />
                             
             {/* Address, Postal Code, Town, Phone Number, Email(can't be changed) */}
-            <h2>Διεύθυνση & Στοιχεία Επικοινωνίας</h2>
+            <h2>Address & Contact Info</h2>
             <TextField
-                label="Διεύθυνση*"
+                label="Address*"
                 name="address"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -483,7 +483,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.address}
             />
             <TextField
-                label="Ταχυδρομικός Κώδικας*"
+                label="Postal Code*"
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
@@ -492,7 +492,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 error={errorStates.postalCode}
                 helperText={errors.postalCode}
             />
-            <p style={{ fontSize: '1.15rem' }}>Διαλέξτε μια από τις πόλεις της λίστας στα αγγλικά.</p>
+            <p style={{ fontSize: '1.15rem' }}>Pick one of the following cities</p>
             <Autocomplete
                 options={towns}
                 getOptionLabel={(option) => option}
@@ -505,7 +505,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 renderInput={(params) => (          // for error
                     <TextField
                         {...params}
-                        label="Πόλη*"
+                        label="Town*"
                         error={errorStates.town}
                         helperText={errors.town}
                     />
@@ -513,7 +513,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 onBlur={handleTownBlur}
             />
             <TextField
-                label="Τηλέφωνο*"
+                label="Phone Number*"
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
@@ -527,9 +527,9 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             </Tooltip>
 
             {/* Name, Gender(dropdown), Age group(dropdown) */}
-            <h2>Στοιχεία Παιδιού</h2>
+            <h2>Child Details</h2>
             <TextField
-                label="Όνομα*"
+                label="Child Name*"
                 name="childName"
                 value={formData.childName}
                 onChange={(e) => setFormData({ ...formData, childName: e.target.value })}
@@ -539,7 +539,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.childName}
             />
             <TextField
-                label="Φύλο*"
+                label="Child Gender*"
                 name="childGender"
                 select
                 value={formData.childGender}
@@ -550,12 +550,12 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.childGender}
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="Male">Αγόρι</MenuItem>
-                <MenuItem value="Female">Κορίτσι</MenuItem>
-                <MenuItem value="Other">Άλλο</MenuItem>
+                <MenuItem value="Male">Boy</MenuItem>
+                <MenuItem value="Female">Girl</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
             </TextField>
             <TextField
-                label="Ηλικιακή Ομάδα*"
+                label="Child's Age Group*"
                 name="childAgeGroup"
                 select
                 value={formData.childAgeGroup}
@@ -566,16 +566,16 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 helperText={errors.childAgeGroup}
                 slotProps={{ input: { style: { textAlign: 'left' } } }}
             >
-                <MenuItem value="1-2">1-2 χρονών</MenuItem>
-                <MenuItem value="3-6">3-6 χρονών</MenuItem>
-                <MenuItem value="7-12">7-12 χρονών</MenuItem>
-                <MenuItem value="13-16">13-16 χρονών</MenuItem>
+                <MenuItem value="1-2">1-2 years old</MenuItem>
+                <MenuItem value="3-6">3-6 years old</MenuItem>
+                <MenuItem value="7-12">7-12 years old</MenuItem>
+                <MenuItem value="13-16">13-16 years old</MenuItem>
             </TextField>
 
             {/* About Me - multiline text field */}
-            <h2>Σχετικά με μένα</h2>
+            <h2>About Me</h2>
             <TextField
-                label="Σχετικά με μένα"
+                label="About Me"
                 name="aboutMe"
                 value={formData.aboutMe}
                 onChange={(e) => setFormData({ ...formData, aboutMe: e.target.value })}
@@ -608,7 +608,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
                 }}
                 disabled={loading}
             >
-                <p className='big-button-text'>Υποβολή</p>
+                <p className='big-button-text'>Submit</p>
             </Button>
             {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
         </Box>
@@ -631,19 +631,19 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
             open={openConfirmDialog}
             onClose={handleConfirmDialogClose}
         >
-            <DialogTitle><strong>Είστε σίγουρος;</strong></DialogTitle>
+            <DialogTitle><strong>Are you sure?</strong></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Είστε σίγουρος πως θέλετε να συνεχίσετε;<br />
-                    <strong>Παρακαλώ ελέγξτε τα στοιχεία σας πριν τα υποβάλετε.</strong>
+                    Are you sure you want to proceed?<br />
+                    <strong>Please check your details before submitting.</strong>
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleConfirmDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                    <p className='button-text'>Ακύρωση</p>
+                    <p className='button-text'>Cancel</p>
                 </Button>
                 <Button variant='contained' onClick={handleConfirmSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }} >
-                    <p className='button-text'>Υποβολή</p>
+                    <p className='button-text'>Submit</p>
                 </Button>
             </DialogActions>
         </Dialog>

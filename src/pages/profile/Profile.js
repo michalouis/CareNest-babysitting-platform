@@ -61,9 +61,9 @@ export function Profile() {
         <>
         {userData && (
                 <>
-                <PageTitle title="CareNest - Προφίλ" />
+                <PageTitle title="CareNest - Profile" />
                 <Breadcrumbs />
-                <h1 style={{ marginLeft: '1rem' }}>Προφίλ Χρήστη</h1>
+                <h1 style={{ marginLeft: '1rem' }}>User Profile</h1>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
@@ -92,7 +92,7 @@ export function Profile() {
                             }}
                             onClick={() => navigate('/profile/edit-profile')}
                         >
-                            <p className="button-text">Επεξεργασία</p>
+                            <p className="button-text">Edit Profile</p>
                         </Button>
                         <Button
                             variant="contained"
@@ -103,7 +103,7 @@ export function Profile() {
                                 '&:hover': { opacity: 0.8 },
                                 padding: '0.5rem 0'
                         }}>
-                            <p className="button-text">Διαγραφή Λογαριασμού</p>
+                            <p className="button-text">Delete Account</p>
                         </Button>
                     </Box>
 
@@ -132,24 +132,24 @@ export function Profile() {
                     open={deleteDialogOpen}
                     onClose={handleDeleteDialogClose}
                 >
-                    <DialogTitle><strong>Επιβεβαίωση Διαγραφής Λογαριασμού</strong></DialogTitle>
+                    <DialogTitle><strong>Confirm Account Deletion</strong></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Είστε σίγουροι ότι θέλετε να διαγράψετε τον λογαριασμό σας;<br />
-                            <strong>Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</strong>
+                            Are you sure you want to delete your account?<br />
+                            <strong>This action cannot be undone.</strong>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleDeleteDialogClose} sx={{ color: 'var(--clr-black)' }}>
-                            <p className='button-text'>Ακύρωση</p>
+                            <p className='button-text'>Cancel</p>
                         </Button>
                         <Button onClick={handleDeleteAccount} sx={{ backgroundColor: 'var(--clr-error-main)', color: 'var(--clr-white)' }}>
-                            <p className='button-text'>Διαγραφή</p>
+                            <p className='button-text'>Delete</p>
                         </Button>
                     </DialogActions>
                 </Dialog>
                 </>
             )}
         </>
-    );
+    );    
 }

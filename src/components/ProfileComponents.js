@@ -7,18 +7,18 @@ import GradeIcon from '@mui/icons-material/Grade';
 
 // translate data to greek
 const translateMap = {
-    school: 'Απολυτήριο Σχολείου',
-    university: 'Πανεπιστήμιο',
-    college: 'Κολέγιο',
-    tei: 'ΤΕΙ',
-    english: 'Αγγλικά',
-    german: 'Γερμανικά',
-    french: 'Γαλλικά',
-    spanish: 'Ισπανικά',
-    piano: 'Πιάνο',
-    guitar: 'Κιθάρα',
-    violin: 'Βιολί',
-    flute: 'Φλάουτο'
+    school: 'High School Diploma',
+    university: 'University',
+    college: 'College',
+    tei: 'TEI',
+    english: 'English',
+    german: 'German',
+    french: 'French',
+    spanish: 'Spanish',
+    piano: 'Piano',
+    guitar: 'Guitar',
+    violin: 'Violin',
+    flute: 'Flute'
 };
 
 // Render the profile picture, name & score of nanny
@@ -75,37 +75,37 @@ export function renderCommonData(userData) {
     return (
         <>
             {/* Personal Data */}
-            <h2>Προσωπικά Στοιχεία</h2>
+            <h2>Personal Details</h2>
             <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                 <TextField
-                    label="Φύλο"
+                    label="Gender"
                     value={
-                        userData.gender === 'Male' ? 'Άντρας' :
-                        userData.gender === 'Female' ? 'Γυναίκα' :
-                        userData.gender === 'Other' ? 'Άλλο' :
+                        userData.gender === 'Male' ? 'Male' :
+                        userData.gender === 'Female' ? 'Female' :
+                        userData.gender === 'Other' ? 'Other' :
                         ''
                     }
                     slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
                     fullWidth
                     variant="outlined"
                 />
-                <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="ΑΜΚΑ" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Age" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Role" value={userData.role === 'parent' ? 'Parent' : 'Nanny'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="AMKA" value={userData.amka} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
             </Box>
 
             {/* Contact Data */}
             <h2>Στοιχεία Επικοινωνίας</h2>
             <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                <TextField label="Διεύθυνση" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Ταχυδρομικός Κώδικας" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Τηλέφωνο" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Address" value={userData.address} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Postal Code" value={userData.postalCode} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Town" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Phone Number" value={userData.phoneNumber} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
                 <TextField label="Email" value={userData.email} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
             </Box>
 
-            <h2>Σχετικά με μένα</h2>
-            <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} sx={{ maxHeight: '150px'}}/>
+            <h2>About Me</h2>
+            <TextField label="About Me" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} sx={{ maxHeight: '150px'}}/>
         </>
     );
 }
@@ -118,24 +118,24 @@ export function renderNonSensitiveCommonData(userData) {
             <h2>Πληροφορίες</h2>
             <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1.5, width: '100%' }}>
                 <TextField
-                    label="Φύλο"
+                    label="Gender"
                     value={
-                        userData.gender === 'Male' ? 'Άντρας' :
-                        userData.gender === 'Female' ? 'Γυναίκα' :
-                        userData.gender === 'Other' ? 'Άλλο' :
+                        userData.gender === 'Male' ? 'Male' :
+                        userData.gender === 'Female' ? 'Female' :
+                        userData.gender === 'Other' ? 'Other' :
                         ''
                     }
                     slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
                     fullWidth
                     variant="outlined"
                 />
-                <TextField label="Ηλικία" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Ρόλος" value={userData.role === 'parent' ? 'Γονέας' : 'Νταντά'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
-                <TextField label="Πόλη" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Age" value={userData.age} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Role" value={userData.role === 'parent' ? 'Parent' : 'Nanny'} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Town" value={userData.town} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
             </Box>
 
-            <h2>Σχετικά με μένα</h2>
-            <TextField label="Σχετικά με μένα" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
+            <h2>About Me</h2>
+            <TextField label="About Me" value={userData.aboutMe} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" multiline rows={4} />
         </>
     );
 }
@@ -144,22 +144,22 @@ export function renderNonSensitiveCommonData(userData) {
 export function renderParentData(userData) {
     return (
         <>
-            <h2>Στοιχεία Παιδιού</h2>
+            <h2>Child Details</h2>
             <Box sx={{ flexGrow: 1, display: 'grid', gridAutoRows: '1fr', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 1.5, width: '100%' }}>
-                <TextField label="Όνομα Παιδιού" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Child Name" value={userData.childName} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
                 <TextField
-                    label="Φύλο Παιδιού"
+                    label="Child Gender"
                     value={
-                        userData.childGender === 'Male' ? 'Αγόρι' :
-                        userData.childGender === 'Female' ? 'Κορίτσι' :
-                        userData.childGender === 'Other' ? 'Άλλο' :
+                        userData.childGender === 'Male' ? 'Boy' :
+                        userData.childGender === 'Female' ? 'Girl' :
+                        userData.childGender === 'Other' ? 'Other' :
                         ''
                     }
                     slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
                     fullWidth
                     variant="outlined"
                 />
-                <TextField label="Ηλικιακή Ομάδα Παιδιού" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
+                <TextField label="Child's Age Group" value={userData.childAgeGroup} slotProps={{ input: { readOnly: true }, label: { shrink: true } }} fullWidth variant="outlined" />
             </Box>
         </>
     );
@@ -169,19 +169,19 @@ export function renderParentData(userData) {
 export function renderNannyData(userData) {
     return (
         <>
-            <h2>Εμπειρία</h2>
+            <h2>Experience</h2>
             <TextField
-                label="Εμπειρία"
-                value={`${userData.experience} μήνες`}
+                label="Experience"
+                value={`${userData.experience} months`}
                 slotProps={{ input: { readOnly: true }, label: { shrink: true } }}
                 fullWidth
                 variant="outlined"
             />
 
-            <h2>Σπουδές</h2>
+            <h2>Education</h2>
             {userData.degrees.length === 0 ? (
                 <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
-                    Δεν υπάρχουν Σπουδές
+                    No Degrees Available
                 </p>
             ) : (
                 userData.degrees.map((degree, index) => (
@@ -200,10 +200,10 @@ export function renderNannyData(userData) {
                 ))
             )}
 
-            <h2>Πιστοποιητικά</h2>
+            <h2>Certificates</h2>
             {userData.certificates.length === 0 ? (
                 <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
-                    Δεν υπάρχουν Πιστοποιητικά
+                    No Certificates Available
                 </p>
             ) : (
                 userData.certificates.map((certificate, index) => (
@@ -222,10 +222,10 @@ export function renderNannyData(userData) {
                 ))
             )}
 
-            <h2>Συστάσεις</h2>
+            <h2>Recommendations</h2>
             {userData.recommendations.length === 0 ? (
                 <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
-                    Δεν υπάρχουν Συστάσεις
+                    No Recommendations Available
                 </p>
             ) : (
                 userData.recommendations.map((recommendation, index) => (
@@ -244,10 +244,10 @@ export function renderNannyData(userData) {
                 ))
             )}
 
-            <h2>Δεξιότητες</h2>
+            <h2>Skills</h2>
             {Object.values(userData.languages).every(value => !value) && Object.values(userData.music).every(value => !value) ? (
                 <p style={{ color: 'var(--clr-grey)', fontSize: '1.25rem' }}>
-                    Δεν υπάρχουν Δεξιότητες
+                    No Skills Available
                 </p>
             ) : (
                 <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem' }}>

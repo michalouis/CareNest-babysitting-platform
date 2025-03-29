@@ -31,7 +31,7 @@ function GenericContainer({ userData, items, itemFunction, itemsPerPage = 4, loa
                     ) : (   // If there are no items to display, show message
                         <Box sx={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
                             <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                                Δεν βρέθηκαν αποτελέσματα!
+                                No results found!
                             </p>
                         </Box>
                     )

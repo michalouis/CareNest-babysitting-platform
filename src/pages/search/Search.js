@@ -114,13 +114,13 @@ function Search() {
 
     return (
         <>
-            <PageTitle title="CareNest - Αναζήτηση Νταντάς" />
+            <PageTitle title="CareNest - Nanny Search" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Αναζήτηση Νταντάς</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Nanny Search</h1>
             <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center', textAlign: 'center' }}>
-                Χρησιμοποιήστε τα φίλτρα παρακάτω για να βρείτε τη νταντά που ταιριάζει στις ανάγκες σας.
-                Επιλέξτε κριτήρια όπως την περιοχή, τις ημέρες και ώρες φύλαξης, καθώς και τα προσόντα και
-                την εμπειρία της νταντάς. Προσαρμόστε την αναζήτησή σας για να δείτε τα καλύτερα αποτελέσματα!
+                Use the filters below to find a nanny that suits your needs. Select criteria such as location,
+                babysitting days and hours, as well as the nanny's qualifications and experience.
+                Customize your search to see the best results!
             </p>
             <Box sx={{
                 display: 'flex',
@@ -146,29 +146,29 @@ function Search() {
                             justifyContent: 'space-around',
                             position: 'relative'
                         }}>
-                            <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
-                            <h1>Φίλτρα Φύλαξης</h1>
-                            <h3>Πόλη Αναζήτησης*</h3>
+                            <p style={{color: 'var(--clr-grey)'}}>Required fields: *</p>
+                            <h1>Babysitting Filters</h1>
+                            <h3>Search Town*</h3>
                             <FormTown formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Ηλικιακή Ομάδα Παιδιού*</h3>
+                            <h3>Child Age Group*</h3>
                             <FormChildAgeGroup formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Χώρος Φύλαξης του Παιδιού*</h3>
+                            <h3>Child Babysitting Location*</h3>
                             <FormBabysittingPlace formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Διάρκεια Απασχόλησης της Νταντάς*</h3>
+                            <h3>Babysitter Working Duration*</h3>
                             <FormWorkTime formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
                             <h3>
-                                Χρονοδιάγραμμα Φύλαξης*: <span style={{ fontWeight: 'normal' }}>Καθορίστε τις ημέρες και ώρες που επιθυμείτε να γίνετε η φύλαξη του παιδιού σας.</span>
+                                Babysitting Schedule*: <span style={{ fontWeight: 'normal' }}>Set the days and hours you wish for the babysitting of your child.</span>
                             </h3>
                             <FormTimeTable formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            
-                            <h1>Φίλτρα Νταντάς</h1>
-                            <h3>Ελάχιστη εμπειρίας της νταντάς</h3>
+
+                            <h1>Babysitter Filters</h1>
+                            <h3>Minimum Babysitter Experience</h3>
                             <FormExperience formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Επίπεδο σπουδών της νταντάς</h3>
+                            <h3>Babysitter Education Level</h3>
                             <FormDegree formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Δεξιότητες της Νταντάς</h3>
+                            <h3>Babysitter Skills</h3>
                             <FormSkills formData={filterData} setFormData={setFilterData} errors={errors} setErrors={setErrors}/>
-                            <h3>Έλάχιστος μέσος όρος αξιλογήσεων</h3>
+                            <h3>Minimum Average Rating</h3>
                             <FormRating formData={filterData} setFormData={setFilterData}/>
                         </Box>
 
@@ -192,7 +192,7 @@ function Search() {
                                     gap: '0.5rem'
                             }}>
                                 <SearchIcon sx={{ fontSize: 35 }}/>
-                                <p className="big-button-text">Αναζήτηση</p>
+                                <p className="big-button-text">Search</p>
                             </Button>
                             {/* Favorites Button */}
                             <Button
@@ -207,7 +207,7 @@ function Search() {
                                 }}
                             >
                                 <FavoriteIcon sx={{ fontSize: 30 }}/>
-                                <p className="big-button-text">Αγαπημένα</p>
+                                <p className="big-button-text">Favorites</p>
                             </Button>
                         </Box>
                     </>

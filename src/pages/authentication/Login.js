@@ -41,7 +41,7 @@ function Login() {
             }
         } catch (error) {   // if an error occurs, log it and display an error message
             console.error('Error logging in:', error);
-            setErrorMessage('Λάθος email ή κωδικός πρόσβασης');
+            setErrorMessage('Wrong email or password. Please try again.');
             setError(true);
         } finally {
             setLoading(false);
@@ -50,7 +50,7 @@ function Login() {
 
     return (
         <>
-            <PageTitle title="CareNest - Σύνδεση" />
+            <PageTitle title="CareNest - Log in to CareNest" />
             <Breadcrumbs />
             <Box sx={{
                 display: 'flex',
@@ -65,9 +65,9 @@ function Login() {
                     alignItems: 'baseline',
                     gap: '1rem'
                 }}>
-                    <h1 className="login-header">Σύνδεση στη Πλατοφορμα</h1>
+                    <h1 className="login-header">Log in to CareNest</h1>
                     <p className="login-text">
-                        Δεν έχετε λογαριασμό; <Link to="/signup" className="signup-link">Κάντε εγγραφή</Link>
+                        "Don't have an account? <Link to='/signup' className='signup-link'>Sign up</Link>"
                     </p>
                 </Box>
 
@@ -77,7 +77,7 @@ function Login() {
                     justifyContent: 'center',
                     width: '100%'
                 }}>
-                    <p style={{ fontSize: '1.5rem', margin: '2rem 0', textAlign: 'center' }}>Συνδεθείτε στο λογαριασμό σας</p>
+                    <p style={{ fontSize: '1.5rem', margin: '2rem 0', textAlign: 'center' }}>Log in to your account</p>
                 </Box>
 
                 {/* Login form: Email, Password, Submit Button */}
@@ -112,7 +112,7 @@ function Login() {
                         />
                         <TextField
                             id="password-input"
-                            label="Κωδικός"
+                            label="Password"
                             type="password"
                             variant="outlined"
                             fullWidth
@@ -133,7 +133,7 @@ function Login() {
                             }}
                             disabled={loading}
                         >
-                            <p className='big-button-text'>Σύνδεση</p>
+                            <p className='big-button-text'>Log in</p>
                         </Button>
                         {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }} />} {/* Loading bar */}
                     </Box>

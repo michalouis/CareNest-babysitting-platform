@@ -51,10 +51,10 @@ export default function PartnershipActiveContent({ userData }) {
           }}
         >
           <h1>
-            Καλησπέρα, <br />{userData.firstName}!
+            Good evening, <br />{userData.firstName}!
           </h1>
           <p style={{ fontSize: 'larger' }}>
-            <br />Δείτε με μια ματιά πότε είναι τα ραντεβού φροντίδας της εβδομάδας, ή δείτε περισσότερα για τη συνεργασία σας πατώντας 'Η ενεργή συνεργασία μου'.
+            <br />Take a quick look at the care appointments for the week, or see more about your partnership by clicking 'My Active Partnership'.
           </p>
           <Button
             component={Link}
@@ -73,7 +73,7 @@ export default function PartnershipActiveContent({ userData }) {
               },
             }}
           >
-            <p className='big-button-text'>Η ενεργή συνεργασία μου</p>
+            <p className='big-button-text'>My Active Partnership</p>
           </Button>
         </Box>
         <Box

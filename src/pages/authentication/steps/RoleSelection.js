@@ -17,7 +17,7 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <p className='description'>Σε ποια ομάδα ανήκετε;</p>
+            <p className='description'>Which group do you belong to?</p>
             <Box
                 sx={{
                     width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
@@ -77,11 +77,11 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             alignItems: 'flex-start',
                             color: role === 'parent' ? 'var(--clr-white)' : 'var(--clr-black)'
                         }}>
-                            <p className='role-title'>Γονέας</p>
+                            <p className='role-title'>Parent</p>
                             <p className='role-description'>
-                                Απαλλαγείτε από το άγχος, αφήνοντας τα παιδιά σας σε ασφαλή χέρια!
-                                Βρείτε την ιδανική νταντά, δείτε τις αιτήσεις σας και κλείστε
-                                ραντεβού γνωριμίας εύκολα μέσα από την πλατφόρμα.
+                                Free yourself from stress by leaving your children in safe hands!
+                                Find the ideal nanny, check your applications, and schedule
+                                meet-and-greet appointments easily through the platform.
                             </p>
                         </Box>
                     </Box>
@@ -133,11 +133,11 @@ function RoleSelection({ selectedRole, onRoleSelect, showError }) {
                             alignItems: 'flex-start',
                             color: role === 'nanny' ? 'var(--clr-white)' : 'var(--clr-black)'
                         }}>
-                            <p className='role-title'>Νταντά</p>
+                            <p className='role-title'>Nanny</p>
                             <p className='role-description'>
-                                Ψάχνετε ευκαιρίες να προσφέρετε τις υπηρεσίες σας;
-                                Εγγραφείτε, δημιουργήστε προφίλ και ξεκινήστε αξιόπιστες
-                                συνεργασίες με γονείς που σας χρειάζονται!
+                                Looking for opportunities to offer your services?
+                                Sign up, create a profile, and start building
+                                trustworthy collaborations with parents who need you!
                             </p>
                         </Box>
                     </Box>

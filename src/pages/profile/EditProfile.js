@@ -21,9 +21,9 @@ function EditProfile() {
         <>
         {userData && (
             <>
-            <PageTitle title="CareNest - Επεξεργασία Προφίλ" />
+            <PageTitle title="CareNest - Edit Profile" />
             <Breadcrumbs showPopup={true} />
-                <h1 style={{ marginLeft: '1rem' }}>Επεξεργασία Προφίλ</h1>
+                <h1 style={{ marginLeft: '1rem' }}>Edit Profile</h1>
             <Box style={{ 
                 display: 'flex',
                 flexDirection: 'column',

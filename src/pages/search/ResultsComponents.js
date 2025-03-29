@@ -9,18 +9,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import GradeIcon from '@mui/icons-material/Grade';
 
 const translateMap = {
-    school: 'Απολυτήριο Σχολείου',
-    university: 'Πανεπιστήμιο',
-    college: 'Κολέγιο',
-    tei: 'ΤΕΙ',
-    english: 'Αγγλικά',
-    german: 'Γερμανικά',
-    french: 'Γαλλικά',
-    spanish: 'Ισπανικά',
-    piano: 'Πιάνο',
-    guitar: 'Κιθάρα',
-    violin: 'Βιολί',
-    flute: 'Φλάουτο'
+    school: 'High School Diploma',
+    university: 'University',
+    college: 'College',
+    tei: 'TEI',
+    english: 'English',
+    german: 'German',
+    french: 'French',
+    spanish: 'Spanish',
+    piano: 'Piano',
+    guitar: 'Guitar',
+    violin: 'Violin',
+    flute: 'Flute'
 };
 
 // Display the info of the result item
@@ -130,10 +130,10 @@ function ResultsItem({ item, favorites, setFavorites }) {
                     <Box sx={{ flex: 1 }}>
                         <p style={{ fontSize: '1.5rem' }}>
                             <b>{firstName} {lastName}</b>
-                            <span style={{ color: 'grey' }}><b> | Εμπειρία</b> {experience} μήνες</span>
+                            <span style={{ color: 'grey' }}><b> | Experience</b> {experience} μήνες</span>
                         </p>
-                        {degrees.length > 0 && (<p style={{ fontSize: '1.5rem' }}><strong>Σπουδές</strong> {degrees[0].degreeTitle}</p>)}
-                        {hasSkills && (<p style={{ fontSize: '1.5rem' }}><strong>Δεξιότητες</strong> {ShowSkills(languages, music)}</p>)}
+                        {degrees.length > 0 && (<p style={{ fontSize: '1.5rem' }}><strong>Degrees</strong> {degrees[0].degreeTitle}</p>)}
+                        {hasSkills && (<p style={{ fontSize: '1.5rem' }}><strong>Skills</strong> {ShowSkills(languages, music)}</p>)}
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -313,10 +313,10 @@ function ResultsContainer({ filterData }) {
                         // Display no results message
                         <Box sx={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
                             <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                                Δεν βρέθηκαν αποτελέσματα!
+                                No results found!
                             </p>
                             <p style={{ fontSize: '1rem' }}>
-                                Αλλάξτε τα φίλτρα για να εμφανιστούν κάποια αποτελέσματα.
+                                Change the filters to display some results.
                             </p>
                         </Box>
                     )

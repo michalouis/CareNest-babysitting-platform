@@ -131,7 +131,7 @@ export default function ViewProfile() {
                         onClick={() => navigate('/messages')}
                         startIcon={<MessageIcon />}
                     >
-                        <p className="button-text">Μήνυμα</p>
+                        <p className="button-text">Message</p>
                     </Button>
                     {profileData.role === 'nanny' && (
                         <>
@@ -146,7 +146,7 @@ export default function ViewProfile() {
                                 startIcon={<EventIcon />}
                                 onClick={() => setDialogOpen(true)}
                             >
-                                <p className="button-text">Ραντεβού Γνωριμίας</p>
+                                <p className="button-text">Arrange Meeting</p> {/* Ραντεβού Γνωριμίας */}
                             </Button>
                             <Button
                                 variant="contained"
@@ -159,7 +159,7 @@ export default function ViewProfile() {
                                 startIcon={<AssignmentIcon />}
                                 onClick={() => navigate(`/search/view-profile/${profileId}/create-application/${profileId}`)}
                             >
-                                <p className="button-text">Αίτηση Ενδιαφέροντος</p>
+                                <p className="button-text">Interest Application</p> {/* Αίτηση Ενδιαφέροντος */}
                             </Button>
                         </>
                     )}
@@ -192,7 +192,7 @@ export default function ViewProfile() {
                     </Box>
                     {profileData.role === 'nanny' && (
                         <>
-                            <h1>Αγγελία Νταντάς</h1>
+                            <h1>Nanny's Job Posting</h1>
                             <ViewJobPosting jobPostingData={profileData.jobPostingData} />
                         </>
                     )}

@@ -28,7 +28,7 @@ function FaqTab({ onTabChange }) {
                 TabIndicatorProps={{ style: { display: 'none' } }}  // remove default indicator styling
             >
                 <Tab
-                    label="Γονεις"
+                    label="Parents"
                     className="faq-tab"
                     sx={{
                         backgroundColor: selectedTab === 0 ? 'var(--clr-light-grey)' : 'transparent',
@@ -46,7 +46,7 @@ function FaqTab({ onTabChange }) {
                     }}
                 />
                 <Tab
-                    label="Ντανταδες"
+                    label="Nannies"
                     className="faq-tab"
                     sx={{
                         backgroundColor: selectedTab === 1 ? 'var(--clr-light-grey)' : 'transparent',

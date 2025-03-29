@@ -166,54 +166,54 @@ function Results() {
 
     const renderDialog = () => (
         <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
-            <DialogTitle><p className='button-text'>Αναζήτηση Νταντάς</p></DialogTitle>
+            <DialogTitle><p className='button-text'>Babysitter Search</p></DialogTitle>
             <DialogContent>
                 {/* Filters from Filters.js */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <p style={{color: 'var(--clr-grey)'}}>Υποχρεωτικά πεδία: *</p>
-                    <h1>Φίλτρα Φύλαξης</h1>
-                    <h3>Πόλη Αναζήτησης*</h3>
+                    <p style={{color: 'var(--clr-grey)'}}>Required fields: *</p>
+                    <h1>Babysitting Filters</h1>
+                    <h3>Search Town*</h3>
                     <FormTown formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
-                    <h3>Ηλικιακή Ομάδα Παιδιού*</h3>
+                    <h3>Child Age Group*</h3>
                     <FormChildAgeGroup formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
-                    <h3>Χώρος Φύλαξης του Παιδιού*</h3>
+                    <h3>Child Care Location*</h3>
                     <FormWorkTime formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
-                    <h3>Διάρκεια Απασχόλησης της Νταντάς*</h3>
+                    <h3>Babysitter Working Hours*</h3>
                     <FormBabysittingPlace formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
                     <h3>
-                        Χρονοδιάγραμμα Φύλαξης*: <span style={{ fontWeight: 'normal' }}>Καθορίστε τις ημέρες και ώρες που επιθυμείτε να γίνετε η φύλαξη του παιδιού σας.</span>
+                        Babysitting Schedule*: <span style={{ fontWeight: 'normal' }}>Set the days and hours you want the child care to take place.</span>
                     </h3>
                     <FormTimeTable formData={newFilterData} setFormData={setNewFilterData} errors={errors} setErrors={setErrors} />
 
-                    <h1>Φίλτρα Νταντάς</h1>
-                    <h3>Ελάχιστη εμπειρίας της νταντάς</h3>
+                    <h1>Babysitter Filters</h1>
+                    <h3>Minimum Babysitter Experience</h3>
                     <FormExperience formData={newFilterData} setFormData={setNewFilterData} />
-                    <h3>Επίπεδο σπουδών της νταντάς</h3>
+                    <h3>Babysitter Education Level</h3>
                     <FormDegree formData={newFilterData} setFormData={setNewFilterData} />
-                    <h3>Δεξιότητες της Νταντάς</h3>
+                    <h3>Babysitter Skills</h3>
                     <FormSkills formData={newFilterData} setFormData={setNewFilterData} />
-                    <h3>Έλάχιστος μέσος όρος αξιλογήσεων</h3>
+                    <h3>Minimum Average Rating</h3>
                     <FormRating formData={newFilterData} setFormData={setNewFilterData} />
                 </Box>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCloseDialog} sx={{ color: 'var(--clr-black)' }}>
-                    <p className='button-text'>Ακύρωση</p>
+                    <p className='button-text'>Cancel</p>
                 </Button>
                 <Button variant="contained" onClick={handleNewSearchSubmit} sx={{ backgroundColor: 'var(--clr-violet)', '&:hover': { opacity: 0.8 } }}>
-                    <p className='button-text'>Αναζήτηση</p>
+                    <p className='button-text'>Search</p>
                 </Button>
             </DialogActions>
         </Dialog>
-    );
+    );    
 
     /////////////// END NEW SEARCH ///////////////
 
     return (
         <>
-            <PageTitle title="CareNest - Αποτελέσματα Αναζήτησης" />
+            <PageTitle title="CareNest - Search Results" />
             <Breadcrumbs />
-            <h1 style={{ marginLeft: '1rem' }}>Αποτελέσματα Αναζήτησης</h1>
+            <h1 style={{ marginLeft: '1rem' }}>Search Results</h1>
             <Box sx={{ margin: '1rem' }}>
                 <Box sx={{
                     width: 'auto',
@@ -235,7 +235,7 @@ function Results() {
                         }}
                     >
                         <SearchIcon sx={{ fontSize: 35 }} />
-                        <p className="big-button-text">Νέα Αναζήτηση</p>
+                        <p className="big-button-text">New Search</p>
                     </Button>
                     {/* Go to favorites button */}
                     <Button
@@ -245,16 +245,16 @@ function Results() {
                             backgroundColor: 'var(--clr-error)',
                             '&:hover': { opacity: 0.8 },
                             padding: '0.5rem 1rem',
-                            gap: '0.5rem'
+                            gap: '0.5rem',
                         }}
                     >
                         <FavoriteIcon sx={{ fontSize: 30 }} />
-                        <p className="big-button-text">Αγαπημένα</p>
+                        <p className="big-button-text">Favorites</p>
                     </Button>
                 </Box>
             </Box>
             {renderDialog()}    {/* New Search Dialog box */}
-            <ResultsContainer filterData={filterData} />    {/* Results Container: Shows resutls in pages */}
+            <ResultsContainer filterData={filterData} />    {/* Results Container: Shows results in pages */}
             <ErrorSnackbar snackbarMessage={snackbarMessage} setSnackbarMessage={setSnackbarMessage} />
         </>
     );

@@ -18,14 +18,14 @@ import PersonIcon from '@mui/icons-material/Person';
 
 // filter options
 const checkboxOptions = [
-    { label: "Απαιτεί Υπογραφή", value: "needSignature" },
-    { label: "Απαιτεί Υπογραφή Συνεργάτη", value: "needSignaturePartner" },
-    { label: "Υπογεγραμμένο", value: "signed" }
+    { label: "Requires Signature", value: "needSignature" },
+    { label: "Requires Partner's Signature", value: "needSignaturePartner" },
+    { label: "Signed", value: "signed" }
 ];
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // Contract item component
@@ -44,7 +44,7 @@ function ContractItem({ contract, userData }) {
                 <CardContent>
                     {/* Status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
+                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Status:</h1>
                         <h2 style={{
                             fontWeight: 'bold',
                             padding: '0.3rem 0.7rem',
@@ -53,16 +53,16 @@ function ContractItem({ contract, userData }) {
                             borderRadius: '1rem',
                             display: 'inline-block'
                         }}>
-                            {contract.signedDocParent && contract.signedDocNanny ? 'Υπογεγραμμένο' :
+                            {contract.signedDocParent && contract.signedDocNanny ? 'Signed' :
                             (userData.role === 'parent' && contract.signedDocParent) || (userData.role === 'nanny' && contract.signedDocNanny) ? 
-                            'Απαιτεί Υπογραφή Συνεργάτη' : 'Απαιτεί Υπογραφή'}
+                            'Requires Partner\'s Signature' : 'Requires Signature'}
                         </h2>
                     </Box>
                     {/* Partner name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>
-                            {userData.role === 'parent' ? 'Νταντά: ' : 'Γονέας:'}
+                            {userData.role === 'parent' ? 'Nanny: ' : 'Parent:'}
                         </h2>
                         <p style={{ fontSize: '1.3rem' }}>
                             {userData.role === 'parent' ? contract.nannyName : contract.parentName}
@@ -71,18 +71,18 @@ function ContractItem({ contract, userData }) {
                     {/* Duration Date */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από: </p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>From: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[contract.fromDate.month]} ${contract.fromDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <InsertInvitationIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι: </p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>To: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[contract.toDate.month]} ${contract.toDate.year}`}</p>
                     </Box>
                     {/* Timestamp */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <ReceiptLongIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης: </strong> {new Date(contract.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Issue Date: </strong> {new Date(contract.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -217,11 +217,11 @@ function Contracts() {
         <>
             {userData && (
                 <>
-                    <PageTitle title="CareNest - Συμφωνητικά" />
+                    <PageTitle title="CareNest - Contracts" />
                     <Breadcrumbs />
-                    <h1 style={{ marginLeft: '1rem' }}>Συμφωνητικά</h1>
+                    <h1 style={{ marginLeft: '1rem' }}>Contracts</h1>
                     <p style={{ fontSize: '1.2rem', maxWidth: '1150px', alignSelf: 'center', textAlign: 'center', marginTop: '1rem' }}>
-                        Εδώ μπορείτε να δείτε όλα τα συμφωνητικά που έχετε υπογράψει με τους συνεργάτες σας.
+                        Here you can see all the contracts you have signed with your partners.
                     </p>
                     
                     <Box sx={{

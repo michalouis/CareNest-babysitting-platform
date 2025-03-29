@@ -18,13 +18,13 @@ import PersonIcon from '@mui/icons-material/Person';
 
 // filter options
 const checkboxOptions = [
-    { label: "Ενεργή", value: "active" },
-    { label: "Ολοκληρωμένη", value: "completed" }
+    { label: "Active", value: "active" },
+    { label: "Completed", value: "completed" }
 ];
 
 const months = [
-    'Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου',
-    'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 // PartnershipItem component
@@ -38,7 +38,7 @@ function PartnershipItem({ partnership, userData }) {
                 <CardContent>
                     {/* status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Κατάσταση:</h1>
+                        <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Status:</h1>
                         <h2 style={{
                             fontWeight: 'bold',
                             padding: '0.3rem 0.7rem',
@@ -47,14 +47,14 @@ function PartnershipItem({ partnership, userData }) {
                             borderRadius: '1rem',
                             display: 'inline-block'
                         }}>
-                            {partnership.active ? 'Ενεργή' : 'Ολοκληρωμένη'}
+                            {partnership.active ? 'Active' : 'Completed'}
                         </h2>
                     </Box>
                     {/* partner name */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <PersonIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
                         <h2 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>
-                            {userData.role === 'parent' ? 'Νταντά: ' : 'Γονέας: '}
+                            {userData.role === 'parent' ? 'Nanny: ' : 'Parent: '}
                         </h2>
                         <p style={{ fontSize: '1.3rem' }}>
                             {userData.role === 'parent' ? partnership.nannyName : partnership.parentName}
@@ -63,18 +63,18 @@ function PartnershipItem({ partnership, userData }) {
                     {/* Duration */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <TodayIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Από: </p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>From: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[partnership.fromDate.month]} ${partnership.fromDate.year}`}</p>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <InsertInvitationIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Μέχρι: </p>
+                        <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginRight: '0.5rem' }}>Until: </p>
                         <p style={{ fontSize: '1.3rem' }}>{`${months[partnership.toDate.month]} ${partnership.toDate.year}`}</p>
                     </Box>
                     {/* timestamp */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <ReceiptLongIcon sx={{ marginRight: '0.5rem', fontSize: '2rem' }} />
-                        <p style={{ fontSize: '1.3rem' }}><strong>Ημερομηνία Έκδοσης: </strong> {new Date(partnership.timestamp).toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p style={{ fontSize: '1.3rem' }}><strong>Issued Date: </strong> {new Date(partnership.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </Box>
                 </CardContent>
             </CardActionArea>
@@ -176,11 +176,11 @@ function Partnerships() {
         <>
             {userData && (
                 <>
-                    <PageTitle title="CareNest - Συνεργασίες" />
+                    <PageTitle title="CareNest - Partnerships" />
                     <Breadcrumbs />
-                    <h1 style={{ marginLeft: '1rem' }}>Συνεργασίες</h1>
+                    <h1 style={{ marginLeft: '1rem' }}>Partnerships</h1>
                     <p style={{ fontSize: '1.2rem', maxWidth: '1150px', alignSelf: 'center', textAlign: 'center', marginTop: '1rem' }}>
-                        Εδώ μπορείτε να βρείτε την ενεργή σας συνεργασία ή να ανατρέξτε σε κάποια παλαιότερη.
+                        Here you can find your active partnership or review a previous one.
                     </p>
                     
                     <Box sx={{

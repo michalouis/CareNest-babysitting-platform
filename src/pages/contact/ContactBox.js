@@ -101,19 +101,19 @@ function ContactBox() {
                     fontSize: '2rem',
                     fontWeight: 'bold',
                 }}>
-                    Επικοινωνήστε μαζί μας
+                    Contact us
                 </h1>
                 <p style={{
                    marginBottom: '2rem',
                    textAlign: 'center',
                    fontSize: '1rem',
                 }}>
-                    Συμπληρώστε την παρακάτω φόρμα για να επικοινωνήσετε μαζί μας. Θα χαρούμε να σας βοηθήσουμε!
+                    Fill out the form below to get in touch with us. We will be happy to assist you!
                 </p>
 
                 {/* Form */}
                 <TextField
-                    label="Όνομα"
+                    label="Name"
                     variant="outlined"
                     fullWidth
                     value={name}
@@ -133,7 +133,7 @@ function ContactBox() {
                     sx={{ marginBottom: '1rem' }}
                 />
                 <TextField
-                    label="Μήνυμα"
+                    label="Message"
                     variant="outlined"
                     fullWidth
                     multiline
@@ -155,7 +155,7 @@ function ContactBox() {
                     }}
                     disabled={loading}
                 >
-                    <p className='button-text'>Αποστολή</p>
+                    <p className='button-text'>Send</p>
                 </Button>
 
                 {/* Success popup */}

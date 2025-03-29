@@ -29,13 +29,13 @@ function CreateProfile() {
 
     return (
         <>
-            <PageTitle title="CareNest - Δημιουργία Προφίλ" />
+            <PageTitle title="CareNest - Create Profile" />
             <Box sx={{
                 display: 'flex',
                 alignItems: 'baseline',
                 margin: '1rem',
             }}>
-                <h1 className="login-header">Εγγραφή</h1>
+                <h1 className="login-header">Sign up</h1>
             </Box>
             <Box sx={{
                 display: 'flex',
@@ -58,8 +58,8 @@ function CreateProfile() {
                     flexWrap: 'wrap',
                 }}>
                     <p style={{ fontSize: '1.1rem', textAlign: 'left' }}>
-                        Για να περιηγηθείτε στον ιστότοπο πρέπει να ολοκληρώσετε το προφίλ σας.
-                        Διαφορετικά μπορείτε να αποσυνδεθείτε.
+                        To browse the website, you must complete your profile.
+                        Otherwise, you can log out.
                     </p>
                     <Button
                         variant="contained"
@@ -75,7 +75,7 @@ function CreateProfile() {
                         }}
                         startIcon={<LogoutIcon style={{ fontSize: '30px' }} />}
                     >
-                        <p className='button-text'>Αποσύνδεση</p>
+                        <p className='button-text'>Log out</p>
                     </Button>
                 </Box>
 
@@ -86,8 +86,8 @@ function CreateProfile() {
 
                 {/* Description */}
                 <p className='description'>
-                    Συμπληρώστε τα προσωπικά σας στοιχεία για να δημιουργήστε
-                    το προφίλ σας και να ολοκληρώσετε την εγγραφή σας.
+                    Fill in your personal details to create your profile
+                    and complete your registration.
                 </p>
 
                 {userData && (
