@@ -20,7 +20,7 @@ function Error404() {
             <h2 className="error404-subtitle">Page not found.</h2>
             <p className="error404-text">Sorry, but the page you are looking for does not exist or has been moved.</p>
             <p className="error404-text">
-                <strong>Don't cry!</strong> You can return to the <Link to="/" className="link">homepage</Link> or use the menu to find what you're looking for.
+                <strong>Don't cry!</strong> You can return to the <Link to="/CareNest-babysitting-platform" className="link">homepage</Link> or use the menu to find what you're looking for.
             </p>
             <img src={`${process.env.PUBLIC_URL}/error404.jpg`} alt='crying baby' className="image" />
         </div>
