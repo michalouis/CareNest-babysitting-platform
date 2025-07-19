@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "https://michalouis.github.io/CareNest-babysitting-platform/static/css/main.299269d7.css",
+    "main.js": "https://michalouis.github.io/CareNest-babysitting-platform/static/js/main.06608841.js",
+    "static/js/488.68e72118.chunk.js": "https://michalouis.github.io/CareNest-babysitting-platform/static/js/488.68e72118.chunk.js",
+    "index.html": "https://michalouis.github.io/CareNest-babysitting-platform/index.html",
+    "main.299269d7.css.map": "https://michalouis.github.io/CareNest-babysitting-platform/static/css/main.299269d7.css.map",
+    "main.06608841.js.map": "https://michalouis.github.io/CareNest-babysitting-platform/static/js/main.06608841.js.map",
+    "488.68e72118.chunk.js.map": "https://michalouis.github.io/CareNest-babysitting-platform/static/js/488.68e72118.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.299269d7.css",
+    "static/js/main.06608841.js"
+  ]
+}
