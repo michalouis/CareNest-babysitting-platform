@@ -58,7 +58,7 @@ export default function PartnershipActiveContent({ userData }) {
           </p>
           <Button
             component={Link}
-            to={`/partnerships/view-partnership/${userData.partnerships[userData.partnerships.length - 1]}`}
+            to={`CareNest-babysitting-platform/partnerships/view-partnership/${userData.partnerships[userData.partnerships.length - 1]}`}
             variant="contained"
             startIcon={<GroupIcon style={{ fontSize: '1.8rem'}} />}
             sx={{

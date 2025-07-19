@@ -76,9 +76,9 @@ function SignupComplete() {
                     }}>
                         {renderButton(
                             userData.role === 'parent' ? 'Search for a Nanny' : 'Create Job Listing',
-                            userData.role === 'parent' ? '/search' : '/job-posting'
+                            userData.role === 'parent' ? '/CareNest-babysitting-platform/search' : '/CareNest-babysitting-platform/job-posting'
                         )}
-                        {renderButton('Home Page', '/')}
+                        {renderButton('Home Page', '/CareNest-babysitting-platform')}
                     </Box>
                     </>
                 )}

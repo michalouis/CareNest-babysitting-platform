@@ -34,7 +34,7 @@ function PartnershipItem({ partnership, userData }) {
     // show partnership info
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/partnerships/view-partnership/${partnership.partnershipId}`)}>
+            <CardActionArea onClick={() => navigate(`/CareNest-babysitting-platform/partnerships/view-partnership/${partnership.partnershipId}`)}>
                 <CardContent>
                     {/* status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>

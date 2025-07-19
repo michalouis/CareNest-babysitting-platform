@@ -40,7 +40,7 @@ function ContractItem({ contract, userData }) {
     // show some info about the contract
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/contracts/view-contract/${contract.contractId}`)}>
+            <CardActionArea onClick={() => navigate(`/CareNest-babysitting-platform/contracts/view-contract/${contract.contractId}`)}>
                 <CardContent>
                     {/* Status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>

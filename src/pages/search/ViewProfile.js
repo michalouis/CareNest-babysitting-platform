@@ -128,7 +128,7 @@ export default function ViewProfile() {
                             '&:hover': { opacity: 0.8 },
                             padding: '0.5rem 0'
                         }}
-                        onClick={() => navigate('/messages')}
+                        onClick={() => navigate('/CareNest-babysitting-platform/messages')}
                         startIcon={<MessageIcon />}
                     >
                         <p className="button-text">Message</p>
@@ -157,7 +157,7 @@ export default function ViewProfile() {
                                     padding: '0.5rem 0'
                                 }}
                                 startIcon={<AssignmentIcon />}
-                                onClick={() => navigate(`/search/view-profile/${profileId}/create-application/${profileId}`)}
+                                onClick={() => navigate(`/CareNest-babysitting-platform/search/view-profile/${profileId}/create-application/${profileId}`)}
                             >
                                 <p className="button-text">Interest Application</p> {/* Αίτηση Ενδιαφέροντος */}
                             </Button>

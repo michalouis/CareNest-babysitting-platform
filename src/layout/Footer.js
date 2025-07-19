@@ -11,7 +11,7 @@ import './layout.css';
 // Footer component
 function Footer() {
     const location = useLocation();
-    const hideFooter = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/create-profile' || location.pathname === '/profile/edit-profile';
+    const hideFooter = location.pathname === '/CareNest-babysitting-platform/login' || location.pathname === '/CareNest-babysitting-platform/signup' || location.pathname === '/CareNest-babysitting-platform/create-profile' || location.pathname === '/CareNest-babysitting-platform/profile/edit-profile';
 
     if (hideFooter) {
         return null;
@@ -25,10 +25,10 @@ function Footer() {
                 </div>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', marginRight: '1rem' }}>
-                        <Link to="/error404" className="footer-link" style={{ marginRight: '1rem' }}>
+                        <Link to="/CareNest-babysitting-platform/error404" className="footer-link" style={{ marginRight: '1rem' }}>
                             Error404
                         </Link>
-                        <Link to="/contact" className="footer-link">
+                        <Link to="/CareNest-babysitting-platform/contact" className="footer-link">
                             Contact us
                         </Link>
                     </Box>

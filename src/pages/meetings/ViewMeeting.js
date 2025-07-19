@@ -309,14 +309,14 @@ export default function ViewMeeting() {
                                     variant="contained"
                                     startIcon={<PersonIcon />}
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                    onClick={() => navigate(`/meetings/view-meeting/${meetingId}/view-profile/${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
+                                    onClick={() => navigate(`/CareNest-babysitting-platform/meetings/view-meeting/${meetingId}/view-profile/${userData.role === 'parent' ? meetingData.nannyId : meetingData.parentId}`)}
                                 >
                                     <p className='small-button-text'>View Profile</p>
                                 </Button>
                                 <Button
                                     variant="contained"
                                     startIcon={<MessageIcon />}
-                                    onClick={() => navigate('/messages')}
+                                    onClick={() => navigate('/CareNest-babysitting-platform/messages')}
                                     sx={{
                                         backgroundColor: 'var(--clr-violet)',
                                         padding: '0.5rem 1rem'

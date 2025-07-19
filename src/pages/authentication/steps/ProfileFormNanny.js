@@ -348,9 +348,9 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                     uid: user.uid,
                 });
                 if (userData) {
-                    navigate('/profile'); // Navigate to the profile page if userData exists
+                    navigate('/CareNest-babysitting-platform/profile'); // Navigate to the profile page if userData exists
                 } else {
-                    navigate('/signup-complete'); // Navigate to the signup complete page if userData does not exist
+                    navigate('/CareNest-babysitting-platform/signup-complete'); // Navigate to the signup complete page if userData does not exist
                 }
             }
         } catch (error) {
@@ -371,7 +371,7 @@ function ProfileFormNanny({ firstName, lastName, amka, email, userData }) {
                 await updateDoc(doc(FIREBASE_DB, 'users', user.uid), {
                     ...formData,
                 });
-                navigate('/profile'); // Navigate to the profile page after update
+                navigate('/CareNest-babysitting-platform/profile'); // Navigate to the profile page after update
             }
         } catch (error) {
             console.error('Error updating profile:', error);

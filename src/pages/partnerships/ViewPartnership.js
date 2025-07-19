@@ -166,7 +166,7 @@ export default function ViewPartnership() {
                                     variant="contained"
                                     sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem', alignSelf: 'center' }}
                                     startIcon={<AutorenewIcon />}
-                                    onClick={() => navigate(`/applications/create-application/${partnershipData.nannyId}`)}
+                                    onClick={() => navigate(`/CareNest-babysitting-platform/applications/create-application/${partnershipData.nannyId}`)}
                                 >
                                     <p className='button-text'>Renew Partnership</p>
                                 </Button>
@@ -201,14 +201,14 @@ export default function ViewPartnership() {
                                         variant="contained"
                                         startIcon={<PersonIcon />}
                                         sx={{ backgroundColor: 'var(--clr-violet)', padding: '0.5rem 1rem' }}
-                                        onClick={() => navigate(`/search/view-profile/${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
+                                        onClick={() => navigate(`/CareNest-babysitting-platform/search/view-profile/${userData.role === 'parent' ? partnershipData.nannyId : partnershipData.parentId}`)}
                                     >
                                         <p className='small-button-text'>View Profile</p>
                                     </Button>
                                     <Button 
                                         variant="contained"
                                         startIcon={<MessageIcon />}
-                                        onClick={() => navigate('/messages')}
+                                        onClick={() => navigate('/CareNest-babysitting-platform/messages')}
                                         sx={{
                                             backgroundColor: 'var(--clr-violet)',
                                             padding: '0.5rem 1rem'

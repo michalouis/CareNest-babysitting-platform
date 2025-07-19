@@ -15,7 +15,7 @@ function Header() {
             <AppBar position="static" sx={{ height: '80px', width: '100%', justifyContent: 'center', backgroundColor: 'var(--clr-violet-dark)' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img src="/logo2.png" style={{ width: '200px', height: '48px' }} alt="Home Page" />
+                        <img src={`${process.env.PUBLIC_URL}/logo2.png`} style={{ width: '200px', height: '48px' }} alt="Home Page" />
                     </Box>
                 </Toolbar>
             </AppBar>

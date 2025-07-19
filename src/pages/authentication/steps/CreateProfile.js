@@ -17,7 +17,7 @@ function CreateProfile() {
     // Handle Logout
     const handleLogout = async () => {
         await signOut(FIREBASE_AUTH);
-        navigate('/'); // Navigate to the landing page
+        navigate('/CareNest-babysitting-platform'); // Navigate to the landing page
     };
 
     const { userData, isLoading } = AuthCheck( true, false, true );

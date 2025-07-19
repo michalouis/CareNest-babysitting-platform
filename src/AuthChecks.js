@@ -24,24 +24,24 @@ export function useAuthCheck(loginRequired = false, logoutRequired = false, crea
                     setUserData(data);
 
                     if (!data.profileCreated) {
-                        navigate('/create-profile');
+                        navigate('/CareNest-babysitting-platform/create-profile');
                     } else if (createProfilePage) {
-                        navigate('/');
+                        navigate('/CareNest-babysitting-platform');
                     } else if (loginRequired) {
                         if (role && data.role !== role) {
-                            navigate('/error404');
+                            navigate('/CareNest-babysitting-platform/error404');
                         }
                     }
                 }
             } else {
                 setUserData(null);
                 if (loginRequired) {
-                    navigate('/login');
+                    navigate('/CareNest-babysitting-platform/login');
                 }
             }
 
             if (logoutRequired && user) {
-                navigate('/');
+                navigate('/CareNest-babysitting-platform');
             }
 
             setIsLoading(false);

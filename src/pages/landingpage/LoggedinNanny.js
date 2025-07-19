@@ -35,7 +35,7 @@ function NoJobPostingContent({ userData }) {
             {/* Job Posting button */}
         	<Button
         		component={Link}
-        		to="/job-posting"
+        		to="CareNest-babysitting-platform/job-posting"
         		variant="contained"
         		startIcon={<WorkIcon style={{ fontSize: '1.8rem'}} />}
         		sx={{
@@ -63,7 +63,7 @@ function NoJobPostingContent({ userData }) {
         	  marginTop: { xs: '1rem', md: '0' },
         }} >
         <img
-            src="job-posting.jpg"
+            src={`${process.env.PUBLIC_URL}/job-posting.jpg`}
             alt="Job posting"
         	style={{ width: '100%', height: '100%', borderRadius: '1rem' }}
         />
@@ -98,7 +98,7 @@ function JobPostingContent({ userData }) {
             <Button
             startIcon={<EventIcon style={{ fontSize: '1.8rem'}} />}
             component={Link}
-            to="/meetings"
+            to="CareNest-babysitting-platform/meetings"
             variant="contained"
             sx={{
                 fontSize: '1.25rem',
@@ -117,7 +117,7 @@ function JobPostingContent({ userData }) {
             <Button
             startIcon={<MessageIcon style={{ fontSize: '1.8rem'}} />}
             component={Link}
-            to="/messages"
+            to="CareNest-babysitting-platform/messages"
             variant="contained"
             sx={{
                 fontSize: '1.25rem',
@@ -146,7 +146,7 @@ function JobPostingContent({ userData }) {
         }}
       >
         <img
-          src="check-calendar.png"
+          src={`${process.env.PUBLIC_URL}/check-calendar.png`}
           alt="Check Calendar"
           style={{ width: '100%', height: '100%', borderRadius: '1rem' }}
         />

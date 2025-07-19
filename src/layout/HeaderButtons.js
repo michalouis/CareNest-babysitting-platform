@@ -18,7 +18,7 @@ function LogoButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
-                component={Link} to="/"
+                component={Link} to="CareNest-babysitting-platform/"
                 color="inherit"
                 sx={{
                     display: 'flex',
@@ -26,7 +26,7 @@ function LogoButton() {
                     gap: 0.5
                 }}
             >
-                <img src="/logo3.png" style={{ width: '200px', height: '48px' }} alt="Home Page" />
+                <img src={`${process.env.PUBLIC_URL}/logo3.png`} style={{ width: '200px', height: '48px' }} alt="Home Page" />
             </Button>
         </Box>
     );
@@ -37,7 +37,7 @@ function FaqButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
-                component={Link} to={'/faq'}
+                component={Link} to={'CareNest-babysitting-platform/faq'}
                 color="inherit"
                 sx={{
                     display: 'flex',
@@ -57,7 +57,7 @@ function MessagesButton() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
-                component={Link} to={'/messages'}
+                component={Link} to={'CareNest-babysitting-platform/messages'}
                 color="inherit"
                 sx={{
                     display: 'flex',
@@ -78,7 +78,7 @@ function LoginButton() {
         <Box sx={{ marginLeft: '1rem' }}>
             <Button
                 component={Link}
-                to="/login"
+                to="CareNest-babysitting-platform/login"
                 variant="contained"
                 sx={{
                     bgcolor: 'var(--clr-white)',

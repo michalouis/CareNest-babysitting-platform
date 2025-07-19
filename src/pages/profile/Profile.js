@@ -50,7 +50,7 @@ export function Profile() {
 
                 // Delete user account
                 await deleteUser(user);
-                navigate('/'); // Navigate to home or login page after deletion
+                navigate('/CareNest-babysitting-platform'); // Navigate to home or login page after deletion
             } catch (error) {
                 console.error('Error deleting user account:', error);
             }
@@ -90,7 +90,7 @@ export function Profile() {
                                 '&:hover': { opacity: 0.8 },
                                 padding: '0.5rem 0'
                             }}
-                            onClick={() => navigate('/profile/edit-profile')}
+                            onClick={() => navigate('/CareNest-babysitting-platform/profile/edit-profile')}
                         >
                             <p className="button-text">Edit Profile</p>
                         </Button>

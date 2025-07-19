@@ -88,7 +88,7 @@ function JobPostingForm({ userData, setSaved }) {
                     ...jobPostingData,
                 });
                     
-                navigate('/job-posting');   // redirect to job posting page, after submitting job posting
+                navigate('/CareNest-babysitting-platform/job-posting');   // redirect to job posting page, after submitting job posting
             }
         } catch (error) {
             console.error('Error submitting job posting:', error);

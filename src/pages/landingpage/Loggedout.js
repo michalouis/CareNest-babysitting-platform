@@ -20,7 +20,7 @@ function SignupButton() {
     return (
         <Button
             component={Link}
-            to="/signup"
+            to="CareNest-babysitting-platform/signup"
             variant='contained'
             sx={{
                 marginTop: '1rem',
@@ -77,7 +77,7 @@ function WelcomeBox() {
             boxShadow: 2,
         }}>
             {/* Welcome Text */}
-            <img className="welcome-logo" src="logo1.png" alt="CareNest Logo" />
+            <img className="welcome-logo" src={`${process.env.PUBLIC_URL}/logo1.png`} alt="CareNest Logo" />
             <h2>A Safe Haven for Your Little Ones</h2>
             <p>
                 The platform provided by gov.gr connects families with experienced nannies in
@@ -114,8 +114,8 @@ function WelcomeBox() {
                 immediately and securely.
             </p>
             <SignupButton />
-            <img className="right-aligned-image" src="mom.png" alt="Nanny with kids" />
-            <img className="left-aligned-image" src="mom2.png" alt="Nanny with kids" />
+            <img className="right-aligned-image" src={`${process.env.PUBLIC_URL}/mom.png`} alt="Nanny with kids" />
+            <img className="left-aligned-image" src={`${process.env.PUBLIC_URL}/mom2.png`} alt="Nanny with kids" />
         </Box>
     );
 }

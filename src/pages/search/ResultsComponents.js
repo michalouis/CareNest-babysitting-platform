@@ -98,7 +98,7 @@ function ResultsItem({ item, favorites, setFavorites }) {
             padding: '0',
         }}>
             <CardActionArea
-                onClick={() => navigate(`/search/view-profile/${uid}`)}
+                onClick={() => navigate(`/CareNest-babysitting-platform/search/view-profile/${uid}`)}
             >
                 <CardContent sx={{
                     display: 'flex',

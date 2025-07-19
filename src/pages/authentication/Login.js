@@ -34,9 +34,9 @@ function Login() {
             if (userDoc.exists()) {
                 const userData = userDoc.data();
                 if (userData.profileCreated) {     // Check if account is completed
-                    navigate('/');      // Navigate to the homepage
+                    navigate('/CareNest-babysitting-platform');      // Navigate to the homepage
                 } else {
-                    navigate('/profile-creation'); // Navigate to the profile creation page
+                    navigate('/CareNest-babysitting-platform/profile-creation'); // Navigate to the profile creation page
                 }
             }
         } catch (error) {   // if an error occurs, log it and display an error message
@@ -67,7 +67,7 @@ function Login() {
                 }}>
                     <h1 className="login-header">Log in to CareNest</h1>
                     <p className="login-text">
-                        "Don't have an account? <Link to='/signup' className='signup-link'>Sign up</Link>"
+                        Don't have an account? <Link to='/signup' className='signup-link'>Sign up</Link>
                     </p>
                 </Box>
 

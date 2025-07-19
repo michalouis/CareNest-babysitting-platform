@@ -36,7 +36,7 @@ function EditJobPosting() {
                     <p style={{ fontSize: '1.2rem', maxWidth: '1080px', alignSelf: 'center' }}>
                         You have already submitted your job listing. Go back to the Job Posting section to view it.
                     </p>
-                    <img src='/question-mark.png' alt="Question Mark" style={{ width: '500px', margin: '1rem auto', alignSelf: 'center' }} />
+                    <img src={`${process.env.PUBLIC_URL}/question-mark.png`} alt="Question Mark" style={{ width: '500px', margin: '1rem auto', alignSelf: 'center' }} />
                 </>
             ) : (   // if job not posted, show form
                 <Box sx={{

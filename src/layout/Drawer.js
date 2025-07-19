@@ -62,7 +62,7 @@ function AppDrawer({ open, onClose }) {
 
     const handleLogout = async () => {
         await signOut(FIREBASE_AUTH);
-        navigate('/');
+        navigate('/CareNest-babysitting-platform');
     };
 
     const handleDialogOpen = () => {
@@ -85,25 +85,25 @@ function AppDrawer({ open, onClose }) {
 
                 {/* Takes you to the following pages */}
                 <List>
-                    <DrawerItem to="/profile" icon={AccountCircleIcon} title="Profile" />
+                    <DrawerItem to="CareNest-babysitting-platform/profile" icon={AccountCircleIcon} title="Profile" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     {userRole === 'parent' ? (
-                        <DrawerItem to="/search" icon={SearchIcon} title="Find Nanny" />
+                        <DrawerItem to="CareNest-babysitting-platform/search" icon={SearchIcon} title="Find Nanny" />
                     ) : (
-                        <DrawerItem to="/job-posting" icon={WorkIcon} title="Job Posting" />
+                        <DrawerItem to="CareNest-babysitting-platform/job-posting" icon={WorkIcon} title="Job Posting" />
                     )}
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/meetings" icon={EventIcon} title="Meetings" />
+                    <DrawerItem to="CareNest-babysitting-platform/meetings" icon={EventIcon} title="Meetings" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
                     {userRole === 'parent' && (
                         <>
-                        <DrawerItem to="/applications" icon={AssignmentIcon} title="Applications" />
+                        <DrawerItem to="CareNest-babysitting-platform/applications" icon={AssignmentIcon} title="Applications" />
                         <Divider sx={{ width: '80%', margin: '0 auto' }} />
                         </>
                     )}
-                    <DrawerItem to="/contracts" icon={DrawRoundedIcon} title="Contracts" />
+                    <DrawerItem to="CareNest-babysitting-platform/contracts" icon={DrawRoundedIcon} title="Contracts" />
                     <Divider sx={{ width: '80%', margin: '0 auto' }} />
-                    <DrawerItem to="/partnerships" icon={GroupIcon} title="Partnerships" />
+                    <DrawerItem to="CareNest-babysitting-platform/partnerships" icon={GroupIcon} title="Partnerships" />
                 </List>
             </>
             {/* Logout button */}

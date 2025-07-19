@@ -74,7 +74,7 @@ function CreateAccount({ role }) {
 
             await setDoc(doc(FIREBASE_DB, 'users', user.uid), userData);
 
-            navigate('/create-profile'); // Navigate to the Createprofile page
+            navigate('/CareNest-babysitting-platform/create-profile'); // Navigate to the Createprofile page
         } catch (error) {
             console.error('Error creating user:', error);
             alert(error.message);

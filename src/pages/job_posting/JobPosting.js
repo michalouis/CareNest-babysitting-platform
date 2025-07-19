@@ -21,7 +21,7 @@ function JobPosting() {
         if (userData && userData.jobPostingData) {
             setOpenDialog(true);
         } else if (userData && !userData.jobPostingData) {
-            navigate('/job-posting/edit-job-posting');
+            navigate('/CareNest-babysitting-platform/job-posting/edit-job-posting');
         }
     };
 
@@ -37,7 +37,7 @@ function JobPosting() {
                 await updateDoc(userDocRef, {
                     jobPostingData: deleteField()
                 });
-                navigate('/job-posting/edit-job-posting');
+                navigate('/CareNest-babysitting-platform/job-posting/edit-job-posting');
             } else {
                 console.error('No such document!');
             }

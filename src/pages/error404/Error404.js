@@ -22,7 +22,7 @@ function Error404() {
             <p className="error404-text">
                 <strong>Don't cry!</strong> You can return to the <Link to="/" className="link">homepage</Link> or use the menu to find what you're looking for.
             </p>
-            <img src='/error404.jpg' alt='crying baby' className="image" />
+            <img src={`${process.env.PUBLIC_URL}/error404.jpg`} alt='crying baby' className="image" />
         </div>
     );    
 }

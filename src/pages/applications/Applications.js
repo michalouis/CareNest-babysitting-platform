@@ -50,7 +50,7 @@ function ApplicationItem({ application }) {
     // show application details
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/applications/view-application/${application.applicationId}`)}>
+            <CardActionArea onClick={() => navigate(`/CareNest-babysitting-platform/applications/view-application/${application.applicationId}`)}>
                 <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <h1 style={{ fontWeight: 'bold', marginRight: '0.5rem' }}>Status:</h1>

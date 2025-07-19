@@ -107,8 +107,11 @@ function Breadcrumbs({ showPopup = false }) {
         }
     };
 
+    // In Breadcrumbs component, filter out the repo name from the path array:
+    const repoName = 'CareNest-babysitting-platform';
+    const pathArray = location.pathname.split('/').filter(Boolean).filter(p => p !== repoName);
+
     // Get the path array from the current location, page -> { pagename: '...', param: '...' }
-    const pathArray = location.pathname.split('/').filter(Boolean);
     const pages = [];
     for (let i = 0; i < pathArray.length; i++) {
         const page = pathArray[i];
@@ -122,10 +125,10 @@ function Breadcrumbs({ showPopup = false }) {
 
     // Create the breadcrumbs
     const breadcrumbs = [
-        { label: pathLabels['/'], path: '/' },  // add landing page as the first breadcrumb
-        ...pages.map((page, index) => ({        // add the rest of the pages
+        { label: 'Home', path: `/${repoName}/` },  // always show "Home" and link to /CareNest-babysitting-platform/
+        ...pages.map((page, index) => ({
             label: getPageLabel(page.pagename),
-            path: `/${pages.slice(0, index + 1).map(p => p.pagename + (p.param ? `/${p.param}` : '')).join('/')}`
+            path: `/${repoName}/${pages.slice(0, index + 1).map(p => p.pagename + (p.param ? `/${p.param}` : '')).join('/')}`
         }))
     ];
 

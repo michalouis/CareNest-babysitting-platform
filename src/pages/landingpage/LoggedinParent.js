@@ -34,7 +34,7 @@ function NoNannyContent({ userData }) {
                 {/* Search Nanny button */}
                 <Button
                     component={Link}
-                    to="/search"
+                    to="CareNest-babysitting-platform/search"
                     variant="contained"
                     startIcon={<SearchIcon style={{ fontSize: '1.8rem'}} />}
                     sx={{
@@ -62,7 +62,7 @@ function NoNannyContent({ userData }) {
                 marginTop: { xs: '1rem', md: '0' },
             }}>
                 <img
-                src="find_nanny.jpg"
+                src={`${process.env.PUBLIC_URL}/find_nanny.jpg`}
                 alt="Find Nanny"
                 style={{ width: '100%', height: '100%', borderRadius: '1rem' }}
                 />

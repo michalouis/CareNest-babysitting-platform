@@ -240,7 +240,7 @@ function Results() {
                     {/* Go to favorites button */}
                     <Button
                         variant="contained"
-                        onClick={() => navigate('/search/favorites')}
+                        onClick={() => navigate('/CareNest-babysitting-platform/search/favorites')}
                         sx={{
                             backgroundColor: 'var(--clr-error)',
                             '&:hover': { opacity: 0.8 },

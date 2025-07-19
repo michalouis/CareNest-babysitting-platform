@@ -31,50 +31,50 @@ import EditJobPosting from './pages/job_posting/EditJobPosting';
 function AppRoutes() {
     return (
             <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/faq" element={<Faq />} />
-                <Route path="/messages" element={<Messages />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/create-profile" element={<CreateProfile />} />
-                <Route path="/signup-complete" element={<SignupComplete />} />
+                <Route path="/CareNest-babysitting-platform" element={<LandingPage />} />
+                <Route path="/CareNest-babysitting-platform/contact" element={<Contact />} />
+                <Route path="/CareNest-babysitting-platform/faq" element={<Faq />} />
+                <Route path="/CareNest-babysitting-platform/messages" element={<Messages />} />
+                <Route path="/CareNest-babysitting-platform/login" element={<Login />} />
+                <Route path="/CareNest-babysitting-platform/signup" element={<Signup />} />
+                <Route path="/CareNest-babysitting-platform/create-profile" element={<CreateProfile />} />
+                <Route path="/CareNest-babysitting-platform/signup-complete" element={<SignupComplete />} />
 
                 {/* Profile */}
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/profile/edit-profile" element={<EditProfile />} />
+                <Route path="/CareNest-babysitting-platform/profile" element={<Profile />} />
+                <Route path="/CareNest-babysitting-platform/profile/edit-profile" element={<EditProfile />} />
                 
                 {/* Job Posting */}
-                <Route path="/job-posting" element={<JobPosting />} />
-                <Route path="/job-posting/edit-job-posting" element={<EditJobPosting />} />
+                <Route path="/CareNest-babysitting-platform/job-posting" element={<JobPosting />} />
+                <Route path="/CareNest-babysitting-platform/job-posting/edit-job-posting" element={<EditJobPosting />} />
 
                 {/* Search */}
-                <Route path="/search" element={<Search />} />
-                <Route path="/search/favorites" element={<Favorites />} />
-                <Route path="/search/results" element={<Results />} />
-                <Route path="/search/view-profile/:id" element={<ViewProfile />} />
-                <Route path="/search/view-profile/:id/create-application/:id" element={<CreateApplication />} />
+                <Route path="/CareNest-babysitting-platform/search" element={<Search />} />
+                <Route path="/CareNest-babysitting-platform/search/favorites" element={<Favorites />} />
+                <Route path="/CareNest-babysitting-platform/search/results" element={<Results />} />
+                <Route path="/CareNest-babysitting-platform/search/view-profile/:id" element={<ViewProfile />} />
+                <Route path="/CareNest-babysitting-platform/search/view-profile/:id/create-application/:id" element={<CreateApplication />} />
 
                 {/* Meetings */}
-                <Route path="/meetings" element={<Meetings />} />
-                <Route path="/meetings/view-meeting/:id" element={<ViewMeeting />} />
-                <Route path="/meetings/view-meeting/:id/view-profile/:id" element={<ViewProfile />} />
+                <Route path="/CareNest-babysitting-platform/meetings" element={<Meetings />} />
+                <Route path="/CareNest-babysitting-platform/meetings/view-meeting/:id" element={<ViewMeeting />} />
+                <Route path="/CareNest-babysitting-platform/meetings/view-meeting/:id/view-profile/:id" element={<ViewProfile />} />
 
                 {/* Applications */}
-                <Route path="/applications" element={<Applications />} />
-                <Route path="/applications/view-application/:id" element={<ViewApplication />} />
-                <Route path="/applications/create-application/:id" element={<CreateApplication />} />
+                <Route path="/CareNest-babysitting-platform/applications" element={<Applications />} />
+                <Route path="/CareNest-babysitting-platform/applications/view-application/:id" element={<ViewApplication />} />
+                <Route path="/CareNest-babysitting-platform/applications/create-application/:id" element={<CreateApplication />} />
 
                 {/* Contracts */}
-                <Route path="/contracts" element={<Contracts />} />
-                <Route path="/contracts/view-contract/:id" element={<ViewContract />} />
+                <Route path="/CareNest-babysitting-platform/contracts" element={<Contracts />} />
+                <Route path="/CareNest-babysitting-platform/contracts/view-contract/:id" element={<ViewContract />} />
                 
                 {/* Partnerships */}
-                <Route path="/partnerships" element={<Partnerships />} />
-                <Route path="/partnerships/view-partnership/:id" element={<ViewPartnership />} />
+                <Route path="/CareNest-babysitting-platform/partnerships" element={<Partnerships />} />
+                <Route path="/CareNest-babysitting-platform/partnerships/view-partnership/:id" element={<ViewPartnership />} />
 
                 {/* Error 404 */}
-                <Route path="/error404" element={<Error404 />} />
+                <Route path="/CareNest-babysitting-platform/error404" element={<Error404 />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
     );

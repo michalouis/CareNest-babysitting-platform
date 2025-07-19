@@ -109,7 +109,7 @@ function Search() {
             ...flatLanguages,
             ...flatMusic
         }).toString();
-        navigate(`/search/results?${queryParams}`);
+        navigate(`/CareNest-babysitting-platform/search/results?${queryParams}`);
     };
 
     return (

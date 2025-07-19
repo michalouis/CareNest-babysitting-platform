@@ -46,7 +46,7 @@ function MeetingItem({ meeting, userData }) {
     // show meeting details
     return (
         <Card sx={{ marginBottom: '1rem' }}>
-            <CardActionArea onClick={() => navigate(`/meetings/view-meeting/${meeting.meetingId}`)}>
+            <CardActionArea onClick={() => navigate(`/CareNest-babysitting-platform/meetings/view-meeting/${meeting.meetingId}`)}>
                 <CardContent>
                     {/* status */}
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
