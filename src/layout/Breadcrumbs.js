@@ -62,17 +62,30 @@ function Breadcrumbs({ showPopup = false }) {
 
     // Navigate to the previous page
     const navigateToPrevious = () => {
+        const repoName = 'CareNest-babysitting-platform';
         const pathArray = location.pathname.split('/').filter(Boolean);
+        
+        // If we're at /repoName/faq, we should go back to /repoName/
+        if (pathArray.length === 2 && pathArray[0] === repoName) {
+            navigate(`/${repoName}/`);
+            return;
+        }
+        
         let previousPathArray = pathArray.slice(0, -1);     // remove the current page
         let previousPath = `/${previousPathArray.join('/')}`;   
-    
+
         // Check if the current or previous path is a parameter
         if (!pathLabels[pathArray[pathArray.length - 1]] || !pathLabels[previousPathArray[previousPathArray.length - 1]]) {
             previousPathArray = pathArray.slice(0, -2);
             previousPath = `/${previousPathArray.join('/')}`;
         }
-    
-        navigate(previousPath);
+
+        // Make sure we don't navigate outside the repo
+        if (previousPathArray.length === 0 || (previousPathArray.length === 1 && previousPathArray[0] !== repoName)) {
+            navigate(`/${repoName}/`);
+        } else {
+            navigate(previousPath);
+        }
     };
 
     /////////////// POPUP ///////////////

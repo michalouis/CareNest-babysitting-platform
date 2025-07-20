@@ -68,12 +68,7 @@ function ProfileFormParent({ firstName, lastName, amka, email, userData }) {
     const navigate = useNavigate();
 
     const towns = [
-        "Athens", "Mesologgi", "Halkida", "Karpenisi", "Lamia", "Amfissa", "Tripoli", "Patra", "Pyrgos", "Korinthos",
-        "Sparti", "Kalamata", "Zakynthos", "Kerkyra", "Argostoli", "Leykada", "Arta", "Prebeza", "Karditsa", "Larissa",
-        "Bolos", "Trikala", "Grebena", "Drama", "Beroia", "Thessaloniki", "Kabala", "Kastoria", "Kilkis", "Kozani",
-        "Edessa", "Katerini", "Serres", "Florina", "Polygyros", "Aleksandroypoli", "Ksanthi", "Komotini", "Rodos",
-        "Ermoypoli", "Mytilini", "Samos", "Xios", "Hrakleio", "Agios Nikolaos", "Rethimno", "Hania", "Ioannina",
-        "Hgoymenitsa", "Leivadia", "Nayplion"
+        "Athens", "Patra", "Thessaloniki"
     ];
 
     ///////////// VALIDATION /////////////

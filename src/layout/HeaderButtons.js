@@ -165,7 +165,7 @@ function HeaderButtons() {
             {isLoggedIn ? (   // Show menu, faq and messages buttons if user logged in
                 <>
                     <FaqButton />
-                    <MessagesButton />
+                    {/* <MessagesButton /> */}
                     <MenuButton />
                 </>
             ) : (   // Show login button if user not logged in
